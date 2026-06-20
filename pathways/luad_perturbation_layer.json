@@ -873,9 +873,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.025109,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 1.739611,
+      "std_expression_luad": 1.142546,
+      "mean_cn_luad": 1.025832,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_ACTB",
@@ -891,9 +892,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.699041,
       "is_essential_luad": true,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 11.209766,
+      "std_expression_luad": 0.719504,
+      "mean_cn_luad": 1.315968,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_AKT1",
@@ -909,9 +911,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.055682,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 6.499529,
+      "std_expression_luad": 0.588628,
+      "mean_cn_luad": 1.227051,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_APC",
@@ -927,9 +930,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.386921,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 3.006296,
+      "std_expression_luad": 0.490032,
+      "mean_cn_luad": 1.020943,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_B2M",
@@ -945,9 +949,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.020818,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 10.579363,
+      "std_expression_luad": 1.413466,
+      "mean_cn_luad": 1.036867,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_BAX",
@@ -963,9 +968,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.013534,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 6.703258,
+      "std_expression_luad": 0.68609,
+      "mean_cn_luad": 0.949888,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_BRAF",
@@ -981,9 +987,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.078266,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 3.195566,
+      "std_expression_luad": 0.547559,
+      "mean_cn_luad": 1.123745,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_C5",
@@ -999,9 +1006,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.026838,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 1.836362,
+      "std_expression_luad": 1.324573,
+      "mean_cn_luad": 1.041775,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_C5AR1",
@@ -1017,9 +1025,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.030396,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 0.990856,
+      "std_expression_luad": 0.863987,
+      "mean_cn_luad": 0.988933,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_CASP8",
@@ -1035,9 +1044,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.014798,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 4.957439,
+      "std_expression_luad": 0.748386,
+      "mean_cn_luad": 1.081895,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_CCL2",
@@ -1053,9 +1063,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.012742,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 2.384478,
+      "std_expression_luad": 2.788983,
+      "mean_cn_luad": 1.060456,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_CCNB1",
@@ -1071,9 +1082,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.81739,
       "is_essential_luad": true,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 7.741921,
+      "std_expression_luad": 0.676003,
+      "mean_cn_luad": 0.976433,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_CDC42",
@@ -1089,9 +1101,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.920646,
       "is_essential_luad": true,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 7.356878,
+      "std_expression_luad": 0.63828,
+      "mean_cn_luad": 0.928074,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_CDK1",
@@ -1107,9 +1120,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.999999,
       "is_essential_luad": true,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 6.772727,
+      "std_expression_luad": 0.686443,
+      "mean_cn_luad": 1.084339,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_CDKN1A",
@@ -1125,9 +1139,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.006429,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 5.281937,
+      "std_expression_luad": 1.331118,
+      "mean_cn_luad": 1.05555,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_CHRNA3",
@@ -1143,9 +1158,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.012071,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 0.50168,
+      "std_expression_luad": 0.430914,
+      "mean_cn_luad": 1.051369,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_CHRNA5",
@@ -1161,9 +1177,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.049155,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 3.951706,
+      "std_expression_luad": 0.922877,
+      "mean_cn_luad": 1.049379,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_CHRNB4",
@@ -1179,9 +1196,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.026163,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 0.35315,
+      "std_expression_luad": 0.413828,
+      "mean_cn_luad": 1.057171,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_CLDN1",
@@ -1197,9 +1215,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.021262,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 4.936535,
+      "std_expression_luad": 2.099533,
+      "mean_cn_luad": 1.217799,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_COL1A1",
@@ -1215,9 +1234,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.059425,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 4.351338,
+      "std_expression_luad": 2.019115,
+      "mean_cn_luad": 1.215008,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_CTNNB1",
@@ -1233,9 +1253,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.209257,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 7.456142,
+      "std_expression_luad": 0.629546,
+      "mean_cn_luad": 0.876034,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_CXCL1",
@@ -1251,9 +1272,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.130814,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 3.548974,
+      "std_expression_luad": 2.637578,
+      "mean_cn_luad": 0.900581,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_CXCL8",
@@ -1269,9 +1291,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.019765,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 4.494481,
+      "std_expression_luad": 2.335305,
+      "mean_cn_luad": 0.923246,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_CYP1A1",
@@ -1287,9 +1310,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.021844,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 1.860578,
+      "std_expression_luad": 1.699682,
+      "mean_cn_luad": 1.092944,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_CYP1B1",
@@ -1305,9 +1329,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.014752,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 4.985284,
+      "std_expression_luad": 1.746032,
+      "mean_cn_luad": 1.17212,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_CYP3A4",
@@ -1323,9 +1348,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.021164,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 0.09893,
+      "std_expression_luad": 0.372772,
+      "mean_cn_luad": 1.257286,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_DLL3",
@@ -1341,9 +1367,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.05919,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 1.207605,
+      "std_expression_luad": 1.189611,
+      "mean_cn_luad": 1.069934,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_EGFR",
@@ -1362,9 +1389,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.233135,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 5.266273,
+      "std_expression_luad": 1.549248,
+      "mean_cn_luad": 2.414158,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_ERBB2",
@@ -1381,9 +1409,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.3001,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 5.337057,
+      "std_expression_luad": 1.365847,
+      "mean_cn_luad": 1.199557,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_F10",
@@ -1399,9 +1428,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.010934,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 0.319351,
+      "std_expression_luad": 0.520592,
+      "mean_cn_luad": 0.896985,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_FAK1",
@@ -1426,9 +1456,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.020743,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 6.784048,
+      "std_expression_luad": 2.846789,
+      "mean_cn_luad": 1.063377,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_FZD1",
@@ -1444,9 +1475,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.033713,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 2.176683,
+      "std_expression_luad": 1.03406,
+      "mean_cn_luad": 1.251154,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_GADD45B",
@@ -1464,9 +1496,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.079909,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 5.132633,
+      "std_expression_luad": 0.912299,
+      "mean_cn_luad": 0.87127,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_GAPDH",
@@ -1482,9 +1515,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.958888,
       "is_essential_luad": true,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 11.975127,
+      "std_expression_luad": 0.573435,
+      "mean_cn_luad": 1.121071,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_GRB2",
@@ -1500,9 +1534,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.827678,
       "is_essential_luad": true,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 5.742434,
+      "std_expression_luad": 0.451134,
+      "mean_cn_luad": 1.15711,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_HES1",
@@ -1518,9 +1553,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.089009,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 4.27317,
+      "std_expression_luad": 0.999434,
+      "mean_cn_luad": 1.111174,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_HIF1A",
@@ -1536,9 +1572,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.010078,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 7.258083,
+      "std_expression_luad": 1.027011,
+      "mean_cn_luad": 1.29224,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_HK2",
@@ -1554,9 +1591,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.392423,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 4.01888,
+      "std_expression_luad": 1.35559,
+      "mean_cn_luad": 1.194279,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_HLA-A",
@@ -1572,9 +1610,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.140901,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 6.19674,
+      "std_expression_luad": 2.055486,
+      "mean_cn_luad": 0.736152,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_HLA-B",
@@ -1590,9 +1629,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.089339,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 5.891362,
+      "std_expression_luad": 2.44495,
+      "mean_cn_luad": 0.525745,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_IL6",
@@ -1609,9 +1649,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.013721,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 2.538442,
+      "std_expression_luad": 2.324628,
+      "mean_cn_luad": 1.296111,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_ITGA5",
@@ -1628,9 +1669,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.14149,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 4.323988,
+      "std_expression_luad": 1.651909,
+      "mean_cn_luad": 1.349091,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_ITGB1",
@@ -1646,9 +1688,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.202486,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 8.693946,
+      "std_expression_luad": 1.013275,
+      "mean_cn_luad": 1.004337,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_JAG1",
@@ -1664,9 +1707,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.036362,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 4.059717,
+      "std_expression_luad": 1.411259,
+      "mean_cn_luad": 1.064088,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_JAK1",
@@ -1682,9 +1726,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.164621,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 5.523282,
+      "std_expression_luad": 0.825773,
+      "mean_cn_luad": 1.114499,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_JAK2",
@@ -1700,9 +1745,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.013666,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 1.78274,
+      "std_expression_luad": 0.630438,
+      "mean_cn_luad": 0.810021,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_KRAS",
@@ -1720,9 +1766,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.75214,
       "is_essential_luad": true,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 4.50383,
+      "std_expression_luad": 0.706483,
+      "mean_cn_luad": 1.302793,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_LAMA5",
@@ -1738,9 +1785,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.017584,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 6.827524,
+      "std_expression_luad": 1.265531,
+      "mean_cn_luad": 1.331147,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_LDHA",
@@ -1756,9 +1804,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.1198,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 10.200774,
+      "std_expression_luad": 0.720392,
+      "mean_cn_luad": 0.903265,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_MAP2K1",
@@ -1774,9 +1823,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.094486,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 5.86043,
+      "std_expression_luad": 0.632782,
+      "mean_cn_luad": 1.075513,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_MAP2K4",
@@ -1792,9 +1842,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.045642,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 4.057614,
+      "std_expression_luad": 0.52865,
+      "mean_cn_luad": 0.982648,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_MAP2K7",
@@ -1810,9 +1861,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.110699,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 3.986819,
+      "std_expression_luad": 0.49876,
+      "mean_cn_luad": 0.904351,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_MAPK1",
@@ -1828,9 +1880,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.115068,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 5.87849,
+      "std_expression_luad": 0.712542,
+      "mean_cn_luad": 1.062357,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_MAPK3",
@@ -1846,9 +1899,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.059048,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 5.475354,
+      "std_expression_luad": 0.788955,
+      "mean_cn_luad": 1.021325,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_MDM2",
@@ -1864,9 +1918,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.448833,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 4.915913,
+      "std_expression_luad": 0.812365,
+      "mean_cn_luad": 1.135746,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_MET",
@@ -1882,9 +1937,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.093134,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 6.284866,
+      "std_expression_luad": 1.430403,
+      "mean_cn_luad": 1.540916,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_MYC",
@@ -1900,9 +1956,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.954951,
       "is_essential_luad": true,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 5.90914,
+      "std_expression_luad": 1.258929,
+      "mean_cn_luad": 4.165916,
+      "cn_status_luad": "amplified"
     },
     {
       "id": "gene_MYH",
@@ -1927,9 +1984,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.151697,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 0.414271,
+      "std_expression_luad": 0.27519,
+      "mean_cn_luad": 1.055624,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_NFKB1",
@@ -1945,9 +2003,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.027197,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 4.127992,
+      "std_expression_luad": 0.646243,
+      "mean_cn_luad": 0.923577,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_NOTCH1",
@@ -1963,9 +2022,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.036187,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 2.299155,
+      "std_expression_luad": 0.841084,
+      "mean_cn_luad": 1.24386,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_NRP1",
@@ -1981,9 +2041,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.020647,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 5.046128,
+      "std_expression_luad": 1.951982,
+      "mean_cn_luad": 1.006996,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_OCLN",
@@ -1999,9 +2060,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.084136,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 4.162136,
+      "std_expression_luad": 1.418292,
+      "mean_cn_luad": 0.997443,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_PAI1",
@@ -2027,9 +2089,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.506277,
       "is_essential_luad": true,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 3.476644,
+      "std_expression_luad": 0.667019,
+      "mean_cn_luad": 1.100345,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_PKM",
@@ -2045,9 +2108,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.822049,
       "is_essential_luad": true,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 11.056179,
+      "std_expression_luad": 0.797025,
+      "mean_cn_luad": 1.109775,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_PLXNA1",
@@ -2063,9 +2127,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.048552,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 4.107029,
+      "std_expression_luad": 0.823528,
+      "mean_cn_luad": 1.116068,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_PTEN",
@@ -2081,9 +2146,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.009356,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 5.086496,
+      "std_expression_luad": 0.6341,
+      "mean_cn_luad": 1.02672,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_PXNI",
@@ -2108,9 +2174,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.042736,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 5.271523,
+      "std_expression_luad": 0.494475,
+      "mean_cn_luad": 0.895424,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_RAC1",
@@ -2126,9 +2193,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.733582,
       "is_essential_luad": true,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 8.086675,
+      "std_expression_luad": 0.615525,
+      "mean_cn_luad": 1.281419,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_RAS",
@@ -2153,9 +2221,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.023376,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 3.884668,
+      "std_expression_luad": 0.848726,
+      "mean_cn_luad": 0.82633,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_RHOA",
@@ -2171,9 +2240,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.440789,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 8.478148,
+      "std_expression_luad": 0.503527,
+      "mean_cn_luad": 0.830597,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_ROBO1",
@@ -2189,9 +2259,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.02953,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 3.318939,
+      "std_expression_luad": 1.720456,
+      "mean_cn_luad": 0.852377,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_ROCK1",
@@ -2207,9 +2278,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.099762,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 4.38649,
+      "std_expression_luad": 0.518729,
+      "mean_cn_luad": 0.916309,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_SEMA3A",
@@ -2225,9 +2297,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.031156,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 3.261921,
+      "std_expression_luad": 1.986333,
+      "mean_cn_luad": 1.154168,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_SOS1",
@@ -2243,9 +2316,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.277758,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 3.971134,
+      "std_expression_luad": 0.588812,
+      "mean_cn_luad": 1.260436,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_SRC",
@@ -2261,9 +2335,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.125923,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 4.625488,
+      "std_expression_luad": 1.267234,
+      "mean_cn_luad": 1.318508,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_STAT3",
@@ -2279,9 +2354,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.208043,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 5.656312,
+      "std_expression_luad": 0.749032,
+      "mean_cn_luad": 1.130783,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_TAP1",
@@ -2297,9 +2373,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.086784,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 4.733788,
+      "std_expression_luad": 1.137979,
+      "mean_cn_luad": 1.045622,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_TGFB1",
@@ -2315,9 +2392,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.048124,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 4.09431,
+      "std_expression_luad": 1.452427,
+      "mean_cn_luad": 1.063914,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_TJP1",
@@ -2333,9 +2411,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.084693,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 5.381353,
+      "std_expression_luad": 0.745878,
+      "mean_cn_luad": 1.021426,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_TNF",
@@ -2352,9 +2431,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.089142,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 0.197804,
+      "std_expression_luad": 0.345936,
+      "mean_cn_luad": 1.061348,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_TP53",
@@ -2372,9 +2452,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.012355,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 4.720452,
+      "std_expression_luad": 1.386961,
+      "mean_cn_luad": 0.925097,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_TRAF2",
@@ -2390,9 +2471,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.337545,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 4.270021,
+      "std_expression_luad": 0.663249,
+      "mean_cn_luad": 1.152777,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_VCL",
@@ -2408,9 +2490,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.32274,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 5.579988,
+      "std_expression_luad": 0.871638,
+      "mean_cn_luad": 1.015452,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_VEGFA",
@@ -2428,9 +2511,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.030895,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 6.226438,
+      "std_expression_luad": 1.216659,
+      "mean_cn_luad": 1.025254,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_VEGFR2",
@@ -2455,9 +2539,10 @@
       "n_luad_crispr_measured": 53,
       "mean_dep_prob_luad": 0.034919,
       "is_essential_luad": false,
-      "mean_expression_luad": null,
-      "std_expression_luad": null,
-      "mean_cn_luad": null
+      "mean_expression_luad": 0.194819,
+      "std_expression_luad": 0.641168,
+      "mean_cn_luad": 1.111446,
+      "cn_status_luad": "neutral"
     },
     {
       "id": "gene_mTOR",
