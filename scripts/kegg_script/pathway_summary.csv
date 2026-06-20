@@ -1,0 +1,9 @@
+pathway_id,pathway_name,genes
+path:ptr01521,EGFR tyrosine kinase inhibitor resistance - Pan troglodytes (chimpanzee),"AKT1,AKT2,ERBB2,ERBB3,FGFR2,KRAS,MAP2K1,MAP2K2,MAPK1,MAPK3,NRAS,PIK3CA,RAF1,SHC1,SOS1"
+path:ptr04010,MAPK signaling pathway - Pan troglodytes (chimpanzee),"AKT1,AKT2,ERBB2,ERBB3,FGFR2,KRAS,MAP2K1,MAP2K2,MAPK1,MAPK3,NRAS,RAF1,SOS1"
+path:ptr04012,ErbB signaling pathway - Pan troglodytes (chimpanzee),"AKT1,AKT2,ERBB2,ERBB3,KRAS,MAP2K1,MAP2K2,MAPK1,MAPK3,NRAS,PIK3CA,RAF1,SHC1,SOS1"
+path:ptr04014,Ras signaling pathway - Pan troglodytes (chimpanzee),"AKT1,AKT2,FGFR2,KRAS,MAP2K1,MAP2K2,MAPK1,MAPK3,NRAS,PIK3CA,RAF1,SHC1,SOS1"
+path:ptr04068,FoxO signaling pathway - Pan troglodytes (chimpanzee),"AKT1,AKT2,KRAS,MAP2K1,MAP2K2,MAPK1,MAPK3,MDM2,NRAS,PIK3CA,RAF1,SOS1"
+path:ptr04150,mTOR signaling pathway - Pan troglodytes (chimpanzee),"AKT1,AKT2,KRAS,MAP2K1,MAP2K2,MAPK1,MAPK3,NRAS,PIK3CA,RAF1,SOS1,TSC1"
+path:ptr04151,PI3K-Akt signaling pathway - Pan troglodytes (chimpanzee),"AKT1,AKT2,ERBB2,ERBB3,FGFR2,KRAS,MAP2K1,MAP2K2,MAPK1,MAPK3,MDM2,NRAS,PIK3CA,RAF1,SOS1,TSC1"
+path:ptr04115,p53 signaling pathway - Pan troglodytes (chimpanzee),"CHEK1,CHEK2,MDM2"

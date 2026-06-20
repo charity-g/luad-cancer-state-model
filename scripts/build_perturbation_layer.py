@@ -189,15 +189,28 @@ def _load_depmap_matrix(
     import io
     import subprocess
 
-    # 1. Read header only to find column indices for target genes
+    # 1. Read header + first data row to determine which column holds ModelID.
+    #    CRISPRGeneEffect: col 0 = ModelID (unnamed, contains "ACH-..." values)
+    #    OmicsExpression / OmicsCNGeneWGS: col 0 = row index int, col 3 = ModelID
     with open(path, newline="", encoding="utf-8") as f:
         reader = csv.reader(f)
         header = next(reader)
+        first_row = next(reader)
 
-    index_col = header[0]
-    # col_idx_map: gene_symbol -> (1-based awk field index, original col name)
+    # Auto-detect: if "ModelID" appears in header, use that column; else use col 0
+    if "ModelID" in header:
+        id_col_idx = header.index("ModelID")       # 0-based Python index
+        id_awk_field = id_col_idx + 1              # 1-based awk field
+    else:
+        id_col_idx = 0
+        id_awk_field = 1
+
+    # col_idx_map: gene_symbol -> (1-based awk field, original col name)
+    # Skip non-gene metadata columns (those without an entrez ID suffix)
     col_idx_map: dict[str, tuple[int, str]] = {}
-    for i, col in enumerate(header[1:], start=2):   # awk fields are 1-based; col 0 = $1
+    for i, col in enumerate(header, start=1):
+        if i == id_awk_field:
+            continue
         gene = _gene_from_col(col)
         if gene in target_genes and gene not in col_idx_map:
             col_idx_map[gene] = (i, col)
@@ -205,29 +218,36 @@ def _load_depmap_matrix(
     if not col_idx_map:
         return pd.DataFrame(), {}
 
-    # 2. Build awk program:
-    #    - NR==1: print selected header fields
-    #    - luad_ids lookup table: print matching data rows
-    luad_set_awk = " || ".join(f'$1=="{mid}"' for mid in luad_ids)
-    selected_fields = "$1"
-    selected_header = index_col
-    gene_col_order: list[tuple[str, str]] = []  # (gene, original_col_name)
+    # 2. Build awk program that filters rows to LUAD ModelIDs and selects columns.
+    #    Also deduplicate: for Expression/CN files keep only IsDefaultEntryForModel==Yes.
+    luad_set_awk = " || ".join(f'${id_awk_field}=="{mid}"' for mid in luad_ids)
+
+    # For files with an IsDefaultEntryForModel column, add that filter
+    if "IsDefaultEntryForModel" in header:
+        default_idx = header.index("IsDefaultEntryForModel") + 1
+        row_filter = f'({luad_set_awk}) && ${default_idx}=="Yes"'
+    else:
+        row_filter = f'({luad_set_awk})'
+
+    selected_fields = f"${id_awk_field}"
+    selected_header = "ModelID"
     for gene, (fidx, col_name) in sorted(col_idx_map.items(), key=lambda x: x[1][0]):
         selected_fields += f", ${fidx}"
         selected_header += f",{col_name}"
-        gene_col_order.append((gene, col_name))
 
     awk_prog = (
         f'BEGIN {{FS=","; OFS=","}} '
         f'NR==1 {{print "{selected_header}"; next}} '
-        f'{luad_set_awk} {{print {selected_fields}}}'
+        f'{row_filter} {{print {selected_fields}}}'
     )
 
-    # 3. Run awk, capture output, load with pandas
+    # 3. Run awk, pipe tiny output to pandas
     result = subprocess.run(
         ["awk", awk_prog, str(path)],
         capture_output=True, text=True, check=True,
     )
+    if not result.stdout.strip():
+        return pd.DataFrame(), {}
 
     luad_df = pd.read_csv(io.StringIO(result.stdout), index_col=0)
     matched = {_gene_from_col(c): c for c in luad_df.columns}
