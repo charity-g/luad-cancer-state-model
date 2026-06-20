@@ -84,3 +84,16 @@ def run_read(cypher, params=None):
 def full_graph():
     """Entire graph for the frontend's static visualization (incl. isolated nodes)."""
     return run_read("MATCH (n) OPTIONAL MATCH (n)-[r]->(m) RETURN n, r, m")["subgraph"]
+
+
+def graph_summary():
+    """Labels + relationship types actually present, with counts. Grounds the
+    planner so the LLM only generates queries against structure that exists."""
+    labels = run_read(
+        "MATCH (n) UNWIND labels(n) AS l RETURN l AS k, count(*) AS c ORDER BY c DESC"
+    )["rows"]
+    rels = run_read(
+        "MATCH ()-[r]->() RETURN type(r) AS k, count(*) AS c ORDER BY c DESC"
+    )["rows"]
+    fmt = lambda rows: ", ".join(f"{r['k']}({r['c']})" for r in rows)
+    return f"Node labels: {fmt(labels)}\nRelationship types: {fmt(rels)}"

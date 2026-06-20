@@ -49,10 +49,17 @@ def plan(question):
 
 def _plan_llm(question):
     client = anthropic.Anthropic()
+    # Ground the planner in what's actually loaded — the schema doc describes the
+    # full target schema, but only a subset may be populated.
+    system = (
+        _PLANNER_SYSTEM
+        + "\n\n=== CURRENTLY LOADED (query only these) ===\n"
+        + cypher.graph_summary()
+    )
     resp = client.messages.create(
         model=PLANNER_MODEL,
         max_tokens=600,
-        system=_PLANNER_SYSTEM,
+        system=system,
         messages=[{"role": "user", "content": question}],
     )
     text = "".join(b.text for b in resp.content if b.type == "text").strip()

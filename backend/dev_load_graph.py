@@ -67,12 +67,7 @@ def main():
             nodes = data["pathway_nodes"] + data["gene_nodes"] + data["mutation_nodes"]
             for n in nodes:
                 label = NODE_LABELS[n["type"]]
-                props = _clean(n)
-                # NEO4J_SCHEMA.md documents Mutation.gene_symbol, but the source
-                # JSON stores it as `gene`. Alias it so queries match the schema doc.
-                if label == "Mutation" and "gene" in n:
-                    props.setdefault("gene_symbol", n["gene"])
-                s.run(f"MERGE (x:{label} {{id: $id}}) SET x += $props", id=n["id"], props=props)
+                s.run(f"MERGE (x:{label} {{id: $id}}) SET x += $props", id=n["id"], props=_clean(n))
             print(f"Loaded {len(nodes)} nodes")
 
             edges = data["pathway_edges"] + data["perturbation_edges"]
