@@ -2,3 +2,5 @@
 venv/
 
 local_data/
+
+.env
