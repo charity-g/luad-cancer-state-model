@@ -79,7 +79,7 @@ A specific genetic alteration observed in LUAD cell lines. Primary key: `id`.
 | `label` | string | perturbation layer | Human-readable e.g. `"KRAS p.G12C"` |
 | `mutation_class` | string | perturbation layer | `"hotspot"` / `"lof"` / `"fusion"` / `"msi"` |
 | `effect_direction` | string | perturbation layer | `"gain_of_function"` / `"loss_of_function"` / `"ambiguous"` |
-| `gene_symbol` | string | perturbation layer | Affected gene HGNC symbol |
+| `gene` | string | perturbation layer | Affected gene HGNC symbol |
 | `luad_prevalence` | float | DepMap OmicsInferredMolecularSubtypes | Fraction of LUAD lines carrying this mutation (0–1) |
 | `luad_n_positive` | integer | DepMap | Count of positive LUAD lines |
 | `luad_n_total` | integer | DepMap | Total LUAD lines tested |
