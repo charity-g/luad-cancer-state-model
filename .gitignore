@@ -2,3 +2,8 @@
 venv/
 
 local_data/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/

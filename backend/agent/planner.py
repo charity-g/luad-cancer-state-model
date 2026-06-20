@@ -1,0 +1,120 @@
+"""Planner — turns a natural-language question into a read-only Cypher query.
+
+Primary path (text2Cypher): Claude generates Cypher, grounded by the authoritative
+NEO4J_SCHEMA.md. The output is validated as read-only before it reaches the DB.
+
+Fallback path (no API key, or generation fails/produces a write): a deterministic
+query built from entities resolved against the graph vocabulary, using the
+schema's documented traversal patterns. This keeps the pipeline runnable without
+an LLM while matching the team's schema.
+"""
+
+import re
+from functools import lru_cache
+
+import anthropic
+
+from backend.agent import cypher
+from backend.config import ANTHROPIC_API_KEY, PLANNER_MODEL
+
+_INTERVENTION = re.compile(
+    r"\b(inhibit|block|suppress|knock|knockout|knockdown|target|drug|treat|"
+    r"reverse|activat|overexpress|effect|help|improve|resist|combination)\b", re.I
+)
+
+_PLANNER_SYSTEM = (
+    "You translate questions about a LUAD (lung adenocarcinoma) causal biology "
+    "Neo4j graph into a SINGLE read-only Cypher query. Use ONLY the labels, "
+    "properties, and relationship types defined in the schema below. The query "
+    "must be read-only: no CREATE, MERGE, SET, DELETE, REMOVE. Return graph "
+    "entities (nodes and relationships) where possible so the result can be "
+    "visualized. Output ONLY the Cypher query — no prose, no markdown fences.\n\n"
+    "=== SCHEMA ===\n" + cypher.schema_text()
+)
+
+
+def plan(question):
+    if ANTHROPIC_API_KEY:
+        try:
+            cy = _plan_llm(question)
+            if cy and cypher.is_read_only(cy):
+                return {"cypher": cy, "params": {}, "source": "llm"}
+        except Exception:
+            pass
+    cy, params = _fallback(question)
+    return {"cypher": cy, "params": params, "source": "fallback"}
+
+
+# --- text2Cypher ----------------------------------------------------------
+
+def _plan_llm(question):
+    client = anthropic.Anthropic()
+    resp = client.messages.create(
+        model=PLANNER_MODEL,
+        max_tokens=600,
+        system=_PLANNER_SYSTEM,
+        messages=[{"role": "user", "content": question}],
+    )
+    text = "".join(b.text for b in resp.content if b.type == "text").strip()
+    return _strip_fences(text)
+
+
+def _strip_fences(text):
+    m = re.search(r"```(?:cypher)?\s*(.+?)```", text, re.S | re.I)
+    return (m.group(1) if m else text).strip()
+
+
+# --- deterministic fallback ----------------------------------------------
+
+@lru_cache(maxsize=1)
+def _vocab():
+    rows = cypher.run_read(
+        "MATCH (g:Gene) RETURN collect(g.symbol) AS genes"
+    )["rows"][0]["genes"]
+    mut = cypher.run_read("MATCH (m:Mutation) RETURN collect(m.id) AS ids")["rows"][0]["ids"]
+    paths = cypher.run_read(
+        "MATCH (p:Pathway) RETURN collect({id: p.id, label: p.label}) AS p"
+    )["rows"][0]["p"]
+    return {"genes": set(rows), "mutations": mut, "pathways": paths}
+
+
+def _fallback(question):
+    vocab = _vocab()
+    tokens = {t.upper() for t in re.findall(r"[A-Za-z0-9]+", question)}
+    genes = sorted(tokens & vocab["genes"])
+    q = question.lower()
+    pathways = [p["id"] for p in vocab["pathways"] if (p["label"] or "").lower() in q]
+
+    # Intervention question about a gene -> mutation/gene -> pathway cascade + essentiality.
+    if genes and _INTERVENTION.search(question):
+        return (
+            "MATCH (g:Gene {symbol: $sym}) "
+            "OPTIONAL MATCH (m:Mutation)-[mut:MUTATES]->(g) "
+            "OPTIONAL MATCH (g)-[mem:MEMBER_OF]->(p:Pathway) "
+            "OPTIONAL MATCH (m)-[pert:PERTURBS]->(p) "
+            "RETURN g, m, mut, p, mem, pert",
+            {"sym": genes[0]},
+        )
+    if genes:
+        return (
+            "MATCH (g:Gene {symbol: $sym}) "
+            "OPTIONAL MATCH (g)-[mem:MEMBER_OF]->(p:Pathway) "
+            "RETURN g, mem, p",
+            {"sym": genes[0]},
+        )
+    if pathways:
+        return (
+            "MATCH (p:Pathway {id: $pid}) "
+            "OPTIONAL MATCH (p)-[r]-(q:Pathway) "
+            "OPTIONAL MATCH (g:Gene)-[mem:MEMBER_OF]->(p) WHERE g.is_essential_luad "
+            "RETURN p, r, q, g, mem",
+            {"pid": pathways[0]},
+        )
+    # Nothing resolved -> overview of the most active pathways.
+    return (
+        "MATCH (p:Pathway) WHERE p.status = 'activated' "
+        "WITH p ORDER BY p.deg_count DESC LIMIT 5 "
+        "OPTIONAL MATCH (p)-[r:ACTIVATES_PATHWAY|DOWNSTREAM_OF]->(q:Pathway) "
+        "RETURN p, r, q",
+        {},
+    )
