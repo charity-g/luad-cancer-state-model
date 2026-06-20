@@ -1,0 +1,5760 @@
+{
+  "meta": {
+    "name": "LUAD Perturbation Layer",
+    "description": "Causal inference overlay on LUAD KEGG pathway graph. Tripartite graph: mutation \u2192 gene \u2192 pathway. Augmented KEGG pathway nodes include DepMap-derived aggregates and inferred causal state from DepMap mutation profiles.",
+    "source_kegg": "/sessions/admiring-charming-franklin/mnt/luad-cancer-state-model/pathways/lung_cancer_pathways_graph.json",
+    "source_depmap": "/sessions/admiring-charming-franklin/mnt/luad-cancer-state-model/local_data/dep_map",
+    "luad_n_cell_lines": 91,
+    "node_types": [
+      "mutation",
+      "gene",
+      "pathway"
+    ],
+    "edge_types": [
+      "mutates",
+      "member_of",
+      "perturbs",
+      "crispr_validates",
+      "activates",
+      "represses",
+      "downstream_of",
+      "crosstalk",
+      "shared_DEG"
+    ]
+  },
+  "pathway_nodes": [
+    {
+      "id": "MAPK_signaling",
+      "label": "MAPK signaling pathway",
+      "kegg_id": "hsa04010",
+      "type": "pathway",
+      "status": "activated",
+      "q_value": 0.857,
+      "deg_count": 14,
+      "upregulated_degs": 13,
+      "downregulated_degs": 1,
+      "impact_factor": null,
+      "key_genes": [
+        "GADD45B",
+        "MAP2K4",
+        "MAP2K7",
+        "EGFR",
+        "KRAS"
+      ],
+      "description": "Core oncogenic signaling cascade; activated via EGFR/KRAS mutations in NSCLC",
+      "mean_pathway_crispr_effect_luad": -0.307702,
+      "n_essential_genes_luad": 1,
+      "top_perturbations_luad": [
+        {
+          "mutation_id": "mut_KRAS_p_G12",
+          "luad_prevalence": 0.2874,
+          "effect_direction": "gain_of_function",
+          "via_gene": "KRAS"
+        },
+        {
+          "mutation_id": "mut_KRAS_p_G12C",
+          "luad_prevalence": 0.1494,
+          "effect_direction": "gain_of_function",
+          "via_gene": "KRAS"
+        },
+        {
+          "mutation_id": "mut_KRAS_p_G13",
+          "luad_prevalence": 0.1149,
+          "effect_direction": "gain_of_function",
+          "via_gene": "KRAS"
+        }
+      ],
+      "inferred_state": "activated",
+      "perturbation_sources": [
+        "mut_KRAS_p_G12D",
+        "mut_KRAS_p_G12C",
+        "mut_EGFR_p_L858R",
+        "mut_KRAS_p_G12",
+        "mut_KRAS_p_G13",
+        "mut_KRAS_p_Q61",
+        "mut_EGFR_exon_19_del"
+      ]
+    },
+    {
+      "id": "chemokine_signaling",
+      "label": "Chemokine signaling pathway",
+      "kegg_id": "hsa04062",
+      "type": "pathway",
+      "status": "activated",
+      "q_value": 0.692,
+      "deg_count": 13,
+      "upregulated_degs": 11,
+      "downregulated_degs": 2,
+      "impact_factor": null,
+      "key_genes": [
+        "CXCL1",
+        "CXCL8",
+        "CCL2",
+        "PIK3CA"
+      ],
+      "description": "Immune cell recruitment; drives tumor microenvironment remodeling",
+      "mean_pathway_crispr_effect_luad": -0.123957,
+      "n_essential_genes_luad": 1,
+      "top_perturbations_luad": [
+        {
+          "mutation_id": "mut_PIK3CA_p_E542",
+          "luad_prevalence": 0.0575,
+          "effect_direction": "gain_of_function",
+          "via_gene": "PIK3CA"
+        },
+        {
+          "mutation_id": "mut_PIK3CA_p_E545",
+          "luad_prevalence": 0.046,
+          "effect_direction": "gain_of_function",
+          "via_gene": "PIK3CA"
+        },
+        {
+          "mutation_id": "mut_PIK3CA_p_H1047",
+          "luad_prevalence": 0.046,
+          "effect_direction": "gain_of_function",
+          "via_gene": "PIK3CA"
+        }
+      ],
+      "inferred_state": "activated",
+      "perturbation_sources": [
+        "mut_PIK3CA_p_E542",
+        "mut_PIK3CA_p_E545",
+        "mut_PIK3CA_p_H1047"
+      ]
+    },
+    {
+      "id": "cytokine_cytokine_receptor",
+      "label": "Cytokine-cytokine receptor interaction",
+      "kegg_id": "hsa04060",
+      "type": "pathway",
+      "status": "activated",
+      "q_value": 0.625,
+      "deg_count": 16,
+      "upregulated_degs": 13,
+      "downregulated_degs": 3,
+      "impact_factor": null,
+      "key_genes": [
+        "IL6",
+        "TNF",
+        "VEGFA",
+        "TGFB1"
+      ],
+      "description": "Inflammatory signaling network; cross-talks with chemokine and MAPK pathways",
+      "mean_pathway_crispr_effect_luad": -0.02262,
+      "n_essential_genes_luad": 0,
+      "top_perturbations_luad": [],
+      "inferred_state": "activated",
+      "perturbation_sources": [],
+      "propagation_source": [
+        "propagated_from:JAK_STAT3"
+      ]
+    },
+    {
+      "id": "vascular_smooth_muscle",
+      "label": "Vascular smooth muscle contraction",
+      "kegg_id": "hsa04270",
+      "type": "pathway",
+      "status": "activated",
+      "q_value": 0.846,
+      "deg_count": 13,
+      "upregulated_degs": 12,
+      "downregulated_degs": 1,
+      "impact_factor": null,
+      "key_genes": [
+        "ACTA2",
+        "MYH11",
+        "ROCK1"
+      ],
+      "description": "Tumor vasculature remodeling; linked to invasion and metastasis",
+      "mean_pathway_crispr_effect_luad": -0.083056,
+      "n_essential_genes_luad": 0,
+      "top_perturbations_luad": [],
+      "inferred_state": null,
+      "perturbation_sources": []
+    },
+    {
+      "id": "actin_cytoskeleton",
+      "label": "Regulation of actin cytoskeleton",
+      "kegg_id": "hsa04810",
+      "type": "pathway",
+      "status": "activated",
+      "q_value": 1.0,
+      "deg_count": 11,
+      "upregulated_degs": 11,
+      "downregulated_degs": 0,
+      "impact_factor": null,
+      "key_genes": [
+        "RAC1",
+        "CDC42",
+        "RHOA",
+        "ACTB"
+      ],
+      "description": "Cell motility and invasion; fully upregulated in lung tumor samples",
+      "mean_pathway_crispr_effect_luad": -0.80722,
+      "n_essential_genes_luad": 3,
+      "top_perturbations_luad": [],
+      "inferred_state": null,
+      "perturbation_sources": []
+    },
+    {
+      "id": "endocytosis",
+      "label": "Endocytosis",
+      "kegg_id": "hsa04144",
+      "type": "pathway",
+      "status": "activated",
+      "q_value": 1.0,
+      "deg_count": 10,
+      "upregulated_degs": 10,
+      "downregulated_degs": 0,
+      "impact_factor": null,
+      "key_genes": [
+        "EGFR",
+        "MET",
+        "ERBB2",
+        "RAB5A"
+      ],
+      "description": "EGFR receptor trafficking and recycling; promotes sustained signaling",
+      "mean_pathway_crispr_effect_luad": -0.180062,
+      "n_essential_genes_luad": 0,
+      "top_perturbations_luad": [
+        {
+          "mutation_id": "mut_EGFR_exon_19_del",
+          "luad_prevalence": 0.1034,
+          "effect_direction": "gain_of_function",
+          "via_gene": "EGFR"
+        },
+        {
+          "mutation_id": "mut_EGFR_p_L858R",
+          "luad_prevalence": 0.069,
+          "effect_direction": "gain_of_function",
+          "via_gene": "EGFR"
+        }
+      ],
+      "inferred_state": "activated",
+      "perturbation_sources": [
+        "mut_EGFR_p_L858R",
+        "mut_EGFR_exon_19_del"
+      ]
+    },
+    {
+      "id": "neuroactive_LR",
+      "label": "Neuroactive ligand-receptor interaction",
+      "kegg_id": "hsa04080",
+      "type": "pathway",
+      "status": "activated",
+      "q_value": 0.667,
+      "deg_count": 18,
+      "upregulated_degs": 15,
+      "downregulated_degs": 3,
+      "impact_factor": null,
+      "key_genes": [
+        "CHRNA3",
+        "CHRNA5",
+        "CHRNB4"
+      ],
+      "description": "Nicotinic acetylcholine receptors; linked to smoking-associated lung carcinogenesis",
+      "mean_pathway_crispr_effect_luad": 0.027012,
+      "n_essential_genes_luad": 0,
+      "top_perturbations_luad": [],
+      "inferred_state": null,
+      "perturbation_sources": []
+    },
+    {
+      "id": "tight_junction",
+      "label": "Tight junction",
+      "kegg_id": "hsa04530",
+      "type": "pathway",
+      "status": "activated",
+      "q_value": 0.636,
+      "deg_count": 11,
+      "upregulated_degs": 9,
+      "downregulated_degs": 2,
+      "impact_factor": null,
+      "key_genes": [
+        "OCLN",
+        "CLDN1",
+        "TJP1",
+        "MYH"
+      ],
+      "description": "Epithelial barrier disruption; associated with EMT in lung cancer",
+      "mean_pathway_crispr_effect_luad": -0.043978,
+      "n_essential_genes_luad": 0,
+      "top_perturbations_luad": [],
+      "inferred_state": null,
+      "perturbation_sources": []
+    },
+    {
+      "id": "axon_guidance",
+      "label": "Axon guidance",
+      "kegg_id": "hsa04360",
+      "type": "pathway",
+      "status": "activated",
+      "q_value": 0.8,
+      "deg_count": 10,
+      "upregulated_degs": 9,
+      "downregulated_degs": 1,
+      "impact_factor": null,
+      "key_genes": [
+        "SEMA3A",
+        "ROBO1",
+        "PLXNA1"
+      ],
+      "description": "Invasion guidance signals; repurposed in lung tumor invasion",
+      "mean_pathway_crispr_effect_luad": 0.006178,
+      "n_essential_genes_luad": 0,
+      "top_perturbations_luad": [],
+      "inferred_state": null,
+      "perturbation_sources": []
+    },
+    {
+      "id": "PI3K_Akt",
+      "label": "PI3K-Akt signaling pathway",
+      "kegg_id": "hsa04151",
+      "type": "pathway",
+      "status": "activated",
+      "q_value": null,
+      "deg_count": null,
+      "upregulated_degs": null,
+      "downregulated_degs": null,
+      "impact_factor": null,
+      "key_genes": [
+        "PIK3CA",
+        "AKT1",
+        "PTEN",
+        "mTOR"
+      ],
+      "description": "Top enriched pathway; early and reversible activation event in lung carcinogenesis",
+      "mean_pathway_crispr_effect_luad": -0.024328,
+      "n_essential_genes_luad": 1,
+      "top_perturbations_luad": [
+        {
+          "mutation_id": "mut_PTEN_LoF",
+          "luad_prevalence": 0.4943,
+          "effect_direction": "loss_of_function",
+          "via_gene": "PTEN"
+        },
+        {
+          "mutation_id": "mut_PIK3CA_p_E542",
+          "luad_prevalence": 0.0575,
+          "effect_direction": "gain_of_function",
+          "via_gene": "PIK3CA"
+        },
+        {
+          "mutation_id": "mut_PIK3CA_p_E545",
+          "luad_prevalence": 0.046,
+          "effect_direction": "gain_of_function",
+          "via_gene": "PIK3CA"
+        }
+      ],
+      "inferred_state": "ambiguous",
+      "perturbation_sources": [
+        "mut_PIK3CA_p_E542",
+        "mut_PIK3CA_p_E545",
+        "mut_PIK3CA_p_H1047",
+        "mut_PTEN_LoF"
+      ]
+    },
+    {
+      "id": "TNF_signaling",
+      "label": "TNF signaling pathway",
+      "kegg_id": "hsa04668",
+      "type": "pathway",
+      "status": "activated",
+      "q_value": null,
+      "deg_count": null,
+      "upregulated_degs": null,
+      "downregulated_degs": null,
+      "impact_factor": null,
+      "key_genes": [
+        "TNF",
+        "NFKB1",
+        "CASP8",
+        "TRAF2"
+      ],
+      "description": "NF-\u03baB activation; promotes survival and drug resistance in NSCLC",
+      "mean_pathway_crispr_effect_luad": -0.090047,
+      "n_essential_genes_luad": 0,
+      "top_perturbations_luad": [],
+      "inferred_state": null,
+      "perturbation_sources": []
+    },
+    {
+      "id": "cell_cycle",
+      "label": "Cell cycle",
+      "kegg_id": "hsa04110",
+      "type": "pathway",
+      "status": "repressed",
+      "q_value": -0.692,
+      "deg_count": 13,
+      "upregulated_degs": 2,
+      "downregulated_degs": 11,
+      "impact_factor": 6.673,
+      "key_genes": [
+        "GADD45B",
+        "TP53",
+        "CDK1",
+        "CCNB1",
+        "RB1"
+      ],
+      "description": "Strongly repressed; G2/M checkpoint arrested by GADD45B overexpression",
+      "mean_pathway_crispr_effect_luad": -0.603778,
+      "n_essential_genes_luad": 2,
+      "top_perturbations_luad": [
+        {
+          "mutation_id": "mut_TP53_LoF",
+          "luad_prevalence": 0.931,
+          "effect_direction": "loss_of_function",
+          "via_gene": "TP53"
+        },
+        {
+          "mutation_id": "mut_RB1_LoF",
+          "luad_prevalence": 0.5287,
+          "effect_direction": "loss_of_function",
+          "via_gene": "RB1"
+        }
+      ],
+      "inferred_state": "repressed",
+      "perturbation_sources": [
+        "mut_RB1_LoF",
+        "mut_TP53_LoF"
+      ]
+    },
+    {
+      "id": "P53_signaling",
+      "label": "P53 signaling pathway",
+      "kegg_id": "hsa04115",
+      "type": "pathway",
+      "status": "repressed",
+      "q_value": -0.6,
+      "deg_count": 10,
+      "upregulated_degs": 2,
+      "downregulated_degs": 8,
+      "impact_factor": 9.017,
+      "key_genes": [
+        "TP53",
+        "GADD45B",
+        "MDM2",
+        "CDKN1A",
+        "BAX"
+      ],
+      "description": "Tumor suppressor pathway; repressed enabling bypass of apoptosis",
+      "mean_pathway_crispr_effect_luad": 0.029726,
+      "n_essential_genes_luad": 0,
+      "top_perturbations_luad": [
+        {
+          "mutation_id": "mut_TP53_LoF",
+          "luad_prevalence": 0.931,
+          "effect_direction": "loss_of_function",
+          "via_gene": "TP53"
+        }
+      ],
+      "inferred_state": "repressed",
+      "perturbation_sources": [
+        "mut_TP53_LoF"
+      ]
+    },
+    {
+      "id": "metabolic_pathways",
+      "label": "Metabolic pathways",
+      "kegg_id": "hsa01100",
+      "type": "pathway",
+      "status": "crosstalk_hub",
+      "q_value": null,
+      "deg_count": null,
+      "upregulated_degs": null,
+      "downregulated_degs": null,
+      "impact_factor": null,
+      "key_genes": [
+        "HK2",
+        "GAPDH",
+        "LDHA",
+        "PKM"
+      ],
+      "description": "Aerobic glycolysis (Warburg effect); central crosstalk hub in pathway network",
+      "mean_pathway_crispr_effect_luad": -0.727399,
+      "n_essential_genes_luad": 2,
+      "top_perturbations_luad": [],
+      "inferred_state": null,
+      "perturbation_sources": []
+    },
+    {
+      "id": "pathways_in_cancer",
+      "label": "Pathways in cancer",
+      "kegg_id": "hsa05200",
+      "type": "pathway",
+      "status": "crosstalk_hub",
+      "q_value": null,
+      "deg_count": null,
+      "upregulated_degs": null,
+      "downregulated_degs": null,
+      "impact_factor": null,
+      "key_genes": [
+        "EGFR",
+        "TP53",
+        "KRAS",
+        "VEGFA",
+        "MYC"
+      ],
+      "description": "Meta-pathway integrating all major oncogenic routes; central hub",
+      "mean_pathway_crispr_effect_luad": -0.641016,
+      "n_essential_genes_luad": 2,
+      "top_perturbations_luad": [
+        {
+          "mutation_id": "mut_TP53_LoF",
+          "luad_prevalence": 0.931,
+          "effect_direction": "loss_of_function",
+          "via_gene": "TP53"
+        },
+        {
+          "mutation_id": "mut_KRAS_p_G12",
+          "luad_prevalence": 0.2874,
+          "effect_direction": "gain_of_function",
+          "via_gene": "KRAS"
+        },
+        {
+          "mutation_id": "mut_KRAS_p_G12C",
+          "luad_prevalence": 0.1494,
+          "effect_direction": "gain_of_function",
+          "via_gene": "KRAS"
+        }
+      ],
+      "inferred_state": "ambiguous",
+      "perturbation_sources": [
+        "mut_KRAS_p_G12D",
+        "mut_KRAS_p_G12C",
+        "mut_EGFR_p_L858R",
+        "mut_KRAS_p_G12",
+        "mut_KRAS_p_G13",
+        "mut_KRAS_p_Q61",
+        "mut_EGFR_exon_19_del",
+        "mut_TP53_LoF"
+      ]
+    },
+    {
+      "id": "focal_adhesion",
+      "label": "Focal adhesion",
+      "kegg_id": "hsa04510",
+      "type": "pathway",
+      "status": "crosstalk_hub",
+      "q_value": null,
+      "deg_count": null,
+      "upregulated_degs": null,
+      "downregulated_degs": null,
+      "impact_factor": 9.283,
+      "key_genes": [
+        "FAK1",
+        "SRC",
+        "ITGA5",
+        "VCL",
+        "PXNI"
+      ],
+      "description": "Cell-matrix adhesion signaling; impact factor 9.28, central crosstalk hub",
+      "mean_pathway_crispr_effect_luad": -0.216784,
+      "n_essential_genes_luad": 0,
+      "top_perturbations_luad": [],
+      "inferred_state": null,
+      "perturbation_sources": []
+    },
+    {
+      "id": "drug_metab_CYP450",
+      "label": "Drug metabolism \u2013 cytochrome P450",
+      "kegg_id": "hsa00982",
+      "type": "pathway",
+      "status": "crosstalk_hub",
+      "q_value": null,
+      "deg_count": null,
+      "upregulated_degs": null,
+      "downregulated_degs": null,
+      "impact_factor": null,
+      "key_genes": [
+        "CYP1A1",
+        "CYP1B1",
+        "CYP3A4"
+      ],
+      "description": "Carcinogen and drug biotransformation; central hub governing treatment efficacy",
+      "mean_pathway_crispr_effect_luad": 0.067067,
+      "n_essential_genes_luad": 0,
+      "top_perturbations_luad": [],
+      "inferred_state": null,
+      "perturbation_sources": []
+    },
+    {
+      "id": "antigen_presentation",
+      "label": "Antigen processing and presentation",
+      "kegg_id": "hsa04612",
+      "type": "pathway",
+      "status": "crosstalk_hub",
+      "q_value": null,
+      "deg_count": null,
+      "upregulated_degs": null,
+      "downregulated_degs": null,
+      "impact_factor": null,
+      "key_genes": [
+        "HLA-A",
+        "HLA-B",
+        "B2M",
+        "TAP1"
+      ],
+      "description": "Immune evasion mechanism; central hub in crosstalk network",
+      "mean_pathway_crispr_effect_luad": -0.077543,
+      "n_essential_genes_luad": 0,
+      "top_perturbations_luad": [],
+      "inferred_state": null,
+      "perturbation_sources": []
+    },
+    {
+      "id": "ECM_receptor",
+      "label": "ECM-receptor interaction",
+      "kegg_id": "hsa04512",
+      "type": "pathway",
+      "status": "crosstalk_hub",
+      "q_value": null,
+      "deg_count": null,
+      "upregulated_degs": null,
+      "downregulated_degs": null,
+      "impact_factor": 14.266,
+      "key_genes": [
+        "ITGA5",
+        "ITGB1",
+        "LAMA5",
+        "FN1",
+        "COL1A1"
+      ],
+      "description": "Matrix remodeling; impact factor 14.27, top enriched crosstalk hub",
+      "mean_pathway_crispr_effect_luad": -0.065672,
+      "n_essential_genes_luad": 0,
+      "top_perturbations_luad": [],
+      "inferred_state": null,
+      "perturbation_sources": []
+    },
+    {
+      "id": "complement_coagulation",
+      "label": "Complement and coagulation cascades",
+      "kegg_id": "hsa04610",
+      "type": "pathway",
+      "status": "crosstalk_hub",
+      "q_value": null,
+      "deg_count": 16,
+      "upregulated_degs": null,
+      "downregulated_degs": null,
+      "impact_factor": 17.258,
+      "key_genes": [
+        "C5",
+        "C5AR1",
+        "PAI1",
+        "F10"
+      ],
+      "description": "Highest impact factor (17.26); complement C5a promotes tumor microenvironment",
+      "mean_pathway_crispr_effect_luad": 0.046664,
+      "n_essential_genes_luad": 0,
+      "top_perturbations_luad": [],
+      "inferred_state": null,
+      "perturbation_sources": []
+    },
+    {
+      "id": "EGFR_signaling",
+      "label": "EGFR signaling",
+      "kegg_id": "hsa05223",
+      "type": "pathway",
+      "status": "nsclc_enriched",
+      "q_value": null,
+      "deg_count": null,
+      "upregulated_degs": null,
+      "downregulated_degs": null,
+      "impact_factor": null,
+      "key_genes": [
+        "EGFR",
+        "ERBB2",
+        "GRB2",
+        "SOS1",
+        "RAS"
+      ],
+      "description": "Primary driver mutation source in NSCLC; ~15% activating mutations",
+      "mean_pathway_crispr_effect_luad": -0.510875,
+      "n_essential_genes_luad": 1,
+      "top_perturbations_luad": [
+        {
+          "mutation_id": "mut_EGFR_exon_19_del",
+          "luad_prevalence": 0.1034,
+          "effect_direction": "gain_of_function",
+          "via_gene": "EGFR"
+        },
+        {
+          "mutation_id": "mut_EGFR_p_L858R",
+          "luad_prevalence": 0.069,
+          "effect_direction": "gain_of_function",
+          "via_gene": "EGFR"
+        }
+      ],
+      "inferred_state": "activated",
+      "perturbation_sources": [
+        "mut_EGFR_p_L858R",
+        "mut_EGFR_exon_19_del"
+      ]
+    },
+    {
+      "id": "RAS_RAF_MEK_ERK",
+      "label": "RAS-RAF-MEK-ERK pathway",
+      "kegg_id": "hsa04010",
+      "type": "pathway",
+      "status": "nsclc_enriched",
+      "q_value": null,
+      "deg_count": null,
+      "upregulated_degs": null,
+      "downregulated_degs": null,
+      "impact_factor": null,
+      "key_genes": [
+        "KRAS",
+        "BRAF",
+        "MAP2K1",
+        "MAPK1",
+        "MAPK3"
+      ],
+      "description": "KRAS mutated in ~30% of NSCLC (esp. adenocarcinoma); BRAF in ~2-3%",
+      "mean_pathway_crispr_effect_luad": -0.294635,
+      "n_essential_genes_luad": 1,
+      "top_perturbations_luad": [
+        {
+          "mutation_id": "mut_KRAS_p_G12",
+          "luad_prevalence": 0.2874,
+          "effect_direction": "gain_of_function",
+          "via_gene": "KRAS"
+        },
+        {
+          "mutation_id": "mut_KRAS_p_G12C",
+          "luad_prevalence": 0.1494,
+          "effect_direction": "gain_of_function",
+          "via_gene": "KRAS"
+        },
+        {
+          "mutation_id": "mut_KRAS_p_G13",
+          "luad_prevalence": 0.1149,
+          "effect_direction": "gain_of_function",
+          "via_gene": "KRAS"
+        }
+      ],
+      "inferred_state": "activated",
+      "perturbation_sources": [
+        "mut_KRAS_p_G12D",
+        "mut_KRAS_p_G12C",
+        "mut_BRAF_p_V600E",
+        "mut_KRAS_p_G12",
+        "mut_KRAS_p_G13",
+        "mut_KRAS_p_Q61"
+      ]
+    },
+    {
+      "id": "JAK_STAT3",
+      "label": "JAK-STAT3 signaling",
+      "kegg_id": "hsa04630",
+      "type": "pathway",
+      "status": "nsclc_enriched",
+      "q_value": null,
+      "deg_count": null,
+      "upregulated_degs": null,
+      "downregulated_degs": null,
+      "impact_factor": null,
+      "key_genes": [
+        "STAT3",
+        "JAK1",
+        "JAK2",
+        "IL6"
+      ],
+      "description": "STAT3 required for EGFR-driven oncogenic effects in NSCLC",
+      "mean_pathway_crispr_effect_luad": -0.039793,
+      "n_essential_genes_luad": 0,
+      "top_perturbations_luad": [
+        {
+          "mutation_id": "mut_JAK2_p_V617F",
+          "luad_prevalence": 0.046,
+          "effect_direction": "gain_of_function",
+          "via_gene": "JAK2"
+        }
+      ],
+      "inferred_state": "activated",
+      "perturbation_sources": [
+        "mut_JAK2_p_V617F"
+      ]
+    },
+    {
+      "id": "Wnt_signaling",
+      "label": "Wnt signaling pathway",
+      "kegg_id": "hsa04310",
+      "type": "pathway",
+      "status": "nsclc_enriched",
+      "q_value": null,
+      "deg_count": null,
+      "upregulated_degs": null,
+      "downregulated_degs": null,
+      "impact_factor": null,
+      "key_genes": [
+        "CTNNB1",
+        "WNT3A",
+        "FZD1",
+        "APC"
+      ],
+      "description": "Tumor progression and stem cell maintenance in lung cancer",
+      "mean_pathway_crispr_effect_luad": -0.158056,
+      "n_essential_genes_luad": 0,
+      "top_perturbations_luad": [
+        {
+          "mutation_id": "mut_APC_LoF",
+          "luad_prevalence": 0.5057,
+          "effect_direction": "loss_of_function",
+          "via_gene": "APC"
+        }
+      ],
+      "inferred_state": "repressed",
+      "perturbation_sources": [
+        "mut_APC_LoF"
+      ]
+    },
+    {
+      "id": "Notch_signaling",
+      "label": "Notch signaling pathway",
+      "kegg_id": "hsa04330",
+      "type": "pathway",
+      "status": "nsclc_enriched",
+      "q_value": null,
+      "deg_count": null,
+      "upregulated_degs": null,
+      "downregulated_degs": null,
+      "impact_factor": null,
+      "key_genes": [
+        "NOTCH1",
+        "DLL3",
+        "HES1",
+        "JAG1"
+      ],
+      "description": "Differentiation and proliferation; altered in ~10% of lung cancers",
+      "mean_pathway_crispr_effect_luad": -0.042916,
+      "n_essential_genes_luad": 0,
+      "top_perturbations_luad": [],
+      "inferred_state": null,
+      "perturbation_sources": []
+    },
+    {
+      "id": "VEGF_signaling",
+      "label": "VEGF signaling pathway",
+      "kegg_id": "hsa04370",
+      "type": "pathway",
+      "status": "nsclc_enriched",
+      "q_value": null,
+      "deg_count": null,
+      "upregulated_degs": null,
+      "downregulated_degs": null,
+      "impact_factor": null,
+      "key_genes": [
+        "VEGFA",
+        "VEGFR2",
+        "NRP1",
+        "HIF1A"
+      ],
+      "description": "Tumor angiogenesis; target of bevacizumab therapy",
+      "mean_pathway_crispr_effect_luad": 0.100053,
+      "n_essential_genes_luad": 0,
+      "top_perturbations_luad": [],
+      "inferred_state": null,
+      "perturbation_sources": []
+    }
+  ],
+  "gene_nodes": [
+    {
+      "id": "gene_ACTA2",
+      "label": "ACTA2",
+      "type": "gene",
+      "symbol": "ACTA2",
+      "pathway_membership": [
+        "vascular_smooth_muscle"
+      ],
+      "entrez_id": 59,
+      "mean_crispr_effect_luad": 0.030725,
+      "std_crispr_effect_luad": 0.102234,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.025109,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_ACTB",
+      "label": "ACTB",
+      "type": "gene",
+      "symbol": "ACTB",
+      "pathway_membership": [
+        "actin_cytoskeleton"
+      ],
+      "entrez_id": 60,
+      "mean_crispr_effect_luad": -0.820416,
+      "std_crispr_effect_luad": 0.488555,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.699041,
+      "is_essential_luad": true,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_AKT1",
+      "label": "AKT1",
+      "type": "gene",
+      "symbol": "AKT1",
+      "pathway_membership": [
+        "PI3K_Akt"
+      ],
+      "entrez_id": 207,
+      "mean_crispr_effect_luad": -0.025961,
+      "std_crispr_effect_luad": 0.151774,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.055682,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_APC",
+      "label": "APC",
+      "type": "gene",
+      "symbol": "APC",
+      "pathway_membership": [
+        "Wnt_signaling"
+      ],
+      "entrez_id": 324,
+      "mean_crispr_effect_luad": -0.376803,
+      "std_crispr_effect_luad": 0.257642,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.386921,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_B2M",
+      "label": "B2M",
+      "type": "gene",
+      "symbol": "B2M",
+      "pathway_membership": [
+        "antigen_presentation"
+      ],
+      "entrez_id": 567,
+      "mean_crispr_effect_luad": 0.050264,
+      "std_crispr_effect_luad": 0.097863,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.020818,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_BAX",
+      "label": "BAX",
+      "type": "gene",
+      "symbol": "BAX",
+      "pathway_membership": [
+        "P53_signaling"
+      ],
+      "entrez_id": 581,
+      "mean_crispr_effect_luad": 0.115783,
+      "std_crispr_effect_luad": 0.141147,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.013534,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_BRAF",
+      "label": "BRAF",
+      "type": "gene",
+      "symbol": "BRAF",
+      "pathway_membership": [
+        "RAS_RAF_MEK_ERK"
+      ],
+      "entrez_id": 673,
+      "mean_crispr_effect_luad": -0.057318,
+      "std_crispr_effect_luad": 0.159183,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.078266,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_C5",
+      "label": "C5",
+      "type": "gene",
+      "symbol": "C5",
+      "pathway_membership": [
+        "complement_coagulation"
+      ],
+      "entrez_id": 727,
+      "mean_crispr_effect_luad": 0.004111,
+      "std_crispr_effect_luad": 0.079026,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.026838,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_C5AR1",
+      "label": "C5AR1",
+      "type": "gene",
+      "symbol": "C5AR1",
+      "pathway_membership": [
+        "complement_coagulation"
+      ],
+      "entrez_id": 728,
+      "mean_crispr_effect_luad": 0.005198,
+      "std_crispr_effect_luad": 0.110998,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.030396,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_CASP8",
+      "label": "CASP8",
+      "type": "gene",
+      "symbol": "CASP8",
+      "pathway_membership": [
+        "TNF_signaling"
+      ],
+      "entrez_id": 841,
+      "mean_crispr_effect_luad": 0.085651,
+      "std_crispr_effect_luad": 0.107391,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.014798,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_CCL2",
+      "label": "CCL2",
+      "type": "gene",
+      "symbol": "CCL2",
+      "pathway_membership": [
+        "chemokine_signaling"
+      ],
+      "entrez_id": 6347,
+      "mean_crispr_effect_luad": 0.103469,
+      "std_crispr_effect_luad": 0.102128,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.012742,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_CCNB1",
+      "label": "CCNB1",
+      "type": "gene",
+      "symbol": "CCNB1",
+      "pathway_membership": [
+        "cell_cycle"
+      ],
+      "entrez_id": 891,
+      "mean_crispr_effect_luad": -0.835108,
+      "std_crispr_effect_luad": 0.322217,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.81739,
+      "is_essential_luad": true,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_CDC42",
+      "label": "CDC42",
+      "type": "gene",
+      "symbol": "CDC42",
+      "pathway_membership": [
+        "actin_cytoskeleton"
+      ],
+      "entrez_id": 998,
+      "mean_crispr_effect_luad": -1.198492,
+      "std_crispr_effect_luad": 0.492442,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.920646,
+      "is_essential_luad": true,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_CDK1",
+      "label": "CDK1",
+      "type": "gene",
+      "symbol": "CDK1",
+      "pathway_membership": [
+        "cell_cycle"
+      ],
+      "entrez_id": 983,
+      "mean_crispr_effect_luad": -2.629792,
+      "std_crispr_effect_luad": 0.430058,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.999999,
+      "is_essential_luad": true,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_CDKN1A",
+      "label": "CDKN1A",
+      "type": "gene",
+      "symbol": "CDKN1A",
+      "pathway_membership": [
+        "P53_signaling"
+      ],
+      "entrez_id": 1026,
+      "mean_crispr_effect_luad": 0.315827,
+      "std_crispr_effect_luad": 0.275671,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.006429,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_CHRNA3",
+      "label": "CHRNA3",
+      "type": "gene",
+      "symbol": "CHRNA3",
+      "pathway_membership": [
+        "neuroactive_LR"
+      ],
+      "entrez_id": 1136,
+      "mean_crispr_effect_luad": 0.105084,
+      "std_crispr_effect_luad": 0.093148,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.012071,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_CHRNA5",
+      "label": "CHRNA5",
+      "type": "gene",
+      "symbol": "CHRNA5",
+      "pathway_membership": [
+        "neuroactive_LR"
+      ],
+      "entrez_id": 1138,
+      "mean_crispr_effect_luad": -0.044163,
+      "std_crispr_effect_luad": 0.116008,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.049155,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_CHRNB4",
+      "label": "CHRNB4",
+      "type": "gene",
+      "symbol": "CHRNB4",
+      "pathway_membership": [
+        "neuroactive_LR"
+      ],
+      "entrez_id": 1143,
+      "mean_crispr_effect_luad": 0.020115,
+      "std_crispr_effect_luad": 0.095559,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.026163,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_CLDN1",
+      "label": "CLDN1",
+      "type": "gene",
+      "symbol": "CLDN1",
+      "pathway_membership": [
+        "tight_junction"
+      ],
+      "entrez_id": 9076,
+      "mean_crispr_effect_luad": 0.044809,
+      "std_crispr_effect_luad": 0.097808,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.021262,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_COL1A1",
+      "label": "COL1A1",
+      "type": "gene",
+      "symbol": "COL1A1",
+      "pathway_membership": [
+        "ECM_receptor"
+      ],
+      "entrez_id": 1277,
+      "mean_crispr_effect_luad": -0.089612,
+      "std_crispr_effect_luad": 0.090191,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.059425,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_CTNNB1",
+      "label": "CTNNB1",
+      "type": "gene",
+      "symbol": "CTNNB1",
+      "pathway_membership": [
+        "Wnt_signaling"
+      ],
+      "entrez_id": 1499,
+      "mean_crispr_effect_luad": -0.23085,
+      "std_crispr_effect_luad": 0.235928,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.209257,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_CXCL1",
+      "label": "CXCL1",
+      "type": "gene",
+      "symbol": "CXCL1",
+      "pathway_membership": [
+        "chemokine_signaling"
+      ],
+      "entrez_id": 2919,
+      "mean_crispr_effect_luad": -0.182532,
+      "std_crispr_effect_luad": 0.129598,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.130814,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_CXCL8",
+      "label": "CXCL8",
+      "type": "gene",
+      "symbol": "CXCL8",
+      "pathway_membership": [
+        "chemokine_signaling"
+      ],
+      "entrez_id": 3576,
+      "mean_crispr_effect_luad": 0.063065,
+      "std_crispr_effect_luad": 0.113283,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.019765,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_CYP1A1",
+      "label": "CYP1A1",
+      "type": "gene",
+      "symbol": "CYP1A1",
+      "pathway_membership": [
+        "drug_metab_CYP450"
+      ],
+      "entrez_id": 1543,
+      "mean_crispr_effect_luad": 0.051066,
+      "std_crispr_effect_luad": 0.106462,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.021844,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_CYP1B1",
+      "label": "CYP1B1",
+      "type": "gene",
+      "symbol": "CYP1B1",
+      "pathway_membership": [
+        "drug_metab_CYP450"
+      ],
+      "entrez_id": 1545,
+      "mean_crispr_effect_luad": 0.083426,
+      "std_crispr_effect_luad": 0.084675,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.014752,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_CYP3A4",
+      "label": "CYP3A4",
+      "type": "gene",
+      "symbol": "CYP3A4",
+      "pathway_membership": [
+        "drug_metab_CYP450"
+      ],
+      "entrez_id": 1576,
+      "mean_crispr_effect_luad": 0.066708,
+      "std_crispr_effect_luad": 0.146695,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.021164,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_DLL3",
+      "label": "DLL3",
+      "type": "gene",
+      "symbol": "DLL3",
+      "pathway_membership": [
+        "Notch_signaling"
+      ],
+      "entrez_id": 10683,
+      "mean_crispr_effect_luad": -0.078015,
+      "std_crispr_effect_luad": 0.107462,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.05919,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_EGFR",
+      "label": "EGFR",
+      "type": "gene",
+      "symbol": "EGFR",
+      "pathway_membership": [
+        "MAPK_signaling",
+        "endocytosis",
+        "pathways_in_cancer",
+        "EGFR_signaling"
+      ],
+      "entrez_id": 1956,
+      "mean_crispr_effect_luad": -0.288155,
+      "std_crispr_effect_luad": 0.507488,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.233135,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_ERBB2",
+      "label": "ERBB2",
+      "type": "gene",
+      "symbol": "ERBB2",
+      "pathway_membership": [
+        "endocytosis",
+        "EGFR_signaling"
+      ],
+      "entrez_id": 2064,
+      "mean_crispr_effect_luad": -0.320983,
+      "std_crispr_effect_luad": 0.196441,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.3001,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_F10",
+      "label": "F10",
+      "type": "gene",
+      "symbol": "F10",
+      "pathway_membership": [
+        "complement_coagulation"
+      ],
+      "entrez_id": 2159,
+      "mean_crispr_effect_luad": 0.130684,
+      "std_crispr_effect_luad": 0.101215,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.010934,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_FAK1",
+      "label": "FAK1",
+      "type": "gene",
+      "symbol": "FAK1",
+      "pathway_membership": [
+        "focal_adhesion"
+      ]
+    },
+    {
+      "id": "gene_FN1",
+      "label": "FN1",
+      "type": "gene",
+      "symbol": "FN1",
+      "pathway_membership": [
+        "ECM_receptor"
+      ],
+      "entrez_id": 2335,
+      "mean_crispr_effect_luad": 0.048799,
+      "std_crispr_effect_luad": 0.091657,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.020743,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_FZD1",
+      "label": "FZD1",
+      "type": "gene",
+      "symbol": "FZD1",
+      "pathway_membership": [
+        "Wnt_signaling"
+      ],
+      "entrez_id": 8321,
+      "mean_crispr_effect_luad": -0.001866,
+      "std_crispr_effect_luad": 0.102957,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.033713,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_GADD45B",
+      "label": "GADD45B",
+      "type": "gene",
+      "symbol": "GADD45B",
+      "pathway_membership": [
+        "MAPK_signaling",
+        "cell_cycle",
+        "P53_signaling"
+      ],
+      "entrez_id": 4616,
+      "mean_crispr_effect_luad": -0.088697,
+      "std_crispr_effect_luad": 0.14867,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.079909,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_GAPDH",
+      "label": "GAPDH",
+      "type": "gene",
+      "symbol": "GAPDH",
+      "pathway_membership": [
+        "metabolic_pathways"
+      ],
+      "entrez_id": 2597,
+      "mean_crispr_effect_luad": -1.41593,
+      "std_crispr_effect_luad": 0.44314,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.958888,
+      "is_essential_luad": true,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_GRB2",
+      "label": "GRB2",
+      "type": "gene",
+      "symbol": "GRB2",
+      "pathway_membership": [
+        "EGFR_signaling"
+      ],
+      "entrez_id": 2885,
+      "mean_crispr_effect_luad": -1.15356,
+      "std_crispr_effect_luad": 0.734229,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.827678,
+      "is_essential_luad": true,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_HES1",
+      "label": "HES1",
+      "type": "gene",
+      "symbol": "HES1",
+      "pathway_membership": [
+        "Notch_signaling"
+      ],
+      "entrez_id": 3280,
+      "mean_crispr_effect_luad": -0.105507,
+      "std_crispr_effect_luad": 0.150615,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.089009,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_HIF1A",
+      "label": "HIF1A",
+      "type": "gene",
+      "symbol": "HIF1A",
+      "pathway_membership": [
+        "VEGF_signaling"
+      ],
+      "entrez_id": 3091,
+      "mean_crispr_effect_luad": 0.155387,
+      "std_crispr_effect_luad": 0.127644,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.010078,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_HK2",
+      "label": "HK2",
+      "type": "gene",
+      "symbol": "HK2",
+      "pathway_membership": [
+        "metabolic_pathways"
+      ],
+      "entrez_id": 3099,
+      "mean_crispr_effect_luad": -0.400138,
+      "std_crispr_effect_luad": 0.217327,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.392423,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_HLA-A",
+      "label": "HLA-A",
+      "type": "gene",
+      "symbol": "HLA-A",
+      "pathway_membership": [
+        "antigen_presentation"
+      ],
+      "entrez_id": 3105,
+      "mean_crispr_effect_luad": -0.178232,
+      "std_crispr_effect_luad": 0.133955,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.140901,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_HLA-B",
+      "label": "HLA-B",
+      "type": "gene",
+      "symbol": "HLA-B",
+      "pathway_membership": [
+        "antigen_presentation"
+      ],
+      "entrez_id": 3106,
+      "mean_crispr_effect_luad": -0.067833,
+      "std_crispr_effect_luad": 0.197867,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.089339,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_IL6",
+      "label": "IL6",
+      "type": "gene",
+      "symbol": "IL6",
+      "pathway_membership": [
+        "cytokine_cytokine_receptor",
+        "JAK_STAT3"
+      ],
+      "entrez_id": 3569,
+      "mean_crispr_effect_luad": 0.09087,
+      "std_crispr_effect_luad": 0.099809,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.013721,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_ITGA5",
+      "label": "ITGA5",
+      "type": "gene",
+      "symbol": "ITGA5",
+      "pathway_membership": [
+        "focal_adhesion",
+        "ECM_receptor"
+      ],
+      "entrez_id": 3678,
+      "mean_crispr_effect_luad": -0.182864,
+      "std_crispr_effect_luad": 0.166112,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.14149,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_ITGB1",
+      "label": "ITGB1",
+      "type": "gene",
+      "symbol": "ITGB1",
+      "pathway_membership": [
+        "ECM_receptor"
+      ],
+      "entrez_id": 3688,
+      "mean_crispr_effect_luad": -0.187147,
+      "std_crispr_effect_luad": 0.357204,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.202486,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_JAG1",
+      "label": "JAG1",
+      "type": "gene",
+      "symbol": "JAG1",
+      "pathway_membership": [
+        "Notch_signaling"
+      ],
+      "entrez_id": 182,
+      "mean_crispr_effect_luad": 0.017562,
+      "std_crispr_effect_luad": 0.139589,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.036362,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_JAK1",
+      "label": "JAK1",
+      "type": "gene",
+      "symbol": "JAK1",
+      "pathway_membership": [
+        "JAK_STAT3"
+      ],
+      "entrez_id": 3716,
+      "mean_crispr_effect_luad": -0.17877,
+      "std_crispr_effect_luad": 0.168137,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.164621,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_JAK2",
+      "label": "JAK2",
+      "type": "gene",
+      "symbol": "JAK2",
+      "pathway_membership": [
+        "JAK_STAT3"
+      ],
+      "entrez_id": 3717,
+      "mean_crispr_effect_luad": 0.155311,
+      "std_crispr_effect_luad": 0.12615,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.013666,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_KRAS",
+      "label": "KRAS",
+      "type": "gene",
+      "symbol": "KRAS",
+      "pathway_membership": [
+        "MAPK_signaling",
+        "pathways_in_cancer",
+        "RAS_RAF_MEK_ERK"
+      ],
+      "entrez_id": 3845,
+      "mean_crispr_effect_luad": -1.139509,
+      "std_crispr_effect_luad": 0.837576,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.75214,
+      "is_essential_luad": true,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_LAMA5",
+      "label": "LAMA5",
+      "type": "gene",
+      "symbol": "LAMA5",
+      "pathway_membership": [
+        "ECM_receptor"
+      ],
+      "entrez_id": 3911,
+      "mean_crispr_effect_luad": 0.082462,
+      "std_crispr_effect_luad": 0.101984,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.017584,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_LDHA",
+      "label": "LDHA",
+      "type": "gene",
+      "symbol": "LDHA",
+      "pathway_membership": [
+        "metabolic_pathways"
+      ],
+      "entrez_id": 3939,
+      "mean_crispr_effect_luad": -0.155371,
+      "std_crispr_effect_luad": 0.173756,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.1198,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_MAP2K1",
+      "label": "MAP2K1",
+      "type": "gene",
+      "symbol": "MAP2K1",
+      "pathway_membership": [
+        "RAS_RAF_MEK_ERK"
+      ],
+      "entrez_id": 5604,
+      "mean_crispr_effect_luad": -0.130272,
+      "std_crispr_effect_luad": 0.123383,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.094486,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_MAP2K4",
+      "label": "MAP2K4",
+      "type": "gene",
+      "symbol": "MAP2K4",
+      "pathway_membership": [
+        "MAPK_signaling"
+      ],
+      "entrez_id": 6416,
+      "mean_crispr_effect_luad": 0.097966,
+      "std_crispr_effect_luad": 0.228691,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.045642,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_MAP2K7",
+      "label": "MAP2K7",
+      "type": "gene",
+      "symbol": "MAP2K7",
+      "pathway_membership": [
+        "MAPK_signaling"
+      ],
+      "entrez_id": 5609,
+      "mean_crispr_effect_luad": -0.120115,
+      "std_crispr_effect_luad": 0.167988,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.110699,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_MAPK1",
+      "label": "MAPK1",
+      "type": "gene",
+      "symbol": "MAPK1",
+      "pathway_membership": [
+        "RAS_RAF_MEK_ERK"
+      ],
+      "entrez_id": 5594,
+      "mean_crispr_effect_luad": -0.084447,
+      "std_crispr_effect_luad": 0.228306,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.115068,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_MAPK3",
+      "label": "MAPK3",
+      "type": "gene",
+      "symbol": "MAPK3",
+      "pathway_membership": [
+        "RAS_RAF_MEK_ERK"
+      ],
+      "entrez_id": 5595,
+      "mean_crispr_effect_luad": -0.061629,
+      "std_crispr_effect_luad": 0.13883,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.059048,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_MDM2",
+      "label": "MDM2",
+      "type": "gene",
+      "symbol": "MDM2",
+      "pathway_membership": [
+        "P53_signaling"
+      ],
+      "entrez_id": 4193,
+      "mean_crispr_effect_luad": -0.540202,
+      "std_crispr_effect_luad": 0.450375,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.448833,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_MET",
+      "label": "MET",
+      "type": "gene",
+      "symbol": "MET",
+      "pathway_membership": [
+        "endocytosis"
+      ],
+      "entrez_id": 4233,
+      "mean_crispr_effect_luad": -0.072546,
+      "std_crispr_effect_luad": 0.271892,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.093134,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_MYC",
+      "label": "MYC",
+      "type": "gene",
+      "symbol": "MYC",
+      "pathway_membership": [
+        "pathways_in_cancer"
+      ],
+      "entrez_id": 4609,
+      "mean_crispr_effect_luad": -2.119975,
+      "std_crispr_effect_luad": 0.748116,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.954951,
+      "is_essential_luad": true,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_MYH",
+      "label": "MYH",
+      "type": "gene",
+      "symbol": "MYH",
+      "pathway_membership": [
+        "tight_junction"
+      ]
+    },
+    {
+      "id": "gene_MYH11",
+      "label": "MYH11",
+      "type": "gene",
+      "symbol": "MYH11",
+      "pathway_membership": [
+        "vascular_smooth_muscle"
+      ],
+      "entrez_id": 4629,
+      "mean_crispr_effect_luad": -0.187268,
+      "std_crispr_effect_luad": 0.158111,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.151697,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_NFKB1",
+      "label": "NFKB1",
+      "type": "gene",
+      "symbol": "NFKB1",
+      "pathway_membership": [
+        "TNF_signaling"
+      ],
+      "entrez_id": 4790,
+      "mean_crispr_effect_luad": 0.030702,
+      "std_crispr_effect_luad": 0.115846,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.027197,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_NOTCH1",
+      "label": "NOTCH1",
+      "type": "gene",
+      "symbol": "NOTCH1",
+      "pathway_membership": [
+        "Notch_signaling"
+      ],
+      "entrez_id": 4851,
+      "mean_crispr_effect_luad": -0.005705,
+      "std_crispr_effect_luad": 0.105134,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.036187,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_NRP1",
+      "label": "NRP1",
+      "type": "gene",
+      "symbol": "NRP1",
+      "pathway_membership": [
+        "VEGF_signaling"
+      ],
+      "entrez_id": 8829,
+      "mean_crispr_effect_luad": 0.148135,
+      "std_crispr_effect_luad": 0.236412,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.020647,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_OCLN",
+      "label": "OCLN",
+      "type": "gene",
+      "symbol": "OCLN",
+      "pathway_membership": [
+        "tight_junction"
+      ],
+      "entrez_id": 100506658,
+      "mean_crispr_effect_luad": -0.090683,
+      "std_crispr_effect_luad": 0.154837,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.084136,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_PAI1",
+      "label": "PAI1",
+      "type": "gene",
+      "symbol": "PAI1",
+      "pathway_membership": [
+        "complement_coagulation"
+      ]
+    },
+    {
+      "id": "gene_PIK3CA",
+      "label": "PIK3CA",
+      "type": "gene",
+      "symbol": "PIK3CA",
+      "pathway_membership": [
+        "chemokine_signaling",
+        "PI3K_Akt"
+      ],
+      "entrez_id": 5290,
+      "mean_crispr_effect_luad": -0.479832,
+      "std_crispr_effect_luad": 0.212888,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.506277,
+      "is_essential_luad": true,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_PKM",
+      "label": "PKM",
+      "type": "gene",
+      "symbol": "PKM",
+      "pathway_membership": [
+        "metabolic_pathways"
+      ],
+      "entrez_id": 5315,
+      "mean_crispr_effect_luad": -0.938157,
+      "std_crispr_effect_luad": 0.400531,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.822049,
+      "is_essential_luad": true,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_PLXNA1",
+      "label": "PLXNA1",
+      "type": "gene",
+      "symbol": "PLXNA1",
+      "pathway_membership": [
+        "axon_guidance"
+      ],
+      "entrez_id": 5361,
+      "mean_crispr_effect_luad": -0.010102,
+      "std_crispr_effect_luad": 0.179229,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.048552,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_PTEN",
+      "label": "PTEN",
+      "type": "gene",
+      "symbol": "PTEN",
+      "pathway_membership": [
+        "PI3K_Akt"
+      ],
+      "entrez_id": 5728,
+      "mean_crispr_effect_luad": 0.432808,
+      "std_crispr_effect_luad": 0.398747,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.009356,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_PXNI",
+      "label": "PXNI",
+      "type": "gene",
+      "symbol": "PXNI",
+      "pathway_membership": [
+        "focal_adhesion"
+      ]
+    },
+    {
+      "id": "gene_RAB5A",
+      "label": "RAB5A",
+      "type": "gene",
+      "symbol": "RAB5A",
+      "pathway_membership": [
+        "endocytosis"
+      ],
+      "entrez_id": 5868,
+      "mean_crispr_effect_luad": -0.038563,
+      "std_crispr_effect_luad": 0.094845,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.042736,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_RAC1",
+      "label": "RAC1",
+      "type": "gene",
+      "symbol": "RAC1",
+      "pathway_membership": [
+        "actin_cytoskeleton"
+      ],
+      "entrez_id": 5879,
+      "mean_crispr_effect_luad": -0.765667,
+      "std_crispr_effect_luad": 0.356884,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.733582,
+      "is_essential_luad": true,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_RAS",
+      "label": "RAS",
+      "type": "gene",
+      "symbol": "RAS",
+      "pathway_membership": [
+        "EGFR_signaling"
+      ]
+    },
+    {
+      "id": "gene_RB1",
+      "label": "RB1",
+      "type": "gene",
+      "symbol": "RB1",
+      "pathway_membership": [
+        "cell_cycle"
+      ],
+      "entrez_id": 5925,
+      "mean_crispr_effect_luad": 0.188788,
+      "std_crispr_effect_luad": 0.222608,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.023376,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_RHOA",
+      "label": "RHOA",
+      "type": "gene",
+      "symbol": "RHOA",
+      "pathway_membership": [
+        "actin_cytoskeleton"
+      ],
+      "entrez_id": 387,
+      "mean_crispr_effect_luad": -0.444305,
+      "std_crispr_effect_luad": 0.391421,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.440789,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_ROBO1",
+      "label": "ROBO1",
+      "type": "gene",
+      "symbol": "ROBO1",
+      "pathway_membership": [
+        "axon_guidance"
+      ],
+      "entrez_id": 6091,
+      "mean_crispr_effect_luad": 0.029472,
+      "std_crispr_effect_luad": 0.134198,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.02953,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_ROCK1",
+      "label": "ROCK1",
+      "type": "gene",
+      "symbol": "ROCK1",
+      "pathway_membership": [
+        "vascular_smooth_muscle"
+      ],
+      "entrez_id": 6093,
+      "mean_crispr_effect_luad": -0.092625,
+      "std_crispr_effect_luad": 0.186364,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.099762,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_SEMA3A",
+      "label": "SEMA3A",
+      "type": "gene",
+      "symbol": "SEMA3A",
+      "pathway_membership": [
+        "axon_guidance"
+      ],
+      "entrez_id": 10371,
+      "mean_crispr_effect_luad": -0.000835,
+      "std_crispr_effect_luad": 0.098607,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.031156,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_SOS1",
+      "label": "SOS1",
+      "type": "gene",
+      "symbol": "SOS1",
+      "pathway_membership": [
+        "EGFR_signaling"
+      ],
+      "entrez_id": 6654,
+      "mean_crispr_effect_luad": -0.2808,
+      "std_crispr_effect_luad": 0.22119,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.277758,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_SRC",
+      "label": "SRC",
+      "type": "gene",
+      "symbol": "SRC",
+      "pathway_membership": [
+        "focal_adhesion"
+      ],
+      "entrez_id": 6714,
+      "mean_crispr_effect_luad": -0.137059,
+      "std_crispr_effect_luad": 0.183335,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.125923,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_STAT3",
+      "label": "STAT3",
+      "type": "gene",
+      "symbol": "STAT3",
+      "pathway_membership": [
+        "JAK_STAT3"
+      ],
+      "entrez_id": 6774,
+      "mean_crispr_effect_luad": -0.226581,
+      "std_crispr_effect_luad": 0.269207,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.208043,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_TAP1",
+      "label": "TAP1",
+      "type": "gene",
+      "symbol": "TAP1",
+      "pathway_membership": [
+        "antigen_presentation"
+      ],
+      "entrez_id": 6890,
+      "mean_crispr_effect_luad": -0.11437,
+      "std_crispr_effect_luad": 0.115103,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.086784,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_TGFB1",
+      "label": "TGFB1",
+      "type": "gene",
+      "symbol": "TGFB1",
+      "pathway_membership": [
+        "cytokine_cytokine_receptor"
+      ],
+      "entrez_id": 7040,
+      "mean_crispr_effect_luad": -0.047569,
+      "std_crispr_effect_luad": 0.111056,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.048124,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_TJP1",
+      "label": "TJP1",
+      "type": "gene",
+      "symbol": "TJP1",
+      "pathway_membership": [
+        "tight_junction"
+      ],
+      "entrez_id": 7082,
+      "mean_crispr_effect_luad": -0.08606,
+      "std_crispr_effect_luad": 0.158474,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.084693,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_TNF",
+      "label": "TNF",
+      "type": "gene",
+      "symbol": "TNF",
+      "pathway_membership": [
+        "cytokine_cytokine_receptor",
+        "TNF_signaling"
+      ],
+      "entrez_id": 7124,
+      "mean_crispr_effect_luad": -0.130419,
+      "std_crispr_effect_luad": 0.10139,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.089142,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_TP53",
+      "label": "TP53",
+      "type": "gene",
+      "symbol": "TP53",
+      "pathway_membership": [
+        "cell_cycle",
+        "P53_signaling",
+        "pathways_in_cancer"
+      ],
+      "entrez_id": 7157,
+      "mean_crispr_effect_luad": 0.345919,
+      "std_crispr_effect_luad": 0.472605,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.012355,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_TRAF2",
+      "label": "TRAF2",
+      "type": "gene",
+      "symbol": "TRAF2",
+      "pathway_membership": [
+        "TNF_signaling"
+      ],
+      "entrez_id": 7186,
+      "mean_crispr_effect_luad": -0.34612,
+      "std_crispr_effect_luad": 0.315067,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.337545,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_VCL",
+      "label": "VCL",
+      "type": "gene",
+      "symbol": "VCL",
+      "pathway_membership": [
+        "focal_adhesion"
+      ],
+      "entrez_id": 7414,
+      "mean_crispr_effect_luad": -0.33043,
+      "std_crispr_effect_luad": 0.241747,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.32274,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_VEGFA",
+      "label": "VEGFA",
+      "type": "gene",
+      "symbol": "VEGFA",
+      "pathway_membership": [
+        "cytokine_cytokine_receptor",
+        "pathways_in_cancer",
+        "VEGF_signaling"
+      ],
+      "entrez_id": 7422,
+      "mean_crispr_effect_luad": -0.003362,
+      "std_crispr_effect_luad": 0.08123,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.030895,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_VEGFR2",
+      "label": "VEGFR2",
+      "type": "gene",
+      "symbol": "VEGFR2",
+      "pathway_membership": [
+        "VEGF_signaling"
+      ]
+    },
+    {
+      "id": "gene_WNT3A",
+      "label": "WNT3A",
+      "type": "gene",
+      "symbol": "WNT3A",
+      "pathway_membership": [
+        "Wnt_signaling"
+      ],
+      "entrez_id": 89780,
+      "mean_crispr_effect_luad": -0.022704,
+      "std_crispr_effect_luad": 0.093651,
+      "n_luad_crispr_measured": 53,
+      "mean_dep_prob_luad": 0.034919,
+      "is_essential_luad": false,
+      "mean_expression_luad": null,
+      "std_expression_luad": null,
+      "mean_cn_luad": null
+    },
+    {
+      "id": "gene_mTOR",
+      "label": "mTOR",
+      "type": "gene",
+      "symbol": "mTOR",
+      "pathway_membership": [
+        "PI3K_Akt"
+      ]
+    }
+  ],
+  "mutation_nodes": [
+    {
+      "id": "mut_KRAS_p_G12D",
+      "label": "KRAS p.G12D",
+      "type": "mutation",
+      "mutation_class": "hotspot",
+      "effect_direction": "gain_of_function",
+      "gene": "KRAS",
+      "luad_prevalence": 0.0805,
+      "luad_n_positive": 7,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_KRAS_p_G12C",
+      "label": "KRAS p.G12C",
+      "type": "mutation",
+      "mutation_class": "hotspot",
+      "effect_direction": "gain_of_function",
+      "gene": "KRAS",
+      "luad_prevalence": 0.1494,
+      "luad_n_positive": 13,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_BRAF_p_V600E",
+      "label": "BRAF p.V600E",
+      "type": "mutation",
+      "mutation_class": "hotspot",
+      "effect_direction": "gain_of_function",
+      "gene": "BRAF",
+      "luad_prevalence": 0.046,
+      "luad_n_positive": 4,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_EGFR_p_L858R",
+      "label": "EGFR p.L858R",
+      "type": "mutation",
+      "mutation_class": "hotspot",
+      "effect_direction": "gain_of_function",
+      "gene": "EGFR",
+      "luad_prevalence": 0.069,
+      "luad_n_positive": 6,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_JAK2_p_V617F",
+      "label": "JAK2 p.V617F",
+      "type": "mutation",
+      "mutation_class": "hotspot",
+      "effect_direction": "gain_of_function",
+      "gene": "JAK2",
+      "luad_prevalence": 0.046,
+      "luad_n_positive": 4,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_KRAS_p_G12",
+      "label": "KRAS p.G12",
+      "type": "mutation",
+      "mutation_class": "hotspot",
+      "effect_direction": "gain_of_function",
+      "gene": "KRAS",
+      "luad_prevalence": 0.2874,
+      "luad_n_positive": 25,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_KRAS_p_G13",
+      "label": "KRAS p.G13",
+      "type": "mutation",
+      "mutation_class": "hotspot",
+      "effect_direction": "gain_of_function",
+      "gene": "KRAS",
+      "luad_prevalence": 0.1149,
+      "luad_n_positive": 10,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_KRAS_p_Q61",
+      "label": "KRAS p.Q61",
+      "type": "mutation",
+      "mutation_class": "hotspot",
+      "effect_direction": "gain_of_function",
+      "gene": "KRAS",
+      "luad_prevalence": 0.0805,
+      "luad_n_positive": 7,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_NRAS_p_G12",
+      "label": "NRAS p.G12",
+      "type": "mutation",
+      "mutation_class": "hotspot",
+      "effect_direction": "gain_of_function",
+      "gene": "NRAS",
+      "luad_prevalence": 0.046,
+      "luad_n_positive": 4,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_NRAS_p_G13",
+      "label": "NRAS p.G13",
+      "type": "mutation",
+      "mutation_class": "hotspot",
+      "effect_direction": "gain_of_function",
+      "gene": "NRAS",
+      "luad_prevalence": 0.046,
+      "luad_n_positive": 4,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_NRAS_p_Q61",
+      "label": "NRAS p.Q61",
+      "type": "mutation",
+      "mutation_class": "hotspot",
+      "effect_direction": "gain_of_function",
+      "gene": "NRAS",
+      "luad_prevalence": 0.069,
+      "luad_n_positive": 6,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_HRAS_p_G12",
+      "label": "HRAS p.G12",
+      "type": "mutation",
+      "mutation_class": "hotspot",
+      "effect_direction": "gain_of_function",
+      "gene": "HRAS",
+      "luad_prevalence": 0.046,
+      "luad_n_positive": 4,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_HRAS_p_G13",
+      "label": "HRAS p.G13",
+      "type": "mutation",
+      "mutation_class": "hotspot",
+      "effect_direction": "gain_of_function",
+      "gene": "HRAS",
+      "luad_prevalence": 0.046,
+      "luad_n_positive": 4,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_HRAS_p_Q61",
+      "label": "HRAS p.Q61",
+      "type": "mutation",
+      "mutation_class": "hotspot",
+      "effect_direction": "gain_of_function",
+      "gene": "HRAS",
+      "luad_prevalence": 0.046,
+      "luad_n_positive": 4,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_PIK3CA_p_E542",
+      "label": "PIK3CA p.E542",
+      "type": "mutation",
+      "mutation_class": "hotspot",
+      "effect_direction": "gain_of_function",
+      "gene": "PIK3CA",
+      "luad_prevalence": 0.0575,
+      "luad_n_positive": 5,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_PIK3CA_p_E545",
+      "label": "PIK3CA p.E545",
+      "type": "mutation",
+      "mutation_class": "hotspot",
+      "effect_direction": "gain_of_function",
+      "gene": "PIK3CA",
+      "luad_prevalence": 0.046,
+      "luad_n_positive": 4,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_PIK3CA_p_H1047",
+      "label": "PIK3CA p.H1047",
+      "type": "mutation",
+      "mutation_class": "hotspot",
+      "effect_direction": "gain_of_function",
+      "gene": "PIK3CA",
+      "luad_prevalence": 0.046,
+      "luad_n_positive": 4,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_ALK_Hotspot",
+      "label": "ALK Hotspot",
+      "type": "mutation",
+      "mutation_class": "hotspot",
+      "effect_direction": "gain_of_function",
+      "gene": "ALK",
+      "luad_prevalence": 0.046,
+      "luad_n_positive": 4,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_EGFR_exon_19_del",
+      "label": "EGFR exon 19 del",
+      "type": "mutation",
+      "mutation_class": "hotspot",
+      "effect_direction": "gain_of_function",
+      "gene": "EGFR",
+      "luad_prevalence": 0.1034,
+      "luad_n_positive": 9,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_EWSR1_FLI1",
+      "label": "EWSR1-FLI1",
+      "type": "mutation",
+      "mutation_class": "fusion",
+      "effect_direction": "gain_of_function",
+      "gene": null,
+      "luad_prevalence": 0.0805,
+      "luad_n_positive": 7,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_EWSR1_ERG",
+      "label": "EWSR1-ERG",
+      "type": "mutation",
+      "mutation_class": "fusion",
+      "effect_direction": "gain_of_function",
+      "gene": null,
+      "luad_prevalence": 0.0805,
+      "luad_n_positive": 7,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_EWSR1_FEV",
+      "label": "EWSR1-FEV",
+      "type": "mutation",
+      "mutation_class": "fusion",
+      "effect_direction": "gain_of_function",
+      "gene": null,
+      "luad_prevalence": 0.0805,
+      "luad_n_positive": 7,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_CIC_DUX4",
+      "label": "CIC-DUX4",
+      "type": "mutation",
+      "mutation_class": "fusion",
+      "effect_direction": "gain_of_function",
+      "gene": null,
+      "luad_prevalence": 0.0805,
+      "luad_n_positive": 7,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_LMO2_STAG2",
+      "label": "LMO2-STAG2",
+      "type": "mutation",
+      "mutation_class": "fusion",
+      "effect_direction": "gain_of_function",
+      "gene": null,
+      "luad_prevalence": 0.0805,
+      "luad_n_positive": 7,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_ETV6_RUNX1",
+      "label": "ETV6-RUNX1",
+      "type": "mutation",
+      "mutation_class": "fusion",
+      "effect_direction": "gain_of_function",
+      "gene": null,
+      "luad_prevalence": 0.0805,
+      "luad_n_positive": 7,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_TCF3_PBX1",
+      "label": "TCF3-PBX1",
+      "type": "mutation",
+      "mutation_class": "fusion",
+      "effect_direction": "gain_of_function",
+      "gene": null,
+      "luad_prevalence": 0.0805,
+      "luad_n_positive": 7,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_BCR_ABL1",
+      "label": "BCR-ABL1",
+      "type": "mutation",
+      "mutation_class": "fusion",
+      "effect_direction": "gain_of_function",
+      "gene": null,
+      "luad_prevalence": 0.0805,
+      "luad_n_positive": 7,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_KMT2A_Fusions",
+      "label": "KMT2A Fusions",
+      "type": "mutation",
+      "mutation_class": "fusion",
+      "effect_direction": "gain_of_function",
+      "gene": null,
+      "luad_prevalence": 0.092,
+      "luad_n_positive": 8,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_PAX_FOXO1",
+      "label": "PAX-FOXO1",
+      "type": "mutation",
+      "mutation_class": "fusion",
+      "effect_direction": "gain_of_function",
+      "gene": null,
+      "luad_prevalence": 0.0805,
+      "luad_n_positive": 7,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_MEF2D_Fusions",
+      "label": "MEF2D Fusions",
+      "type": "mutation",
+      "mutation_class": "fusion",
+      "effect_direction": "gain_of_function",
+      "gene": null,
+      "luad_prevalence": 0.0805,
+      "luad_n_positive": 7,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_RB1_LoF",
+      "label": "RB1_LoF",
+      "type": "mutation",
+      "mutation_class": "lof",
+      "effect_direction": "loss_of_function",
+      "gene": "RB1",
+      "luad_prevalence": 0.5287,
+      "luad_n_positive": 46,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_TP53_LoF",
+      "label": "TP53_LoF",
+      "type": "mutation",
+      "mutation_class": "lof",
+      "effect_direction": "loss_of_function",
+      "gene": "TP53",
+      "luad_prevalence": 0.931,
+      "luad_n_positive": 81,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_PTEN_LoF",
+      "label": "PTEN_LoF",
+      "type": "mutation",
+      "mutation_class": "lof",
+      "effect_direction": "loss_of_function",
+      "gene": "PTEN",
+      "luad_prevalence": 0.4943,
+      "luad_n_positive": 43,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_NF1_LoF",
+      "label": "NF1_LoF",
+      "type": "mutation",
+      "mutation_class": "lof",
+      "effect_direction": "loss_of_function",
+      "gene": "NF1",
+      "luad_prevalence": 0.5057,
+      "luad_n_positive": 44,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_CDKN2A_LoF",
+      "label": "CDKN2A_LoF",
+      "type": "mutation",
+      "mutation_class": "lof",
+      "effect_direction": "loss_of_function",
+      "gene": "CDKN2A",
+      "luad_prevalence": 0.7701,
+      "luad_n_positive": 67,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_VHL_LoF",
+      "label": "VHL_LoF",
+      "type": "mutation",
+      "mutation_class": "lof",
+      "effect_direction": "loss_of_function",
+      "gene": "VHL",
+      "luad_prevalence": 0.4943,
+      "luad_n_positive": 43,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_MTAP_LoF",
+      "label": "MTAP_LoF",
+      "type": "mutation",
+      "mutation_class": "lof",
+      "effect_direction": "loss_of_function",
+      "gene": "MTAP",
+      "luad_prevalence": 0.6667,
+      "luad_n_positive": 58,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_APC_LoF",
+      "label": "APC_LoF",
+      "type": "mutation",
+      "mutation_class": "lof",
+      "effect_direction": "loss_of_function",
+      "gene": "APC",
+      "luad_prevalence": 0.5057,
+      "luad_n_positive": 44,
+      "luad_n_total": 87
+    },
+    {
+      "id": "mut_MSI",
+      "label": "MSI",
+      "type": "mutation",
+      "mutation_class": "msi",
+      "effect_direction": "ambiguous",
+      "gene": null,
+      "luad_prevalence": 0.0575,
+      "luad_n_positive": 5,
+      "luad_n_total": 87
+    }
+  ],
+  "pathway_edges": [
+    {
+      "id": "e01",
+      "source": "MAPK_signaling",
+      "target": "cell_cycle",
+      "type": "shared_DEG",
+      "shared_genes": [
+        "GADD45B"
+      ],
+      "gene_ids": [
+        4616
+      ],
+      "description": "GADD45B bridges MAPK activation and cell cycle repression"
+    },
+    {
+      "id": "e02",
+      "source": "MAPK_signaling",
+      "target": "P53_signaling",
+      "type": "shared_DEG",
+      "shared_genes": [
+        "GADD45B"
+      ],
+      "gene_ids": [
+        4616
+      ],
+      "description": "GADD45B mediates crosstalk between MAPK activation and P53 repression"
+    },
+    {
+      "id": "e03",
+      "source": "P53_signaling",
+      "target": "cell_cycle",
+      "type": "shared_DEG",
+      "shared_genes": [
+        "GADD45B"
+      ],
+      "gene_ids": [
+        4616
+      ],
+      "description": "Both repressed pathways share GADD45B as a key DEG"
+    },
+    {
+      "id": "e04",
+      "source": "MAPK_signaling",
+      "target": "actin_cytoskeleton",
+      "type": "shared_DEG",
+      "shared_genes": [
+        "FGF7",
+        "FGF18",
+        "FGF22"
+      ],
+      "gene_ids": [
+        2264,
+        6237,
+        2263
+      ],
+      "description": "FGF family genes shared between MAPK and actin cytoskeleton regulation"
+    },
+    {
+      "id": "e05",
+      "source": "MAPK_signaling",
+      "target": "endocytosis",
+      "type": "shared_DEG",
+      "shared_genes": [
+        "FGF7",
+        "EGFR",
+        "FGF22"
+      ],
+      "gene_ids": [
+        2264,
+        7048,
+        2263
+      ],
+      "description": "EGFR endocytosis feeds back to MAPK pathway activation"
+    },
+    {
+      "id": "e06",
+      "source": "actin_cytoskeleton",
+      "target": "endocytosis",
+      "type": "shared_DEG",
+      "shared_genes": [
+        "FGF7",
+        "FGF22",
+        "ARPC1B"
+      ],
+      "gene_ids": [
+        2264,
+        2263,
+        8395
+      ],
+      "description": "Cytoskeletal machinery shared with endocytic trafficking"
+    },
+    {
+      "id": "e07",
+      "source": "tight_junction",
+      "target": "actin_cytoskeleton",
+      "type": "shared_DEG",
+      "shared_genes": [
+        "MYH9",
+        "ACTN4",
+        "RAC1"
+      ],
+      "gene_ids": [
+        10398,
+        6237,
+        4628
+      ],
+      "description": "Tight junction dissolution linked to actin remodeling during EMT"
+    },
+    {
+      "id": "e08",
+      "source": "cytokine_cytokine_receptor",
+      "target": "chemokine_signaling",
+      "type": "shared_DEG",
+      "shared_genes": [
+        "CXCL6",
+        "IL6ST",
+        "CXCL1",
+        "CCL18",
+        "CXCL14"
+      ],
+      "gene_ids": [
+        6359,
+        1524,
+        2921,
+        2920,
+        6387
+      ],
+      "description": "Extensive gene sharing between cytokine and chemokine arms"
+    },
+    {
+      "id": "e09",
+      "source": "neuroactive_LR",
+      "target": "vascular_smooth_muscle",
+      "type": "shared_DEG",
+      "shared_genes": [
+        "ADRA1A",
+        "ADRA1B",
+        "GUCY1A2",
+        "NPR1"
+      ],
+      "gene_ids": [
+        1906,
+        10203,
+        1909,
+        185
+      ],
+      "description": "Adrenergic and guanylyl cyclase receptors shared between pathways"
+    },
+    {
+      "id": "e10",
+      "source": "tight_junction",
+      "target": "vascular_smooth_muscle",
+      "type": "shared_DEG",
+      "shared_genes": [
+        "MYH9",
+        "ACTG1"
+      ],
+      "gene_ids": [
+        10398,
+        4629
+      ],
+      "description": "Myosin and actin isoforms bridging tight junction and smooth muscle"
+    },
+    {
+      "id": "e11",
+      "source": "chemokine_signaling",
+      "target": "axon_guidance",
+      "type": "shared_DEG",
+      "shared_genes": [
+        "CXCL14"
+      ],
+      "gene_ids": [
+        6387
+      ],
+      "description": "CXCL14 links immune chemotaxis and invasive guidance signals"
+    },
+    {
+      "id": "e12",
+      "source": "chemokine_signaling",
+      "target": "vascular_smooth_muscle",
+      "type": "shared_DEG",
+      "shared_genes": [
+        "GNG2"
+      ],
+      "gene_ids": [
+        115
+      ],
+      "description": "G-protein beta-gamma subunit shared between pathways"
+    },
+    {
+      "id": "e13",
+      "source": "chemokine_signaling",
+      "target": "MAPK_signaling",
+      "type": "shared_DEG",
+      "shared_genes": [
+        "AKT3"
+      ],
+      "gene_ids": [
+        10000
+      ],
+      "description": "AKT3 shared node connecting chemokine and MAPK arms"
+    },
+    {
+      "id": "e14",
+      "source": "chemokine_signaling",
+      "target": "actin_cytoskeleton",
+      "type": "shared_DEG",
+      "shared_genes": [
+        "PIK3CG"
+      ],
+      "gene_ids": [
+        5295
+      ],
+      "description": "PIK3CG links chemokine-driven signaling to cytoskeletal changes"
+    },
+    {
+      "id": "e15",
+      "source": "chemokine_signaling",
+      "target": "endocytosis",
+      "type": "shared_DEG",
+      "shared_genes": [
+        "GIT2"
+      ],
+      "gene_ids": [
+        2869
+      ],
+      "description": "GIT2 bridges chemokine receptor internalization and endocytosis"
+    },
+    {
+      "id": "e16",
+      "source": "cytokine_cytokine_receptor",
+      "target": "axon_guidance",
+      "type": "shared_DEG",
+      "shared_genes": [
+        "CXCL14"
+      ],
+      "gene_ids": [
+        6387
+      ],
+      "description": "CXCL14 shared across immune and guidance pathways"
+    },
+    {
+      "id": "e17",
+      "source": "cytokine_cytokine_receptor",
+      "target": "MAPK_signaling",
+      "type": "shared_DEG",
+      "shared_genes": [
+        "EGFR"
+      ],
+      "gene_ids": [
+        7048
+      ],
+      "description": "EGFR connects cytokine signaling to MAPK cascade"
+    },
+    {
+      "id": "e18",
+      "source": "cytokine_cytokine_receptor",
+      "target": "endocytosis",
+      "type": "shared_DEG",
+      "shared_genes": [
+        "EGFR"
+      ],
+      "gene_ids": [
+        7048
+      ],
+      "description": "EGFR drives both cytokine receptor interaction and receptor endocytosis"
+    },
+    {
+      "id": "e19",
+      "source": "neuroactive_LR",
+      "target": "complement_coagulation",
+      "type": "shared_DEG",
+      "shared_genes": [
+        "C3AR1"
+      ],
+      "gene_ids": [
+        728
+      ],
+      "description": "Complement receptor shared with neuroactive ligand network"
+    },
+    {
+      "id": "e20",
+      "source": "neuroactive_LR",
+      "target": "endocytosis",
+      "type": "shared_DEG",
+      "shared_genes": [
+        "ARRB1"
+      ],
+      "gene_ids": [
+        154
+      ],
+      "description": "Beta-arrestin mediates receptor internalization across both pathways"
+    },
+    {
+      "id": "e21",
+      "source": "tight_junction",
+      "target": "chemokine_signaling",
+      "type": "shared_DEG",
+      "shared_genes": [
+        "AKT3"
+      ],
+      "gene_ids": [
+        10000
+      ],
+      "description": "AKT3 shared between tight junction signaling and chemokine pathway"
+    },
+    {
+      "id": "e22",
+      "source": "vascular_smooth_muscle",
+      "target": "MAPK_signaling",
+      "type": "shared_DEG",
+      "shared_genes": [
+        "PRKCA",
+        "PRKCB"
+      ],
+      "gene_ids": [
+        5319,
+        5321
+      ],
+      "description": "PKC isoforms activate MAPK from vascular signaling context"
+    },
+    {
+      "id": "e23",
+      "source": "EGFR_signaling",
+      "target": "MAPK_signaling",
+      "type": "downstream_of",
+      "shared_genes": [
+        "EGFR",
+        "RAS",
+        "RAF1"
+      ],
+      "gene_ids": [],
+      "description": "EGFR is the upstream activator of MAPK/RAS-RAF-MEK-ERK cascade"
+    },
+    {
+      "id": "e24",
+      "source": "EGFR_signaling",
+      "target": "PI3K_Akt",
+      "type": "downstream_of",
+      "shared_genes": [
+        "EGFR",
+        "PIK3CA",
+        "AKT1"
+      ],
+      "gene_ids": [],
+      "description": "EGFR activates PI3K-Akt in parallel to RAS-MAPK"
+    },
+    {
+      "id": "e25",
+      "source": "PI3K_Akt",
+      "target": "MAPK_signaling",
+      "type": "crosstalk",
+      "shared_genes": [
+        "AKT1",
+        "AKT3"
+      ],
+      "gene_ids": [],
+      "description": "AKT feeds back into MAPK pathway cross-activation"
+    },
+    {
+      "id": "e26",
+      "source": "RAS_RAF_MEK_ERK",
+      "target": "MAPK_signaling",
+      "type": "downstream_of",
+      "shared_genes": [
+        "KRAS",
+        "BRAF",
+        "MAP2K1"
+      ],
+      "gene_ids": [],
+      "description": "RAS-RAF-MEK-ERK is a sub-module of the broader MAPK pathway"
+    },
+    {
+      "id": "e27",
+      "source": "JAK_STAT3",
+      "target": "cytokine_cytokine_receptor",
+      "type": "downstream_of",
+      "shared_genes": [
+        "IL6",
+        "STAT3",
+        "JAK1"
+      ],
+      "gene_ids": [],
+      "description": "Cytokine signals (IL-6) activate JAK-STAT3 axis"
+    },
+    {
+      "id": "e28",
+      "source": "VEGF_signaling",
+      "target": "PI3K_Akt",
+      "type": "downstream_of",
+      "shared_genes": [
+        "VEGFA",
+        "PIK3CA",
+        "AKT1"
+      ],
+      "gene_ids": [],
+      "description": "VEGF receptor signals through PI3K-Akt for endothelial survival"
+    },
+    {
+      "id": "e29",
+      "source": "VEGF_signaling",
+      "target": "MAPK_signaling",
+      "type": "downstream_of",
+      "shared_genes": [
+        "VEGFA",
+        "MAPK1",
+        "MAPK3"
+      ],
+      "gene_ids": [],
+      "description": "VEGFR2 activates ERK1/2 branch of MAPK signaling"
+    },
+    {
+      "id": "e30",
+      "source": "pathways_in_cancer",
+      "target": "EGFR_signaling",
+      "type": "crosstalk",
+      "shared_genes": [
+        "EGFR",
+        "TP53",
+        "KRAS"
+      ],
+      "gene_ids": [],
+      "description": "Pathways in cancer meta-pathway encompasses EGFR oncogenic axis"
+    },
+    {
+      "id": "e31",
+      "source": "pathways_in_cancer",
+      "target": "Wnt_signaling",
+      "type": "crosstalk",
+      "shared_genes": [
+        "CTNNB1",
+        "APC"
+      ],
+      "gene_ids": [],
+      "description": "Wnt/beta-catenin is a core component of the pan-cancer pathway"
+    },
+    {
+      "id": "e32",
+      "source": "TNF_signaling",
+      "target": "MAPK_signaling",
+      "type": "activates",
+      "shared_genes": [
+        "TRAF2",
+        "MAP3K7",
+        "NFKB1"
+      ],
+      "gene_ids": [],
+      "description": "TNF-induced TRAF2 activates MAPK kinase cascade"
+    },
+    {
+      "id": "e33",
+      "source": "MAPK_signaling",
+      "target": "P53_signaling",
+      "type": "represses",
+      "shared_genes": [
+        "GADD45B"
+      ],
+      "gene_ids": [
+        4616
+      ],
+      "description": "GADD45B upregulation in activated MAPK leads to P53 pathway suppression"
+    },
+    {
+      "id": "e34",
+      "source": "ECM_receptor",
+      "target": "focal_adhesion",
+      "type": "downstream_of",
+      "shared_genes": [
+        "ITGA5",
+        "ITGB1",
+        "FN1"
+      ],
+      "gene_ids": [],
+      "description": "ECM binding to integrins directly activates focal adhesion kinase"
+    },
+    {
+      "id": "e35",
+      "source": "focal_adhesion",
+      "target": "MAPK_signaling",
+      "type": "activates",
+      "shared_genes": [
+        "SRC",
+        "FAK1",
+        "RAS"
+      ],
+      "gene_ids": [],
+      "description": "FAK-SRC complex at focal adhesions activates RAS-MAPK"
+    },
+    {
+      "id": "e36",
+      "source": "focal_adhesion",
+      "target": "PI3K_Akt",
+      "type": "activates",
+      "shared_genes": [
+        "FAK1",
+        "PIK3CA"
+      ],
+      "gene_ids": [],
+      "description": "FAK activates PI3K-Akt downstream of integrin signaling"
+    }
+  ],
+  "perturbation_edges": [
+    {
+      "id": "pe0001",
+      "source": "mut_KRAS_p_G12D",
+      "target": "gene_KRAS",
+      "type": "mutates",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.0805,
+      "description": "KRAS p.G12D alters KRAS (gain of function) in 8.1% of LUAD lines"
+    },
+    {
+      "id": "pe0002",
+      "source": "mut_KRAS_p_G12C",
+      "target": "gene_KRAS",
+      "type": "mutates",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.1494,
+      "description": "KRAS p.G12C alters KRAS (gain of function) in 14.9% of LUAD lines"
+    },
+    {
+      "id": "pe0003",
+      "source": "mut_BRAF_p_V600E",
+      "target": "gene_BRAF",
+      "type": "mutates",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.046,
+      "description": "BRAF p.V600E alters BRAF (gain of function) in 4.6% of LUAD lines"
+    },
+    {
+      "id": "pe0004",
+      "source": "mut_EGFR_p_L858R",
+      "target": "gene_EGFR",
+      "type": "mutates",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.069,
+      "description": "EGFR p.L858R alters EGFR (gain of function) in 6.9% of LUAD lines"
+    },
+    {
+      "id": "pe0005",
+      "source": "mut_JAK2_p_V617F",
+      "target": "gene_JAK2",
+      "type": "mutates",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.046,
+      "description": "JAK2 p.V617F alters JAK2 (gain of function) in 4.6% of LUAD lines"
+    },
+    {
+      "id": "pe0006",
+      "source": "mut_KRAS_p_G12",
+      "target": "gene_KRAS",
+      "type": "mutates",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.2874,
+      "description": "KRAS p.G12 alters KRAS (gain of function) in 28.7% of LUAD lines"
+    },
+    {
+      "id": "pe0007",
+      "source": "mut_KRAS_p_G13",
+      "target": "gene_KRAS",
+      "type": "mutates",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.1149,
+      "description": "KRAS p.G13 alters KRAS (gain of function) in 11.5% of LUAD lines"
+    },
+    {
+      "id": "pe0008",
+      "source": "mut_KRAS_p_Q61",
+      "target": "gene_KRAS",
+      "type": "mutates",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.0805,
+      "description": "KRAS p.Q61 alters KRAS (gain of function) in 8.1% of LUAD lines"
+    },
+    {
+      "id": "pe0009",
+      "source": "mut_PIK3CA_p_E542",
+      "target": "gene_PIK3CA",
+      "type": "mutates",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.0575,
+      "description": "PIK3CA p.E542 alters PIK3CA (gain of function) in 5.8% of LUAD lines"
+    },
+    {
+      "id": "pe0010",
+      "source": "mut_PIK3CA_p_E545",
+      "target": "gene_PIK3CA",
+      "type": "mutates",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.046,
+      "description": "PIK3CA p.E545 alters PIK3CA (gain of function) in 4.6% of LUAD lines"
+    },
+    {
+      "id": "pe0011",
+      "source": "mut_PIK3CA_p_H1047",
+      "target": "gene_PIK3CA",
+      "type": "mutates",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.046,
+      "description": "PIK3CA p.H1047 alters PIK3CA (gain of function) in 4.6% of LUAD lines"
+    },
+    {
+      "id": "pe0012",
+      "source": "mut_EGFR_exon_19_del",
+      "target": "gene_EGFR",
+      "type": "mutates",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.1034,
+      "description": "EGFR exon 19 del alters EGFR (gain of function) in 10.3% of LUAD lines"
+    },
+    {
+      "id": "pe0013",
+      "source": "mut_RB1_LoF",
+      "target": "gene_RB1",
+      "type": "mutates",
+      "effect_direction": "loss_of_function",
+      "luad_prevalence": 0.5287,
+      "description": "RB1_LoF alters RB1 (loss of function) in 52.9% of LUAD lines"
+    },
+    {
+      "id": "pe0014",
+      "source": "mut_TP53_LoF",
+      "target": "gene_TP53",
+      "type": "mutates",
+      "effect_direction": "loss_of_function",
+      "luad_prevalence": 0.931,
+      "description": "TP53_LoF alters TP53 (loss of function) in 93.1% of LUAD lines"
+    },
+    {
+      "id": "pe0015",
+      "source": "mut_PTEN_LoF",
+      "target": "gene_PTEN",
+      "type": "mutates",
+      "effect_direction": "loss_of_function",
+      "luad_prevalence": 0.4943,
+      "description": "PTEN_LoF alters PTEN (loss of function) in 49.4% of LUAD lines"
+    },
+    {
+      "id": "pe0016",
+      "source": "mut_APC_LoF",
+      "target": "gene_APC",
+      "type": "mutates",
+      "effect_direction": "loss_of_function",
+      "luad_prevalence": 0.5057,
+      "description": "APC_LoF alters APC (loss of function) in 50.6% of LUAD lines"
+    },
+    {
+      "id": "pe0017",
+      "source": "gene_GADD45B",
+      "target": "MAPK_signaling",
+      "type": "member_of",
+      "description": "GADD45B is a key gene in MAPK_signaling"
+    },
+    {
+      "id": "pe0018",
+      "source": "gene_MAP2K4",
+      "target": "MAPK_signaling",
+      "type": "member_of",
+      "description": "MAP2K4 is a key gene in MAPK_signaling"
+    },
+    {
+      "id": "pe0019",
+      "source": "gene_MAP2K7",
+      "target": "MAPK_signaling",
+      "type": "member_of",
+      "description": "MAP2K7 is a key gene in MAPK_signaling"
+    },
+    {
+      "id": "pe0020",
+      "source": "gene_EGFR",
+      "target": "MAPK_signaling",
+      "type": "member_of",
+      "description": "EGFR is a key gene in MAPK_signaling"
+    },
+    {
+      "id": "pe0021",
+      "source": "gene_KRAS",
+      "target": "MAPK_signaling",
+      "type": "member_of",
+      "description": "KRAS is a key gene in MAPK_signaling"
+    },
+    {
+      "id": "pe0022",
+      "source": "gene_CXCL1",
+      "target": "chemokine_signaling",
+      "type": "member_of",
+      "description": "CXCL1 is a key gene in chemokine_signaling"
+    },
+    {
+      "id": "pe0023",
+      "source": "gene_CXCL8",
+      "target": "chemokine_signaling",
+      "type": "member_of",
+      "description": "CXCL8 is a key gene in chemokine_signaling"
+    },
+    {
+      "id": "pe0024",
+      "source": "gene_CCL2",
+      "target": "chemokine_signaling",
+      "type": "member_of",
+      "description": "CCL2 is a key gene in chemokine_signaling"
+    },
+    {
+      "id": "pe0025",
+      "source": "gene_PIK3CA",
+      "target": "chemokine_signaling",
+      "type": "member_of",
+      "description": "PIK3CA is a key gene in chemokine_signaling"
+    },
+    {
+      "id": "pe0026",
+      "source": "gene_IL6",
+      "target": "cytokine_cytokine_receptor",
+      "type": "member_of",
+      "description": "IL6 is a key gene in cytokine_cytokine_receptor"
+    },
+    {
+      "id": "pe0027",
+      "source": "gene_TNF",
+      "target": "cytokine_cytokine_receptor",
+      "type": "member_of",
+      "description": "TNF is a key gene in cytokine_cytokine_receptor"
+    },
+    {
+      "id": "pe0028",
+      "source": "gene_VEGFA",
+      "target": "cytokine_cytokine_receptor",
+      "type": "member_of",
+      "description": "VEGFA is a key gene in cytokine_cytokine_receptor"
+    },
+    {
+      "id": "pe0029",
+      "source": "gene_TGFB1",
+      "target": "cytokine_cytokine_receptor",
+      "type": "member_of",
+      "description": "TGFB1 is a key gene in cytokine_cytokine_receptor"
+    },
+    {
+      "id": "pe0030",
+      "source": "gene_ACTA2",
+      "target": "vascular_smooth_muscle",
+      "type": "member_of",
+      "description": "ACTA2 is a key gene in vascular_smooth_muscle"
+    },
+    {
+      "id": "pe0031",
+      "source": "gene_MYH11",
+      "target": "vascular_smooth_muscle",
+      "type": "member_of",
+      "description": "MYH11 is a key gene in vascular_smooth_muscle"
+    },
+    {
+      "id": "pe0032",
+      "source": "gene_ROCK1",
+      "target": "vascular_smooth_muscle",
+      "type": "member_of",
+      "description": "ROCK1 is a key gene in vascular_smooth_muscle"
+    },
+    {
+      "id": "pe0033",
+      "source": "gene_RAC1",
+      "target": "actin_cytoskeleton",
+      "type": "member_of",
+      "description": "RAC1 is a key gene in actin_cytoskeleton"
+    },
+    {
+      "id": "pe0034",
+      "source": "gene_CDC42",
+      "target": "actin_cytoskeleton",
+      "type": "member_of",
+      "description": "CDC42 is a key gene in actin_cytoskeleton"
+    },
+    {
+      "id": "pe0035",
+      "source": "gene_RHOA",
+      "target": "actin_cytoskeleton",
+      "type": "member_of",
+      "description": "RHOA is a key gene in actin_cytoskeleton"
+    },
+    {
+      "id": "pe0036",
+      "source": "gene_ACTB",
+      "target": "actin_cytoskeleton",
+      "type": "member_of",
+      "description": "ACTB is a key gene in actin_cytoskeleton"
+    },
+    {
+      "id": "pe0037",
+      "source": "gene_EGFR",
+      "target": "endocytosis",
+      "type": "member_of",
+      "description": "EGFR is a key gene in endocytosis"
+    },
+    {
+      "id": "pe0038",
+      "source": "gene_MET",
+      "target": "endocytosis",
+      "type": "member_of",
+      "description": "MET is a key gene in endocytosis"
+    },
+    {
+      "id": "pe0039",
+      "source": "gene_ERBB2",
+      "target": "endocytosis",
+      "type": "member_of",
+      "description": "ERBB2 is a key gene in endocytosis"
+    },
+    {
+      "id": "pe0040",
+      "source": "gene_RAB5A",
+      "target": "endocytosis",
+      "type": "member_of",
+      "description": "RAB5A is a key gene in endocytosis"
+    },
+    {
+      "id": "pe0041",
+      "source": "gene_CHRNA3",
+      "target": "neuroactive_LR",
+      "type": "member_of",
+      "description": "CHRNA3 is a key gene in neuroactive_LR"
+    },
+    {
+      "id": "pe0042",
+      "source": "gene_CHRNA5",
+      "target": "neuroactive_LR",
+      "type": "member_of",
+      "description": "CHRNA5 is a key gene in neuroactive_LR"
+    },
+    {
+      "id": "pe0043",
+      "source": "gene_CHRNB4",
+      "target": "neuroactive_LR",
+      "type": "member_of",
+      "description": "CHRNB4 is a key gene in neuroactive_LR"
+    },
+    {
+      "id": "pe0044",
+      "source": "gene_OCLN",
+      "target": "tight_junction",
+      "type": "member_of",
+      "description": "OCLN is a key gene in tight_junction"
+    },
+    {
+      "id": "pe0045",
+      "source": "gene_CLDN1",
+      "target": "tight_junction",
+      "type": "member_of",
+      "description": "CLDN1 is a key gene in tight_junction"
+    },
+    {
+      "id": "pe0046",
+      "source": "gene_TJP1",
+      "target": "tight_junction",
+      "type": "member_of",
+      "description": "TJP1 is a key gene in tight_junction"
+    },
+    {
+      "id": "pe0047",
+      "source": "gene_MYH",
+      "target": "tight_junction",
+      "type": "member_of",
+      "description": "MYH is a key gene in tight_junction"
+    },
+    {
+      "id": "pe0048",
+      "source": "gene_SEMA3A",
+      "target": "axon_guidance",
+      "type": "member_of",
+      "description": "SEMA3A is a key gene in axon_guidance"
+    },
+    {
+      "id": "pe0049",
+      "source": "gene_ROBO1",
+      "target": "axon_guidance",
+      "type": "member_of",
+      "description": "ROBO1 is a key gene in axon_guidance"
+    },
+    {
+      "id": "pe0050",
+      "source": "gene_PLXNA1",
+      "target": "axon_guidance",
+      "type": "member_of",
+      "description": "PLXNA1 is a key gene in axon_guidance"
+    },
+    {
+      "id": "pe0051",
+      "source": "gene_PIK3CA",
+      "target": "PI3K_Akt",
+      "type": "member_of",
+      "description": "PIK3CA is a key gene in PI3K_Akt"
+    },
+    {
+      "id": "pe0052",
+      "source": "gene_AKT1",
+      "target": "PI3K_Akt",
+      "type": "member_of",
+      "description": "AKT1 is a key gene in PI3K_Akt"
+    },
+    {
+      "id": "pe0053",
+      "source": "gene_PTEN",
+      "target": "PI3K_Akt",
+      "type": "member_of",
+      "description": "PTEN is a key gene in PI3K_Akt"
+    },
+    {
+      "id": "pe0054",
+      "source": "gene_mTOR",
+      "target": "PI3K_Akt",
+      "type": "member_of",
+      "description": "mTOR is a key gene in PI3K_Akt"
+    },
+    {
+      "id": "pe0055",
+      "source": "gene_TNF",
+      "target": "TNF_signaling",
+      "type": "member_of",
+      "description": "TNF is a key gene in TNF_signaling"
+    },
+    {
+      "id": "pe0056",
+      "source": "gene_NFKB1",
+      "target": "TNF_signaling",
+      "type": "member_of",
+      "description": "NFKB1 is a key gene in TNF_signaling"
+    },
+    {
+      "id": "pe0057",
+      "source": "gene_CASP8",
+      "target": "TNF_signaling",
+      "type": "member_of",
+      "description": "CASP8 is a key gene in TNF_signaling"
+    },
+    {
+      "id": "pe0058",
+      "source": "gene_TRAF2",
+      "target": "TNF_signaling",
+      "type": "member_of",
+      "description": "TRAF2 is a key gene in TNF_signaling"
+    },
+    {
+      "id": "pe0059",
+      "source": "gene_GADD45B",
+      "target": "cell_cycle",
+      "type": "member_of",
+      "description": "GADD45B is a key gene in cell_cycle"
+    },
+    {
+      "id": "pe0060",
+      "source": "gene_TP53",
+      "target": "cell_cycle",
+      "type": "member_of",
+      "description": "TP53 is a key gene in cell_cycle"
+    },
+    {
+      "id": "pe0061",
+      "source": "gene_CDK1",
+      "target": "cell_cycle",
+      "type": "member_of",
+      "description": "CDK1 is a key gene in cell_cycle"
+    },
+    {
+      "id": "pe0062",
+      "source": "gene_CCNB1",
+      "target": "cell_cycle",
+      "type": "member_of",
+      "description": "CCNB1 is a key gene in cell_cycle"
+    },
+    {
+      "id": "pe0063",
+      "source": "gene_RB1",
+      "target": "cell_cycle",
+      "type": "member_of",
+      "description": "RB1 is a key gene in cell_cycle"
+    },
+    {
+      "id": "pe0064",
+      "source": "gene_TP53",
+      "target": "P53_signaling",
+      "type": "member_of",
+      "description": "TP53 is a key gene in P53_signaling"
+    },
+    {
+      "id": "pe0065",
+      "source": "gene_GADD45B",
+      "target": "P53_signaling",
+      "type": "member_of",
+      "description": "GADD45B is a key gene in P53_signaling"
+    },
+    {
+      "id": "pe0066",
+      "source": "gene_MDM2",
+      "target": "P53_signaling",
+      "type": "member_of",
+      "description": "MDM2 is a key gene in P53_signaling"
+    },
+    {
+      "id": "pe0067",
+      "source": "gene_CDKN1A",
+      "target": "P53_signaling",
+      "type": "member_of",
+      "description": "CDKN1A is a key gene in P53_signaling"
+    },
+    {
+      "id": "pe0068",
+      "source": "gene_BAX",
+      "target": "P53_signaling",
+      "type": "member_of",
+      "description": "BAX is a key gene in P53_signaling"
+    },
+    {
+      "id": "pe0069",
+      "source": "gene_HK2",
+      "target": "metabolic_pathways",
+      "type": "member_of",
+      "description": "HK2 is a key gene in metabolic_pathways"
+    },
+    {
+      "id": "pe0070",
+      "source": "gene_GAPDH",
+      "target": "metabolic_pathways",
+      "type": "member_of",
+      "description": "GAPDH is a key gene in metabolic_pathways"
+    },
+    {
+      "id": "pe0071",
+      "source": "gene_LDHA",
+      "target": "metabolic_pathways",
+      "type": "member_of",
+      "description": "LDHA is a key gene in metabolic_pathways"
+    },
+    {
+      "id": "pe0072",
+      "source": "gene_PKM",
+      "target": "metabolic_pathways",
+      "type": "member_of",
+      "description": "PKM is a key gene in metabolic_pathways"
+    },
+    {
+      "id": "pe0073",
+      "source": "gene_EGFR",
+      "target": "pathways_in_cancer",
+      "type": "member_of",
+      "description": "EGFR is a key gene in pathways_in_cancer"
+    },
+    {
+      "id": "pe0074",
+      "source": "gene_TP53",
+      "target": "pathways_in_cancer",
+      "type": "member_of",
+      "description": "TP53 is a key gene in pathways_in_cancer"
+    },
+    {
+      "id": "pe0075",
+      "source": "gene_KRAS",
+      "target": "pathways_in_cancer",
+      "type": "member_of",
+      "description": "KRAS is a key gene in pathways_in_cancer"
+    },
+    {
+      "id": "pe0076",
+      "source": "gene_VEGFA",
+      "target": "pathways_in_cancer",
+      "type": "member_of",
+      "description": "VEGFA is a key gene in pathways_in_cancer"
+    },
+    {
+      "id": "pe0077",
+      "source": "gene_MYC",
+      "target": "pathways_in_cancer",
+      "type": "member_of",
+      "description": "MYC is a key gene in pathways_in_cancer"
+    },
+    {
+      "id": "pe0078",
+      "source": "gene_FAK1",
+      "target": "focal_adhesion",
+      "type": "member_of",
+      "description": "FAK1 is a key gene in focal_adhesion"
+    },
+    {
+      "id": "pe0079",
+      "source": "gene_SRC",
+      "target": "focal_adhesion",
+      "type": "member_of",
+      "description": "SRC is a key gene in focal_adhesion"
+    },
+    {
+      "id": "pe0080",
+      "source": "gene_ITGA5",
+      "target": "focal_adhesion",
+      "type": "member_of",
+      "description": "ITGA5 is a key gene in focal_adhesion"
+    },
+    {
+      "id": "pe0081",
+      "source": "gene_VCL",
+      "target": "focal_adhesion",
+      "type": "member_of",
+      "description": "VCL is a key gene in focal_adhesion"
+    },
+    {
+      "id": "pe0082",
+      "source": "gene_PXNI",
+      "target": "focal_adhesion",
+      "type": "member_of",
+      "description": "PXNI is a key gene in focal_adhesion"
+    },
+    {
+      "id": "pe0083",
+      "source": "gene_CYP1A1",
+      "target": "drug_metab_CYP450",
+      "type": "member_of",
+      "description": "CYP1A1 is a key gene in drug_metab_CYP450"
+    },
+    {
+      "id": "pe0084",
+      "source": "gene_CYP1B1",
+      "target": "drug_metab_CYP450",
+      "type": "member_of",
+      "description": "CYP1B1 is a key gene in drug_metab_CYP450"
+    },
+    {
+      "id": "pe0085",
+      "source": "gene_CYP3A4",
+      "target": "drug_metab_CYP450",
+      "type": "member_of",
+      "description": "CYP3A4 is a key gene in drug_metab_CYP450"
+    },
+    {
+      "id": "pe0086",
+      "source": "gene_HLA-A",
+      "target": "antigen_presentation",
+      "type": "member_of",
+      "description": "HLA-A is a key gene in antigen_presentation"
+    },
+    {
+      "id": "pe0087",
+      "source": "gene_HLA-B",
+      "target": "antigen_presentation",
+      "type": "member_of",
+      "description": "HLA-B is a key gene in antigen_presentation"
+    },
+    {
+      "id": "pe0088",
+      "source": "gene_B2M",
+      "target": "antigen_presentation",
+      "type": "member_of",
+      "description": "B2M is a key gene in antigen_presentation"
+    },
+    {
+      "id": "pe0089",
+      "source": "gene_TAP1",
+      "target": "antigen_presentation",
+      "type": "member_of",
+      "description": "TAP1 is a key gene in antigen_presentation"
+    },
+    {
+      "id": "pe0090",
+      "source": "gene_ITGA5",
+      "target": "ECM_receptor",
+      "type": "member_of",
+      "description": "ITGA5 is a key gene in ECM_receptor"
+    },
+    {
+      "id": "pe0091",
+      "source": "gene_ITGB1",
+      "target": "ECM_receptor",
+      "type": "member_of",
+      "description": "ITGB1 is a key gene in ECM_receptor"
+    },
+    {
+      "id": "pe0092",
+      "source": "gene_LAMA5",
+      "target": "ECM_receptor",
+      "type": "member_of",
+      "description": "LAMA5 is a key gene in ECM_receptor"
+    },
+    {
+      "id": "pe0093",
+      "source": "gene_FN1",
+      "target": "ECM_receptor",
+      "type": "member_of",
+      "description": "FN1 is a key gene in ECM_receptor"
+    },
+    {
+      "id": "pe0094",
+      "source": "gene_COL1A1",
+      "target": "ECM_receptor",
+      "type": "member_of",
+      "description": "COL1A1 is a key gene in ECM_receptor"
+    },
+    {
+      "id": "pe0095",
+      "source": "gene_C5",
+      "target": "complement_coagulation",
+      "type": "member_of",
+      "description": "C5 is a key gene in complement_coagulation"
+    },
+    {
+      "id": "pe0096",
+      "source": "gene_C5AR1",
+      "target": "complement_coagulation",
+      "type": "member_of",
+      "description": "C5AR1 is a key gene in complement_coagulation"
+    },
+    {
+      "id": "pe0097",
+      "source": "gene_PAI1",
+      "target": "complement_coagulation",
+      "type": "member_of",
+      "description": "PAI1 is a key gene in complement_coagulation"
+    },
+    {
+      "id": "pe0098",
+      "source": "gene_F10",
+      "target": "complement_coagulation",
+      "type": "member_of",
+      "description": "F10 is a key gene in complement_coagulation"
+    },
+    {
+      "id": "pe0099",
+      "source": "gene_EGFR",
+      "target": "EGFR_signaling",
+      "type": "member_of",
+      "description": "EGFR is a key gene in EGFR_signaling"
+    },
+    {
+      "id": "pe0100",
+      "source": "gene_ERBB2",
+      "target": "EGFR_signaling",
+      "type": "member_of",
+      "description": "ERBB2 is a key gene in EGFR_signaling"
+    },
+    {
+      "id": "pe0101",
+      "source": "gene_GRB2",
+      "target": "EGFR_signaling",
+      "type": "member_of",
+      "description": "GRB2 is a key gene in EGFR_signaling"
+    },
+    {
+      "id": "pe0102",
+      "source": "gene_SOS1",
+      "target": "EGFR_signaling",
+      "type": "member_of",
+      "description": "SOS1 is a key gene in EGFR_signaling"
+    },
+    {
+      "id": "pe0103",
+      "source": "gene_RAS",
+      "target": "EGFR_signaling",
+      "type": "member_of",
+      "description": "RAS is a key gene in EGFR_signaling"
+    },
+    {
+      "id": "pe0104",
+      "source": "gene_KRAS",
+      "target": "RAS_RAF_MEK_ERK",
+      "type": "member_of",
+      "description": "KRAS is a key gene in RAS_RAF_MEK_ERK"
+    },
+    {
+      "id": "pe0105",
+      "source": "gene_BRAF",
+      "target": "RAS_RAF_MEK_ERK",
+      "type": "member_of",
+      "description": "BRAF is a key gene in RAS_RAF_MEK_ERK"
+    },
+    {
+      "id": "pe0106",
+      "source": "gene_MAP2K1",
+      "target": "RAS_RAF_MEK_ERK",
+      "type": "member_of",
+      "description": "MAP2K1 is a key gene in RAS_RAF_MEK_ERK"
+    },
+    {
+      "id": "pe0107",
+      "source": "gene_MAPK1",
+      "target": "RAS_RAF_MEK_ERK",
+      "type": "member_of",
+      "description": "MAPK1 is a key gene in RAS_RAF_MEK_ERK"
+    },
+    {
+      "id": "pe0108",
+      "source": "gene_MAPK3",
+      "target": "RAS_RAF_MEK_ERK",
+      "type": "member_of",
+      "description": "MAPK3 is a key gene in RAS_RAF_MEK_ERK"
+    },
+    {
+      "id": "pe0109",
+      "source": "gene_STAT3",
+      "target": "JAK_STAT3",
+      "type": "member_of",
+      "description": "STAT3 is a key gene in JAK_STAT3"
+    },
+    {
+      "id": "pe0110",
+      "source": "gene_JAK1",
+      "target": "JAK_STAT3",
+      "type": "member_of",
+      "description": "JAK1 is a key gene in JAK_STAT3"
+    },
+    {
+      "id": "pe0111",
+      "source": "gene_JAK2",
+      "target": "JAK_STAT3",
+      "type": "member_of",
+      "description": "JAK2 is a key gene in JAK_STAT3"
+    },
+    {
+      "id": "pe0112",
+      "source": "gene_IL6",
+      "target": "JAK_STAT3",
+      "type": "member_of",
+      "description": "IL6 is a key gene in JAK_STAT3"
+    },
+    {
+      "id": "pe0113",
+      "source": "gene_CTNNB1",
+      "target": "Wnt_signaling",
+      "type": "member_of",
+      "description": "CTNNB1 is a key gene in Wnt_signaling"
+    },
+    {
+      "id": "pe0114",
+      "source": "gene_WNT3A",
+      "target": "Wnt_signaling",
+      "type": "member_of",
+      "description": "WNT3A is a key gene in Wnt_signaling"
+    },
+    {
+      "id": "pe0115",
+      "source": "gene_FZD1",
+      "target": "Wnt_signaling",
+      "type": "member_of",
+      "description": "FZD1 is a key gene in Wnt_signaling"
+    },
+    {
+      "id": "pe0116",
+      "source": "gene_APC",
+      "target": "Wnt_signaling",
+      "type": "member_of",
+      "description": "APC is a key gene in Wnt_signaling"
+    },
+    {
+      "id": "pe0117",
+      "source": "gene_NOTCH1",
+      "target": "Notch_signaling",
+      "type": "member_of",
+      "description": "NOTCH1 is a key gene in Notch_signaling"
+    },
+    {
+      "id": "pe0118",
+      "source": "gene_DLL3",
+      "target": "Notch_signaling",
+      "type": "member_of",
+      "description": "DLL3 is a key gene in Notch_signaling"
+    },
+    {
+      "id": "pe0119",
+      "source": "gene_HES1",
+      "target": "Notch_signaling",
+      "type": "member_of",
+      "description": "HES1 is a key gene in Notch_signaling"
+    },
+    {
+      "id": "pe0120",
+      "source": "gene_JAG1",
+      "target": "Notch_signaling",
+      "type": "member_of",
+      "description": "JAG1 is a key gene in Notch_signaling"
+    },
+    {
+      "id": "pe0121",
+      "source": "gene_VEGFA",
+      "target": "VEGF_signaling",
+      "type": "member_of",
+      "description": "VEGFA is a key gene in VEGF_signaling"
+    },
+    {
+      "id": "pe0122",
+      "source": "gene_VEGFR2",
+      "target": "VEGF_signaling",
+      "type": "member_of",
+      "description": "VEGFR2 is a key gene in VEGF_signaling"
+    },
+    {
+      "id": "pe0123",
+      "source": "gene_NRP1",
+      "target": "VEGF_signaling",
+      "type": "member_of",
+      "description": "NRP1 is a key gene in VEGF_signaling"
+    },
+    {
+      "id": "pe0124",
+      "source": "gene_HIF1A",
+      "target": "VEGF_signaling",
+      "type": "member_of",
+      "description": "HIF1A is a key gene in VEGF_signaling"
+    },
+    {
+      "id": "pe0125",
+      "source": "mut_KRAS_p_G12D",
+      "target": "MAPK_signaling",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.0805,
+      "via_gene": "KRAS",
+      "mean_crispr_effect": -1.139509,
+      "is_gene_essential": true,
+      "description": "KRAS p.G12D perturbs MAPK_signaling via KRAS"
+    },
+    {
+      "id": "pe0126",
+      "source": "mut_KRAS_p_G12D",
+      "target": "pathways_in_cancer",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.0805,
+      "via_gene": "KRAS",
+      "mean_crispr_effect": -1.139509,
+      "is_gene_essential": true,
+      "description": "KRAS p.G12D perturbs pathways_in_cancer via KRAS"
+    },
+    {
+      "id": "pe0127",
+      "source": "mut_KRAS_p_G12D",
+      "target": "RAS_RAF_MEK_ERK",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.0805,
+      "via_gene": "KRAS",
+      "mean_crispr_effect": -1.139509,
+      "is_gene_essential": true,
+      "description": "KRAS p.G12D perturbs RAS_RAF_MEK_ERK via KRAS"
+    },
+    {
+      "id": "pe0128",
+      "source": "mut_KRAS_p_G12C",
+      "target": "MAPK_signaling",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.1494,
+      "via_gene": "KRAS",
+      "mean_crispr_effect": -1.139509,
+      "is_gene_essential": true,
+      "description": "KRAS p.G12C perturbs MAPK_signaling via KRAS"
+    },
+    {
+      "id": "pe0129",
+      "source": "mut_KRAS_p_G12C",
+      "target": "pathways_in_cancer",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.1494,
+      "via_gene": "KRAS",
+      "mean_crispr_effect": -1.139509,
+      "is_gene_essential": true,
+      "description": "KRAS p.G12C perturbs pathways_in_cancer via KRAS"
+    },
+    {
+      "id": "pe0130",
+      "source": "mut_KRAS_p_G12C",
+      "target": "RAS_RAF_MEK_ERK",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.1494,
+      "via_gene": "KRAS",
+      "mean_crispr_effect": -1.139509,
+      "is_gene_essential": true,
+      "description": "KRAS p.G12C perturbs RAS_RAF_MEK_ERK via KRAS"
+    },
+    {
+      "id": "pe0131",
+      "source": "mut_BRAF_p_V600E",
+      "target": "RAS_RAF_MEK_ERK",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.046,
+      "via_gene": "BRAF",
+      "mean_crispr_effect": -0.057318,
+      "is_gene_essential": false,
+      "description": "BRAF p.V600E perturbs RAS_RAF_MEK_ERK via BRAF"
+    },
+    {
+      "id": "pe0132",
+      "source": "mut_EGFR_p_L858R",
+      "target": "MAPK_signaling",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.069,
+      "via_gene": "EGFR",
+      "mean_crispr_effect": -0.288155,
+      "is_gene_essential": false,
+      "description": "EGFR p.L858R perturbs MAPK_signaling via EGFR"
+    },
+    {
+      "id": "pe0133",
+      "source": "mut_EGFR_p_L858R",
+      "target": "endocytosis",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.069,
+      "via_gene": "EGFR",
+      "mean_crispr_effect": -0.288155,
+      "is_gene_essential": false,
+      "description": "EGFR p.L858R perturbs endocytosis via EGFR"
+    },
+    {
+      "id": "pe0134",
+      "source": "mut_EGFR_p_L858R",
+      "target": "pathways_in_cancer",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.069,
+      "via_gene": "EGFR",
+      "mean_crispr_effect": -0.288155,
+      "is_gene_essential": false,
+      "description": "EGFR p.L858R perturbs pathways_in_cancer via EGFR"
+    },
+    {
+      "id": "pe0135",
+      "source": "mut_EGFR_p_L858R",
+      "target": "EGFR_signaling",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.069,
+      "via_gene": "EGFR",
+      "mean_crispr_effect": -0.288155,
+      "is_gene_essential": false,
+      "description": "EGFR p.L858R perturbs EGFR_signaling via EGFR"
+    },
+    {
+      "id": "pe0136",
+      "source": "mut_JAK2_p_V617F",
+      "target": "JAK_STAT3",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.046,
+      "via_gene": "JAK2",
+      "mean_crispr_effect": 0.155311,
+      "is_gene_essential": false,
+      "description": "JAK2 p.V617F perturbs JAK_STAT3 via JAK2"
+    },
+    {
+      "id": "pe0137",
+      "source": "mut_KRAS_p_G12",
+      "target": "MAPK_signaling",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.2874,
+      "via_gene": "KRAS",
+      "mean_crispr_effect": -1.139509,
+      "is_gene_essential": true,
+      "description": "KRAS p.G12 perturbs MAPK_signaling via KRAS"
+    },
+    {
+      "id": "pe0138",
+      "source": "mut_KRAS_p_G12",
+      "target": "pathways_in_cancer",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.2874,
+      "via_gene": "KRAS",
+      "mean_crispr_effect": -1.139509,
+      "is_gene_essential": true,
+      "description": "KRAS p.G12 perturbs pathways_in_cancer via KRAS"
+    },
+    {
+      "id": "pe0139",
+      "source": "mut_KRAS_p_G12",
+      "target": "RAS_RAF_MEK_ERK",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.2874,
+      "via_gene": "KRAS",
+      "mean_crispr_effect": -1.139509,
+      "is_gene_essential": true,
+      "description": "KRAS p.G12 perturbs RAS_RAF_MEK_ERK via KRAS"
+    },
+    {
+      "id": "pe0140",
+      "source": "mut_KRAS_p_G13",
+      "target": "MAPK_signaling",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.1149,
+      "via_gene": "KRAS",
+      "mean_crispr_effect": -1.139509,
+      "is_gene_essential": true,
+      "description": "KRAS p.G13 perturbs MAPK_signaling via KRAS"
+    },
+    {
+      "id": "pe0141",
+      "source": "mut_KRAS_p_G13",
+      "target": "pathways_in_cancer",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.1149,
+      "via_gene": "KRAS",
+      "mean_crispr_effect": -1.139509,
+      "is_gene_essential": true,
+      "description": "KRAS p.G13 perturbs pathways_in_cancer via KRAS"
+    },
+    {
+      "id": "pe0142",
+      "source": "mut_KRAS_p_G13",
+      "target": "RAS_RAF_MEK_ERK",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.1149,
+      "via_gene": "KRAS",
+      "mean_crispr_effect": -1.139509,
+      "is_gene_essential": true,
+      "description": "KRAS p.G13 perturbs RAS_RAF_MEK_ERK via KRAS"
+    },
+    {
+      "id": "pe0143",
+      "source": "mut_KRAS_p_Q61",
+      "target": "MAPK_signaling",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.0805,
+      "via_gene": "KRAS",
+      "mean_crispr_effect": -1.139509,
+      "is_gene_essential": true,
+      "description": "KRAS p.Q61 perturbs MAPK_signaling via KRAS"
+    },
+    {
+      "id": "pe0144",
+      "source": "mut_KRAS_p_Q61",
+      "target": "pathways_in_cancer",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.0805,
+      "via_gene": "KRAS",
+      "mean_crispr_effect": -1.139509,
+      "is_gene_essential": true,
+      "description": "KRAS p.Q61 perturbs pathways_in_cancer via KRAS"
+    },
+    {
+      "id": "pe0145",
+      "source": "mut_KRAS_p_Q61",
+      "target": "RAS_RAF_MEK_ERK",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.0805,
+      "via_gene": "KRAS",
+      "mean_crispr_effect": -1.139509,
+      "is_gene_essential": true,
+      "description": "KRAS p.Q61 perturbs RAS_RAF_MEK_ERK via KRAS"
+    },
+    {
+      "id": "pe0146",
+      "source": "mut_PIK3CA_p_E542",
+      "target": "chemokine_signaling",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.0575,
+      "via_gene": "PIK3CA",
+      "mean_crispr_effect": -0.479832,
+      "is_gene_essential": true,
+      "description": "PIK3CA p.E542 perturbs chemokine_signaling via PIK3CA"
+    },
+    {
+      "id": "pe0147",
+      "source": "mut_PIK3CA_p_E542",
+      "target": "PI3K_Akt",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.0575,
+      "via_gene": "PIK3CA",
+      "mean_crispr_effect": -0.479832,
+      "is_gene_essential": true,
+      "description": "PIK3CA p.E542 perturbs PI3K_Akt via PIK3CA"
+    },
+    {
+      "id": "pe0148",
+      "source": "mut_PIK3CA_p_E545",
+      "target": "chemokine_signaling",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.046,
+      "via_gene": "PIK3CA",
+      "mean_crispr_effect": -0.479832,
+      "is_gene_essential": true,
+      "description": "PIK3CA p.E545 perturbs chemokine_signaling via PIK3CA"
+    },
+    {
+      "id": "pe0149",
+      "source": "mut_PIK3CA_p_E545",
+      "target": "PI3K_Akt",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.046,
+      "via_gene": "PIK3CA",
+      "mean_crispr_effect": -0.479832,
+      "is_gene_essential": true,
+      "description": "PIK3CA p.E545 perturbs PI3K_Akt via PIK3CA"
+    },
+    {
+      "id": "pe0150",
+      "source": "mut_PIK3CA_p_H1047",
+      "target": "chemokine_signaling",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.046,
+      "via_gene": "PIK3CA",
+      "mean_crispr_effect": -0.479832,
+      "is_gene_essential": true,
+      "description": "PIK3CA p.H1047 perturbs chemokine_signaling via PIK3CA"
+    },
+    {
+      "id": "pe0151",
+      "source": "mut_PIK3CA_p_H1047",
+      "target": "PI3K_Akt",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.046,
+      "via_gene": "PIK3CA",
+      "mean_crispr_effect": -0.479832,
+      "is_gene_essential": true,
+      "description": "PIK3CA p.H1047 perturbs PI3K_Akt via PIK3CA"
+    },
+    {
+      "id": "pe0152",
+      "source": "mut_EGFR_exon_19_del",
+      "target": "MAPK_signaling",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.1034,
+      "via_gene": "EGFR",
+      "mean_crispr_effect": -0.288155,
+      "is_gene_essential": false,
+      "description": "EGFR exon 19 del perturbs MAPK_signaling via EGFR"
+    },
+    {
+      "id": "pe0153",
+      "source": "mut_EGFR_exon_19_del",
+      "target": "endocytosis",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.1034,
+      "via_gene": "EGFR",
+      "mean_crispr_effect": -0.288155,
+      "is_gene_essential": false,
+      "description": "EGFR exon 19 del perturbs endocytosis via EGFR"
+    },
+    {
+      "id": "pe0154",
+      "source": "mut_EGFR_exon_19_del",
+      "target": "pathways_in_cancer",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.1034,
+      "via_gene": "EGFR",
+      "mean_crispr_effect": -0.288155,
+      "is_gene_essential": false,
+      "description": "EGFR exon 19 del perturbs pathways_in_cancer via EGFR"
+    },
+    {
+      "id": "pe0155",
+      "source": "mut_EGFR_exon_19_del",
+      "target": "EGFR_signaling",
+      "type": "perturbs",
+      "effect_direction": "gain_of_function",
+      "luad_prevalence": 0.1034,
+      "via_gene": "EGFR",
+      "mean_crispr_effect": -0.288155,
+      "is_gene_essential": false,
+      "description": "EGFR exon 19 del perturbs EGFR_signaling via EGFR"
+    },
+    {
+      "id": "pe0156",
+      "source": "mut_RB1_LoF",
+      "target": "cell_cycle",
+      "type": "perturbs",
+      "effect_direction": "loss_of_function",
+      "luad_prevalence": 0.5287,
+      "via_gene": "RB1",
+      "mean_crispr_effect": 0.188788,
+      "is_gene_essential": false,
+      "description": "RB1_LoF perturbs cell_cycle via RB1"
+    },
+    {
+      "id": "pe0157",
+      "source": "mut_TP53_LoF",
+      "target": "cell_cycle",
+      "type": "perturbs",
+      "effect_direction": "loss_of_function",
+      "luad_prevalence": 0.931,
+      "via_gene": "TP53",
+      "mean_crispr_effect": 0.345919,
+      "is_gene_essential": false,
+      "description": "TP53_LoF perturbs cell_cycle via TP53"
+    },
+    {
+      "id": "pe0158",
+      "source": "mut_TP53_LoF",
+      "target": "P53_signaling",
+      "type": "perturbs",
+      "effect_direction": "loss_of_function",
+      "luad_prevalence": 0.931,
+      "via_gene": "TP53",
+      "mean_crispr_effect": 0.345919,
+      "is_gene_essential": false,
+      "description": "TP53_LoF perturbs P53_signaling via TP53"
+    },
+    {
+      "id": "pe0159",
+      "source": "mut_TP53_LoF",
+      "target": "pathways_in_cancer",
+      "type": "perturbs",
+      "effect_direction": "loss_of_function",
+      "luad_prevalence": 0.931,
+      "via_gene": "TP53",
+      "mean_crispr_effect": 0.345919,
+      "is_gene_essential": false,
+      "description": "TP53_LoF perturbs pathways_in_cancer via TP53"
+    },
+    {
+      "id": "pe0160",
+      "source": "mut_PTEN_LoF",
+      "target": "PI3K_Akt",
+      "type": "perturbs",
+      "effect_direction": "loss_of_function",
+      "luad_prevalence": 0.4943,
+      "via_gene": "PTEN",
+      "mean_crispr_effect": 0.432808,
+      "is_gene_essential": false,
+      "description": "PTEN_LoF perturbs PI3K_Akt via PTEN"
+    },
+    {
+      "id": "pe0161",
+      "source": "mut_APC_LoF",
+      "target": "Wnt_signaling",
+      "type": "perturbs",
+      "effect_direction": "loss_of_function",
+      "luad_prevalence": 0.5057,
+      "via_gene": "APC",
+      "mean_crispr_effect": -0.376803,
+      "is_gene_essential": false,
+      "description": "APC_LoF perturbs Wnt_signaling via APC"
+    },
+    {
+      "id": "pe0162",
+      "source": "gene_ACTA2",
+      "target": "vascular_smooth_muscle",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.030725,
+      "mean_dep_prob": 0.025109,
+      "is_essential": false,
+      "description": "ACTA2 CRISPR effect 0.031 in LUAD (dep prob 0.025)"
+    },
+    {
+      "id": "pe0163",
+      "source": "gene_ACTB",
+      "target": "actin_cytoskeleton",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.820416,
+      "mean_dep_prob": 0.699041,
+      "is_essential": true,
+      "description": "ACTB CRISPR effect -0.820 in LUAD (dep prob 0.699)"
+    },
+    {
+      "id": "pe0164",
+      "source": "gene_AKT1",
+      "target": "PI3K_Akt",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.025961,
+      "mean_dep_prob": 0.055682,
+      "is_essential": false,
+      "description": "AKT1 CRISPR effect -0.026 in LUAD (dep prob 0.056)"
+    },
+    {
+      "id": "pe0165",
+      "source": "gene_APC",
+      "target": "Wnt_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.376803,
+      "mean_dep_prob": 0.386921,
+      "is_essential": false,
+      "description": "APC CRISPR effect -0.377 in LUAD (dep prob 0.387)"
+    },
+    {
+      "id": "pe0166",
+      "source": "gene_B2M",
+      "target": "antigen_presentation",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.050264,
+      "mean_dep_prob": 0.020818,
+      "is_essential": false,
+      "description": "B2M CRISPR effect 0.050 in LUAD (dep prob 0.021)"
+    },
+    {
+      "id": "pe0167",
+      "source": "gene_BAX",
+      "target": "P53_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.115783,
+      "mean_dep_prob": 0.013534,
+      "is_essential": false,
+      "description": "BAX CRISPR effect 0.116 in LUAD (dep prob 0.014)"
+    },
+    {
+      "id": "pe0168",
+      "source": "gene_BRAF",
+      "target": "RAS_RAF_MEK_ERK",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.057318,
+      "mean_dep_prob": 0.078266,
+      "is_essential": false,
+      "description": "BRAF CRISPR effect -0.057 in LUAD (dep prob 0.078)"
+    },
+    {
+      "id": "pe0169",
+      "source": "gene_C5",
+      "target": "complement_coagulation",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.004111,
+      "mean_dep_prob": 0.026838,
+      "is_essential": false,
+      "description": "C5 CRISPR effect 0.004 in LUAD (dep prob 0.027)"
+    },
+    {
+      "id": "pe0170",
+      "source": "gene_C5AR1",
+      "target": "complement_coagulation",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.005198,
+      "mean_dep_prob": 0.030396,
+      "is_essential": false,
+      "description": "C5AR1 CRISPR effect 0.005 in LUAD (dep prob 0.030)"
+    },
+    {
+      "id": "pe0171",
+      "source": "gene_CASP8",
+      "target": "TNF_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.085651,
+      "mean_dep_prob": 0.014798,
+      "is_essential": false,
+      "description": "CASP8 CRISPR effect 0.086 in LUAD (dep prob 0.015)"
+    },
+    {
+      "id": "pe0172",
+      "source": "gene_CCL2",
+      "target": "chemokine_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.103469,
+      "mean_dep_prob": 0.012742,
+      "is_essential": false,
+      "description": "CCL2 CRISPR effect 0.103 in LUAD (dep prob 0.013)"
+    },
+    {
+      "id": "pe0173",
+      "source": "gene_CCNB1",
+      "target": "cell_cycle",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.835108,
+      "mean_dep_prob": 0.81739,
+      "is_essential": true,
+      "description": "CCNB1 CRISPR effect -0.835 in LUAD (dep prob 0.817)"
+    },
+    {
+      "id": "pe0174",
+      "source": "gene_CDC42",
+      "target": "actin_cytoskeleton",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -1.198492,
+      "mean_dep_prob": 0.920646,
+      "is_essential": true,
+      "description": "CDC42 CRISPR effect -1.198 in LUAD (dep prob 0.921)"
+    },
+    {
+      "id": "pe0175",
+      "source": "gene_CDK1",
+      "target": "cell_cycle",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -2.629792,
+      "mean_dep_prob": 0.999999,
+      "is_essential": true,
+      "description": "CDK1 CRISPR effect -2.630 in LUAD (dep prob 1.000)"
+    },
+    {
+      "id": "pe0176",
+      "source": "gene_CDKN1A",
+      "target": "P53_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.315827,
+      "mean_dep_prob": 0.006429,
+      "is_essential": false,
+      "description": "CDKN1A CRISPR effect 0.316 in LUAD (dep prob 0.006)"
+    },
+    {
+      "id": "pe0177",
+      "source": "gene_CHRNA3",
+      "target": "neuroactive_LR",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.105084,
+      "mean_dep_prob": 0.012071,
+      "is_essential": false,
+      "description": "CHRNA3 CRISPR effect 0.105 in LUAD (dep prob 0.012)"
+    },
+    {
+      "id": "pe0178",
+      "source": "gene_CHRNA5",
+      "target": "neuroactive_LR",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.044163,
+      "mean_dep_prob": 0.049155,
+      "is_essential": false,
+      "description": "CHRNA5 CRISPR effect -0.044 in LUAD (dep prob 0.049)"
+    },
+    {
+      "id": "pe0179",
+      "source": "gene_CHRNB4",
+      "target": "neuroactive_LR",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.020115,
+      "mean_dep_prob": 0.026163,
+      "is_essential": false,
+      "description": "CHRNB4 CRISPR effect 0.020 in LUAD (dep prob 0.026)"
+    },
+    {
+      "id": "pe0180",
+      "source": "gene_CLDN1",
+      "target": "tight_junction",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.044809,
+      "mean_dep_prob": 0.021262,
+      "is_essential": false,
+      "description": "CLDN1 CRISPR effect 0.045 in LUAD (dep prob 0.021)"
+    },
+    {
+      "id": "pe0181",
+      "source": "gene_COL1A1",
+      "target": "ECM_receptor",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.089612,
+      "mean_dep_prob": 0.059425,
+      "is_essential": false,
+      "description": "COL1A1 CRISPR effect -0.090 in LUAD (dep prob 0.059)"
+    },
+    {
+      "id": "pe0182",
+      "source": "gene_CTNNB1",
+      "target": "Wnt_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.23085,
+      "mean_dep_prob": 0.209257,
+      "is_essential": false,
+      "description": "CTNNB1 CRISPR effect -0.231 in LUAD (dep prob 0.209)"
+    },
+    {
+      "id": "pe0183",
+      "source": "gene_CXCL1",
+      "target": "chemokine_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.182532,
+      "mean_dep_prob": 0.130814,
+      "is_essential": false,
+      "description": "CXCL1 CRISPR effect -0.183 in LUAD (dep prob 0.131)"
+    },
+    {
+      "id": "pe0184",
+      "source": "gene_CXCL8",
+      "target": "chemokine_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.063065,
+      "mean_dep_prob": 0.019765,
+      "is_essential": false,
+      "description": "CXCL8 CRISPR effect 0.063 in LUAD (dep prob 0.020)"
+    },
+    {
+      "id": "pe0185",
+      "source": "gene_CYP1A1",
+      "target": "drug_metab_CYP450",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.051066,
+      "mean_dep_prob": 0.021844,
+      "is_essential": false,
+      "description": "CYP1A1 CRISPR effect 0.051 in LUAD (dep prob 0.022)"
+    },
+    {
+      "id": "pe0186",
+      "source": "gene_CYP1B1",
+      "target": "drug_metab_CYP450",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.083426,
+      "mean_dep_prob": 0.014752,
+      "is_essential": false,
+      "description": "CYP1B1 CRISPR effect 0.083 in LUAD (dep prob 0.015)"
+    },
+    {
+      "id": "pe0187",
+      "source": "gene_CYP3A4",
+      "target": "drug_metab_CYP450",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.066708,
+      "mean_dep_prob": 0.021164,
+      "is_essential": false,
+      "description": "CYP3A4 CRISPR effect 0.067 in LUAD (dep prob 0.021)"
+    },
+    {
+      "id": "pe0188",
+      "source": "gene_DLL3",
+      "target": "Notch_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.078015,
+      "mean_dep_prob": 0.05919,
+      "is_essential": false,
+      "description": "DLL3 CRISPR effect -0.078 in LUAD (dep prob 0.059)"
+    },
+    {
+      "id": "pe0189",
+      "source": "gene_EGFR",
+      "target": "MAPK_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.288155,
+      "mean_dep_prob": 0.233135,
+      "is_essential": false,
+      "description": "EGFR CRISPR effect -0.288 in LUAD (dep prob 0.233)"
+    },
+    {
+      "id": "pe0190",
+      "source": "gene_EGFR",
+      "target": "endocytosis",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.288155,
+      "mean_dep_prob": 0.233135,
+      "is_essential": false,
+      "description": "EGFR CRISPR effect -0.288 in LUAD (dep prob 0.233)"
+    },
+    {
+      "id": "pe0191",
+      "source": "gene_EGFR",
+      "target": "pathways_in_cancer",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.288155,
+      "mean_dep_prob": 0.233135,
+      "is_essential": false,
+      "description": "EGFR CRISPR effect -0.288 in LUAD (dep prob 0.233)"
+    },
+    {
+      "id": "pe0192",
+      "source": "gene_EGFR",
+      "target": "EGFR_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.288155,
+      "mean_dep_prob": 0.233135,
+      "is_essential": false,
+      "description": "EGFR CRISPR effect -0.288 in LUAD (dep prob 0.233)"
+    },
+    {
+      "id": "pe0193",
+      "source": "gene_ERBB2",
+      "target": "endocytosis",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.320983,
+      "mean_dep_prob": 0.3001,
+      "is_essential": false,
+      "description": "ERBB2 CRISPR effect -0.321 in LUAD (dep prob 0.300)"
+    },
+    {
+      "id": "pe0194",
+      "source": "gene_ERBB2",
+      "target": "EGFR_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.320983,
+      "mean_dep_prob": 0.3001,
+      "is_essential": false,
+      "description": "ERBB2 CRISPR effect -0.321 in LUAD (dep prob 0.300)"
+    },
+    {
+      "id": "pe0195",
+      "source": "gene_F10",
+      "target": "complement_coagulation",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.130684,
+      "mean_dep_prob": 0.010934,
+      "is_essential": false,
+      "description": "F10 CRISPR effect 0.131 in LUAD (dep prob 0.011)"
+    },
+    {
+      "id": "pe0196",
+      "source": "gene_FN1",
+      "target": "ECM_receptor",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.048799,
+      "mean_dep_prob": 0.020743,
+      "is_essential": false,
+      "description": "FN1 CRISPR effect 0.049 in LUAD (dep prob 0.021)"
+    },
+    {
+      "id": "pe0197",
+      "source": "gene_FZD1",
+      "target": "Wnt_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.001866,
+      "mean_dep_prob": 0.033713,
+      "is_essential": false,
+      "description": "FZD1 CRISPR effect -0.002 in LUAD (dep prob 0.034)"
+    },
+    {
+      "id": "pe0198",
+      "source": "gene_GADD45B",
+      "target": "MAPK_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.088697,
+      "mean_dep_prob": 0.079909,
+      "is_essential": false,
+      "description": "GADD45B CRISPR effect -0.089 in LUAD (dep prob 0.080)"
+    },
+    {
+      "id": "pe0199",
+      "source": "gene_GADD45B",
+      "target": "cell_cycle",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.088697,
+      "mean_dep_prob": 0.079909,
+      "is_essential": false,
+      "description": "GADD45B CRISPR effect -0.089 in LUAD (dep prob 0.080)"
+    },
+    {
+      "id": "pe0200",
+      "source": "gene_GADD45B",
+      "target": "P53_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.088697,
+      "mean_dep_prob": 0.079909,
+      "is_essential": false,
+      "description": "GADD45B CRISPR effect -0.089 in LUAD (dep prob 0.080)"
+    },
+    {
+      "id": "pe0201",
+      "source": "gene_GAPDH",
+      "target": "metabolic_pathways",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -1.41593,
+      "mean_dep_prob": 0.958888,
+      "is_essential": true,
+      "description": "GAPDH CRISPR effect -1.416 in LUAD (dep prob 0.959)"
+    },
+    {
+      "id": "pe0202",
+      "source": "gene_GRB2",
+      "target": "EGFR_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -1.15356,
+      "mean_dep_prob": 0.827678,
+      "is_essential": true,
+      "description": "GRB2 CRISPR effect -1.154 in LUAD (dep prob 0.828)"
+    },
+    {
+      "id": "pe0203",
+      "source": "gene_HES1",
+      "target": "Notch_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.105507,
+      "mean_dep_prob": 0.089009,
+      "is_essential": false,
+      "description": "HES1 CRISPR effect -0.106 in LUAD (dep prob 0.089)"
+    },
+    {
+      "id": "pe0204",
+      "source": "gene_HIF1A",
+      "target": "VEGF_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.155387,
+      "mean_dep_prob": 0.010078,
+      "is_essential": false,
+      "description": "HIF1A CRISPR effect 0.155 in LUAD (dep prob 0.010)"
+    },
+    {
+      "id": "pe0205",
+      "source": "gene_HK2",
+      "target": "metabolic_pathways",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.400138,
+      "mean_dep_prob": 0.392423,
+      "is_essential": false,
+      "description": "HK2 CRISPR effect -0.400 in LUAD (dep prob 0.392)"
+    },
+    {
+      "id": "pe0206",
+      "source": "gene_HLA-A",
+      "target": "antigen_presentation",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.178232,
+      "mean_dep_prob": 0.140901,
+      "is_essential": false,
+      "description": "HLA-A CRISPR effect -0.178 in LUAD (dep prob 0.141)"
+    },
+    {
+      "id": "pe0207",
+      "source": "gene_HLA-B",
+      "target": "antigen_presentation",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.067833,
+      "mean_dep_prob": 0.089339,
+      "is_essential": false,
+      "description": "HLA-B CRISPR effect -0.068 in LUAD (dep prob 0.089)"
+    },
+    {
+      "id": "pe0208",
+      "source": "gene_IL6",
+      "target": "cytokine_cytokine_receptor",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.09087,
+      "mean_dep_prob": 0.013721,
+      "is_essential": false,
+      "description": "IL6 CRISPR effect 0.091 in LUAD (dep prob 0.014)"
+    },
+    {
+      "id": "pe0209",
+      "source": "gene_IL6",
+      "target": "JAK_STAT3",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.09087,
+      "mean_dep_prob": 0.013721,
+      "is_essential": false,
+      "description": "IL6 CRISPR effect 0.091 in LUAD (dep prob 0.014)"
+    },
+    {
+      "id": "pe0210",
+      "source": "gene_ITGA5",
+      "target": "focal_adhesion",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.182864,
+      "mean_dep_prob": 0.14149,
+      "is_essential": false,
+      "description": "ITGA5 CRISPR effect -0.183 in LUAD (dep prob 0.141)"
+    },
+    {
+      "id": "pe0211",
+      "source": "gene_ITGA5",
+      "target": "ECM_receptor",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.182864,
+      "mean_dep_prob": 0.14149,
+      "is_essential": false,
+      "description": "ITGA5 CRISPR effect -0.183 in LUAD (dep prob 0.141)"
+    },
+    {
+      "id": "pe0212",
+      "source": "gene_ITGB1",
+      "target": "ECM_receptor",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.187147,
+      "mean_dep_prob": 0.202486,
+      "is_essential": false,
+      "description": "ITGB1 CRISPR effect -0.187 in LUAD (dep prob 0.202)"
+    },
+    {
+      "id": "pe0213",
+      "source": "gene_JAG1",
+      "target": "Notch_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.017562,
+      "mean_dep_prob": 0.036362,
+      "is_essential": false,
+      "description": "JAG1 CRISPR effect 0.018 in LUAD (dep prob 0.036)"
+    },
+    {
+      "id": "pe0214",
+      "source": "gene_JAK1",
+      "target": "JAK_STAT3",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.17877,
+      "mean_dep_prob": 0.164621,
+      "is_essential": false,
+      "description": "JAK1 CRISPR effect -0.179 in LUAD (dep prob 0.165)"
+    },
+    {
+      "id": "pe0215",
+      "source": "gene_JAK2",
+      "target": "JAK_STAT3",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.155311,
+      "mean_dep_prob": 0.013666,
+      "is_essential": false,
+      "description": "JAK2 CRISPR effect 0.155 in LUAD (dep prob 0.014)"
+    },
+    {
+      "id": "pe0216",
+      "source": "gene_KRAS",
+      "target": "MAPK_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -1.139509,
+      "mean_dep_prob": 0.75214,
+      "is_essential": true,
+      "description": "KRAS CRISPR effect -1.140 in LUAD (dep prob 0.752)"
+    },
+    {
+      "id": "pe0217",
+      "source": "gene_KRAS",
+      "target": "pathways_in_cancer",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -1.139509,
+      "mean_dep_prob": 0.75214,
+      "is_essential": true,
+      "description": "KRAS CRISPR effect -1.140 in LUAD (dep prob 0.752)"
+    },
+    {
+      "id": "pe0218",
+      "source": "gene_KRAS",
+      "target": "RAS_RAF_MEK_ERK",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -1.139509,
+      "mean_dep_prob": 0.75214,
+      "is_essential": true,
+      "description": "KRAS CRISPR effect -1.140 in LUAD (dep prob 0.752)"
+    },
+    {
+      "id": "pe0219",
+      "source": "gene_LAMA5",
+      "target": "ECM_receptor",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.082462,
+      "mean_dep_prob": 0.017584,
+      "is_essential": false,
+      "description": "LAMA5 CRISPR effect 0.082 in LUAD (dep prob 0.018)"
+    },
+    {
+      "id": "pe0220",
+      "source": "gene_LDHA",
+      "target": "metabolic_pathways",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.155371,
+      "mean_dep_prob": 0.1198,
+      "is_essential": false,
+      "description": "LDHA CRISPR effect -0.155 in LUAD (dep prob 0.120)"
+    },
+    {
+      "id": "pe0221",
+      "source": "gene_MAP2K1",
+      "target": "RAS_RAF_MEK_ERK",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.130272,
+      "mean_dep_prob": 0.094486,
+      "is_essential": false,
+      "description": "MAP2K1 CRISPR effect -0.130 in LUAD (dep prob 0.094)"
+    },
+    {
+      "id": "pe0222",
+      "source": "gene_MAP2K4",
+      "target": "MAPK_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.097966,
+      "mean_dep_prob": 0.045642,
+      "is_essential": false,
+      "description": "MAP2K4 CRISPR effect 0.098 in LUAD (dep prob 0.046)"
+    },
+    {
+      "id": "pe0223",
+      "source": "gene_MAP2K7",
+      "target": "MAPK_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.120115,
+      "mean_dep_prob": 0.110699,
+      "is_essential": false,
+      "description": "MAP2K7 CRISPR effect -0.120 in LUAD (dep prob 0.111)"
+    },
+    {
+      "id": "pe0224",
+      "source": "gene_MAPK1",
+      "target": "RAS_RAF_MEK_ERK",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.084447,
+      "mean_dep_prob": 0.115068,
+      "is_essential": false,
+      "description": "MAPK1 CRISPR effect -0.084 in LUAD (dep prob 0.115)"
+    },
+    {
+      "id": "pe0225",
+      "source": "gene_MAPK3",
+      "target": "RAS_RAF_MEK_ERK",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.061629,
+      "mean_dep_prob": 0.059048,
+      "is_essential": false,
+      "description": "MAPK3 CRISPR effect -0.062 in LUAD (dep prob 0.059)"
+    },
+    {
+      "id": "pe0226",
+      "source": "gene_MDM2",
+      "target": "P53_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.540202,
+      "mean_dep_prob": 0.448833,
+      "is_essential": false,
+      "description": "MDM2 CRISPR effect -0.540 in LUAD (dep prob 0.449)"
+    },
+    {
+      "id": "pe0227",
+      "source": "gene_MET",
+      "target": "endocytosis",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.072546,
+      "mean_dep_prob": 0.093134,
+      "is_essential": false,
+      "description": "MET CRISPR effect -0.073 in LUAD (dep prob 0.093)"
+    },
+    {
+      "id": "pe0228",
+      "source": "gene_MYC",
+      "target": "pathways_in_cancer",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -2.119975,
+      "mean_dep_prob": 0.954951,
+      "is_essential": true,
+      "description": "MYC CRISPR effect -2.120 in LUAD (dep prob 0.955)"
+    },
+    {
+      "id": "pe0229",
+      "source": "gene_MYH11",
+      "target": "vascular_smooth_muscle",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.187268,
+      "mean_dep_prob": 0.151697,
+      "is_essential": false,
+      "description": "MYH11 CRISPR effect -0.187 in LUAD (dep prob 0.152)"
+    },
+    {
+      "id": "pe0230",
+      "source": "gene_NFKB1",
+      "target": "TNF_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.030702,
+      "mean_dep_prob": 0.027197,
+      "is_essential": false,
+      "description": "NFKB1 CRISPR effect 0.031 in LUAD (dep prob 0.027)"
+    },
+    {
+      "id": "pe0231",
+      "source": "gene_NOTCH1",
+      "target": "Notch_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.005705,
+      "mean_dep_prob": 0.036187,
+      "is_essential": false,
+      "description": "NOTCH1 CRISPR effect -0.006 in LUAD (dep prob 0.036)"
+    },
+    {
+      "id": "pe0232",
+      "source": "gene_NRP1",
+      "target": "VEGF_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.148135,
+      "mean_dep_prob": 0.020647,
+      "is_essential": false,
+      "description": "NRP1 CRISPR effect 0.148 in LUAD (dep prob 0.021)"
+    },
+    {
+      "id": "pe0233",
+      "source": "gene_OCLN",
+      "target": "tight_junction",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.090683,
+      "mean_dep_prob": 0.084136,
+      "is_essential": false,
+      "description": "OCLN CRISPR effect -0.091 in LUAD (dep prob 0.084)"
+    },
+    {
+      "id": "pe0234",
+      "source": "gene_PIK3CA",
+      "target": "chemokine_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.479832,
+      "mean_dep_prob": 0.506277,
+      "is_essential": true,
+      "description": "PIK3CA CRISPR effect -0.480 in LUAD (dep prob 0.506)"
+    },
+    {
+      "id": "pe0235",
+      "source": "gene_PIK3CA",
+      "target": "PI3K_Akt",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.479832,
+      "mean_dep_prob": 0.506277,
+      "is_essential": true,
+      "description": "PIK3CA CRISPR effect -0.480 in LUAD (dep prob 0.506)"
+    },
+    {
+      "id": "pe0236",
+      "source": "gene_PKM",
+      "target": "metabolic_pathways",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.938157,
+      "mean_dep_prob": 0.822049,
+      "is_essential": true,
+      "description": "PKM CRISPR effect -0.938 in LUAD (dep prob 0.822)"
+    },
+    {
+      "id": "pe0237",
+      "source": "gene_PLXNA1",
+      "target": "axon_guidance",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.010102,
+      "mean_dep_prob": 0.048552,
+      "is_essential": false,
+      "description": "PLXNA1 CRISPR effect -0.010 in LUAD (dep prob 0.049)"
+    },
+    {
+      "id": "pe0238",
+      "source": "gene_PTEN",
+      "target": "PI3K_Akt",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.432808,
+      "mean_dep_prob": 0.009356,
+      "is_essential": false,
+      "description": "PTEN CRISPR effect 0.433 in LUAD (dep prob 0.009)"
+    },
+    {
+      "id": "pe0239",
+      "source": "gene_RAB5A",
+      "target": "endocytosis",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.038563,
+      "mean_dep_prob": 0.042736,
+      "is_essential": false,
+      "description": "RAB5A CRISPR effect -0.039 in LUAD (dep prob 0.043)"
+    },
+    {
+      "id": "pe0240",
+      "source": "gene_RAC1",
+      "target": "actin_cytoskeleton",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.765667,
+      "mean_dep_prob": 0.733582,
+      "is_essential": true,
+      "description": "RAC1 CRISPR effect -0.766 in LUAD (dep prob 0.734)"
+    },
+    {
+      "id": "pe0241",
+      "source": "gene_RB1",
+      "target": "cell_cycle",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.188788,
+      "mean_dep_prob": 0.023376,
+      "is_essential": false,
+      "description": "RB1 CRISPR effect 0.189 in LUAD (dep prob 0.023)"
+    },
+    {
+      "id": "pe0242",
+      "source": "gene_RHOA",
+      "target": "actin_cytoskeleton",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.444305,
+      "mean_dep_prob": 0.440789,
+      "is_essential": false,
+      "description": "RHOA CRISPR effect -0.444 in LUAD (dep prob 0.441)"
+    },
+    {
+      "id": "pe0243",
+      "source": "gene_ROBO1",
+      "target": "axon_guidance",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.029472,
+      "mean_dep_prob": 0.02953,
+      "is_essential": false,
+      "description": "ROBO1 CRISPR effect 0.029 in LUAD (dep prob 0.030)"
+    },
+    {
+      "id": "pe0244",
+      "source": "gene_ROCK1",
+      "target": "vascular_smooth_muscle",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.092625,
+      "mean_dep_prob": 0.099762,
+      "is_essential": false,
+      "description": "ROCK1 CRISPR effect -0.093 in LUAD (dep prob 0.100)"
+    },
+    {
+      "id": "pe0245",
+      "source": "gene_SEMA3A",
+      "target": "axon_guidance",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.000835,
+      "mean_dep_prob": 0.031156,
+      "is_essential": false,
+      "description": "SEMA3A CRISPR effect -0.001 in LUAD (dep prob 0.031)"
+    },
+    {
+      "id": "pe0246",
+      "source": "gene_SOS1",
+      "target": "EGFR_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.2808,
+      "mean_dep_prob": 0.277758,
+      "is_essential": false,
+      "description": "SOS1 CRISPR effect -0.281 in LUAD (dep prob 0.278)"
+    },
+    {
+      "id": "pe0247",
+      "source": "gene_SRC",
+      "target": "focal_adhesion",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.137059,
+      "mean_dep_prob": 0.125923,
+      "is_essential": false,
+      "description": "SRC CRISPR effect -0.137 in LUAD (dep prob 0.126)"
+    },
+    {
+      "id": "pe0248",
+      "source": "gene_STAT3",
+      "target": "JAK_STAT3",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.226581,
+      "mean_dep_prob": 0.208043,
+      "is_essential": false,
+      "description": "STAT3 CRISPR effect -0.227 in LUAD (dep prob 0.208)"
+    },
+    {
+      "id": "pe0249",
+      "source": "gene_TAP1",
+      "target": "antigen_presentation",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.11437,
+      "mean_dep_prob": 0.086784,
+      "is_essential": false,
+      "description": "TAP1 CRISPR effect -0.114 in LUAD (dep prob 0.087)"
+    },
+    {
+      "id": "pe0250",
+      "source": "gene_TGFB1",
+      "target": "cytokine_cytokine_receptor",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.047569,
+      "mean_dep_prob": 0.048124,
+      "is_essential": false,
+      "description": "TGFB1 CRISPR effect -0.048 in LUAD (dep prob 0.048)"
+    },
+    {
+      "id": "pe0251",
+      "source": "gene_TJP1",
+      "target": "tight_junction",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.08606,
+      "mean_dep_prob": 0.084693,
+      "is_essential": false,
+      "description": "TJP1 CRISPR effect -0.086 in LUAD (dep prob 0.085)"
+    },
+    {
+      "id": "pe0252",
+      "source": "gene_TNF",
+      "target": "cytokine_cytokine_receptor",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.130419,
+      "mean_dep_prob": 0.089142,
+      "is_essential": false,
+      "description": "TNF CRISPR effect -0.130 in LUAD (dep prob 0.089)"
+    },
+    {
+      "id": "pe0253",
+      "source": "gene_TNF",
+      "target": "TNF_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.130419,
+      "mean_dep_prob": 0.089142,
+      "is_essential": false,
+      "description": "TNF CRISPR effect -0.130 in LUAD (dep prob 0.089)"
+    },
+    {
+      "id": "pe0254",
+      "source": "gene_TP53",
+      "target": "cell_cycle",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.345919,
+      "mean_dep_prob": 0.012355,
+      "is_essential": false,
+      "description": "TP53 CRISPR effect 0.346 in LUAD (dep prob 0.012)"
+    },
+    {
+      "id": "pe0255",
+      "source": "gene_TP53",
+      "target": "P53_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.345919,
+      "mean_dep_prob": 0.012355,
+      "is_essential": false,
+      "description": "TP53 CRISPR effect 0.346 in LUAD (dep prob 0.012)"
+    },
+    {
+      "id": "pe0256",
+      "source": "gene_TP53",
+      "target": "pathways_in_cancer",
+      "type": "crispr_validates",
+      "mean_crispr_effect": 0.345919,
+      "mean_dep_prob": 0.012355,
+      "is_essential": false,
+      "description": "TP53 CRISPR effect 0.346 in LUAD (dep prob 0.012)"
+    },
+    {
+      "id": "pe0257",
+      "source": "gene_TRAF2",
+      "target": "TNF_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.34612,
+      "mean_dep_prob": 0.337545,
+      "is_essential": false,
+      "description": "TRAF2 CRISPR effect -0.346 in LUAD (dep prob 0.338)"
+    },
+    {
+      "id": "pe0258",
+      "source": "gene_VCL",
+      "target": "focal_adhesion",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.33043,
+      "mean_dep_prob": 0.32274,
+      "is_essential": false,
+      "description": "VCL CRISPR effect -0.330 in LUAD (dep prob 0.323)"
+    },
+    {
+      "id": "pe0259",
+      "source": "gene_VEGFA",
+      "target": "cytokine_cytokine_receptor",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.003362,
+      "mean_dep_prob": 0.030895,
+      "is_essential": false,
+      "description": "VEGFA CRISPR effect -0.003 in LUAD (dep prob 0.031)"
+    },
+    {
+      "id": "pe0260",
+      "source": "gene_VEGFA",
+      "target": "pathways_in_cancer",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.003362,
+      "mean_dep_prob": 0.030895,
+      "is_essential": false,
+      "description": "VEGFA CRISPR effect -0.003 in LUAD (dep prob 0.031)"
+    },
+    {
+      "id": "pe0261",
+      "source": "gene_VEGFA",
+      "target": "VEGF_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.003362,
+      "mean_dep_prob": 0.030895,
+      "is_essential": false,
+      "description": "VEGFA CRISPR effect -0.003 in LUAD (dep prob 0.031)"
+    },
+    {
+      "id": "pe0262",
+      "source": "gene_WNT3A",
+      "target": "Wnt_signaling",
+      "type": "crispr_validates",
+      "mean_crispr_effect": -0.022704,
+      "mean_dep_prob": 0.034919,
+      "is_essential": false,
+      "description": "WNT3A CRISPR effect -0.023 in LUAD (dep prob 0.035)"
+    }
+  ]
+}
