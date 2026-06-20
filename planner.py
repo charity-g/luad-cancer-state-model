@@ -4,7 +4,7 @@
 FINAL_SCHEMA: {
     "mutation_id": "id",
     "protein": "EGFR",
-    "estimated affect": "no_effect/activating/inactivating",
+    "estimated_effect": "no_effect/activating/inactivating",
 }
 
     # "ids": [ #for harmonization
@@ -14,14 +14,15 @@ FINAL_SCHEMA: {
 
 
 def extract_mutation_profiles(profiles):
-    # planner should plan how to extract mutation profiles
-
+    # planner should produce a list with details for each mutation
 
 def run(profiles):
     mutations =  extract_mutation_profiles(profiles)
     
     # does mutation fulfill FINAL_SCHEMA?
-    
-    proteins = extract_proteins_for_mutations(mutations)
-    extract_pathways_for_proteins(proteins)
+    # for each mutation to produce estimated_effect on protein
 
+    proteins = extract_proteins_for_mutations(mutations)
+    pathways = extract_pathways_for_proteins(proteins)
+
+    # agent generate code to update the pathway into full pathway
