@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lung Cancer KEGG Pathway Graph</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#0f1117;color:#e2e8f0;height:100vh;overflow:hidden}
+#header{padding:12px 20px;border-bottom:1px solid #2d3748;display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:#0f1117}
+#header h1{font-size:15px;font-weight:600;color:#e2e8f0;white-space:nowrap}
+.legend{display:flex;gap:12px;flex-wrap:wrap}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:#a0aec0}
+.dot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+#filters{display:flex;gap:8px;flex-wrap:wrap}
+.filter-btn{padding:3px 10px;border-radius:20px;border:1px solid #4a5568;font-size:11px;cursor:pointer;background:transparent;color:#a0aec0;transition:all .15s}
+.filter-btn.active{color:#fff;border-color:currentColor}
+.filter-btn[data-status="all"].active{background:#4a5568;border-color:#718096;color:#fff}
+.filter-btn[data-status="activated"].active{background:#0F6E56;border-color:#1D9E75;color:#9FE1CB}
+.filter-btn[data-status="repressed"].active{background:#791F1F;border-color:#E24B4A;color:#F7C1C1}
+.filter-btn[data-status="crosstalk_hub"].active{background:#3C3489;border-color:#7F77DD;color:#CECBF6}
+.filter-btn[data-status="nsclc_enriched"].active{background:#633806;border-color:#BA7517;color:#FAC775}
+#canvas{position:relative;width:100%;height:calc(100vh - 56px)}
+svg{width:100%;height:100%}
+.node circle{stroke-width:1.5;cursor:grab;transition:opacity .2s}
+.node circle:active{cursor:grabbing}
+.node text{pointer-events:none;font-size:9px;fill:#e2e8f0;font-family:system-ui,sans-serif}
+.link{stroke-opacity:0.45;transition:stroke-opacity .2s}
+.link:hover{stroke-opacity:1}
+.node.dimmed circle{opacity:0.15}
+.node.dimmed text{opacity:0.1}
+.link.dimmed{stroke-opacity:0.04}
+#tooltip{position:fixed;background:#1a202c;border:1px solid #4a5568;border-radius:8px;padding:12px 14px;font-size:12px;max-width:280px;pointer-events:none;display:none;z-index:100;line-height:1.5}
+#tooltip h3{font-size:13px;font-weight:600;margin-bottom:4px;color:#e2e8f0}
+#tooltip .kegg{font-size:10px;color:#718096;margin-bottom:6px}
+#tooltip .status-badge{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:500;margin-bottom:6px}
+#tooltip .stat-row{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #2d3748;padding-top:6px;margin-top:4px}
+#tooltip .stat{text-align:center}
+#tooltip .stat-val{font-size:14px;font-weight:600;display:block}
+#tooltip .stat-lbl{font-size:9px;color:#718096}
+#tooltip .genes{margin-top:6px;font-size:10px;color:#9FE1CB}
+#tooltip .desc{font-size:11px;color:#a0aec0;margin-top:6px;border-top:1px solid #2d3748;padding-top:6px}
+#info{position:absolute;bottom:14px;left:14px;font-size:10px;color:#4a5568}
+</style>
+</head>
+<body>
+<div id="header">
+  <h1>🧬 Lung Cancer KEGG Pathway Graph</h1>
+  <div class="legend">
+    <span class="leg"><span class="dot" style="background:#1D9E75"></span>Activated</span>
+    <span class="leg"><span class="dot" style="background:#E24B4A"></span>Repressed</span>
+    <span class="leg"><span class="dot" style="background:#7F77DD"></span>Crosstalk hub</span>
+    <span class="leg"><span class="dot" style="background:#EF9F27"></span>NSCLC-enriched</span>
+  </div>
+  <div id="filters">
+    <button class="filter-btn active" data-status="all">All</button>
+    <button class="filter-btn" data-status="activated">Activated</button>
+    <button class="filter-btn" data-status="repressed">Repressed</button>
+    <button class="filter-btn" data-status="crosstalk_hub">Hubs</button>
+    <button class="filter-btn" data-status="nsclc_enriched">NSCLC</button>
+  </div>
+</div>
+<div id="canvas">
+<svg id="graph"></svg>
+</div>
+<div id="tooltip"></div>
+<div id="info">Drag nodes · Scroll to zoom · Click to highlight · Double-click to reset</div>
+
+<script>
+const graphData = {
+  nodes: [
+    {id:"MAPK_signaling",label:"MAPK signaling",kegg_id:"hsa04010",status:"activated",q_value:0.857,deg_count:14,impact_factor:null,key_genes:["GADD45B","MAP2K4","EGFR","KRAS"],description:"Core oncogenic cascade; activated via EGFR/KRAS mutations in NSCLC"},
+    {id:"chemokine_signaling",label:"Chemokine signaling",kegg_id:"hsa04062",status:"activated",q_value:0.692,deg_count:13,impact_factor:null,key_genes:["CXCL1","CXCL8","CCL2","PIK3CA"],description:"Immune cell recruitment; tumor microenvironment remodeling"},
+    {id:"cytokine_cytokine_receptor",label:"Cytokine-cytokine R.",kegg_id:"hsa04060",status:"activated",q_value:0.625,deg_count:16,impact_factor:null,key_genes:["IL6","TNF","VEGFA","TGFB1"],description:"Inflammatory signaling; cross-talks with chemokine and MAPK"},
+    {id:"vascular_smooth_muscle",label:"Vasc. smooth muscle",kegg_id:"hsa04270",status:"activated",q_value:0.846,deg_count:13,impact_factor:null,key_genes:["ACTA2","MYH11","ROCK1"],description:"Tumor vasculature remodeling; invasion and metastasis"},
+    {id:"actin_cytoskeleton",label:"Actin cytoskeleton",kegg_id:"hsa04810",status:"activated",q_value:1.0,deg_count:11,impact_factor:null,key_genes:["RAC1","CDC42","RHOA","ACTB"],description:"Cell motility; fully upregulated (Q=1.0)"},
+    {id:"endocytosis",label:"Endocytosis",kegg_id:"hsa04144",status:"activated",q_value:1.0,deg_count:10,impact_factor:null,key_genes:["EGFR","MET","ERBB2","RAB5A"],description:"EGFR receptor trafficking; promotes sustained signaling"},
+    {id:"neuroactive_LR",label:"Neuroactive LR int.",kegg_id:"hsa04080",status:"activated",q_value:0.667,deg_count:18,impact_factor:null,key_genes:["CHRNA3","CHRNA5","CHRNB4"],description:"Nicotinic acetylcholine receptors; smoking carcinogenesis"},
+    {id:"tight_junction",label:"Tight junction",kegg_id:"hsa04530",status:"activated",q_value:0.636,deg_count:11,impact_factor:null,key_genes:["OCLN","CLDN1","TJP1"],description:"Epithelial barrier disruption; EMT in lung cancer"},
+    {id:"axon_guidance",label:"Axon guidance",kegg_id:"hsa04360",status:"activated",q_value:0.800,deg_count:10,impact_factor:null,key_genes:["SEMA3A","ROBO1","PLXNA1"],description:"Invasion guidance signals; repurposed in tumor invasion"},
+    {id:"PI3K_Akt",label:"PI3K-Akt signaling",kegg_id:"hsa04151",status:"activated",q_value:null,deg_count:null,impact_factor:null,key_genes:["PIK3CA","AKT1","PTEN","mTOR"],description:"Top enriched pathway; early activation in lung carcinogenesis"},
+    {id:"TNF_signaling",label:"TNF signaling",kegg_id:"hsa04668",status:"activated",q_value:null,deg_count:null,impact_factor:null,key_genes:["TNF","NFKB1","CASP8","TRAF2"],description:"NF-κB activation; survival and drug resistance in NSCLC"},
+    {id:"cell_cycle",label:"Cell cycle",kegg_id:"hsa04110",status:"repressed",q_value:-0.692,deg_count:13,impact_factor:6.673,key_genes:["GADD45B","TP53","CDK1","CCNB1","RB1"],description:"Repressed; G2/M checkpoint arrested by GADD45B"},
+    {id:"P53_signaling",label:"P53 signaling",kegg_id:"hsa04115",status:"repressed",q_value:-0.600,deg_count:10,impact_factor:9.017,key_genes:["TP53","GADD45B","MDM2","CDKN1A"],description:"Tumor suppressor; repressed enabling bypass of apoptosis"},
+    {id:"metabolic_pathways",label:"Metabolic pathways",kegg_id:"hsa01100",status:"crosstalk_hub",q_value:null,deg_count:null,impact_factor:null,key_genes:["HK2","GAPDH","LDHA","PKM"],description:"Warburg effect; central crosstalk hub"},
+    {id:"pathways_in_cancer",label:"Pathways in cancer",kegg_id:"hsa05200",status:"crosstalk_hub",q_value:null,deg_count:null,impact_factor:null,key_genes:["EGFR","TP53","KRAS","VEGFA","MYC"],description:"Meta-pathway integrating all oncogenic routes"},
+    {id:"focal_adhesion",label:"Focal adhesion",kegg_id:"hsa04510",status:"crosstalk_hub",q_value:null,deg_count:null,impact_factor:9.283,key_genes:["FAK1","SRC","ITGA5","VCL"],description:"Cell-matrix adhesion; impact factor 9.28"},
+    {id:"drug_metab_CYP450",label:"Drug metab. CYP450",kegg_id:"hsa00982",status:"crosstalk_hub",q_value:null,deg_count:null,impact_factor:null,key_genes:["CYP1A1","CYP1B1","CYP3A4"],description:"Carcinogen biotransformation; governs treatment efficacy"},
+    {id:"antigen_presentation",label:"Antigen presentation",kegg_id:"hsa04612",status:"crosstalk_hub",q_value:null,deg_count:null,impact_factor:null,key_genes:["HLA-A","HLA-B","B2M","TAP1"],description:"Immune evasion mechanism; central hub"},
+    {id:"ECM_receptor",label:"ECM-receptor int.",kegg_id:"hsa04512",status:"crosstalk_hub",q_value:null,deg_count:null,impact_factor:14.266,key_genes:["ITGA5","ITGB1","FN1","COL1A1"],description:"Matrix remodeling; impact factor 14.27"},
+    {id:"complement_coagulation",label:"Complement & coag.",kegg_id:"hsa04610",status:"crosstalk_hub",q_value:null,deg_count:16,impact_factor:17.258,key_genes:["C5","C5AR1","PAI1","F10"],description:"Highest impact factor (17.26); C5a promotes tumor microenvironment"},
+    {id:"EGFR_signaling",label:"EGFR signaling",kegg_id:"hsa05223",status:"nsclc_enriched",q_value:null,deg_count:null,impact_factor:null,key_genes:["EGFR","ERBB2","GRB2","SOS1"],description:"Primary driver; ~15% activating EGFR mutations"},
+    {id:"RAS_RAF_MEK_ERK",label:"RAS-RAF-MEK-ERK",kegg_id:"hsa04010",status:"nsclc_enriched",q_value:null,deg_count:null,impact_factor:null,key_genes:["KRAS","BRAF","MAP2K1","MAPK1"],description:"KRAS mutated in ~30% NSCLC; BRAF in 2-3%"},
+    {id:"JAK_STAT3",label:"JAK-STAT3",kegg_id:"hsa04630",status:"nsclc_enriched",q_value:null,deg_count:null,impact_factor:null,key_genes:["STAT3","JAK1","JAK2","IL6"],description:"Required for EGFR-driven oncogenic effects"},
+    {id:"Wnt_signaling",label:"Wnt signaling",kegg_id:"hsa04310",status:"nsclc_enriched",q_value:null,deg_count:null,impact_factor:null,key_genes:["CTNNB1","WNT3A","FZD1","APC"],description:"Tumor progression and stem cell maintenance"},
+    {id:"Notch_signaling",label:"Notch signaling",kegg_id:"hsa04330",status:"nsclc_enriched",q_value:null,deg_count:null,impact_factor:null,key_genes:["NOTCH1","DLL3","HES1","JAG1"],description:"Differentiation; altered in ~10% of lung cancers"},
+    {id:"VEGF_signaling",label:"VEGF signaling",kegg_id:"hsa04370",status:"nsclc_enriched",q_value:null,deg_count:null,impact_factor:null,key_genes:["VEGFA","VEGFR2","NRP1","HIF1A"],description:"Tumor angiogenesis; target of bevacizumab"}
+  ],
+  edges: [
+    {source:"MAPK_signaling",target:"cell_cycle",type:"shared_DEG",shared_genes:["GADD45B"]},
+    {source:"MAPK_signaling",target:"P53_signaling",type:"represses",shared_genes:["GADD45B"]},
+    {source:"P53_signaling",target:"cell_cycle",type:"shared_DEG",shared_genes:["GADD45B"]},
+    {source:"MAPK_signaling",target:"actin_cytoskeleton",type:"shared_DEG",shared_genes:["FGF7","FGF22"]},
+    {source:"MAPK_signaling",target:"endocytosis",type:"shared_DEG",shared_genes:["FGF7","EGFR"]},
+    {source:"actin_cytoskeleton",target:"endocytosis",type:"shared_DEG",shared_genes:["FGF7","ARPC1B"]},
+    {source:"tight_junction",target:"actin_cytoskeleton",type:"shared_DEG",shared_genes:["MYH9","ACTB"]},
+    {source:"cytokine_cytokine_receptor",target:"chemokine_signaling",type:"shared_DEG",shared_genes:["CXCL6","CXCL1","CCL18"]},
+    {source:"neuroactive_LR",target:"vascular_smooth_muscle",type:"shared_DEG",shared_genes:["ADRA1A","GUCY1A2"]},
+    {source:"tight_junction",target:"vascular_smooth_muscle",type:"shared_DEG",shared_genes:["MYH9","ACTG1"]},
+    {source:"chemokine_signaling",target:"axon_guidance",type:"shared_DEG",shared_genes:["CXCL14"]},
+    {source:"chemokine_signaling",target:"vascular_smooth_muscle",type:"shared_DEG",shared_genes:["GNG2"]},
+    {source:"chemokine_signaling",target:"MAPK_signaling",type:"shared_DEG",shared_genes:["AKT3"]},
+    {source:"chemokine_signaling",target:"actin_cytoskeleton",type:"shared_DEG",shared_genes:["PIK3CG"]},
+    {source:"chemokine_signaling",target:"endocytosis",type:"shared_DEG",shared_genes:["GIT2"]},
+    {source:"cytokine_cytokine_receptor",target:"axon_guidance",type:"shared_DEG",shared_genes:["CXCL14"]},
+    {source:"cytokine_cytokine_receptor",target:"MAPK_signaling",type:"shared_DEG",shared_genes:["EGFR"]},
+    {source:"cytokine_cytokine_receptor",target:"endocytosis",type:"shared_DEG",shared_genes:["EGFR"]},
+    {source:"neuroactive_LR",target:"complement_coagulation",type:"shared_DEG",shared_genes:["C3AR1"]},
+    {source:"neuroactive_LR",target:"endocytosis",type:"shared_DEG",shared_genes:["ARRB1"]},
+    {source:"tight_junction",target:"chemokine_signaling",type:"shared_DEG",shared_genes:["AKT3"]},
+    {source:"vascular_smooth_muscle",target:"MAPK_signaling",type:"shared_DEG",shared_genes:["PRKCA","PRKCB"]},
+    {source:"EGFR_signaling",target:"MAPK_signaling",type:"downstream_of",shared_genes:["EGFR","RAS"]},
+    {source:"EGFR_signaling",target:"PI3K_Akt",type:"downstream_of",shared_genes:["EGFR","PIK3CA"]},
+    {source:"PI3K_Akt",target:"MAPK_signaling",type:"crosstalk",shared_genes:["AKT1","AKT3"]},
+    {source:"RAS_RAF_MEK_ERK",target:"MAPK_signaling",type:"downstream_of",shared_genes:["KRAS","MAP2K1"]},
+    {source:"JAK_STAT3",target:"cytokine_cytokine_receptor",type:"downstream_of",shared_genes:["IL6","STAT3"]},
+    {source:"VEGF_signaling",target:"PI3K_Akt",type:"downstream_of",shared_genes:["VEGFA","PIK3CA"]},
+    {source:"VEGF_signaling",target:"MAPK_signaling",type:"downstream_of",shared_genes:["VEGFA","MAPK1"]},
+    {source:"pathways_in_cancer",target:"EGFR_signaling",type:"crosstalk",shared_genes:["EGFR","KRAS"]},
+    {source:"pathways_in_cancer",target:"Wnt_signaling",type:"crosstalk",shared_genes:["CTNNB1"]},
+    {source:"TNF_signaling",target:"MAPK_signaling",type:"activates",shared_genes:["TRAF2","MAP3K7"]},
+    {source:"ECM_receptor",target:"focal_adhesion",type:"downstream_of",shared_genes:["ITGA5","ITGB1"]},
+    {source:"focal_adhesion",target:"MAPK_signaling",type:"activates",shared_genes:["SRC","FAK1"]},
+    {source:"focal_adhesion",target:"PI3K_Akt",type:"activates",shared_genes:["FAK1","PIK3CA"]},
+    {source:"Notch_signaling",target:"pathways_in_cancer",type:"crosstalk",shared_genes:["NOTCH1","HES1"]}
+  ]
+};
+
+const colors = {
+  activated: {fill:"#1D9E75", stroke:"#9FE1CB", text:"#9FE1CB"},
+  repressed:  {fill:"#A32D2D", stroke:"#F09595", text:"#F7C1C1"},
+  crosstalk_hub:{fill:"#534AB7", stroke:"#AFA9EC", text:"#CECBF6"},
+  nsclc_enriched:{fill:"#854F0B", stroke:"#EF9F27", text:"#FAC775"}
+};
+
+const edgeColors = {
+  shared_DEG: "#5DCAA5",
+  crosstalk:  "#7F77DD",
+  activates:  "#EF9F27",
+  represses:  "#E24B4A",
+  downstream_of: "#85B7EB"
+};
+
+const W = () => document.getElementById("canvas").offsetWidth;
+const H = () => document.getElementById("canvas").offsetHeight;
+
+const svg = d3.select("#graph");
+const g = svg.append("g");
+
+// zoom
+svg.call(d3.zoom().scaleExtent([0.2,4]).on("zoom", e => g.attr("transform", e.transform)));
+
+// Compute degree for node sizing
+const degree = {};
+graphData.nodes.forEach(n => degree[n.id] = 0);
+graphData.edges.forEach(e => { degree[e.source]++; degree[e.target]++; });
+
+// Radii based on degree
+const rScale = d3.scaleSqrt().domain([0, d3.max(Object.values(degree))]).range([14, 30]);
+
+// Build simulation
+const simulation = d3.forceSimulation(graphData.nodes)
+  .force("link", d3.forceLink(graphData.edges).id(d => d.id).distance(d => {
+    const types = {shared_DEG:90, crosstalk:110, activates:100, represses:100, downstream_of:120};
+    return types[d.type] || 100;
+  }).strength(0.4))
+  .force("charge", d3.forceManyBody().strength(-280))
+  .force("center", d3.forceCenter(W()/2, H()/2))
+  .force("collision", d3.forceCollide().radius(d => rScale(degree[d.id]) + 8));
+
+// Defs arrowheads
+const defs = svg.append("defs");
+Object.entries(edgeColors).forEach(([type, col]) => {
+  defs.append("marker")
+    .attr("id", `arrow-${type}`)
+    .attr("viewBox","0 0 10 10").attr("refX",8).attr("refY",5)
+    .attr("markerWidth",6).attr("markerHeight",6).attr("orient","auto-start-reverse")
+    .append("path").attr("d","M2 1L8 5L2 9").attr("fill","none")
+    .attr("stroke", col).attr("stroke-width",1.5)
+    .attr("stroke-linecap","round").attr("stroke-linejoin","round");
+});
+
+// Links
+const link = g.append("g").selectAll("line")
+  .data(graphData.edges).join("line")
+  .attr("class","link")
+  .attr("stroke", d => edgeColors[d.type] || "#718096")
+  .attr("stroke-width", 1.2)
+  .attr("marker-end", d => `url(#arrow-${d.type})`);
+
+// Nodes
+const node = g.append("g").selectAll("g")
+  .data(graphData.nodes).join("g")
+  .attr("class","node")
+  .call(d3.drag()
+    .on("start", (event, d) => { if(!event.active) simulation.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; })
+    .on("drag",  (event, d) => { d.fx=event.x; d.fy=event.y; })
+    .on("end",   (event, d) => { if(!event.active) simulation.alphaTarget(0); d.fx=null; d.fy=null; }));
+
+node.append("circle")
+  .attr("r", d => rScale(degree[d.id]))
+  .attr("fill", d => colors[d.status].fill)
+  .attr("stroke", d => colors[d.status].stroke)
+  .attr("stroke-width", 1.5);
+
+node.append("text")
+  .attr("text-anchor","middle")
+  .attr("dominant-baseline","central")
+  .attr("font-size", d => rScale(degree[d.id]) > 22 ? 9 : 8)
+  .text(d => d.label);
+
+// Q-value badge on repressed nodes
+node.filter(d => d.status === "repressed").append("text")
+  .attr("text-anchor","middle")
+  .attr("dominant-baseline","central")
+  .attr("dy", "1.4em")
+  .attr("font-size", 7)
+  .attr("fill","#F09595")
+  .attr("opacity",0.8)
+  .text(d => d.q_value !== null ? `Q=${d.q_value}` : "");
+
+// Tooltip
+const tooltip = document.getElementById("tooltip");
+
+node.on("mouseenter", function(event, d) {
+  const c = colors[d.status];
+  const badgeStyle = `background:${c.fill};color:${c.text};`;
+  const statusLabel = d.status.replace(/_/g," ");
+  const qRow = d.q_value !== null ? `<div class="stat"><span class="stat-val" style="color:${d.q_value<0?'#F09595':'#9FE1CB'}">${d.q_value}</span><span class="stat-lbl">Q-value</span></div>` : "";
+  const degRow = d.deg_count !== null ? `<div class="stat"><span class="stat-val">${d.deg_count}</span><span class="stat-lbl">DEGs</span></div>` : "";
+  const impRow = d.impact_factor !== null ? `<div class="stat"><span class="stat-val">${d.impact_factor}</span><span class="stat-lbl">Impact</span></div>` : "";
+  const statsHtml = (qRow||degRow||impRow) ? `<div class="stat-row">${qRow}${degRow}${impRow}</div>` : "";
+  tooltip.innerHTML = `
+    <h3>${d.label}</h3>
+    <div class="kegg">${d.kegg_id} · degree ${degree[d.id]}</div>
+    <span class="status-badge" style="${badgeStyle}">${statusLabel}</span>
+    ${statsHtml}
+    <div class="genes">🧬 ${d.key_genes.join(" · ")}</div>
+    <div class="desc">${d.description}</div>`;
+  tooltip.style.display = "block";
+  tooltip.style.left = (event.clientX + 14) + "px";
+  tooltip.style.top  = (event.clientY - 10) + "px";
+}).on("mousemove", (event) => {
+  tooltip.style.left = (event.clientX + 14) + "px";
+  tooltip.style.top  = (event.clientY - 10) + "px";
+}).on("mouseleave", () => { tooltip.style.display = "none"; });
+
+// Click to highlight
+let selected = null;
+node.on("click", function(event, d) {
+  event.stopPropagation();
+  if(selected === d.id) { selected = null; resetHighlight(); return; }
+  selected = d.id;
+  const connected = new Set([d.id]);
+  const connEdges = new Set();
+  graphData.edges.forEach((e,i) => {
+    const sid = typeof e.source === "object" ? e.source.id : e.source;
+    const tid = typeof e.target === "object" ? e.target.id : e.target;
+    if(sid === d.id || tid === d.id) { connected.add(sid); connected.add(tid); connEdges.add(i); }
+  });
+  node.classed("dimmed", nd => !connected.has(nd.id));
+  link.classed("dimmed", (le,i) => !connEdges.has(i));
+});
+
+svg.on("dblclick", () => { selected = null; resetHighlight(); });
+
+function resetHighlight() {
+  node.classed("dimmed", false);
+  link.classed("dimmed", false);
+}
+
+// Filter buttons
+let activeFilter = "all";
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activeFilter = btn.dataset.status;
+    resetHighlight();
+    selected = null;
+    if(activeFilter === "all") {
+      node.style("display","");
+      link.style("display","");
+    } else {
+      const visIds = new Set(graphData.nodes.filter(n => n.status === activeFilter).map(n => n.id));
+      node.style("display", d => visIds.has(d.id) ? "" : "none");
+      link.style("display", d => {
+        const sid = typeof d.source === "object" ? d.source.id : d.source;
+        const tid = typeof d.target === "object" ? d.target.id : d.target;
+        return (visIds.has(sid) && visIds.has(tid)) ? "" : "none";
+      });
+    }
+  });
+});
+
+// Tick
+simulation.on("tick", () => {
+  link
+    .attr("x1", d => d.source.x)
+    .attr("y1", d => d.source.y)
+    .attr("x2", d => {
+      const dx = d.target.x - d.source.x, dy = d.target.y - d.source.y;
+      const dist = Math.sqrt(dx*dx+dy*dy)||1;
+      const r = rScale(degree[d.target.id]) + 2;
+      return d.target.x - (dx/dist)*r;
+    })
+    .attr("y2", d => {
+      const dx = d.target.x - d.source.x, dy = d.target.y - d.source.y;
+      const dist = Math.sqrt(dx*dx+dy*dy)||1;
+      const r = rScale(degree[d.target.id]) + 2;
+      return d.target.y - (dy/dist)*r;
+    });
+  node.attr("transform", d => `translate(${d.x},${d.y})`);
+});
+
+// Edge legend (bottom-right)
+const edgeLegend = svg.append("g").attr("transform",`translate(${()=>W()-160}, 20)`);
+Object.entries(edgeColors).forEach(([type, col], i) => {
+  const row = edgeLegend.append("g").attr("transform",`translate(10,${i*16+10})`);
+  row.append("line").attr("x1",0).attr("y1",5).attr("x2",18).attr("y2",5)
+    .attr("stroke",col).attr("stroke-width",1.5);
+  row.append("text").attr("x",22).attr("y",9)
+    .attr("font-size","9px").attr("fill","#718096")
+    .text(type.replace(/_/g," "));
+});
+</script>
+</body>
+</html>
