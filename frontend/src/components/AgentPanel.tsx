@@ -227,12 +227,15 @@ interface Props {
   pendingContext: ContextCard | null
   onClearPendingContext: () => void
   onClearChat: () => void
+  profileId: string | null
+  onMutationPatched: (mutation_id: string, patch: Partial<MutationEntry>) => void
+  onViewStructure: (uniprotAc: string, proteinName: string, mutationResidue: number | null) => void
 }
 
 export default function AgentPanel({
   mutations, selected, onSelect, phase, analysisError, onDismissError, filename,
   messages, busy, onSend, onStop, onRetry, pendingContext, onClearPendingContext,
-  onClearChat,
+  onClearChat, profileId, onMutationPatched, onViewStructure,
 }: Props) {
   const panelRef  = useRef<HTMLDivElement>(null)
   const dragging  = useRef(false)
@@ -315,7 +318,12 @@ export default function AgentPanel({
               </button>
               <p className="text-xs font-semibold text-slate-700">Mutation detail</p>
             </div>
-            <MutationDetail entry={mutations.find((m) => m.mutation_id === selected)} />
+            <MutationDetail
+              entry={mutations.find((m) => m.mutation_id === selected)}
+              profileId={profileId}
+              onPatched={onMutationPatched}
+              onViewStructure={onViewStructure}
+            />
           </>
         ) : (
           /* ── List view ── */

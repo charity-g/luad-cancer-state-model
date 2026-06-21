@@ -4,9 +4,10 @@ interface Props {
   onFile: (file: File) => void
   hasData: boolean
   filename?: string
+  standalone?: boolean
 }
 
-export default function UploadBox({ onFile, hasData, filename }: Props) {
+export default function UploadBox({ onFile, hasData, filename, standalone }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [dragging, setDragging] = useState(false)
 
@@ -31,8 +32,10 @@ export default function UploadBox({ onFile, hasData, filename }: Props) {
 
   return (
     <div
-      className={`flex-shrink-0 border-t border-slate-200 bg-white px-4 py-3 transition-colors ${
-        dragging ? 'bg-blue-50' : ''
+      className={`flex-shrink-0 bg-white px-4 py-3 transition-colors ${
+        standalone
+          ? `rounded-2xl border border-slate-200 shadow-lg ${dragging ? 'bg-blue-50' : ''}`
+          : `border-t border-slate-200 ${dragging ? 'bg-blue-50' : ''}`
       }`}
       onDragOver={(e) => { e.preventDefault(); setDragging(true) }}
       onDragLeave={() => setDragging(false)}

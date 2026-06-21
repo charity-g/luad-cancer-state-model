@@ -9,7 +9,7 @@ export default function Layout() {
   const isModel = useMatch('/model')
 
   return (
-    <div className="flex h-screen flex-col bg-slate-50 text-slate-900">
+    <div className="app-bg flex h-screen flex-col text-slate-900">
       <header className="flex-shrink-0 border-b border-slate-200 bg-white">
         <div className="flex items-center justify-between px-5 py-3">
           <span className="text-sm font-semibold tracking-tight text-slate-800">
