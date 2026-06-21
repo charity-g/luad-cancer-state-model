@@ -51,6 +51,23 @@ def test_kras_g12c_hgvs_gets_variant_specific_drug():
     assert "sotorasib" in items[0]["direct_drugs"]
 
 
+def test_real_depmap_flags_used_as_ml_features():
+    # Gene + variant from raw HugoSymbol/ProteinChange, real DepMap flags as the
+    # ML features (what the model was trained on). KRAS G12D -> no direct drug,
+    # ML fallback fires using the forwarded hotspot/oncogene flags.
+    muts = [{
+        "gene": "KRAS", "protein": "KRAS", "mutation_id": "mutation_1",
+        "hgvs_protein": "p.G12D", "estimated_effect": "activating",
+        "features": {"is_hotspot": True, "is_lof": False, "is_high_impact": True,
+                     "oncogene_high_impact": True, "tsg_high_impact": False},
+    }]
+    items = drug_routing.route(muts)
+    assert items[0]["mutation"] == "KRAS G12D"
+    assert "sotorasib" not in items[0]["direct_drugs"]
+    vuln = [p for p in items[0]["ml_predictions"] if p["predicted_vulnerable"]]
+    assert vuln, "real hotspot/oncogene flags should drive a vulnerable prediction"
+
+
 def test_unknown_gene_is_skipped():
     items = drug_routing.route(_muts(("ZZZ9", "ZZZ9:p.A1B", "gain_of_function")))
     assert items == []

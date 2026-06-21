@@ -96,10 +96,17 @@ def _resolve_key(graph, gene, hgvs_protein, mutation_id, effect, justification):
     return None, None
 
 
-def _features(effect):
-    """Mutation-level ML features from the hydrated effect call. Conservative
-    heuristics: activating driver calls behave like activating hotspots, which
-    is the model's strongest signal."""
+_FEATURE_KEYS = ("is_hotspot", "is_lof", "is_high_impact",
+                 "oncogene_high_impact", "tsg_high_impact")
+
+
+def _features(effect, explicit=None):
+    """ML features. Prefer the REAL DepMap annotation flags forwarded from the
+    profile (Hotspot, OncogeneHighImpact, etc. — exactly what the model was
+    trained on). Fall back to a conservative heuristic from the effect call when
+    those aren't available."""
+    if explicit:
+        return {k: bool(explicit.get(k, False)) for k in _FEATURE_KEYS}
     gof = effect in _DRIVER_EFFECTS
     lof = effect in _LOF_EFFECTS
     high_impact = gof or lof
@@ -122,11 +129,10 @@ def _gene_active_pathways(graph, gene):
     return out
 
 
-def _ml_predictions(graph, gene, pathway_ids, effect):
+def _ml_predictions(graph, gene, pathway_ids, feats):
     """Run the classifier for each pathway id. Pathway IDs (e.g. 'MAPK_signaling')
     are exactly the names the model was trained on."""
     clf, encoders, support = _model()
-    feats = _features(effect)
     preds = []
     for pid in pathway_ids:
         node = graph["pathways_by_id"].get(pid) or {}
@@ -150,34 +156,33 @@ def _candidates(mutations, context):
     then profile mutations. Deduped by gene, preferring whichever resolves to a
     real graph variant key so we don't lose variant-specific drugs."""
     graph = _graph()
-    rows = []
-    for c in (context or []):
-        rows.append({"protein": c.get("protein"),
-                     "mutation_id": c.get("mutation_id"),
-                     "hgvs_protein": c.get("hgvs_protein"),
-                     "estimated_effect": c.get("effect") or c.get("estimated_effect")})
-    rows += list(mutations or [])
+    rows = list(context or []) + list(mutations or [])
 
     by_gene = {}
     for m in rows:
-        gene = m.get("protein")
+        # Prefer the gene symbol (HugoSymbol) forwarded from the profile; fall
+        # back to the display protein / context selection.
+        gene = m.get("gene") or m.get("protein")
         if not gene or gene not in graph["gene_index"]:
             continue
         effect = m.get("estimated_effect") or m.get("effect")
+        features = m.get("features")
         key, kind = _resolve_key(graph, gene, m.get("hgvs_protein"),
                                  m.get("mutation_id"), effect, m.get("justification"))
-        # The classifier is a fallback for REAL mutations. Only route entries
-        # with genuine mutation signal — a resolved graph variant key, or a
-        # gain/loss-of-function call. A bare gene selection (no variant, no
-        # effect) carries nothing for the model to classify, so we skip it
-        # rather than emit a meaningless gene-level guess.
-        if not key and effect not in _REAL_EFFECTS:
+        # The classifier is a fallback for REAL mutations. Route only entries with
+        # genuine signal — a resolved graph variant key, a driver effect call, or
+        # a real impact flag (hotspot / oncogene- or TSG-high-impact). A bare gene
+        # selection with no variant, effect, or flag carries nothing to classify.
+        has_flag = bool(features) and any(
+            features.get(k) for k in ("is_hotspot", "oncogene_high_impact", "tsg_high_impact", "is_lof")
+        )
+        if not key and effect not in _REAL_EFFECTS and not has_flag:
             continue
         prev = by_gene.get(gene)
         # Keep the first (context-first order); upgrade only if a later row
         # resolves a variant key where the kept one did not.
         if prev is None or (key and not prev["key"]):
-            by_gene[gene] = {"gene": gene, "effect": effect,
+            by_gene[gene] = {"gene": gene, "effect": effect, "features": features,
                              "mutation_id": m.get("mutation_id"), "key": key, "kind": kind}
     return list(by_gene.values())
 
@@ -192,9 +197,9 @@ def route(mutations, context=None):
     items = []
     for cand in _candidates(mutations, context):
         gene = cand["gene"]
-        effect = cand["effect"]
         mutation_id = cand["mutation_id"]
         key, kind = cand["key"], cand["kind"]
+        feats = _features(cand["effect"], cand.get("features"))
 
         if key:
             cov = gap_detector.check_coverage(graph, key)
@@ -209,7 +214,7 @@ def route(mutations, context=None):
                 "gene": gene,
                 "match": kind,
                 "direct_drugs": direct,
-                "ml_predictions": _ml_predictions(graph, gene, ml_ids, effect) if not direct else [],
+                "ml_predictions": _ml_predictions(graph, gene, ml_ids, feats) if not direct else [],
             })
         else:
             # Variant not in the drug graph — still offer gene-level pathway ML,
@@ -220,7 +225,7 @@ def route(mutations, context=None):
                 "gene": gene,
                 "match": None,
                 "direct_drugs": [],
-                "ml_predictions": _ml_predictions(graph, gene, [pid for pid, _ in active], effect),
+                "ml_predictions": _ml_predictions(graph, gene, [pid for pid, _ in active], feats),
                 "note": "variant not in drug graph; gene-level pathway prediction only",
             })
     return items

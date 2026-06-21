@@ -79,14 +79,31 @@ export function useAnalysis() {
             const hydrated = payload['hydrated'] as Record<string, unknown>
             const mutation_id = String(raw['mutation_id'] ?? '')
 
+            // Raw DepMap CSV columns survive under mutation.raw; use them for
+            // drug routing since the LLM hydration can drop gene/variant/flags.
+            const rawCsv = ((raw['raw'] as Record<string, unknown>) ?? {})
+            const csvStr = (k: string) => {
+              const v = rawCsv[k]
+              return v === undefined || v === null || v === '' ? undefined : String(v)
+            }
+            const csvBool = (k: string) => String(rawCsv[k] ?? '').toUpperCase() === 'TRUE'
+
             const identifiers = (hydrated['identifiers'] as Record<string, unknown>) ?? {}
-            const hgvs = identifiers['hgvs_protein']
+            const hgvs = csvStr('ProteinChange') ?? (identifiers['hgvs_protein'] ? String(identifiers['hgvs_protein']) : undefined)
             const hydratedMutation: HydratedMutation = {
               mutation_id,
               protein:          String(hydrated['protein'] ?? ''),
               estimated_effect: (hydrated['estimated_effect'] as HydratedMutation['estimated_effect']) ?? 'no_effect',
               justification:    (hydrated['justification'] as Record<string, unknown>) ?? {},
-              hgvs_protein:     hgvs ? String(hgvs) : undefined,
+              hgvs_protein:     hgvs,
+              gene:             csvStr('HugoSymbol'),
+              features: {
+                is_hotspot:           csvBool('Hotspot'),
+                is_lof:               csvBool('LikelyLoF') || csvBool('TranscriptLikelyLof'),
+                is_high_impact:       (csvStr('VepImpact') ?? '').toUpperCase() === 'HIGH',
+                oncogene_high_impact: csvBool('OncogeneHighImpact'),
+                tsg_high_impact:      csvBool('TumorSuppressorHighImpact'),
+              },
             }
 
             setMutations((prev) => {
