@@ -11,8 +11,11 @@ export interface ContextCard {
 export interface HydratedMutation {
   mutation_id: string
   protein: string
+  identifiers: Record<string, unknown>
   estimated_effect: EffectType
+  confidence: string
   justification: Record<string, unknown>
+  [key: string]: unknown
 }
 
 export interface SubgraphNode {
@@ -35,10 +38,11 @@ export interface Subgraph {
   edges: SubgraphEdge[]
 }
 
-export type MutationStatus = 'identified' | 'hydrating' | 'done'
+export type MutationStatus = 'identified' | 'hydrating' | 'done' | 'failed'
 
 export interface MutationEntry {
   mutation_id: string
   status: MutationStatus
   hydrated?: HydratedMutation
+  error?: string
 }

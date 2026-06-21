@@ -93,9 +93,17 @@ export default function MutationSidebar({ mutations, selected, onSelect, phase, 
                       {effectLabel[m.hydrated.estimated_effect]}
                     </span>
                   )}
+                  {m.status === 'failed' && (
+                    <span className="flex-shrink-0 rounded border px-1.5 py-0.5 text-[10px] font-semibold bg-red-50 text-red-500 border-red-200">
+                      ERR
+                    </span>
+                  )}
                 </div>
                 {m.status === 'done' && m.hydrated && (
                   <p className="mt-0.5 text-[11px] text-slate-400">{m.hydrated.protein}</p>
+                )}
+                {m.status === 'failed' && m.error && (
+                  <p className="mt-0.5 text-[11px] text-red-400 line-clamp-2">{m.error}</p>
                 )}
               </button>
             </li>

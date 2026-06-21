@@ -69,9 +69,26 @@ export function useAnalysis() {
           }
 
           if (event === 'error') {
-            setError(String(payload['message'] ?? 'An error occurred during analysis.'))
-            setPhase('error')
-            return
+            const mutationPayload = payload['mutation'] as Record<string, unknown> | undefined
+            const message = String(payload['message'] ?? 'An error occurred during analysis.')
+            if (mutationPayload) {
+              // Per-mutation error — stream continues, mark just this mutation failed
+              const mutation_id = String(mutationPayload['mutation_id'] ?? '')
+              setMutations((prev) => {
+                const exists = prev.find((m) => m.mutation_id === mutation_id)
+                if (exists) {
+                  return prev.map((m) =>
+                    m.mutation_id === mutation_id ? { ...m, status: 'failed', error: message } : m,
+                  )
+                }
+                return [...prev, { mutation_id, status: 'failed', error: message }]
+              })
+            } else {
+              // Fatal stream error
+              setError(message)
+              setPhase('error')
+              return
+            }
           }
 
           if (event === 'mutation_hydrated') {
@@ -82,7 +99,9 @@ export function useAnalysis() {
             const hydratedMutation: HydratedMutation = {
               mutation_id,
               protein:          String(hydrated['protein'] ?? ''),
+              identifiers:      (hydrated['identifiers'] as Record<string, unknown>) ?? {},
               estimated_effect: (hydrated['estimated_effect'] as HydratedMutation['estimated_effect']) ?? 'no_effect',
+              confidence:       String(hydrated['confidence'] ?? ''),
               justification:    (hydrated['justification'] as Record<string, unknown>) ?? {},
             }
 
