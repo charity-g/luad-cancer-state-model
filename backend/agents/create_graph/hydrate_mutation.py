@@ -195,33 +195,37 @@ async def hydrate_mutation(mutation: GuessMutation) -> MutationProteinEffect:
     # Run synchronous variant normalization via the harmonizer before LLM call.
     # This fills in fields the LLM prompt benefits from (hgvs, rsid, etc.) and
     # may make the LLM call unnecessary when confidence is already high.
+    mutation_dict = dict(mutation)
     try:
         from backend.harmonizer import harmonizer as _harmonizer
-        hv = _harmonizer.normalize_variant(dict(mutation))
-        # Merge harmonizer findings back into the mutation dict for the prompt
-        mutation = dict(mutation)  # type: ignore[assignment]
+        hv = _harmonizer.normalize_variant(mutation_dict)
         for field in ("hgvs_cdna", "hgvs_protein", "rsid", "variant_type", "genomic_coordinate"):
             val = getattr(hv, field, None)
-            if val and not mutation.get(field):
-                mutation[field] = val  # type: ignore[index]
+            if val and not mutation_dict.get(field):
+                mutation_dict[field] = val
     except Exception:
         pass
 
+    raw_input = mutation_dict.get("raw") or {}
+
     if not ANTHROPIC_API_KEY:
-        result = _hydrate_stub(mutation)
+        result = _hydrate_stub(mutation_dict)
+        result = result.model_copy(update={"raw": raw_input})
         return await _enrich_with_gene(result)
 
-    prompt = build_mutation_prompt(mutation)
+    prompt = build_mutation_prompt(mutation_dict)
 
     try:
         result = await asyncio.to_thread(_call_anthropic, prompt)
-        if 'uniprot_ac' in mutation:
-            result['identifiers']['uniprot_ac'] = mutation["uniprot_ac"]
+        if 'uniprot_ac' in mutation_dict:
+            result['identifiers']['uniprot_ac'] = mutation_dict["uniprot_ac"]
         hydrated = MutationProteinEffect.model_validate(result)
+        hydrated = hydrated.model_copy(update={"raw": raw_input})
         return await _enrich_with_gene(hydrated)
     except Exception as exc:
         log.warning("hydrate_mutation LLM call failed, falling back to stub: %s", exc, exc_info=True)
-        result = _hydrate_stub(mutation)
+        result = _hydrate_stub(mutation_dict)
+        result = result.model_copy(update={"raw": raw_input})
         return await _enrich_with_gene(result)
 
 

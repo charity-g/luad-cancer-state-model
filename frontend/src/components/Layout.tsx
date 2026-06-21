@@ -33,7 +33,7 @@ export default function Layout() {
           </div>
         </div>
       ) : (
-        <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
+        <main className="flex flex-1 min-h-0 overflow-auto bg-gradient-to-br from-slate-50 via-white to-blue-50">
           <Outlet />
         </main>
       )}
