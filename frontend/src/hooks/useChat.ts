@@ -1,5 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
 import type { HydratedMutation, ContextCard, Subgraph, DrugHit } from '../types'
+import { API_BASE } from '../lib/api'
 
 export interface ChatMessage {
   id: string
@@ -134,7 +135,7 @@ export function useChat(getMutations: () => HydratedMutation[], profileId?: stri
         const mutations = getMutations()
         let resp: Response
         try {
-          resp = await fetch('/api/query', {
+          resp = await fetch(`${API_BASE}/api/query`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             signal: ac.signal,

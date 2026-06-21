@@ -1,4 +1,5 @@
-import { useRef, useEffect, useState, KeyboardEvent } from 'react'
+import { useRef, useEffect, useState } from 'react'
+import type { KeyboardEvent } from 'react'
 import type { ChatMessage } from '../hooks/useChat'
 
 export interface PromptSeed {

@@ -1,4 +1,5 @@
-import { useRef, useState, DragEvent, ChangeEvent } from 'react'
+import { useRef, useState } from 'react'
+import type { DragEvent, ChangeEvent } from 'react'
 
 interface Props {
   onFile: (file: File) => void

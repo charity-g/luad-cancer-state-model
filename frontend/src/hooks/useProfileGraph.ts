@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import type { HydratedMutation, MutationEntry } from '../types'
+import { API_BASE } from '../lib/api'
 
 interface GraphNode {
   id: string
@@ -89,7 +90,7 @@ export function useProfileGraph(profileId: string | null) {
     setLoading(true)
     setError(null)
 
-    fetch(`/api/profiles/${profileId}/graph`)
+    fetch(`${API_BASE}/api/profiles/${profileId}/graph`)
       .then((r) => {
         if (!r.ok) throw new Error(`${r.status} ${r.statusText}`)
         return r.json() as Promise<ProfileGraph>

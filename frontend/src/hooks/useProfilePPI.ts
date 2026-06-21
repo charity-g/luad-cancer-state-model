@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import type { ProfileGraph } from './useProfileGraph'
+import { API_BASE } from '../lib/api'
 
 export function useProfilePPI(profileId: string | null) {
   const [graph, setGraph]   = useState<ProfileGraph | null>(null)
@@ -13,7 +14,7 @@ export function useProfilePPI(profileId: string | null) {
     setLoading(true)
     setError(null)
 
-    fetch(`/api/profiles/${profileId}/ppi`)
+    fetch(`${API_BASE}/api/profiles/${profileId}/ppi`)
       .then((r) => {
         if (r.status === 404) return null   // no interactions — not an error
         if (!r.ok) throw new Error(`${r.status} ${r.statusText}`)
