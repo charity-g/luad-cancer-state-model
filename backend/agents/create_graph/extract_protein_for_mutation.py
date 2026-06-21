@@ -159,16 +159,45 @@ async def extract_protein_for_mutation(mutation: MutationProteinEffect) -> Prote
     """
     Map a mutation interpretation to a KEGG protein/gene record.
 
-    Workflow: mutation → KEGG gene ID → full KEGG entry (symbol, description, KO)
-    Raises ProteinResolutionError if no valid mapping exists.
+    Delegates to the central harmonizer so results are cached across the
+    pipeline.  Falls back to the original KEGG REST path when harmonizer
+    returns a low-confidence result.
     """
+    # Prefer UniProt AC from hydrated identifiers as the query when available
+    query = (
+        mutation.identifiers.get("uniprot_ac")
+        or mutation.identifiers.get("uniprot_id")
+        or mutation.protein
+    )
+
+    try:
+        from backend.harmonizer import harmonizer as _harmonizer
+        hg = await _harmonizer.resolve_gene(query)
+        if hg.confidence >= 0.5 and hg.kegg_gene_id:
+            uniprot_id = (
+                hg.uniprot_ac
+                or mutation.identifiers.get("uniprot_ac")
+                or mutation.identifiers.get("uniprot_id")
+                or (mutation.protein if _looks_like_uniprot(mutation.protein) else None)
+            )
+            return ProteinRecord(
+                query=mutation.protein,
+                gene_symbol=hg.gene_symbol,
+                uniprot_id=uniprot_id,
+                entrez_gene_id=hg.entrez_gene_id or mutation.identifiers.get("entrez_gene_id"),
+                kegg_gene_id=hg.kegg_gene_id,
+                kegg_ko_id=hg.kegg_ko_id,
+                kegg_description=hg.description or hg.kegg_gene_id,
+                source=f"harmonizer/{hg.source.value}",
+                raw_response=None,
+            )
+    except Exception:
+        pass  # fall through to legacy path
+
+    # Legacy KEGG REST path
     kegg_gene_id, raw_line = await _query_kegg_gene(mutation)
     entry = await _query_kegg_entry(kegg_gene_id)
 
-    # Resolve UniProt AC in priority order:
-    #   1. Hydrated identifiers (LLM path)
-    #   2. KEGG conv response line  e.g. "up:Q96T58\thsa:23013"
-    #   3. mutation.protein itself when it looks like a UniProt AC (stub path)
     uniprot_id = (
         mutation.identifiers.get("uniprot_ac")
         or mutation.identifiers.get("uniprot_id")

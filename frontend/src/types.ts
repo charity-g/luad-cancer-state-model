@@ -31,6 +31,9 @@ export interface HydratedMutation {
   confidence: string
   justification: Record<string, unknown>
   [key: string]: unknown
+  // Original raw CSV row — passed through from GuessMutation so detail views
+  // and context cards can surface the original input fields.
+  raw?: Record<string, unknown>
   // Drug-routing inputs sourced from the raw DepMap annotation (HugoSymbol /
   // ProteinChange / impact flags), which the LLM hydration can drop.
   hgvs_protein?: string   // protein-level variant (e.g. "p.L858R")

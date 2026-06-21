@@ -140,6 +140,7 @@ export function useAnalysis() {
               estimated_effect: (hydrated['estimated_effect'] as HydratedMutation['estimated_effect']) ?? 'no_effect',
               confidence:       String(hydrated['confidence'] ?? ''),
               justification:    (hydrated['justification'] as Record<string, unknown>) ?? {},
+              raw:              (hydrated['raw'] as Record<string, unknown>) ?? rawCsv,
               hgvs_protein:     hgvs,
               gene:             gene ?? csvStr('HugoSymbol'),
               features: {

@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState, useCallback, type KeyboardEvent } from 'react'
 import type { MutationEntry, ContextCard, EffectType } from '../types'
 import type { ChatMessage } from '../hooks/useChat'
+import type { ConversationRecord } from '../db/conversations'
 import MutationDetail from './MutationDetail'
 
 // ── helpers ──────────────────────────────────────────────────────────────────
@@ -227,7 +228,11 @@ interface Props {
   pendingContext: ContextCard | null
   onClearPendingContext: () => void
   onClearChat: () => void
+  onNewSession: () => void
   profileId: string | null
+  sessions: ConversationRecord[]
+  sessionId: string
+  onSwitchSession: (id: string) => void
   onMutationPatched: (mutation_id: string, patch: Partial<MutationEntry>) => void
   onViewStructure: (uniprotAc: string, proteinName: string, mutationResidue: number | null) => void
 }
@@ -235,11 +240,13 @@ interface Props {
 export default function AgentPanel({
   mutations, selected, onSelect, phase, analysisError, onDismissError, filename,
   messages, busy, onSend, onStop, onRetry, pendingContext, onClearPendingContext,
-  onClearChat, profileId, onMutationPatched, onViewStructure,
+  onClearChat, onNewSession, profileId, sessions, sessionId, onSwitchSession,
+  onMutationPatched, onViewStructure,
 }: Props) {
-  const panelRef  = useRef<HTMLDivElement>(null)
-  const dragging  = useRef(false)
-  const [splitPct, setSplitPct] = useState(38)
+  const panelRef     = useRef<HTMLDivElement>(null)
+  const dragging     = useRef(false)
+  const [splitPct, setSplitPct]     = useState(38)
+  const [historyOpen, setHistoryOpen] = useState(false)
 
   const onMouseMove = useCallback((e: MouseEvent) => {
     if (!dragging.current || !panelRef.current) return
@@ -258,6 +265,7 @@ export default function AgentPanel({
   }, [onMouseMove, onMouseUp])
 
   const [contextCards, setContextCards] = useState<ContextCard[]>([])
+  const [checkedIds, setCheckedIds]     = useState<Set<string>>(new Set())
   const scrollRef = useRef<HTMLDivElement>(null)
   const inputRef  = useRef<HTMLInputElement>(null)
   const [draft, setDraft] = useState('')
@@ -270,6 +278,24 @@ export default function AgentPanel({
     onClearPendingContext()
     inputRef.current?.focus()
   }, [pendingContext, onClearPendingContext])
+
+  function addCardsToContext(cards: ContextCard[]) {
+    setContextCards((prev) => {
+      const existingIds = new Set(prev.map((c) => c.mutation_id))
+      const fresh = cards.filter((c) => !existingIds.has(c.mutation_id))
+      return [...prev, ...fresh]
+    })
+  }
+
+  function mutationToCard(m: typeof mutations[number]): ContextCard | null {
+    if (!m.hydrated) return null
+    return {
+      id: `${m.mutation_id}-ctx`,
+      protein: m.hydrated.protein,
+      effect: m.hydrated.estimated_effect as EffectType,
+      mutation_id: m.mutation_id,
+    }
+  }
 
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight
@@ -323,34 +349,80 @@ export default function AgentPanel({
               profileId={profileId}
               onPatched={onMutationPatched}
               onViewStructure={onViewStructure}
+              onAddContext={(cards) => { addCardsToContext(cards); inputRef.current?.focus() }}
             />
           </>
         ) : (
           /* ── List view ── */
           <>
-            <div className="flex flex-shrink-0 items-center justify-between border-b border-slate-100 px-4 py-2.5">
-              <div>
-                <p className="text-xs font-semibold text-slate-700">Mutations</p>
-                <p className="text-[11px] text-slate-400">
-                  {phase === 'error' ? (
-                    <span className="text-red-500">Analysis failed</span>
-                  ) : (
-                    <>
-                      {mutations.length} variant{mutations.length !== 1 ? 's' : ''}
-                      {phase === 'streaming' && ' · analyzing…'}
-                      {phase === 'done' && ` · ${done} annotated`}
-                    </>
-                  )}
-                </p>
+            <div className="flex flex-shrink-0 flex-col border-b border-slate-100">
+              <div className="flex items-center justify-between px-4 py-2.5">
+                <div>
+                  <p className="text-xs font-semibold text-slate-700">Mutations</p>
+                  <p className="text-[11px] text-slate-400">
+                    {phase === 'error' ? (
+                      <span className="text-red-500">Analysis failed</span>
+                    ) : (
+                      <>
+                        {mutations.length} variant{mutations.length !== 1 ? 's' : ''}
+                        {phase === 'streaming' && ' · analyzing…'}
+                        {phase === 'done' && ` · ${done} annotated`}
+                      </>
+                    )}
+                  </p>
+                </div>
+                {phase === 'streaming' && (
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-200 border-t-blue-500" />
+                )}
+                {phase === 'error' && (
+                  <svg className="h-4 w-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                      d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                  </svg>
+                )}
               </div>
-              {phase === 'streaming' && (
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-200 border-t-blue-500" />
-              )}
-              {phase === 'error' && (
-                <svg className="h-4 w-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                    d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
-                </svg>
+              {/* Context batch actions — shown when there are annotated mutations */}
+              {done > 0 && (
+                <div className="flex items-center gap-2 border-t border-slate-100 px-4 py-1.5">
+                  {checkedIds.size > 0 && (
+                    <button
+                      onClick={() => {
+                        const cards = mutations
+                          .filter((m) => checkedIds.has(m.mutation_id))
+                          .map(mutationToCard)
+                          .filter(Boolean) as ContextCard[]
+                        addCardsToContext(cards)
+                        setCheckedIds(new Set())
+                        inputRef.current?.focus()
+                      }}
+                      className="flex items-center gap-1 rounded-md bg-slate-900 px-2 py-1 text-[10px] font-semibold text-white transition-colors hover:bg-slate-700"
+                    >
+                      <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                      </svg>
+                      Add {checkedIds.size} selected
+                    </button>
+                  )}
+                  <button
+                    onClick={() => {
+                      const cards = mutations.map(mutationToCard).filter(Boolean) as ContextCard[]
+                      addCardsToContext(cards)
+                      setCheckedIds(new Set())
+                      inputRef.current?.focus()
+                    }}
+                    className="flex items-center gap-1 rounded-md border border-slate-200 px-2 py-1 text-[10px] font-medium text-slate-600 transition-colors hover:bg-slate-50"
+                  >
+                    Add all
+                  </button>
+                  {checkedIds.size > 0 && (
+                    <button
+                      onClick={() => setCheckedIds(new Set())}
+                      className="ml-auto text-[10px] text-slate-400 hover:text-slate-600"
+                    >
+                      Clear
+                    </button>
+                  )}
+                </div>
               )}
             </div>
 
@@ -377,39 +449,63 @@ export default function AgentPanel({
                   <p className="text-xs">No variants were loaded.</p>
                 </li>
               )}
-              {mutations.map((m) => (
-                <li key={m.mutation_id}>
-                  <button
-                    onClick={() => onSelect(m.mutation_id)}
-                    className="w-full px-4 py-2 text-left transition-colors hover:bg-slate-50"
-                  >
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="min-w-0 truncate font-mono text-xs font-medium text-slate-700">
-                        {m.mutation_id}
-                      </span>
-                      {m.status === 'done' && m.hydrated && (
-                        <span className={`flex-shrink-0 rounded border px-1.5 py-0.5 text-[10px] font-semibold ${effectColors[m.hydrated.estimated_effect as EffectType] ?? 'bg-slate-100 text-slate-600 border-slate-200'}`}>
-                          {effectShort[m.hydrated.estimated_effect as EffectType] ?? m.hydrated.estimated_effect.slice(0, 4).toUpperCase()}
-                        </span>
-                      )}
-                      {m.status === 'hydrating' && (
-                        <span className="h-3 w-3 flex-shrink-0 animate-spin rounded-full border-2 border-slate-200 border-t-blue-400" />
-                      )}
-                      {m.status === 'failed' && (
-                        <span className="flex-shrink-0 rounded border border-red-200 bg-red-50 px-1.5 py-0.5 text-[10px] font-semibold text-red-500">
-                          ERR
-                        </span>
-                      )}
+              {mutations.map((m) => {
+                const isChecked = checkedIds.has(m.mutation_id)
+                const canCheck  = m.status === 'done' && !!m.hydrated
+                return (
+                  <li key={m.mutation_id} className={`flex items-stretch ${isChecked ? 'bg-slate-50' : ''}`}>
+                    {/* Checkbox */}
+                    <div className="flex items-center pl-3 pr-1">
+                      <input
+                        type="checkbox"
+                        checked={isChecked}
+                        disabled={!canCheck}
+                        onChange={(e) => {
+                          e.stopPropagation()
+                          setCheckedIds((prev) => {
+                            const next = new Set(prev)
+                            if (e.target.checked) next.add(m.mutation_id)
+                            else next.delete(m.mutation_id)
+                            return next
+                          })
+                        }}
+                        className="h-3.5 w-3.5 cursor-pointer rounded border-slate-300 accent-slate-800 disabled:opacity-30"
+                        onClick={(e) => e.stopPropagation()}
+                      />
                     </div>
-                    {m.hydrated && (
-                      <p className="mt-0.5 text-[11px] text-slate-400">{m.hydrated.protein}</p>
-                    )}
-                    {m.status === 'failed' && m.error && (
-                      <p className="mt-0.5 line-clamp-1 text-[11px] text-red-400">{m.error}</p>
-                    )}
-                  </button>
-                </li>
-              ))}
+                    {/* Row button */}
+                    <button
+                      onClick={() => onSelect(m.mutation_id)}
+                      className="flex-1 py-2 pr-4 text-left transition-colors hover:bg-slate-50"
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="min-w-0 truncate font-mono text-xs font-medium text-slate-700">
+                          {m.mutation_id}
+                        </span>
+                        {m.status === 'done' && m.hydrated && (
+                          <span className={`flex-shrink-0 rounded border px-1.5 py-0.5 text-[10px] font-semibold ${effectColors[m.hydrated.estimated_effect as EffectType] ?? 'bg-slate-100 text-slate-600 border-slate-200'}`}>
+                            {effectShort[m.hydrated.estimated_effect as EffectType] ?? m.hydrated.estimated_effect.slice(0, 4).toUpperCase()}
+                          </span>
+                        )}
+                        {m.status === 'hydrating' && (
+                          <span className="h-3 w-3 flex-shrink-0 animate-spin rounded-full border-2 border-slate-200 border-t-blue-400" />
+                        )}
+                        {m.status === 'failed' && (
+                          <span className="flex-shrink-0 rounded border border-red-200 bg-red-50 px-1.5 py-0.5 text-[10px] font-semibold text-red-500">
+                            ERR
+                          </span>
+                        )}
+                      </div>
+                      {m.hydrated && (
+                        <p className="mt-0.5 text-[11px] text-slate-400">{m.hydrated.protein}</p>
+                      )}
+                      {m.status === 'failed' && m.error && (
+                        <p className="mt-0.5 line-clamp-1 text-[11px] text-red-400">{m.error}</p>
+                      )}
+                    </button>
+                  </li>
+                )
+              })}
             </ul>
           </>
         )}
@@ -435,8 +531,34 @@ export default function AgentPanel({
               d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
           </svg>
           <p className="text-xs font-semibold text-slate-700">Agent Workspace</p>
-          <div className="ml-auto flex items-center gap-2">
+          <div className="ml-auto flex items-center gap-1.5">
             {filename && <p className="truncate text-[10px] text-slate-400">{filename}</p>}
+            {/* Session history toggle */}
+            {sessions.length > 0 && (
+              <button
+                onClick={() => setHistoryOpen((v) => !v)}
+                title="Conversation history"
+                className={`flex items-center gap-1 rounded px-1.5 py-1 text-[10px] font-medium transition-colors ${
+                  historyOpen
+                    ? 'bg-slate-100 text-slate-700'
+                    : 'text-slate-400 hover:text-slate-600'
+                }`}
+              >
+                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                {sessions.length}
+              </button>
+            )}
+            <button
+              onClick={onNewSession}
+              disabled={busy}
+              title="New conversation"
+              className="flex-shrink-0 rounded text-[10px] font-medium text-slate-400 transition-colors hover:text-slate-600 disabled:opacity-40"
+            >
+              + New
+            </button>
             {messages.length > 0 && (
               <button
                 onClick={onClearChat}
@@ -444,11 +566,44 @@ export default function AgentPanel({
                 title="Clear the conversation"
                 className="flex-shrink-0 rounded text-[10px] font-medium text-slate-400 transition-colors hover:text-slate-600 disabled:opacity-40"
               >
-                Clear chat
+                Clear
               </button>
             )}
           </div>
         </div>
+
+        {/* ── Session history panel ── */}
+        {historyOpen && sessions.length > 0 && (
+          <div className="flex-shrink-0 border-b border-slate-100 bg-slate-50">
+            <div className="max-h-48 overflow-y-auto">
+              {sessions.map((s) => {
+                const isActive = s.session_id === sessionId
+                const date = new Date(s.updated_at)
+                const label = date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
+                  + ' ' + date.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })
+                return (
+                  <button
+                    key={s.session_id}
+                    onClick={() => { onSwitchSession(s.session_id); setHistoryOpen(false) }}
+                    className={`w-full px-4 py-2 text-left transition-colors hover:bg-slate-100 ${
+                      isActive ? 'bg-slate-100' : ''
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      {isActive && (
+                        <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-blue-500" />
+                      )}
+                      <p className={`flex-1 truncate text-xs ${isActive ? 'font-semibold text-slate-800' : 'text-slate-600'}`}>
+                        {s.title}
+                      </p>
+                    </div>
+                    <p className="mt-0.5 text-[10px] text-slate-400 pl-3.5">{label} · {s.messages.length} msgs</p>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        )}
 
         <div ref={scrollRef} className="flex-1 overflow-y-auto py-3">
           {threads.length === 0 ? (

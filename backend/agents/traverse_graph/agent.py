@@ -25,6 +25,22 @@ import logging
 import backend.neo4j_http as neo4j_http
 from backend.agents import drug_routing, ttd, ttd_writer
 from backend.agents.traverse_graph import cypher, planner, reasoner
+from backend.agents.classifier.gap_detector import check_coverage
+from backend.agents.classifier.graph_lookup import load_graph
+
+# Loaded once at import time; failures are silenced so the rest of the agent
+# still works if the classifier graph file is missing.
+_CLASSIFIER_GRAPH: dict | None = None
+
+
+def _get_classifier_graph() -> dict | None:
+    global _CLASSIFIER_GRAPH
+    if _CLASSIFIER_GRAPH is None:
+        try:
+            _CLASSIFIER_GRAPH = load_graph()
+        except Exception:
+            pass
+    return _CLASSIFIER_GRAPH
 
 log = logging.getLogger(__name__)
 
@@ -147,6 +163,36 @@ def _enrich_edges(subgraph):
     return {"nodes": list(nodes_by.values()), "edges": edges}
 
 
+def _coverage_evidence_text(reports: list) -> str:
+    """Format check_coverage results as a plain-text block for the reasoner.
+
+    Only includes mutations that were recognised by the static graph.  Reports
+    with unknown_mutation=True are silently skipped — they contribute nothing.
+    """
+    lines = []
+    for r in reports:
+        if r.unknown_mutation:
+            continue
+        gene = r.gene or r.mutation
+        direct = r.direct_drugs
+        gap_names = ", ".join(sorted(r.gap_pathway_ids)) or "none"
+        covered_names = ", ".join(sorted(r.covered_pathway_ids)) or "none"
+
+        lines.append(f"  {gene} ({r.mutation}):")
+        if direct:
+            drug_list = ", ".join(d["drug"] for d in direct)
+            lines.append(f"    direct-target drugs: {drug_list}")
+            lines.append(f"    pathways covered: {covered_names}")
+        else:
+            lines.append("    no direct-target drugs found in static graph")
+        if r.gap_pathway_ids:
+            lines.append(f"    uncovered activated pathways (gaps): {gap_names}")
+
+    if not lines:
+        return ""
+    return "STATIC GRAPH DRUG COVERAGE (classifier):\n" + "\n".join(lines)
+
+
 def _ttd_evidence_text(drug_hits: list) -> str:
     """Format TTD drug hits as a plain-text block for the reasoner."""
     if not drug_hits:
@@ -237,6 +283,47 @@ def run(question, profile_id=None, mutations=None, context=None, history=None):
     if mode == "lookup":
         report = reasoner.summarize(result, profile=profile, evidence=evidence)
     else:
+        try:
+            routing = drug_routing.route(mutations, context)
+            evidence = drug_routing.evidence_text(mutations, context)
+        except Exception:
+            routing, evidence = [], ""
+
+        ttd_block = _ttd_evidence_text(ttd_drug_hits)
+        if ttd_block:
+            evidence = f"{evidence}\n\n{ttd_block}".strip() if evidence else ttd_block
+
+        # ── Coverage check: run check_coverage for every context mutation,
+        #    then let mutation_to_drugs results surface as grounded evidence.
+        #    If coverage report exists (non-unknown_mutation), the agent can
+        #    decide to discuss drugs / gaps; unknown mutations are silently
+        #    skipped so the reasoner never sees noise. ──────────────────────
+        classifier_graph = _get_classifier_graph()
+        if classifier_graph is not None:
+            # Build candidate mutation strings from context cards and mutations.
+            # The static graph uses "GENE VARIANT" keys (e.g. "KRAS G12C").
+            candidate_mutations: list[str] = []
+            for c in (context or []):
+                mid = c.get("mutation_id") or ""
+                if mid:
+                    candidate_mutations.append(mid)
+            for m in (mutations or []):
+                mid = m.get("mutation_id") or ""
+                if mid and mid not in candidate_mutations:
+                    candidate_mutations.append(mid)
+
+            coverage_reports = []
+            for mut_str in candidate_mutations:
+                try:
+                    report_obj = check_coverage(classifier_graph, mut_str)
+                    coverage_reports.append(report_obj)
+                except Exception:
+                    pass
+
+            coverage_block = _coverage_evidence_text(coverage_reports)
+            if coverage_block:
+                evidence = f"{evidence}\n\n{coverage_block}".strip() if evidence else coverage_block
+
         report = reasoner.reason(question, result, profile=profile, history=convo, evidence=evidence)
 
     pathway_ids = [

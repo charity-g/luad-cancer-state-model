@@ -22,6 +22,106 @@ def list_profiles():
     return result["rows"]
 
 
+_OUTCOME_GENES = {
+    # Cell cycle / proliferation
+    "MYC", "CCND1", "CCND2", "CDK4", "CDK6", "CDK2", "RB1", "E2F1", "PCNA",
+    # MAPK → proliferation
+    "MAPK1", "MAPK3", "MAP2K1", "MAP2K2", "BRAF", "RAF1", "HRAS", "NRAS",
+    # PI3K-AKT-mTOR growth
+    "AKT1", "AKT2", "MTOR", "RPS6KB1", "PIK3CA", "PIK3CB",
+    # Apoptosis
+    "BCL2", "BCL2L1", "MCL1", "CASP3", "CASP9", "BAX", "BAD", "PARP1",
+    # Tumor suppressors
+    "TP53", "PTEN", "CDKN2A", "CDKN1A", "CDKN1B",
+}
+
+_OUTCOME_CATEGORY = {
+    "MYC": "growth", "CCND1": "proliferation", "CCND2": "proliferation",
+    "CDK4": "proliferation", "CDK6": "proliferation", "CDK2": "proliferation",
+    "RB1": "proliferation", "E2F1": "proliferation",
+    "MAPK1": "proliferation", "MAPK3": "proliferation",
+    "MAP2K1": "proliferation", "MAP2K2": "proliferation",
+    "BRAF": "proliferation", "RAF1": "proliferation",
+    "AKT1": "growth", "AKT2": "growth", "MTOR": "growth",
+    "PIK3CA": "growth", "PIK3CB": "growth",
+    "BCL2": "survival", "BCL2L1": "survival", "MCL1": "survival",
+    "CASP3": "apoptosis", "CASP9": "apoptosis", "BAX": "apoptosis",
+    "TP53": "tumor_suppressor", "PTEN": "tumor_suppressor",
+    "CDKN2A": "tumor_suppressor", "CDKN1A": "tumor_suppressor",
+}
+
+
+@router.get("/profiles/{profile_id}/ppi/cascade")
+def get_profile_cascade(profile_id: str):
+    """Cascade PPI from the profile's mutated proteins outward through signaling edges.
+
+    Traverses two hops from each seed gene via ACTIVATES / INHIBITS /
+    PHOSPHORYLATES / DEPHOSPHORYLATES / REGULATES_EXPRESSION_OF relationships.
+    Tags each returned gene node with:
+      - is_seed          True when the gene is directly mutated in this profile
+      - outcome_category e.g. 'proliferation' | 'growth' | 'apoptosis' | None
+    """
+    # Step 1: collect seed genes + mutation effects
+    seed_cypher = """
+    MATCH (prof:Profile {profile_id: $profile_id})
+          -[:HAS_MUTATION]->(m:Mutation)-[:AFFECTS]->(p:Protein)
+    RETURN p.gene_symbol     AS gene,
+           m.estimated_effect AS effect,
+           m.mutation_id      AS mutation_id
+    """
+    try:
+        seed_result = run_read(seed_cypher, {"profile_id": profile_id})
+    except RuntimeError as e:
+        raise HTTPException(status_code=502, detail=str(e))
+
+    rows = seed_result.get("rows") or []
+    if not rows:
+        raise HTTPException(status_code=404, detail=f"Profile '{profile_id}' not found or has no mutations")
+
+    seed_genes: set[str] = set()
+    mutation_effects: dict[str, dict] = {}
+    for row in rows:
+        gene = row.get("gene") or ""
+        if gene:
+            seed_genes.add(gene)
+            mutation_effects[gene] = {
+                "estimated_effect": row.get("effect"),
+                "mutation_id": row.get("mutation_id"),
+            }
+
+    # Step 2: two-hop cascade outward from seed genes
+    cascade_cypher = """
+    MATCH (g1:Gene)-[r1:ACTIVATES|INHIBITS|PHOSPHORYLATES|DEPHOSPHORYLATES|REGULATES_EXPRESSION_OF]->(g2:Gene)
+    WHERE g1.symbol IN $seed_genes
+    OPTIONAL MATCH (g2)-[r2:ACTIVATES|INHIBITS|PHOSPHORYLATES|DEPHOSPHORYLATES|REGULATES_EXPRESSION_OF]->(g3:Gene)
+    RETURN g1, r1, g2, r2, g3
+    LIMIT 300
+    """
+    try:
+        cascade_result = run_read(cascade_cypher, {"seed_genes": list(seed_genes)})
+    except RuntimeError as e:
+        raise HTTPException(status_code=502, detail=str(e))
+
+    subgraph = cascade_result["subgraph"]
+
+    # Step 3: annotate each gene node
+    for node in subgraph["nodes"]:
+        sym = str(node.get("symbol") or node.get("gene_symbol") or node.get("key") or "")
+        node["is_seed"] = sym in seed_genes
+        node["outcome_category"] = _OUTCOME_CATEGORY.get(sym)
+        node["is_outcome"] = sym in _OUTCOME_GENES
+        if sym in mutation_effects:
+            node.update(mutation_effects[sym])
+
+    if not subgraph["nodes"]:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No signaling interactions found for profile '{profile_id}'"
+        )
+
+    return subgraph
+
+
 @router.get("/profiles/{profile_id}/ppi")
 def get_profile_ppi(profile_id: str):
     """Return protein-protein interaction subgraph scoped to a profile.
@@ -75,6 +175,28 @@ def get_profile_ppi(profile_id: str):
                             detail=f"No PPI data found for profile '{profile_id}'")
 
     return subgraph
+
+
+@router.get("/profiles/{profile_id}/drugs")
+def get_profile_drugs(profile_id: str):
+    """Return all Drug nodes linked to proteins mutated in this profile."""
+    cypher = """
+    MATCH (prof:Profile {profile_id: $profile_id})
+          -[:HAS_MUTATION]->(m:Mutation)-[:AFFECTS]->(p:Protein)
+          <-[:TARGETS]-(d:Drug)
+    RETURN d.drug_name       AS drug_name,
+           d.drugbank_id     AS drugbank_id,
+           d.approval_status AS approval_status,
+           d.mechanism       AS mechanism,
+           p.gene_symbol     AS gene_symbol,
+           m.estimated_effect AS estimated_effect,
+           m.mutation_id     AS mutation_id
+    """
+    try:
+        result = run_read(cypher, {"profile_id": profile_id})
+    except RuntimeError as e:
+        raise HTTPException(status_code=502, detail=str(e))
+    return result["rows"]
 
 
 @router.get("/profiles/{profile_id}/graph")

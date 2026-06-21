@@ -1,9 +1,5 @@
+import { useRef, useState, useCallback, useEffect } from 'react'
 import type { Subgraph, SubgraphNode } from '../types'
-
-// Renders the exact subgraph the agent traversed, in the dark SVG style of
-// PathwayGraph. Auto-layout: ordered columns by node type
-// (mutation -> gene -> pathway -> other). Only non-empty columns get space, so
-// the picture spreads to fill the (narrow) chat panel and stays legible.
 
 // Column layout: Mutation(0) → Gene/ProteinTarget(1) → Pathway(2) → Drug/Compound/Other(3)
 const KIND_ORDER = ['Mutation', 'Gene', 'ProteinTarget', 'Pathway', 'Drug', 'Compound', 'Disease']
@@ -16,9 +12,9 @@ const KIND_COL: Record<string, number> = {
 const KIND_COLOR: Record<string, string> = {
   Mutation:      '#ef4444',
   Gene:          '#3b82f6',
-  ProteinTarget: '#06b6d4',  // cyan — therapeutic target
+  ProteinTarget: '#06b6d4',
   Pathway:       '#22c55e',
-  Drug:          '#f59e0b',  // amber — drug
+  Drug:          '#f59e0b',
   Compound:      '#a855f7',
   Disease:       '#64748b',
 }
@@ -29,11 +25,11 @@ const MARGIN_X = 80
 const R = 22
 const ROW = 84
 const TOP = 64
-const FS_NODE = 13   // node labels
-const FS_PATH = 12   // pathway box text
-const FS_EDGE = 11   // edge type labels
-const FS_HEAD = 12   // column headers
-const CHAR_W = 0.62  // monospace char width as fraction of font size
+const FS_NODE = 13
+const FS_PATH = 12
+const FS_EDGE = 11
+const FS_HEAD = 12
+const CHAR_W = 0.62
 
 function kind(n: SubgraphNode): string {
   return (n.labels && n.labels[0]) || 'Other'
@@ -51,9 +47,6 @@ function pillWidth(text: string, fs: number): number {
   return text.length * fs * CHAR_W + 8
 }
 
-// Wrap a (possibly long) pathway name to lines of at most `maxChars`, breaking
-// on spaces/underscores and hard-breaking any single token that is still too
-// long, so the full name is shown inside its box instead of being clipped.
 function wrapLabel(text: string, maxChars: number, maxLines: number): string[] {
   const lines: string[] = []
   let cur = ''
@@ -77,8 +70,6 @@ function wrapLabel(text: string, maxChars: number, maxLines: number): string[] {
   return lines.length ? lines : [text]
 }
 
-// Dark rounded background so a label stays readable even when it lands near a
-// line or another label.
 function Pill({ x, y, text, fs, fill }: { x: number; y: number; text: string; fs: number; fill: string }) {
   const w = pillWidth(text, fs)
   return (
@@ -89,12 +80,149 @@ function Pill({ x, y, text, fs, fill }: { x: number; y: number; text: string; fs
   )
 }
 
+// ── node detail fields to display in popup ────────────────────────────────────
+
+const SKIP_FIELDS = new Set(['id', 'labels', 'label', 'symbol'])
+
+function formatVal(v: unknown): string {
+  if (v === null || v === undefined) return ''
+  if (typeof v === 'object') return JSON.stringify(v)
+  return String(v)
+}
+
+// ── popup ─────────────────────────────────────────────────────────────────────
+
+interface PopupProps {
+  node: SubgraphNode
+  px: number   // pixel position relative to container
+  py: number
+  containerW: number
+  containerH: number
+  onAddContext: (node: SubgraphNode) => void
+  onClose: () => void
+}
+
+function NodePopup({ node, px, py, containerW, containerH, onAddContext, onClose }: PopupProps) {
+  const POPUP_W = 220
+  const POPUP_H_EST = 160
+  const PADDING = 12
+
+  // keep popup inside container
+  let left = px - POPUP_W / 2
+  let top  = py - POPUP_H_EST - 16
+  if (left < PADDING) left = PADDING
+  if (left + POPUP_W > containerW - PADDING) left = containerW - PADDING - POPUP_W
+  if (top < PADDING) top = py + 32
+
+  const k     = kind(node)
+  const color = KIND_COLOR[k] || '#94a3b8'
+  const name  = nodeLabel(node)
+
+  // Collect extra displayable fields (skip structural & empty)
+  const extras = Object.entries(node).filter(
+    ([key, val]) => !SKIP_FIELDS.has(key) && val !== null && val !== undefined && val !== '',
+  )
+
+  return (
+    <>
+      {/* backdrop to close on outside click */}
+      <div className="fixed inset-0 z-10" onClick={onClose} />
+
+      <div
+        className="absolute z-20 w-56 rounded-xl border border-slate-600 bg-slate-800 shadow-2xl"
+        style={{ left, top }}
+      >
+        {/* header */}
+        <div className="flex items-center gap-2 rounded-t-xl border-b border-slate-700 px-3 py-2.5"
+          style={{ borderLeftWidth: 3, borderLeftColor: color }}>
+          <span
+            className="inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full text-[9px] font-bold"
+            style={{ background: color + '33', color }}
+          >
+            {k[0]}
+          </span>
+          <div className="min-w-0">
+            <p className="truncate text-xs font-semibold text-slate-100">{name}</p>
+            <p className="text-[10px]" style={{ color }}>{k}</p>
+          </div>
+          <button
+            onClick={onClose}
+            className="ml-auto flex-shrink-0 text-slate-500 hover:text-slate-300"
+          >
+            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        {/* properties */}
+        {extras.length > 0 && (
+          <div className="space-y-1.5 px-3 py-2.5">
+            {extras.map(([key, val]) => (
+              <div key={key} className="flex gap-2">
+                <span className="min-w-0 flex-shrink-0 text-[10px] font-medium capitalize text-slate-400">
+                  {key.replace(/_/g, ' ')}
+                </span>
+                <span className="min-w-0 truncate text-[10px] text-slate-300">
+                  {formatVal(val)}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* add to context */}
+        <div className={`px-3 pb-3 ${extras.length === 0 ? 'pt-3' : 'pt-1'}`}>
+          <button
+            onClick={() => { onAddContext(node); onClose() }}
+            className="flex w-full items-center justify-center gap-1.5 rounded-lg py-1.5 text-xs font-semibold transition-colors"
+            style={{ background: color + '22', color }}
+          >
+            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                d="M12 4v16m8-8H4" />
+            </svg>
+            Add to context
+          </button>
+        </div>
+      </div>
+    </>
+  )
+}
+
+// ── main ──────────────────────────────────────────────────────────────────────
+
+interface Selected {
+  node: SubgraphNode
+  svgX: number   // SVG viewBox coords
+  svgY: number
+}
+
 export default function SubgraphView(
-  { subgraph, maxHeight = 460, fill = false }:
-  { subgraph: Subgraph; maxHeight?: number; fill?: boolean },
+  { subgraph, maxHeight = 460, fill = false, onNodeClick }:
+  { subgraph: Subgraph; maxHeight?: number; fill?: boolean; onNodeClick?: (node: SubgraphNode) => void },
 ) {
-  // Bucket nodes into their type-columns, then keep only the non-empty ones so
-  // they spread evenly across the available width.
+  const svgRef       = useRef<SVGSVGElement>(null)
+  const wrapRef      = useRef<HTMLDivElement>(null)
+  const [sel, setSel] = useState<Selected | null>(null)
+  const [popupPx, setPopupPx] = useState<{ x: number; y: number } | null>(null)
+
+  // Convert SVG viewBox coords → pixel coords relative to the wrapper div
+  const toPixel = useCallback((svgX: number, svgY: number, viewH: number) => {
+    const svg  = svgRef.current
+    const wrap = wrapRef.current
+    if (!svg || !wrap) return null
+    const svgRect  = svg.getBoundingClientRect()
+    const wrapRect = wrap.getBoundingClientRect()
+    const scaleX   = svgRect.width  / W
+    const scaleY   = svgRect.height / viewH
+    return {
+      x: (svgX * scaleX) + (svgRect.left - wrapRect.left),
+      y: (svgY * scaleY) + (svgRect.top  - wrapRect.top),
+    }
+  }, [])
+
+  // Bucket nodes into columns
   const buckets: SubgraphNode[][] = [[], [], [], []]
   for (const n of subgraph.nodes) buckets[colOf(n)].push(n)
   const used = buckets
@@ -122,8 +250,31 @@ export default function SubgraphView(
     (e) => pos[e.source] && pos[e.target] && e.source !== e.target,
   )
 
+  function handleNodeClick(n: SubgraphNode, svgX: number, svgY: number) {
+    if (sel?.node.id === n.id) { setSel(null); setPopupPx(null); return }
+    setSel({ node: n, svgX, svgY })
+    const px = toPixel(svgX, svgY, H)
+    setPopupPx(px)
+  }
+
+  // Recompute pixel position on window resize
+  useEffect(() => {
+    if (!sel) return
+    const update = () => {
+      const px = toPixel(sel.svgX, sel.svgY, H)
+      setPopupPx(px)
+    }
+    window.addEventListener('resize', update)
+    return () => window.removeEventListener('resize', update)
+  }, [sel, H, toPixel])
+
+  const wrapH = wrapRef.current?.getBoundingClientRect().height ?? 400
+
   return (
-    <div className={`overflow-hidden rounded-xl border border-slate-700 bg-slate-900 ${fill ? 'flex h-full w-full flex-col' : 'mt-2'}`}>
+    <div
+      ref={wrapRef}
+      className={`relative overflow-hidden rounded-xl border border-slate-700 bg-slate-900 ${fill ? 'flex h-full w-full flex-col' : 'mt-2'}`}
+    >
       <div className="flex flex-shrink-0 items-center justify-between border-b border-slate-700/60 px-3 py-1.5">
         <span className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
           Agent reasoning path
@@ -140,6 +291,7 @@ export default function SubgraphView(
       </div>
 
       <svg
+        ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
         preserveAspectRatio="xMidYMid meet"
         className={fill ? 'min-h-0 w-full flex-1' : 'w-full'}
@@ -160,15 +312,12 @@ export default function SubgraphView(
           const sameCol = Math.abs(s.x - t.x) < 1
 
           if (sameCol) {
-            // Bow the edge out to the side so it doesn't run straight through the
-            // stacked nodes in this column. Bow away from the nearer wall.
             const bow = (s.x > W / 2 ? -1 : 1) * 52
             const cx = s.x + bow, cy = (s.y + t.y) / 2
             const sd = Math.hypot(cx - s.x, cy - s.y) || 1
             const ed = Math.hypot(t.x - cx, t.y - cy) || 1
             const sx = s.x + ((cx - s.x) / sd) * R, sy = s.y + ((cy - s.y) / sd) * R
             const ex = t.x - ((t.x - cx) / ed) * (R + 9), ey = t.y - ((t.y - cy) / ed) * (R + 9)
-            // Quadratic midpoint (t=0.5): 0.25*P0 + 0.5*C + 0.25*P2
             const lx = 0.25 * sx + 0.5 * cx + 0.25 * ex
             const ly = 0.25 * sy + 0.5 * cy + 0.25 * ey
             return (
@@ -184,7 +333,6 @@ export default function SubgraphView(
           const ux = dx / len, uy = dy / len
           const x1 = s.x + ux * R, y1 = s.y + uy * R
           const x2 = t.x - ux * (R + 9), y2 = t.y - uy * (R + 9)
-          // Stagger labels of near-parallel edges so they don't pile up.
           const f = i % 2 ? 0.40 : 0.60
           const lx = x1 + (x2 - x1) * f
           const ly = y1 + (y2 - y1) * f
@@ -202,18 +350,35 @@ export default function SubgraphView(
           const k = kind(n)
           const color = KIND_COLOR[k] || '#94a3b8'
           const name = nodeLabel(n)
+          const isSelected = sel?.node.id === n.id
+
           if (k === 'Pathway') {
             const lines = wrapLabel(name, 18, 3)
             const longest = Math.max(...lines.map((l) => l.length))
             const lineH = FS_PATH + 3
-            // Fit the box to the text, but never let it run past the viewBox edge.
             const maxW = 2 * Math.min(p.x, W - p.x) - 8
             const w = Math.min(maxW, Math.max(80, longest * FS_PATH * CHAR_W + 16))
             const h = lines.length * lineH + 12
             const y0 = p.y - ((lines.length - 1) * lineH) / 2
             return (
-              <g key={n.id}>
-                <rect x={p.x - w / 2} y={p.y - h / 2} width={w} height={h} rx={7} fill={color + '22'} stroke={color} strokeWidth={1.4} />
+              <g
+                key={n.id}
+                onClick={() => handleNodeClick(n, p.x, p.y)}
+                style={{ cursor: 'pointer' }}
+              >
+                <rect
+                  x={p.x - w / 2} y={p.y - h / 2} width={w} height={h} rx={7}
+                  fill={color + (isSelected ? '44' : '22')}
+                  stroke={color}
+                  strokeWidth={isSelected ? 2.5 : 1.4}
+                />
+                {isSelected && (
+                  <rect
+                    x={p.x - w / 2 - 3} y={p.y - h / 2 - 3}
+                    width={w + 6} height={h + 6} rx={10}
+                    fill="none" stroke={color} strokeWidth={1} strokeDasharray="4 3" opacity={0.5}
+                  />
+                )}
                 <text x={p.x} y={y0} fontSize={FS_PATH} fill={color} textAnchor="middle" dominantBaseline="middle">
                   {lines.map((ln, li) => (
                     <tspan key={li} x={p.x} dy={li === 0 ? 0 : lineH}>{ln}</tspan>
@@ -222,14 +387,48 @@ export default function SubgraphView(
               </g>
             )
           }
+
           return (
-            <g key={n.id}>
-              <circle cx={p.x} cy={p.y} r={R} fill={color + '22'} stroke={color} strokeWidth={1.7} />
+            <g
+              key={n.id}
+              onClick={() => handleNodeClick(n, p.x, p.y)}
+              style={{ cursor: 'pointer' }}
+            >
+              {/* outer glow ring when selected */}
+              {isSelected && (
+                <circle cx={p.x} cy={p.y} r={R + 7} fill="none" stroke={color} strokeWidth={1.2} strokeDasharray="4 3" opacity={0.6} />
+              )}
+              <circle
+                cx={p.x} cy={p.y} r={R}
+                fill={color + (isSelected ? '44' : '22')}
+                stroke={color}
+                strokeWidth={isSelected ? 2.5 : 1.7}
+              />
               <Pill x={p.x} y={p.y + R + 12} text={clip(name, 16)} fs={FS_NODE} fill="#e2e8f0" />
             </g>
           )
         })}
       </svg>
+
+      {/* click hint */}
+      {!sel && onNodeClick && (
+        <div className="pointer-events-none absolute bottom-2 right-3 text-[9px] text-slate-600">
+          click a node for details
+        </div>
+      )}
+
+      {/* node popup */}
+      {sel && popupPx && (
+        <NodePopup
+          node={sel.node}
+          px={popupPx.x}
+          py={popupPx.y}
+          containerW={wrapRef.current?.getBoundingClientRect().width ?? 400}
+          containerH={wrapH}
+          onAddContext={(node) => onNodeClick?.(node)}
+          onClose={() => { setSel(null); setPopupPx(null) }}
+        />
+      )}
     </div>
   )
 }

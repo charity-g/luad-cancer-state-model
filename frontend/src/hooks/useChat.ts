@@ -1,5 +1,11 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
 import type { HydratedMutation, ContextCard, Subgraph, DrugHit } from '../types'
+import {
+  saveConversation,
+  loadConversation,
+  listConversations,
+  type ConversationRecord,
+} from '../db/conversations'
 import { API_BASE } from '../lib/api'
 
 export interface ChatMessage {
@@ -13,13 +19,9 @@ export interface ChatMessage {
   thread: string
   followUps?: string[]
   subgraph?: Subgraph
-  drugs?: DrugHit[]   // TTD drug hits returned by this agent turn
-  mode?: 'lookup' | 'reason'  // which pipeline path ran
-  verdict?: string    // short clinical verdict from the reasoning agent
-}
-
-function storageKey(profileId: string | null | undefined) {
-  return profileId ? `luad_chat_${profileId}` : null
+  drugs?: DrugHit[]
+  mode?: 'lookup' | 'reason'
+  verdict?: string
 }
 
 function uid() {
@@ -50,42 +52,76 @@ function errorMessage(agentId: string, text: string, context: ContextCard[], thr
   return { id: agentId, role: 'agent', content: text, isError: true, context, thread }
 }
 
-function loadHistory(key: string): ChatMessage[] {
-  try {
-    const raw = localStorage.getItem(key)
-    return raw ? (JSON.parse(raw) as ChatMessage[]) : []
-  } catch {
-    return []
-  }
-}
-
 export function useChat(getMutations: () => HydratedMutation[], profileId?: string | null) {
-  const key = storageKey(profileId)
+  const [messages, setMessages]   = useState<ChatMessage[]>([])
+  const [sessions, setSessions]   = useState<ConversationRecord[]>([])
+  const [sessionId, setSessionId] = useState<string>(() => uid())
+  const sessionCreatedAt          = useRef<number>(Date.now())
 
-  const [messages, setMessages] = useState<ChatMessage[]>(() =>
-    key ? loadHistory(key) : []
-  )
-  const [busy, setBusy] = useState(false)
-  const abortRef = useRef<AbortController | null>(null)
-  const lastRef = useRef<{ text: string; context: ContextCard[] } | null>(null)
-  const messagesRef = useRef<ChatMessage[]>(messages)
+  const [busy, setBusy]       = useState(false)
+  const abortRef              = useRef<AbortController | null>(null)
+  const lastRef               = useRef<{ text: string; context: ContextCard[] } | null>(null)
+  const messagesRef           = useRef<ChatMessage[]>(messages)
 
-  // Swap to the profile-specific history whenever the active profile changes.
+  // Keep ref in sync
+  useEffect(() => { messagesRef.current = messages }, [messages])
+
+  // When profileId changes, load its sessions and restore the most recent one
   useEffect(() => {
-    setMessages(key ? loadHistory(key) : [])
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key])
-
-  // Persist to the profile-specific key on every change.
-  useEffect(() => {
-    messagesRef.current = messages
-    if (!key) return
-    try {
-      localStorage.setItem(key, JSON.stringify(messages))
-    } catch {
-      /* storage full / unavailable — non-fatal */
+    if (!profileId) {
+      setSessions([])
+      setMessages([])
+      setSessionId(uid())
+      sessionCreatedAt.current = Date.now()
+      return
     }
-  }, [messages, key])
+    listConversations(profileId).then((rows) => {
+      setSessions(rows)
+      if (rows.length > 0) {
+        const latest = rows[0]
+        setSessionId(latest.session_id)
+        setMessages(latest.messages)
+        sessionCreatedAt.current = latest.created_at
+      } else {
+        setSessionId(uid())
+        setMessages([])
+        sessionCreatedAt.current = Date.now()
+      }
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profileId])
+
+  // Persist to IndexedDB whenever messages change
+  useEffect(() => {
+    if (!profileId || messages.length === 0) return
+    const rec: ConversationRecord = {
+      session_id:  sessionId,
+      profile_id:  profileId,
+      created_at:  sessionCreatedAt.current,
+      updated_at:  Date.now(),
+      title:       messages.find((m) => m.role === 'user')?.content.slice(0, 60) ?? 'New conversation',
+      messages,
+    }
+    saveConversation(rec).then(() =>
+      listConversations(profileId).then(setSessions)
+    )
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messages])
+
+  const switchSession = useCallback(async (id: string) => {
+    const rec = await loadConversation(id)
+    if (!rec) return
+    setSessionId(rec.session_id)
+    setMessages(rec.messages)
+    sessionCreatedAt.current = rec.created_at
+  }, [])
+
+  const newSession = useCallback(() => {
+    const id = uid()
+    setSessionId(id)
+    setMessages([])
+    sessionCreatedAt.current = Date.now()
+  }, [])
 
   const send = useCallback(
     async (text: string, context: ContextCard[]) => {
@@ -96,14 +132,12 @@ export function useChat(getMutations: () => HydratedMutation[], profileId?: stri
       abortRef.current = ac
 
       const thread = deriveThread(context)
-      // Memory is scoped to the current selection's thread, so switching nodes
-      // (e.g. KRAS -> mTOR) doesn't drag the previous topic into the answer.
       const history = messagesRef.current
         .filter((m) => !m.isError && m.content && m.thread === thread)
         .map((m) => ({ role: m.role, content: m.content }))
 
-      const userMsg: ChatMessage = { id: uid(), role: 'user', content: text.trim(), context, thread }
-      const agentId = uid()
+      const userMsg: ChatMessage  = { id: uid(), role: 'user', content: text.trim(), context, thread }
+      const agentId               = uid()
       const agentMsg: ChatMessage = { id: agentId, role: 'agent', content: '', streaming: true, context, thread }
 
       setMessages((prev) => [...prev, userMsg, agentMsg])
@@ -192,7 +226,6 @@ export function useChat(getMutations: () => HydratedMutation[], profileId?: stri
         return
       }
 
-      // Stream words into the bubble; stop() interrupts this too.
       const words = responseText.split(' ')
       let accumulated = ''
       for (const word of words) {
@@ -210,7 +243,7 @@ export function useChat(getMutations: () => HydratedMutation[], profileId?: stri
       setBusy(false)
       abortRef.current = null
     },
-    [busy, getMutations],
+    [busy, getMutations, profileId],
   )
 
   const stop = useCallback(() => {
@@ -222,11 +255,8 @@ export function useChat(getMutations: () => HydratedMutation[], profileId?: stri
   }, [busy, send])
 
   const clear = useCallback(() => {
-    setMessages([])
-    try {
-      if (key) localStorage.removeItem(key)
-    } catch { /* non-fatal */ }
-  }, [key])
+    newSession()
+  }, [newSession])
 
-  return { messages, busy, send, stop, retry, clear }
+  return { messages, busy, send, stop, retry, clear, sessions, sessionId, switchSession, newSession }
 }

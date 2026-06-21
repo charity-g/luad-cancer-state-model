@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { MutationEntry, EffectType } from '../types'
+import type { MutationEntry, EffectType, ContextCard } from '../types'
 
 const effectConfig: Record<EffectType, {
   label: string; bg: string; border: string; badge: string; dot: string; description: string
@@ -53,9 +53,10 @@ interface Props {
   profileId: string | null
   onPatched: (mutation_id: string, patch: Partial<MutationEntry>) => void
   onViewStructure: (uniprotAc: string, proteinName: string, mutationResidue: number | null) => void
+  onAddContext: (cards: ContextCard[]) => void
 }
 
-export default function MutationDetail({ entry, profileId, onPatched, onViewStructure }: Props) {
+export default function MutationDetail({ entry, profileId, onPatched, onViewStructure, onAddContext }: Props) {
   const [retrying, setRetrying]     = useState(false)
   const [retryError, setRetryError] = useState<string | null>(null)
 
@@ -276,6 +277,43 @@ export default function MutationDetail({ entry, profileId, onPatched, onViewStru
           </button>
         )
       })()}
+
+      {/* Raw input fields */}
+      {h.raw && Object.keys(h.raw).length > 0 && (
+        <div className="mt-5">
+          <h3 className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400">
+            Raw input
+          </h3>
+          <div className="divide-y divide-slate-100 rounded-lg border border-slate-200 bg-white">
+            {Object.entries(h.raw)
+              .filter(([, v]) => v !== null && v !== undefined && v !== '')
+              .map(([key, val]) => (
+                <div key={key} className="flex items-start gap-3 px-4 py-2">
+                  <span className="mt-0.5 min-w-[120px] font-mono text-[11px] text-slate-400">
+                    {key.replace(/_/g, ' ')}
+                  </span>
+                  <span className="text-xs text-slate-700">{String(val)}</span>
+                </div>
+              ))}
+          </div>
+        </div>
+      )}
+
+      {/* Add to context */}
+      <button
+        onClick={() => onAddContext([{
+          id: `${h.mutation_id}-${Date.now()}`,
+          protein: h.protein,
+          effect: effect,
+          mutation_id: h.mutation_id,
+        }])}
+        className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-100"
+      >
+        <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+        </svg>
+        Add to context
+      </button>
     </div>
   )
 }

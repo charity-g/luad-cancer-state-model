@@ -1,8 +1,10 @@
 import { NavLink, Outlet, useMatch } from 'react-router-dom'
 
 const linkClass = ({ isActive }: { isActive: boolean }) =>
-  `px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-    isActive ? 'bg-slate-900 text-white' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+  `px-1 py-2 text-sm font-medium transition-colors border-b-2 ${
+    isActive
+      ? 'border-white text-white'
+      : 'border-transparent text-white/60 hover:text-white hover:border-white/40'
   }`
 
 export default function Layout() {
@@ -10,9 +12,9 @@ export default function Layout() {
 
   return (
     <div className="app-bg flex h-screen flex-col text-slate-900">
-      <header className="flex-shrink-0 border-b border-slate-200 bg-white">
+      <header className="flex-shrink-0 border-b border-white/20 bg-white/10 backdrop-blur-sm">
         <div className="flex items-center justify-between px-5 py-3">
-          <span className="text-sm font-semibold tracking-tight text-slate-800">
+          <span className="text-sm font-semibold tracking-tight text-white">
             Cancer State Model
           </span>
           <nav className="flex gap-1">
@@ -21,6 +23,9 @@ export default function Layout() {
             </NavLink>
             <NavLink to="/model" className={linkClass}>
               Workspace
+            </NavLink>
+            <NavLink to="/acknowledgements" className={linkClass}>
+              Acknowledgements
             </NavLink>
           </nav>
         </div>
@@ -33,7 +38,7 @@ export default function Layout() {
           </div>
         </div>
       ) : (
-        <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
+        <main className="flex flex-1 min-h-0 overflow-auto">
           <Outlet />
         </main>
       )}
