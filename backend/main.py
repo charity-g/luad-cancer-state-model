@@ -13,7 +13,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from backend.agent import agent, cypher
+from backend.agents.traverse_graph import agent, cypher
 from backend.endpoints.profiles.stream import router as profiles_router
 
 app = FastAPI(title="LUAD Cell-State GraphRAG")

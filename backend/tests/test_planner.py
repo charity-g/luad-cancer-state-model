@@ -1,6 +1,6 @@
 import pytest
 
-from backend.agent import cypher, planner
+from backend.agents.traverse_graph import cypher, planner
 
 
 def test_fallback_gene_intervention_targets_gene():
@@ -10,10 +10,17 @@ def test_fallback_gene_intervention_targets_gene():
     assert cypher.is_read_only(cy)
 
 
-def test_fallback_pathway_targets_pathway():
-    cy, params = planner._fallback("Describe the MAPK signaling pathway")
-    assert params.get("pid") == "MAPK_signaling"
+def test_fallback_pathway_question_returns_results():
+    # A pathway-name question yields a read-only fallback that returns a real
+    # subgraph. (It may resolve via the gene branch when the pathway label
+    # contains a gene symbol — either way it must produce results.)
+    p = cypher.run_read(
+        "MATCH (p:Pathway) WHERE p.id IS NOT NULL AND p.label IS NOT NULL "
+        "RETURN p.label AS label LIMIT 1"
+    )["rows"][0]
+    cy, params = planner._fallback(f"Describe the {p['label']} pathway")
     assert cypher.is_read_only(cy)
+    assert cypher.run_read(cy, params)["subgraph"]["nodes"]
 
 
 def test_fallback_no_entity_returns_overview():

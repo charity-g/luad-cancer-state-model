@@ -14,7 +14,7 @@ from functools import lru_cache
 
 import anthropic
 
-from backend.agent import cypher
+from backend.agents.traverse_graph import cypher
 from backend.config import ANTHROPIC_API_KEY, PLANNER_MODEL
 
 _INTERVENTION = re.compile(
@@ -75,14 +75,24 @@ def _strip_fences(text):
 
 @lru_cache(maxsize=1)
 def _vocab():
-    rows = cypher.run_read(
-        "MATCH (g:Gene) RETURN collect(g.symbol) AS genes"
-    )["rows"][0]["genes"]
-    mut = cypher.run_read("MATCH (m:Mutation) RETURN collect(m.id) AS ids")["rows"][0]["ids"]
+    genes = cypher.run_read(
+        "MATCH (g:Gene) WHERE g.symbol IS NOT NULL RETURN collect(g.symbol) AS x"
+    )["rows"][0]["x"]
+    mut = cypher.run_read("MATCH (m:Mutation) RETURN collect(m.id) AS x")["rows"][0]["x"]
+    # Only pathways with a snake_case id can anchor a fallback query.
     paths = cypher.run_read(
-        "MATCH (p:Pathway) RETURN collect({id: p.id, label: p.label}) AS p"
-    )["rows"][0]["p"]
-    return {"genes": set(rows), "mutations": mut, "pathways": paths}
+        "MATCH (p:Pathway) WHERE p.id IS NOT NULL "
+        "RETURN collect({id: p.id, label: p.label, title: p.title}) AS x"
+    )["rows"][0]["x"]
+    return {"genes": set(genes), "mutations": mut, "pathways": paths}
+
+
+def _matches(p, q):
+    # Match the question against the pathway's label or KEGG title.
+    for field in (p.get("label"), p.get("title")):
+        if field and field.lower().replace("kegg ", "") in q:
+            return True
+    return False
 
 
 def _fallback(question):
@@ -90,7 +100,7 @@ def _fallback(question):
     tokens = {t.upper() for t in re.findall(r"[A-Za-z0-9]+", question)}
     genes = sorted(tokens & vocab["genes"])
     q = question.lower()
-    pathways = [p["id"] for p in vocab["pathways"] if (p["label"] or "").lower() in q]
+    pathways = [p["id"] for p in vocab["pathways"] if _matches(p, q)]
 
     # Intervention question about a gene -> mutation/gene -> pathway cascade + essentiality.
     if genes and _INTERVENTION.search(question):
