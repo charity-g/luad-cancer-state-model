@@ -13,6 +13,7 @@ nothing, fall back to a deterministic query.
 
 from neo4j.exceptions import Neo4jError
 
+from backend.agents import drug_routing
 from backend.agents.traverse_graph import cypher, planner, reasoner
 
 
@@ -97,7 +98,15 @@ def run(question, mutations=None, context=None, history=None):
     # query happened to return.
     result["subgraph"] = _enrich_edges(result["subgraph"])
 
-    report = reasoner.reason(question, result, profile=profile, history=convo)
+    # Drug-routing evidence (graph lookup + ML fallback) for the uploaded
+    # profile. Best-effort: a failure here must never break the chat answer.
+    try:
+        routing = drug_routing.route(mutations, context)
+        evidence = drug_routing.evidence_text(mutations, context)
+    except Exception:
+        routing, evidence = [], ""
+
+    report = reasoner.reason(question, result, profile=profile, history=convo, evidence=evidence)
     pathway_ids = [
         n.get("key") or n.get("label") or n["id"]
         for n in result["subgraph"]["nodes"]
@@ -112,4 +121,5 @@ def run(question, mutations=None, context=None, history=None):
         "subgraph": result["subgraph"],
         "rows": result["rows"],
         "cited_pathways": pathway_ids,
+        "drug_routing": routing,
     }

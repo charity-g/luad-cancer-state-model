@@ -1,0 +1,155 @@
+"""Drug-routing wiring: graph lookup + ML fallback, independent of Neo4j/LLM."""
+
+import pytest
+
+from backend.agents import drug_routing
+
+
+def _driver(gene, variant, effect="activating", lof=False):
+    return {
+        "gene": gene, "protein": gene, "hgvs_protein": variant,
+        "estimated_effect": effect, "mutation_id": "x",
+        "features": {"is_hotspot": not lof, "is_lof": lof, "is_high_impact": True,
+                     "oncogene_high_impact": not lof, "tsg_high_impact": lof},
+    }
+
+
+# Across the mutations the graph knows: variant-matched drivers resolve to their
+# direct-target drugs (no ML), while gap variants (e.g. G12C-only drugs excluded
+# for G12D/G12V) fall through to the ML classifier.
+@pytest.mark.parametrize("gene,variant,direct_drug", [
+    ("EGFR", "L858R", "osimertinib"),
+    ("EGFR", "exon19del", "osimertinib"),
+    ("KRAS", "G12C", "sotorasib"),
+    ("BRAF", "V600E", "dabrafenib"),
+    ("ALK", "fusion", "crizotinib"),
+])
+def test_direct_drug_cases_skip_ml(gene, variant, direct_drug):
+    r = drug_routing.route([_driver(gene, variant)])[0]
+    assert direct_drug in r["direct_drugs"]
+    assert r["ml_predictions"] == [], "direct-drug cases must not invoke the ML fallback"
+
+
+@pytest.mark.parametrize("variant", ["G12D", "G12V"])
+def test_kras_non_g12c_falls_back_to_ml(variant):
+    r = drug_routing.route([_driver("KRAS", variant)])[0]
+    assert r["mutation"] == f"KRAS {variant}"
+    assert "sotorasib" not in r["direct_drugs"] and "adagrasib" not in r["direct_drugs"]
+    vuln = [p for p in r["ml_predictions"] if p["predicted_vulnerable"]]
+    assert any(p["pathway_id"] in {"RAS_RAF_MEK_ERK", "MAPK_signaling"} for p in vuln)
+
+
+def _muts(*specs):
+    # spec: (protein, mutation_id, estimated_effect)
+    return [
+        {"protein": p, "mutation_id": mid, "estimated_effect": eff}
+        for p, mid, eff in specs
+    ]
+
+
+def test_egfr_l858r_routes_to_direct_drug():
+    items = drug_routing.route(_muts(("EGFR", "EGFR:p.L858R", "gain_of_function")))
+    assert len(items) == 1
+    egfr = items[0]
+    assert egfr["mutation"] == "EGFR L858R"
+    assert "osimertinib" in egfr["direct_drugs"]
+
+
+def test_kras_g12d_has_no_variant_drug_but_gets_ml_fallback():
+    items = drug_routing.route(_muts(("KRAS", "KRAS:p.G12D", "gain_of_function")))
+    kras = items[0]
+    assert kras["mutation"] == "KRAS G12D"
+    # sotorasib/adagrasib are G12C-only — must not be claimed for G12D.
+    assert "sotorasib" not in kras["direct_drugs"]
+    assert "adagrasib" not in kras["direct_drugs"]
+    # With no direct drug, the ML fallback should produce predictions.
+    assert kras["ml_predictions"], "expected ML fallback predictions for the gap"
+    p = kras["ml_predictions"][0]
+    assert 0.0 <= p["probability"] <= 1.0
+    assert p["pathway_id"] in {"MAPK_signaling", "RAS_RAF_MEK_ERK", "pathways_in_cancer"}
+
+
+def test_hgvs_protein_field_resolves_variant_when_id_is_generic():
+    # Realistic upload: mutation_id is generic ("mutation_1"); the variant comes
+    # from the hgvs_protein field threaded through from the hydrated profile.
+    muts = [{"protein": "EGFR", "mutation_id": "mutation_1",
+             "hgvs_protein": "p.L858R", "estimated_effect": "gain_of_function"}]
+    items = drug_routing.route(muts)
+    assert items[0]["mutation"] == "EGFR L858R"
+    assert "osimertinib" in items[0]["direct_drugs"]
+
+
+def test_kras_g12c_hgvs_gets_variant_specific_drug():
+    muts = [{"protein": "KRAS", "mutation_id": "mutation_2",
+             "hgvs_protein": "p.G12C", "estimated_effect": "gain_of_function"}]
+    items = drug_routing.route(muts)
+    assert items[0]["mutation"] == "KRAS G12C"
+    assert "sotorasib" in items[0]["direct_drugs"]
+
+
+def test_real_depmap_flags_used_as_ml_features():
+    # Gene + variant from raw HugoSymbol/ProteinChange, real DepMap flags as the
+    # ML features (what the model was trained on). KRAS G12D -> no direct drug,
+    # ML fallback fires using the forwarded hotspot/oncogene flags.
+    muts = [{
+        "gene": "KRAS", "protein": "KRAS", "mutation_id": "mutation_1",
+        "hgvs_protein": "p.G12D", "estimated_effect": "activating",
+        "features": {"is_hotspot": True, "is_lof": False, "is_high_impact": True,
+                     "oncogene_high_impact": True, "tsg_high_impact": False},
+    }]
+    items = drug_routing.route(muts)
+    assert items[0]["mutation"] == "KRAS G12D"
+    assert "sotorasib" not in items[0]["direct_drugs"]
+    vuln = [p for p in items[0]["ml_predictions"] if p["predicted_vulnerable"]]
+    assert vuln, "real hotspot/oncogene flags should drive a vulnerable prediction"
+
+
+def test_unknown_gene_is_skipped():
+    items = drug_routing.route(_muts(("ZZZ9", "ZZZ9:p.A1B", "gain_of_function")))
+    assert items == []
+
+
+def test_evidence_text_mentions_ml_for_kras_and_drug_for_egfr():
+    text = drug_routing.evidence_text(
+        _muts(
+            ("EGFR", "EGFR:p.L858R", "gain_of_function"),
+            ("KRAS", "KRAS:p.G12D", "gain_of_function"),
+        )
+    )
+    assert "DRUG-ROUTING EVIDENCE" in text
+    assert "osimertinib" in text
+    assert "KRAS G12D" in text
+    assert "ML" in text  # ML fallback cited for the KRAS gap
+
+
+def test_bare_gene_selection_without_mutation_signal_is_not_routed():
+    # Clicking KRAS on the graph with no variant and no effect carries nothing
+    # for the classifier to do — it must NOT emit a gene-level guess.
+    ctx = [{"protein": "KRAS", "effect": "no_effect", "mutation_id": ""}]
+    assert drug_routing.route([], ctx) == []
+    assert drug_routing.evidence_text([], ctx) == ""
+
+
+def test_selected_context_with_real_effect_is_routed():
+    # A selected node that carries a real driver call (gain_of_function) is a
+    # legitimate mutation input even without a variant string.
+    ctx = [{"protein": "KRAS", "effect": "gain_of_function", "mutation_id": ""}]
+    items = drug_routing.route([], ctx)
+    assert len(items) == 1 and items[0]["gene"] == "KRAS"
+    assert items[0]["ml_predictions"], "a real driver call should produce ML predictions"
+
+
+def test_profile_variant_preferred_over_bare_context_for_same_gene():
+    # KRAS selected (no variant) AND KRAS G12D in the profile -> use the variant.
+    ctx = [{"protein": "KRAS", "effect": "no_effect", "mutation_id": ""}]
+    muts = _muts(("KRAS", "KRAS:p.G12D", "gain_of_function"))
+    items = drug_routing.route(muts, ctx)
+    kras = [i for i in items if i["gene"] == "KRAS"]
+    assert len(kras) == 1
+    assert kras[0]["mutation"] == "KRAS G12D"
+
+
+def test_empty_inputs_no_evidence():
+    assert drug_routing.route([]) == []
+    assert drug_routing.route([], []) == []
+    assert drug_routing.evidence_text([], []) == ""

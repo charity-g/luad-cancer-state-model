@@ -129,6 +129,9 @@ export function useChat(getMutations: () => HydratedMutation[]) {
                 protein: m.protein,
                 estimated_effect: m.estimated_effect,
                 justification: m.justification,
+                hgvs_protein: m.hgvs_protein,
+                gene: m.gene,
+                features: m.features,
               })),
             }),
           })
