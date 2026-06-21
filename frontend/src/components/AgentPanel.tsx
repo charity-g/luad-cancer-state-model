@@ -177,11 +177,13 @@ interface Props {
   onRetry: () => void
   pendingContext: ContextCard | null
   onClearPendingContext: () => void
+  onClearChat: () => void
 }
 
 export default function AgentPanel({
   mutations, selected, onSelect, phase, analysisError, onDismissError, filename,
   messages, busy, onSend, onStop, onRetry, pendingContext, onClearPendingContext,
+  onClearChat,
 }: Props) {
   const panelRef  = useRef<HTMLDivElement>(null)
   const dragging  = useRef(false)
@@ -210,7 +212,9 @@ export default function AgentPanel({
 
   useEffect(() => {
     if (!pendingContext) return
-    setContextCards((prev) => prev.find((c) => c.id === pendingContext.id) ? prev : [...prev, pendingContext])
+    // Single active selection: picking a new node replaces the context so the
+    // agent answers about the currently selected node, not previous ones.
+    setContextCards([pendingContext])
     onClearPendingContext()
     inputRef.current?.focus()
   }, [pendingContext, onClearPendingContext])
@@ -347,7 +351,19 @@ export default function AgentPanel({
               d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
           </svg>
           <p className="text-xs font-semibold text-slate-700">Agent Workspace</p>
-          {filename && <p className="ml-auto truncate text-[10px] text-slate-400">{filename}</p>}
+          <div className="ml-auto flex items-center gap-2">
+            {filename && <p className="truncate text-[10px] text-slate-400">{filename}</p>}
+            {messages.length > 0 && (
+              <button
+                onClick={onClearChat}
+                disabled={busy}
+                title="Clear the conversation"
+                className="flex-shrink-0 rounded text-[10px] font-medium text-slate-400 transition-colors hover:text-slate-600 disabled:opacity-40"
+              >
+                Clear chat
+              </button>
+            )}
+          </div>
         </div>
 
         <div ref={scrollRef} className="flex-1 overflow-y-auto py-3">
