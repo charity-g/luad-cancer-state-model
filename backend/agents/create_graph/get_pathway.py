@@ -34,7 +34,7 @@ def extract_pathways_for_protein(protein: ProteinRecord):
     return [] # list of kegg pathways 
 
 def update_pathway():
-    generate code to update pathway
+    # generate graph database code to update pathway
 
 def run(profile):
     profile_id = some hash
