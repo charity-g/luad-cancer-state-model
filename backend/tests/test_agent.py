@@ -1,5 +1,5 @@
-from agents.traverse_graph import agent, cypher
-from agents.traverse_graph.reasoner import VERDICTS
+from backend.agents.traverse_graph import agent, cypher
+from backend.agents.traverse_graph.reasoner import VERDICTS
 
 EXPECTED_KEYS = {
     "question", "cypher", "plan_source", "report",

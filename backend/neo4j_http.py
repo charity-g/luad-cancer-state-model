@@ -137,7 +137,7 @@ _api = None
 def _get_api():
     global _api
     if _api is None:
-        from config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
+        from backend.config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
         _api = QueryAPI(NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD)
     return _api
 

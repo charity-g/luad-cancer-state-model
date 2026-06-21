@@ -6,11 +6,13 @@ any of this; it only talks to the FastAPI endpoints in main.py.
 
 import os
 
-# Load a local .env if present (team drops shared Aura creds there). Soft dep.
+# Load backend/.env if present (team drops shared Aura creds there). Explicit
+# path so it works regardless of the current working directory. Soft dep.
 try:
+    from pathlib import Path
     from dotenv import load_dotenv
 
-    load_dotenv()
+    load_dotenv(Path(__file__).resolve().parent / ".env")
 except ImportError:
     pass
 

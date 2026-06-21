@@ -15,7 +15,7 @@ from pathlib import Path
 from neo4j import GraphDatabase
 from neo4j.graph import Node, Relationship
 
-from config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
+from backend.config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
 
 # Transport: HTTP Query API for https:// URIs (campus-friendly), else Bolt.
 _USE_HTTP = NEO4J_URI.startswith("http")
@@ -80,7 +80,7 @@ def run_read(cypher, params=None):
     if not is_read_only(cypher):
         raise ValueError("Refusing to run non-read-only Cypher")
     if _USE_HTTP:
-        import neo4j_http
+        import backend.neo4j_http as neo4j_http
         return neo4j_http.run_read(cypher, params)
     with driver().session() as session:
         result = session.run(cypher, **(params or {}))

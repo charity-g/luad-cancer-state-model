@@ -14,8 +14,8 @@ from functools import lru_cache
 
 import anthropic
 
-from agents.traverse_graph import cypher
-from config import ANTHROPIC_API_KEY, PLANNER_MODEL
+from backend.agents.traverse_graph import cypher
+from backend.config import ANTHROPIC_API_KEY, PLANNER_MODEL
 
 _INTERVENTION = re.compile(
     r"\b(inhibit|block|suppress|knock|knockout|knockdown|target|drug|treat|"

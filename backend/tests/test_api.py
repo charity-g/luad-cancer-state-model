@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 
-from main import app
+from backend.main import app
 
 client = TestClient(app)
 
@@ -20,7 +20,7 @@ def test_graph_endpoint_returns_full_graph():
 
 
 def test_query_endpoint_contract(force_fallback):
-    from agents.traverse_graph import cypher
+    from backend.agents.traverse_graph import cypher
 
     r = client.post("/query", json={"question": "Will inhibiting KRAS help?"})
     assert r.status_code == 200

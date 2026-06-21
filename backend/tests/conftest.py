@@ -12,7 +12,7 @@ the core suite is deterministic and free even when ANTHROPIC_API_KEY is set.
 
 import pytest
 
-from agents.traverse_graph import cypher
+from backend.agents.traverse_graph import cypher
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -28,5 +28,5 @@ def graph_available():
 
 @pytest.fixture
 def force_fallback(monkeypatch):
-    monkeypatch.setattr("agents.traverse_graph.planner.ANTHROPIC_API_KEY", None)
-    monkeypatch.setattr("agents.traverse_graph.reasoner.ANTHROPIC_API_KEY", None)
+    monkeypatch.setattr("backend.agents.traverse_graph.planner.ANTHROPIC_API_KEY", None)
+    monkeypatch.setattr("backend.agents.traverse_graph.reasoner.ANTHROPIC_API_KEY", None)

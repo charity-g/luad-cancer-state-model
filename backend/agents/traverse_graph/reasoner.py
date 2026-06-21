@@ -10,7 +10,7 @@ import re
 import anthropic
 from pydantic import BaseModel
 
-from config import ANTHROPIC_API_KEY, REASONER_MODEL
+from backend.config import ANTHROPIC_API_KEY, REASONER_MODEL
 
 VERDICTS = ("beneficial", "harmful", "negligible", "uncertain")
 

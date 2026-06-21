@@ -17,8 +17,8 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
-sys.path.insert(0, str(HERE))            # upload_init (load functions + parsing)
-sys.path.insert(0, str(ROOT / "backend"))  # neo4j_http (HttpSession)
+sys.path.insert(0, str(HERE))   # upload_init (load functions + parsing)
+sys.path.insert(0, str(ROOT))   # backend package (neo4j_http)
 
 try:
     from dotenv import load_dotenv
@@ -27,7 +27,7 @@ except ImportError:
     pass
 
 import upload_init as ui
-from neo4j_http import HttpSession
+from backend.neo4j_http import HttpSession
 
 URI = os.environ["NEO4J_URI"]
 USER = os.environ.get("NEO4J_USERNAME") or os.environ.get("NEO4J_USER", "neo4j")
