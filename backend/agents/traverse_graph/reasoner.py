@@ -29,6 +29,55 @@ _SYSTEM = (
 )
 
 
+def summarize(result: dict, profile: str = "") -> dict:
+    """Lightweight summary for lookup queries — describes the returned graph in
+    1-3 sentences without mechanistic inference.  Much cheaper than reason().
+    Falls back to a deterministic node-count description if no API key.
+    """
+    sub = result["subgraph"]
+    if not sub["nodes"]:
+        return {"report": "No matching nodes found in the graph.", "verdict": None}
+
+    if ANTHROPIC_API_KEY:
+        try:
+            return _summarize_llm(sub, profile)
+        except Exception:
+            pass
+
+    # Deterministic fallback — just enumerate what was found.
+    by_label: dict[str, list[str]] = {}
+    for n in sub["nodes"]:
+        label = (n.get("labels") or ["Node"])[0]
+        name  = n.get("label") or n.get("symbol") or n.get("name") or n.get("id") or "?"
+        by_label.setdefault(label, []).append(str(name))
+    parts = [
+        f"**{lbl}** ({len(names)}): {', '.join(names[:5])}{'…' if len(names) > 5 else ''}"
+        for lbl, names in by_label.items()
+    ]
+    return {
+        "report": "Graph contains " + "; ".join(parts) + f". ({len(sub['edges'])} edges total)",
+        "verdict": None,
+    }
+
+
+def _summarize_llm(subgraph: dict, profile: str) -> dict:
+    client = anthropic.Anthropic()
+    ctx = _context(subgraph)
+    preamble = f"{profile}\n\n" if profile else ""
+    resp = client.messages.create(
+        model=REASONER_MODEL,
+        max_tokens=300,
+        system=_SYSTEM,
+        messages=[{"role": "user", "content": (
+            f"{preamble}Neo4j subgraph:\n{ctx}\n\n"
+            "Write 1-3 sentences describing what this graph contains. "
+            "Name the key entities. Do not infer mechanisms — only describe what was returned."
+        )}],
+    )
+    text = "".join(b.text for b in resp.content if b.type == "text")
+    return {"report": text, "verdict": None}
+
+
 def reason(question, result, profile="", history="", evidence=""):
     intervention = bool(_INTERVENTION.search(question))
     if ANTHROPIC_API_KEY:

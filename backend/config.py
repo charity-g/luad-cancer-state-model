@@ -34,3 +34,9 @@ ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY")
 # Planner generates Cypher (hard task -> capable model); reasoner synthesizes.
 PLANNER_MODEL = os.environ.get("PLANNER_MODEL", "claude-opus-4-8")
 REASONER_MODEL = os.environ.get("REASONER_MODEL", "claude-opus-4-8")
+
+# Therapeutic Target Database (TTD) API.
+# Set TTD_BASE_URL to the real endpoint and TTD_API_KEY to your bearer token.
+# When TTD_API_KEY is unset the TTD lookup is silently skipped.
+TTD_BASE_URL = os.environ.get("TTD_BASE_URL", "https://api.example.org/v1")
+TTD_API_KEY  = os.environ.get("TTD_API_KEY", "")

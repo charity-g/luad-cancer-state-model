@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
-import type { HydratedMutation, ContextCard, Subgraph } from '../types'
+import type { HydratedMutation, ContextCard, Subgraph, DrugHit } from '../types'
 
 export interface ChatMessage {
   id: string
@@ -12,9 +12,13 @@ export interface ChatMessage {
   thread: string
   followUps?: string[]
   subgraph?: Subgraph
+  drugs?: DrugHit[]   // TTD drug hits returned by this agent turn
+  mode?: 'lookup' | 'reason'  // which pipeline path ran
 }
 
-const STORAGE_KEY = 'luad_chat_history'
+function storageKey(profileId: string | null | undefined) {
+  return profileId ? `luad_chat_${profileId}` : null
+}
 
 function uid() {
   return Math.random().toString(36).slice(2)
@@ -44,32 +48,42 @@ function errorMessage(agentId: string, text: string, context: ContextCard[], thr
   return { id: agentId, role: 'agent', content: text, isError: true, context, thread }
 }
 
-function loadHistory(): ChatMessage[] {
+function loadHistory(key: string): ChatMessage[] {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY)
+    const raw = localStorage.getItem(key)
     return raw ? (JSON.parse(raw) as ChatMessage[]) : []
   } catch {
     return []
   }
 }
 
-export function useChat(getMutations: () => HydratedMutation[]) {
-  const [messages, setMessages] = useState<ChatMessage[]>(loadHistory)
+export function useChat(getMutations: () => HydratedMutation[], profileId?: string | null) {
+  const key = storageKey(profileId)
+
+  const [messages, setMessages] = useState<ChatMessage[]>(() =>
+    key ? loadHistory(key) : []
+  )
   const [busy, setBusy] = useState(false)
   const abortRef = useRef<AbortController | null>(null)
   const lastRef = useRef<{ text: string; context: ContextCard[] } | null>(null)
   const messagesRef = useRef<ChatMessage[]>(messages)
 
-  // Persist history across reloads; keep a ref so send() can read prior turns
-  // without being recreated on every message.
+  // Swap to the profile-specific history whenever the active profile changes.
+  useEffect(() => {
+    setMessages(key ? loadHistory(key) : [])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key])
+
+  // Persist to the profile-specific key on every change.
   useEffect(() => {
     messagesRef.current = messages
+    if (!key) return
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages))
+      localStorage.setItem(key, JSON.stringify(messages))
     } catch {
       /* storage full / unavailable — non-fatal */
     }
-  }, [messages])
+  }, [messages, key])
 
   const send = useCallback(
     async (text: string, context: ContextCard[]) => {
@@ -122,6 +136,7 @@ export function useChat(getMutations: () => HydratedMutation[]) {
             signal: ac.signal,
             body: JSON.stringify({
               question: text.trim(),
+              profile_id: profileId ?? null,
               context: context.map((c) => ({ ...c })),
               history,
               mutations: mutations.map((m) => ({
@@ -161,6 +176,9 @@ export function useChat(getMutations: () => HydratedMutation[]) {
         responseText = String(data['report'] ?? data['message'] ?? JSON.stringify(data))
         const sg = data['subgraph'] as Subgraph | undefined
         if (sg && Array.isArray(sg.nodes) && sg.nodes.length) subgraph = sg
+        const rawDrugs = data['ttd_drugs']
+        const drugs: DrugHit[] = Array.isArray(rawDrugs) && rawDrugs.length ? rawDrugs as DrugHit[] : []
+        const mode = (data['mode'] === 'lookup' || data['mode'] === 'reason') ? data['mode'] : undefined
       } catch (err) {
         if (ac.signal.aborted) return markStopped('')
         const msg = err instanceof Error ? err.message : String(err)
@@ -181,7 +199,7 @@ export function useChat(getMutations: () => HydratedMutation[]) {
 
       const followUps = deriveFollowUps(context)
       setMessages((prev) =>
-        prev.map((m) => (m.id === agentId ? { ...m, streaming: false, followUps, subgraph } : m)),
+        prev.map((m) => (m.id === agentId ? { ...m, streaming: false, followUps, subgraph, drugs: drugs.length ? drugs : undefined, mode } : m)),
       )
       setBusy(false)
       abortRef.current = null
@@ -200,9 +218,9 @@ export function useChat(getMutations: () => HydratedMutation[]) {
   const clear = useCallback(() => {
     setMessages([])
     try {
-      localStorage.removeItem(STORAGE_KEY)
+      if (key) localStorage.removeItem(key)
     } catch { /* non-fatal */ }
-  }, [])
+  }, [key])
 
   return { messages, busy, send, stop, retry, clear }
 }

@@ -57,6 +57,14 @@ export interface Subgraph {
   edges: SubgraphEdge[]
 }
 
+export interface DrugHit {
+  drug_name: string
+  drugbank_id: string
+  approval_status: string
+  mechanism: string
+  gene_symbol: string  // the protein this drug targets
+}
+
 export type MutationStatus = 'identified' | 'hydrating' | 'done' | 'failed'
 
 export interface MutationEntry {

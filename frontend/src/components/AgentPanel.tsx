@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState, useCallback, type KeyboardEvent } from 'react'
 import type { MutationEntry, ContextCard, EffectType } from '../types'
 import type { ChatMessage } from '../hooks/useChat'
+import MutationDetail from './MutationDetail'
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 
@@ -134,6 +135,23 @@ function ThreadGroup({
                   </svg>
                 </div>
                 <div className="flex-1 min-w-0">
+                  {/* Mode badge — only shown after streaming completes */}
+                  {!msg.streaming && msg.mode && (
+                    <div className="mb-1 flex items-center gap-1.5">
+                      {msg.mode === 'lookup' ? (
+                        <>
+                          <span className="rounded bg-blue-900/50 px-1.5 py-0.5 text-[10px] font-medium text-blue-300">
+                            Graph query
+                          </span>
+                          <span className="text-[10px] text-slate-500">See Agent Graph →</span>
+                        </>
+                      ) : (
+                        <span className="rounded bg-violet-900/50 px-1.5 py-0.5 text-[10px] font-medium text-violet-300">
+                          Mechanistic analysis
+                        </span>
+                      )}
+                    </div>
+                  )}
                   <div className="rounded-2xl rounded-tl-sm bg-slate-50 px-3.5 py-2.5 text-sm leading-relaxed text-slate-700">
                     {msg.streaming && msg.content === '' ? (
                       <span className="flex gap-1">

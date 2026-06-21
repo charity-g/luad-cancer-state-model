@@ -6,6 +6,24 @@
 //                                       hsa04068, hsa04115, hsa04150, hsa04151)
 //   2. lung_cancer_pathways_graph.json  (pathway-level DEG + crosstalk graph)
 //   3. luad_perturbation_layer.json     (mutation → gene → pathway causal layer)
+//   4. TTD / DrugBank                   (ProteinTarget + Drug nodes)
+//   5. OncoKB / CIViC / ClinVar        (clinical Mutation annotation)
+//
+// Node layers:
+//   Gene          — molecular/genomic view (KEGG + DepMap)
+//   ProteinTarget — therapeutic/actionable view (TTD + DrugBank)
+//   Pathway       — KEGG pathway map
+//   Mutation      — variant annotation (OncoKB / ClinVar / DepMap)
+//   Drug          — therapeutic agent (DrugBank / TTD)
+//   Compound      — KEGG small molecule
+//   Disease       — OncoTree disease
+//   CellLine      — DepMap LUAD cell lines
+//
+// Identifier harmonization:
+//   Gene.symbol = ProteinTarget.gene_symbol = Mutation.gene_symbol
+//   This is the join key between the genomic layer (KEGG/DepMap) and the
+//   therapeutic layer (TTD/DrugBank) and is also the `gene` field emitted
+//   by the patient profile SSE pipeline (HydratedMutation.gene).
 //
 // Reasoning targets:
 //   Q1. Tumor survivability under drug combinations
@@ -36,9 +54,17 @@ CREATE CONSTRAINT mutation_id_unique IF NOT EXISTS
 CREATE CONSTRAINT compound_id_unique IF NOT EXISTS
   FOR (c:Compound) REQUIRE c.id IS UNIQUE;
 
-// Drug (scaffold for DrugBank / OpenTargets integration)
+// Drug — DrugBank id as secondary unique key (id is internal)
 CREATE CONSTRAINT drug_id_unique IF NOT EXISTS
   FOR (d:Drug) REQUIRE d.id IS UNIQUE;
+CREATE CONSTRAINT drug_drugbank_id_unique IF NOT EXISTS
+  FOR (d:Drug) REQUIRE d.drugbank_id IS UNIQUE;
+
+// ProteinTarget — UniProt AC as primary key; gene_symbol as join key to Gene
+CREATE CONSTRAINT protein_target_uniprot_unique IF NOT EXISTS
+  FOR (pt:ProteinTarget) REQUIRE pt.uniprot_id IS UNIQUE;
+CREATE CONSTRAINT protein_target_id_unique IF NOT EXISTS
+  FOR (pt:ProteinTarget) REQUIRE pt.id IS UNIQUE;
 
 // Disease
 CREATE CONSTRAINT disease_id_unique IF NOT EXISTS
@@ -71,8 +97,25 @@ CREATE INDEX mutation_prevalence IF NOT EXISTS FOR (m:Mutation) ON (m.luad_preva
 CREATE INDEX mutation_gene IF NOT EXISTS FOR (m:Mutation) ON (m.gene_symbol);
 
 // Drug lookups
-CREATE INDEX drug_name IF NOT EXISTS FOR (d:Drug) ON (d.name);
+CREATE INDEX drug_name IF NOT EXISTS FOR (d:Drug) ON (d.drug_name);
 CREATE INDEX drug_class IF NOT EXISTS FOR (d:Drug) ON (d.drug_class);
+CREATE INDEX drug_approval IF NOT EXISTS FOR (d:Drug) ON (d.approval_status);
+CREATE INDEX drug_fda IF NOT EXISTS FOR (d:Drug) ON (d.fda_approved);
+
+// ProteinTarget lookups — gene_symbol bridges to Gene.symbol
+CREATE INDEX protein_target_gene_symbol IF NOT EXISTS FOR (pt:ProteinTarget) ON (pt.gene_symbol);
+CREATE INDEX protein_target_class IF NOT EXISTS FOR (pt:ProteinTarget) ON (pt.target_class);
+CREATE INDEX protein_target_oncogene IF NOT EXISTS FOR (pt:ProteinTarget) ON (pt.oncogene);
+CREATE INDEX protein_target_tsg IF NOT EXISTS FOR (pt:ProteinTarget) ON (pt.tumor_suppressor);
+
+// Profile — patient analysis sessions
+CREATE CONSTRAINT profile_id_unique IF NOT EXISTS
+  FOR (p:Profile) REQUIRE p.profile_id IS UNIQUE;
+CREATE INDEX profile_created_at IF NOT EXISTS FOR (p:Profile) ON (p.created_at);
+
+// Protein — patient-specific proteins created during SSE stream
+CREATE INDEX protein_gene_symbol IF NOT EXISTS FOR (p:Protein) ON (p.gene_symbol);
+CREATE INDEX protein_kegg_gene_id IF NOT EXISTS FOR (p:Protein) ON (p.kegg_gene_id);
 
 // Full-text search (natural language → entity lookup)
 CREATE FULLTEXT INDEX gene_text_search IF NOT EXISTS
@@ -85,7 +128,10 @@ CREATE FULLTEXT INDEX mutation_text_search IF NOT EXISTS
   FOR (m:Mutation) ON EACH [m.label, m.gene_symbol];
 
 CREATE FULLTEXT INDEX drug_text_search IF NOT EXISTS
-  FOR (d:Drug) ON EACH [d.name, d.drug_class, d.mechanism];
+  FOR (d:Drug) ON EACH [d.drug_name, d.drug_class, d.mechanism];
+
+CREATE FULLTEXT INDEX protein_target_text_search IF NOT EXISTS
+  FOR (pt:ProteinTarget) ON EACH [pt.gene_symbol, pt.protein_name, pt.target_class, pt.description];
 
 
 // -----------------------------------------------------------------------------
@@ -142,18 +188,28 @@ CREATE FULLTEXT INDEX drug_text_search IF NOT EXISTS
 // }
 
 // --- 3c. Mutation ---
-// Source: luad_perturbation_layer mutation_nodes
-// Merge key: id
+// Sources: luad_perturbation_layer + OncoKB + ClinVar + patient profile pipeline
+// Merge key: id (e.g. "EGFR_L858R")
+// Join key: gene_symbol → Gene.symbol, ProteinTarget.gene_symbol
 //
 // MERGE (m:Mutation {id: $id})
 // SET m += {
-//   label:            $label,           // e.g. "KRAS p.G12C"
-//   mutation_class:   $mutation_class,  // "hotspot"|"lof"|"fusion"|"msi"
-//   effect_direction: $effect_direction,// "gain_of_function"|"loss_of_function"|"ambiguous"
-//   gene_symbol:      $gene_symbol,     // HGNC symbol of affected gene
-//   luad_prevalence:  $luad_prevalence, // float 0-1; fraction of LUAD lines positive
-//   luad_n_positive:  $luad_n_positive, // int
-//   luad_n_total:     $luad_n_total     // int
+//   label:            $label,            // e.g. "KRAS p.G12C"
+//   gene_symbol:      $gene_symbol,      // HGNC symbol — join key to Gene + ProteinTarget
+//   protein_change:   $protein_change,   // e.g. "L858R" (HGVS p. without prefix)
+//   dna_change:       $dna_change,       // e.g. "c.2573T>G"
+//   rsid:             $rsid,             // dbSNP rsID if available
+//   // Classification (OncoKB / DepMap)
+//   mutation_class:   $mutation_class,   // "hotspot"|"lof"|"fusion"|"msi"
+//   effect_direction: $effect_direction, // "gain_of_function"|"loss_of_function"|"ambiguous"
+//   oncogenic:        $oncogenic,        // bool; OncoKB oncogenic flag
+//   effect:           $effect,           // "activating"|"inactivating"|"uncertain"
+//   hotspot:          $hotspot,          // bool
+//   cancer_type:      $cancer_type,      // string[] e.g. ["LUAD","NSCLC"]
+//   // DepMap prevalence
+//   luad_prevalence:  $luad_prevalence,  // float 0-1
+//   luad_n_positive:  $luad_n_positive,
+//   luad_n_total:     $luad_n_total
 // }
 
 // --- 3d. Compound ---
@@ -167,16 +223,45 @@ CREATE FULLTEXT INDEX drug_text_search IF NOT EXISTS
 //   link:     $link
 // }
 
-// --- 3e. Drug  (scaffold — populated from DrugBank / OpenTargets) ---
-// Merge key: id
+// --- 3e. Drug  (DrugBank + TTD) ---
+// Merge key: id (internal); drugbank_id also unique
 //
 // MERGE (d:Drug {id: $id})
 // SET d += {
-//   name:        $name,
-//   drug_class:  $drug_class,    // "TKI"|"MEKi"|"mTORi"|"immunotherapy" etc.
-//   mechanism:   $mechanism,     // "competitive inhibitor"|"allosteric" etc.
-//   fda_status:  $fda_status,    // "approved"|"investigational"
-//   targets:     $targets        // string[] gene symbols (denormalized convenience copy)
+//   drug_name:       $drug_name,
+//   drugbank_id:     $drugbank_id,     // e.g. "DB09330"
+//   ttd_id:          $ttd_id,          // TTD drug ID
+//   chembl_id:       $chembl_id,
+//   drug_class:      $drug_class,      // "TKI"|"MEKi"|"mTORi"|"immunotherapy" etc.
+//   drug_type:       $drug_type,       // "small_molecule"|"biologic"|"antibody"
+//   mechanism:       $mechanism,       // "irreversible EGFR inhibitor" etc.
+//   approval_status: $approval_status, // "FDA_APPROVED"|"PHASE3"|"PHASE2"|etc.
+//   clinical_phase:  $clinical_phase,  // "approved"|"phase3"|"phase2"|"preclinical"
+//   fda_approved:    $fda_approved,    // bool
+//   oral:            $oral,            // bool; route of administration
+//   description:     $description,
+//   targets:         $targets          // string[] gene symbols (denormalized)
+// }
+
+// --- 3h. ProteinTarget  (TTD + DrugBank; therapeutic/actionable view) ---
+// Merge key: uniprot_id (UniProt AC) or id (internal)
+// Join to Gene layer: gene_symbol → Gene.symbol
+//
+// MERGE (pt:ProteinTarget {uniprot_id: $uniprot_id})
+// SET pt += {
+//   id:               $id,              // internal id e.g. "protein_egfr"
+//   gene_symbol:      $gene_symbol,     // HGNC — bridges to Gene.symbol
+//   protein_name:     $protein_name,    // canonical name e.g. "Epidermal growth factor receptor"
+//   entrez_gene_id:   $entrez_gene_id,  // int; bridges to Gene.entrez_id
+//   ensembl_gene_id:  $ensembl_gene_id, // e.g. "ENSG00000146648"
+//   kegg_id:          $kegg_id,         // e.g. "hsa:1956"
+//   ko_id:            $ko_id,           // KEGG orthology id
+//   target_class:     $target_class,    // "RTK"|"kinase"|"GPCR"|"phosphatase" etc.
+//   oncogene:         $oncogene,        // bool
+//   tumor_suppressor: $tumor_suppressor,// bool
+//   pathways:         $pathways,        // string[] KEGG pathway ids
+//   mechanism:        $mechanism,       // therapeutic mechanism summary
+//   description:      $description
 // }
 
 // --- 3f. Disease ---
@@ -328,21 +413,57 @@ CREATE FULLTEXT INDEX drug_text_search IF NOT EXISTS
 //   }]->(:Pathway)
 //
 //
-// ── DRUG RELATIONSHIPS  (scaffold for DrugBank / OpenTargets) ────────────
+// ── DRUG / PROTEIN-TARGET RELATIONSHIPS  (DrugBank + TTD + OncoKB) ──────
 //
 //   (:Drug)-[:TARGETS {
-//     mechanism:     string,   // "ATP competitive inhibitor"
-//     affinity_nm:   float,    // binding affinity if known
-//     source:        string    // "drugbank"|"opentargets"
-//   }]->(:Gene)
+//     mechanism:      string,   // "irreversible inhibition"|"ATP competitive"
+//     evidence_level: string,   // "FDA_APPROVED"|"PHASE3"|"preclinical"
+//     source:         string,   // "drugbank"|"ttd"|"opentargets"
+//     ic50:           float?,   // nM
+//     kd:             float?    // nM
+//   }]->(:ProteinTarget)
 //
-//   (:Drug)-[:INHIBITS_PATHWAY {
+//   // Legacy genomic-layer variant (kept for backward compat with KEGG data)
+//   (:Drug)-[:TARGETS {mechanism, affinity_nm, source}]->(:Gene)
+//
+//   (:Drug)-[:INHIBITS {
 //     evidence:   string,
 //     source:     string
 //   }]->(:Pathway)
 //
+//   // Kept as alias; prefer INHIBITS going forward
+//   (:Drug)-[:INHIBITS_PATHWAY {evidence, source}]->(:Pathway)
+//
+//   (:Drug)-[:TREATS {
+//     // Drug has clinical evidence against this specific mutation
+//     evidence_level: string,   // "FDA_APPROVED"|"PHASE3"|"case_report"
+//     response_type:  string,   // "sensitive"|"resistant"|"partial"
+//     disease:        string,   // "LUAD"|"NSCLC"
+//     pmid:           string,
+//     source:         string    // "oncokb"|"civic"|"drugbank"
+//   }]->(:Mutation)
+//
+//   (:ProteinTarget)-[:PARTICIPATES_IN {
+//     // ProteinTarget appears in this pathway; bridges therapeutic → pathway layer
+//     pathway_id:  string    // KEGG pathway id
+//   }]->(:Pathway)
+//
+//   (:Mutation)-[:AFFECTS {
+//     // Clinical mutation has a functional consequence on this protein
+//     effect:           string,  // "activating"|"inactivating"|"uncertain"
+//     gain_of_function: bool,
+//     loss_of_function: bool,
+//     source:           string   // "oncokb"|"civic"|"clinvar"
+//   }]->(:ProteinTarget)
+//
+//   (:Mutation)-[:ACTIVATES {
+//     // Mutation causally activates this pathway (OncoKB / CIViC evidence)
+//     evidence_level: string,
+//     via_gene:       string,   // shortcut gene symbol
+//     source:         string
+//   }]->(:Pathway)
+//
 //   (:Mutation)-[:SENSITIZES_TO {
-//     // mutation makes tumor sensitive to this drug
 //     evidence:   string,
 //     source:     string
 //   }]->(:Drug)
@@ -445,7 +566,46 @@ CREATE FULLTEXT INDEX drug_text_search IF NOT EXISTS
 // ORDER BY length(path);
 
 
-// ── Q6. Full context subgraph for a given mutation profile (LLM context window)
+// ── Q6. Pathway view with mutated proteins highlighted (e.g. "show me hsa04014")
+//   Given a patient profile's gene symbols, return pathway members and flag which
+//   are mutated. gene_symbol is the join key between HydratedMutation and the graph.
+//
+// WITH ["KRAS", "EGFR", "TP53"] AS mutated_genes   // injected from profile mutations
+// MATCH (p:Pathway {kegg_id: "hsa04014"})
+// MATCH (g:Gene)-[:PARTICIPATES_IN]->(p)
+// OPTIONAL MATCH (pt:ProteinTarget {gene_symbol: g.symbol})
+// OPTIONAL MATCH (m:Mutation)-[:AFFECTS|MUTATES]->(pt_or_g)
+//   WHERE (pt_or_g = pt OR pt_or_g = g) AND m.gene_symbol IN mutated_genes
+// RETURN
+//   g.symbol                  AS gene,
+//   g.is_essential_luad       AS essential,
+//   pt.target_class           AS target_class,
+//   pt.oncogene               AS oncogene,
+//   CASE WHEN g.symbol IN mutated_genes THEN true ELSE false END AS is_mutated_in_profile,
+//   collect(DISTINCT m.id)    AS profile_mutations
+// ORDER BY is_mutated_in_profile DESC, essential DESC;
+
+
+// ── Q7. Drugs for all mutations in a patient profile
+//
+// WITH ["KRAS", "EGFR", "STK11"] AS mutated_genes
+// MATCH (pt:ProteinTarget)
+// WHERE pt.gene_symbol IN mutated_genes
+// MATCH (d:Drug)-[:TARGETS]->(pt)
+// OPTIONAL MATCH (m:Mutation)-[:AFFECTS]->(pt)
+// WHERE m.gene_symbol IN mutated_genes
+// OPTIONAL MATCH (d)-[:TREATS]->(m)
+// RETURN
+//   pt.gene_symbol            AS target_gene,
+//   pt.target_class           AS target_class,
+//   d.drug_name               AS drug,
+//   d.approval_status         AS approval,
+//   d.mechanism               AS mechanism,
+//   collect(DISTINCT m.id)    AS relevant_mutations
+// ORDER BY d.approval_status, pt.gene_symbol;
+
+
+// ── Q8. Full context subgraph for a given mutation profile (LLM context window)
 //
 // MATCH (mut:Mutation)
 // WHERE mut.id IN ["mut_KRAS_p_G12C", "mut_TP53_LoF", "mut_STK11_LoF"]

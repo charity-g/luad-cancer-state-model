@@ -7,9 +7,10 @@ import UploadBox from '../components/UploadBox'
 import AgentPanel from '../components/AgentPanel'
 import PathwayGraph from '../components/PathwayGraph'
 import SubgraphView from '../components/SubgraphView'
-import type { HydratedMutation, ContextCard } from '../types'
+import DrugPanel from '../components/DrugPanel'
+import type { HydratedMutation, ContextCard, DrugHit } from '../types'
 
-type GraphTab = 'pathway' | 'agent'
+type GraphTab = 'pathway' | 'agent' | 'drugs'
 
 export default function Model() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -40,7 +41,7 @@ export default function Model() {
     (): HydratedMutation[] => mutations.filter((m) => m.hydrated).map((m) => m.hydrated!),
     [mutations],
   )
-  const { messages, busy, send, stop, retry, clear } = useChat(getHydrated)
+  const { messages, busy, send, stop, retry, clear } = useChat(getHydrated, activeProfileId)
 
   // The agent's reasoning graph shown in the "Agent Graph" tab is the most
   // recent answer's subgraph.
@@ -52,9 +53,23 @@ export default function Model() {
     return null
   }, [messages])
 
-  // Auto-switch to the Agent Graph tab when a NEW graph is generated. Skip the
-  // first run so a persisted graph (restored from localStorage on load) doesn't
-  // yank the user off the Pathway Network on page open.
+  // Collect all unique drug hits across the session — deduped by drugbank_id.
+  const allDrugs = useMemo((): DrugHit[] => {
+    const seen = new Set<string>()
+    const result: DrugHit[] = []
+    for (const msg of messages) {
+      for (const d of msg.drugs ?? []) {
+        const key = d.drugbank_id || d.drug_name
+        if (!seen.has(key)) { seen.add(key); result.push(d) }
+      }
+    }
+    return result
+  }, [messages])
+
+  // Auto-switch to the Agent Graph tab when:
+  //   - a new graph is generated on any agent turn, OR
+  //   - the mode is 'lookup' (graph IS the answer — always show it)
+  // Skip the first render so a persisted graph doesn't yank the user on page open.
   const seenSubgraphId = useRef<string | null | undefined>(undefined)
   useEffect(() => {
     const id = latestSubgraph?.id ?? null
@@ -67,6 +82,14 @@ export default function Model() {
       setGraphTab('agent')
     }
   }, [latestSubgraph])
+
+  // For lookup answers: switch to Agent Graph as soon as the message is done streaming.
+  const lastMessage = messages[messages.length - 1]
+  useEffect(() => {
+    if (lastMessage?.role === 'agent' && !lastMessage.streaming && lastMessage.mode === 'lookup') {
+      setGraphTab('agent')
+    }
+  }, [lastMessage?.id, lastMessage?.streaming, lastMessage?.mode])
 
   function handleFile(file: File) {
     setFilename(file.name)
@@ -136,9 +159,12 @@ export default function Model() {
                 {/* graph tabs */}
                 <div className="flex items-center rounded-md bg-slate-800 p-0.5">
                   {([
-                    { key: 'pathway', label: 'Pathway Network' },
-                    { key: 'agent', label: 'Agent Graph' },
-                  ] as const).map((t) => (
+                    { key: 'pathway', label: 'Pathway Network', dot: null },
+                    { key: 'agent',   label: 'Agent Graph',     dot: latestSubgraph ? 'bg-emerald-400' : null },
+                    ...(allDrugs.length > 0
+                      ? [{ key: 'drugs', label: 'Drugs', dot: 'bg-blue-400' }]
+                      : []),
+                  ] as { key: GraphTab; label: string; dot: string | null }[]).map((t) => (
                     <button
                       key={t.key}
                       onClick={() => setGraphTab(t.key)}
@@ -149,9 +175,7 @@ export default function Model() {
                       }`}
                     >
                       {t.label}
-                      {t.key === 'agent' && latestSubgraph && (
-                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                      )}
+                      {t.dot && <span className={`h-1.5 w-1.5 rounded-full ${t.dot}`} />}
                     </button>
                   ))}
                 </div>
@@ -196,7 +220,11 @@ export default function Model() {
                 </div>
               </div>
 
-              {graphTab === 'pathway' ? (
+              {graphTab === 'drugs' ? (
+                <div className="flex flex-1 overflow-hidden bg-slate-900">
+                  <DrugPanel drugs={allDrugs} />
+                </div>
+              ) : graphTab === 'pathway' ? (
                 <PathwayGraph
                   profileId={highlightsOn ? activeProfileId : null}
                   highlights={hydratedList}
@@ -217,6 +245,7 @@ export default function Model() {
                   )}
                 </div>
               )}
+
             </div>
 
             {/* ── Right panel ─────────────────────────────────────── */}

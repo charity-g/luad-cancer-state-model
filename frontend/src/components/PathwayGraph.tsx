@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import type { HydratedMutation, EffectType, ContextCard } from '../types'
 import { useProfileGraph, type ProfileGraph } from '../hooks/useProfileGraph'
+import { useProfilePPI } from '../hooks/useProfilePPI'
 
 const VIEWBOX_W = 780
 const VIEWBOX_H = 390
@@ -169,12 +170,26 @@ interface Props {
   onDiveDeeper?: (card: ContextCard) => void
 }
 
+// Edge colours for PPI interaction types
+const PPI_EDGE_COLOR: Record<string, string> = {
+  ACTIVATES:                '#22c55e',   // green
+  PHOSPHORYLATES:           '#f59e0b',   // amber
+  INHIBITS:                 '#ef4444',   // red
+  DEPHOSPHORYLATES:         '#fb923c',   // orange
+  BINDS:                    '#3b82f6',   // blue
+  REGULATES_EXPRESSION_OF:  '#a78bfa',   // purple
+  COMPONENT_OF:             '#64748b',   // slate
+}
+const PPI_EDGE_DEFAULT = '#475569'
+
 export default function PathwayGraph({ profileId, highlights: propHighlights = [], selectedProtein, onDiveDeeper }: Props) {
   const [hoveredNode, setHoveredNode] = useState<string | null>(null)
   const [clickedNode, setClickedNode] = useState<string | null>(null)
+  const [ppiView, setPpiView] = useState(false)
   const svgRef = useRef<SVGSVGElement>(null)
 
   const { graph: backendGraph, highlights: fetchedHighlights, loading: graphLoading } = useProfileGraph(profileId ?? null)
+  const { graph: ppiGraph, loading: ppiLoading } = useProfilePPI(ppiView && profileId ? profileId : null)
 
   // Source of truth priority:
   //   1. Backend profile graph (when profileId set + highlights on)
@@ -234,8 +249,21 @@ export default function PathwayGraph({ profileId, highlights: propHighlights = [
       <div className="flex flex-shrink-0 items-center justify-between border-b border-slate-700/60 px-4 py-2">
         <div className="flex items-center gap-2">
           <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
-            Protein Pathway Network
+            {ppiView ? 'Protein Interactions' : 'Protein Pathway Network'}
           </p>
+          {/* PPI toggle — only shown when highlights are on (profileId set) */}
+          {profileId && (
+            <button
+              onClick={() => { setPpiView(v => !v); setClickedNode(null) }}
+              className={`rounded px-2 py-0.5 text-[10px] font-medium transition-colors ${
+                ppiView
+                  ? 'bg-blue-700 text-blue-100'
+                  : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-slate-200'
+              }`}
+            >
+              {ppiView ? 'PPI on' : 'PPI'}
+            </button>
+          )}
           {graphLoading && (
             <>
               <span className="h-3 w-3 animate-spin rounded-full border-2 border-slate-600 border-t-blue-400" />
@@ -251,37 +279,39 @@ export default function PathwayGraph({ profileId, highlights: propHighlights = [
             </span>
           )}
         </div>
-        {useDynamic && (
+        {(useDynamic || ppiView) && (
           <div className="flex flex-wrap gap-3">
-            {profileId ? (
-              // Highlights on — show effect types
-              <>
-                {([
-                  ['Activating / GOF', '#f59e0b'],
-                  ['Inactivating / LOF', '#ef4444'],
-                  ['Uncertain', '#a78bfa'],
-                  ['Pathway', '#7c3aed'],
-                  ['Member', '#1d4ed8'],
-                ] as const).map(([label, color]) => (
-                  <div key={label} className="flex items-center gap-1.5">
-                    <span className="h-2 w-2 rounded-full" style={{ backgroundColor: color }} />
-                    <span className="text-[11px] text-slate-400">{label}</span>
-                  </div>
-                ))}
-              </>
+            {ppiView ? (
+              // PPI view — show interaction type colours
+              Object.entries(PPI_EDGE_COLOR).map(([rel, color]) => (
+                <div key={rel} className="flex items-center gap-1.5">
+                  <span className="h-0.5 w-4 rounded" style={{ backgroundColor: color }} />
+                  <span className="text-[10px] text-slate-400">{rel.replace(/_/g, ' ')}</span>
+                </div>
+              ))
+            ) : profileId ? (
+              ([
+                ['Activating / GOF', '#f59e0b'],
+                ['Inactivating / LOF', '#ef4444'],
+                ['Uncertain', '#a78bfa'],
+                ['Pathway', '#7c3aed'],
+                ['Member', '#1d4ed8'],
+              ] as const).map(([label, color]) => (
+                <div key={label} className="flex items-center gap-1.5">
+                  <span className="h-2 w-2 rounded-full" style={{ backgroundColor: color }} />
+                  <span className="text-[11px] text-slate-400">{label}</span>
+                </div>
+              ))
             ) : (
-              // Highlights off — show node types only
-              <>
-                {([
-                  ['Mutation', '#64748b'],
-                  ['Protein', '#3b82f6'],
-                ] as const).map(([label, color]) => (
-                  <div key={label} className="flex items-center gap-1.5">
-                    <span className="h-2 w-2 rounded-full" style={{ backgroundColor: color }} />
-                    <span className="text-[11px] text-slate-400">{label}</span>
-                  </div>
-                ))}
-              </>
+              ([
+                ['Mutation', '#64748b'],
+                ['Protein', '#3b82f6'],
+              ] as const).map(([label, color]) => (
+                <div key={label} className="flex items-center gap-1.5">
+                  <span className="h-2 w-2 rounded-full" style={{ backgroundColor: color }} />
+                  <span className="text-[11px] text-slate-400">{label}</span>
+                </div>
+              ))
             )}
           </div>
         )}
@@ -289,8 +319,142 @@ export default function PathwayGraph({ profileId, highlights: propHighlights = [
 
       {/* Canvas */}
       <div className="relative flex-1 overflow-hidden">
+
+        {/* ── PPI network view ──────────────────────────────────────── */}
+        {ppiView && (
+          <div className="absolute inset-0 flex flex-col">
+            {ppiLoading && (
+              <div className="flex flex-1 items-center justify-center gap-2 text-xs text-slate-400">
+                <span className="h-3 w-3 animate-spin rounded-full border-2 border-slate-600 border-t-blue-400" />
+                Loading interactions…
+              </div>
+            )}
+            {!ppiLoading && !ppiGraph && (
+              <div className="flex flex-1 flex-col items-center justify-center gap-2 text-center">
+                <p className="text-sm text-slate-500">No protein-protein interactions found</p>
+                <p className="max-w-xs text-xs text-slate-600">
+                  KEGG interactions are available only for genes with recorded signal-flow edges
+                  between the mutated proteins in this profile.
+                </p>
+              </div>
+            )}
+            {!ppiLoading && ppiGraph && (() => {
+              // Circular layout — all gene nodes arranged on a circle
+              const geneNodes = ppiGraph.nodes.filter(n => (n.labels ?? []).includes('Gene'))
+              const n = geneNodes.length
+              const cx = VIEWBOX_W / 2, cy = VIEWBOX_H / 2
+              const R = Math.min(cx, cy) - 60
+              const pos = new Map(geneNodes.map((node, i) => {
+                const angle = (2 * Math.PI * i) / n - Math.PI / 2
+                return [node.id, { x: cx + R * Math.cos(angle), y: cy + R * Math.sin(angle) }]
+              }))
+              return (
+                <svg
+                  viewBox={`0 0 ${VIEWBOX_W} ${VIEWBOX_H}`}
+                  className="h-full w-full"
+                  ref={svgRef}
+                >
+                  {/* Edges */}
+                  {ppiGraph.edges.map((edge, i) => {
+                    const s = pos.get(edge.source), t = pos.get(edge.target)
+                    if (!s || !t) return null
+                    const color = PPI_EDGE_COLOR[edge.type] ?? PPI_EDGE_DEFAULT
+                    const dx = t.x - s.x, dy = t.y - s.y
+                    const len = Math.sqrt(dx * dx + dy * dy) || 1
+                    const ux = dx / len, uy = dy / len
+                    const ex = t.x - ux * NODE_R, ey = t.y - uy * NODE_R
+                    const sx = s.x + ux * NODE_R, sy = s.y + uy * NODE_R
+                    return (
+                      <g key={i}>
+                        <line x1={sx} y1={sy} x2={ex} y2={ey}
+                          stroke={color} strokeWidth={1.5} strokeOpacity={0.7} />
+                        <polygon
+                          points={`${ex},${ey} ${ex - ux * 7 - uy * 4},${ey - uy * 7 + ux * 4} ${ex - ux * 7 + uy * 4},${ey - uy * 7 - ux * 4}`}
+                          fill={color} opacity={0.8} />
+                        {/* Edge type label on mid-point */}
+                        <text
+                          x={(sx + ex) / 2} y={(sy + ey) / 2 - 3}
+                          fontSize={7} fill={color} textAnchor="middle" opacity={0.9}
+                        >
+                          {edge.type.replace(/_/g, ' ')}
+                        </text>
+                      </g>
+                    )
+                  })}
+                  {/* Nodes */}
+                  {geneNodes.map((node) => {
+                    const p = pos.get(node.id)
+                    if (!p) return null
+                    const sym = String(node.symbol ?? node.key ?? node.id).slice(0, 8)
+                    const eff = node.estimated_effect as string | undefined
+                    const fillColor = eff
+                      ? (effectNodeColor[eff as EffectType] ?? '#3b82f6')
+                      : '#3b82f6'
+                    const isHov = hoveredNode === node.id
+                    const isSel = clickedNode === node.id
+                    return (
+                      <g key={node.id}
+                        style={{ cursor: 'pointer' }}
+                        onMouseEnter={() => setHoveredNode(node.id)}
+                        onMouseLeave={() => setHoveredNode(null)}
+                        onClick={() => setClickedNode(prev => prev === node.id ? null : node.id)}
+                      >
+                        {(isHov || isSel) && (
+                          <circle cx={p.x} cy={p.y} r={NODE_R + 5}
+                            fill={fillColor} opacity={0.15} />
+                        )}
+                        <circle cx={p.x} cy={p.y} r={isHov || isSel ? NODE_R + 2 : NODE_R}
+                          fill={fillColor} stroke={isSel ? '#fff' : '#1e293b'} strokeWidth={isSel ? 2 : 1} />
+                        <text x={p.x} y={p.y + 1} textAnchor="middle" dominantBaseline="middle"
+                          fontSize={9} fontWeight={600} fill="#fff">
+                          {sym}
+                        </text>
+                        {/* Essentiality badge */}
+                        {node.is_essential_luad === true && (
+                          <circle cx={p.x + NODE_R - 4} cy={p.y - NODE_R + 4} r={4}
+                            fill="#f43f5e" stroke="#1e293b" strokeWidth={1} />
+                        )}
+                      </g>
+                    )
+                  })}
+                  {/* Clicked gene popover */}
+                  {clickedNode && (() => {
+                    const node = ppiGraph.nodes.find(n => n.id === clickedNode)
+                    const p = pos.get(clickedNode)
+                    if (!node || !p) return null
+                    const flipLeft = p.x > VIEWBOX_W / 2
+                    const flipUp   = p.y > VIEWBOX_H * 0.6
+                    const popX = flipLeft ? p.x - NODE_R - 8 : p.x + NODE_R + 8
+                    const popY = flipUp   ? p.y - 8 : p.y + 8
+                    const sym = String(node.symbol ?? node.key ?? node.id)
+                    const eff = node.estimated_effect as string | undefined
+                    const crispr = node.mean_crispr_effect_luad as number | undefined
+                    const dep = node.mean_dep_prob_luad as number | undefined
+                    return (
+                      <foreignObject
+                        x={flipLeft ? popX - 160 : popX}
+                        y={flipUp ? popY - 120 : popY}
+                        width={168} height={124}
+                      >
+                        <div className="rounded-lg border border-slate-600 bg-slate-800 p-2.5 text-[11px] shadow-xl">
+                          <p className="mb-1 font-mono font-semibold text-slate-100">{sym}</p>
+                          {eff && <p className="text-slate-400">Effect: <span className="text-slate-200">{eff.replace(/_/g, ' ')}</span></p>}
+                          {crispr !== undefined && <p className="text-slate-400">CRISPR: <span className="text-slate-200">{crispr.toFixed(3)}</span></p>}
+                          {dep !== undefined && <p className="text-slate-400">Dep prob: <span className="text-slate-200">{dep.toFixed(2)}</span></p>}
+                          {node.is_essential_luad === true && <p className="mt-1 text-rose-400">● Essential in LUAD</p>}
+                        </div>
+                      </foreignObject>
+                    )
+                  })()}
+                </svg>
+              )
+            })()}
+          </div>
+        )}
+
+        {/* ── Pathway / synthetic view (hidden when PPI is on) ───────── */}
         {/* Blank state — no data at all */}
-        {!graph && !graphLoading && (
+        {!ppiView && !graph && !graphLoading && (
           <div className="flex h-full flex-col items-center justify-center gap-3 text-center">
             <svg className="h-10 w-10 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1}
@@ -301,7 +465,7 @@ export default function PathwayGraph({ profileId, highlights: propHighlights = [
         )}
 
         {/* Loading state */}
-        {graphLoading && (
+        {!ppiView && graphLoading && (
           <div className="flex h-full items-center justify-center">
             <span className="h-6 w-6 animate-spin rounded-full border-2 border-slate-700 border-t-blue-500" />
           </div>
@@ -311,7 +475,7 @@ export default function PathwayGraph({ profileId, highlights: propHighlights = [
         <svg
           ref={svgRef}
           viewBox={`0 0 ${VIEWBOX_W} ${VIEWBOX_H}`}
-          className={`h-full w-full cursor-default ${!useDynamic ? 'hidden' : ''}`}
+          className={`h-full w-full cursor-default ${!useDynamic || ppiView ? 'hidden' : ''}`}
           style={{ fontFamily: 'ui-monospace, monospace' }}
           onClick={(e) => { if ((e.target as SVGElement).tagName === 'svg') setClickedNode(null) }}
         >

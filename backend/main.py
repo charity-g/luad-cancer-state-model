@@ -35,9 +35,10 @@ app.add_middleware(
 
 class QueryRequest(BaseModel):
     question: str
-    mutations: list[dict] = []   # uploaded sample profile (gene/effect)
-    context: list[dict] = []     # selected pathway/protein context cards
-    history: list[dict] = []     # prior chat turns: [{role, content}]
+    profile_id: str | None = None  # active profile — used to load graph memory from Neo4j
+    mutations: list[dict] = []     # uploaded sample profile (gene/effect)
+    context: list[dict] = []       # selected pathway/protein context cards
+    history: list[dict] = []       # prior chat turns: [{role, content}]
 
 
 @app.get("/health")
@@ -54,6 +55,7 @@ def graph():
 def query(req: QueryRequest):
     return agent.run(
         req.question,
+        profile_id=req.profile_id,
         mutations=req.mutations,
         context=req.context,
         history=req.history,

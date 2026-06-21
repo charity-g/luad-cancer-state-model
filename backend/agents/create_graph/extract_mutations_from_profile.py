@@ -4,6 +4,7 @@ import csv
 import io
 from typing import Any, List
 from backend.agents.create_graph.model import GuessMutation
+import hashlib
 
 
 def extract_mutations_from_profile(profile_bytes: bytes) -> List[GuessMutation]:
@@ -36,7 +37,10 @@ def extract_mutations_from_profile(profile_bytes: bytes) -> List[GuessMutation]:
                 continue
             rows.append(
                 {
-                    "mutation_id": f"mutation_{index}",
+                    "mutation_id":  "mutation_"
+                    + hashlib.sha256(
+                        row.encode("utf-8")
+                    ).hexdigest()[:16],
                     "protein": "",
                     "estimated_effect": "no_effect",
                     "raw": {"line": line},

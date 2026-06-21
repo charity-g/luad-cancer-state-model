@@ -171,6 +171,17 @@ def run_read(cypher, params=None):
     return {"rows": rows, "subgraph": _subgraph(values)}
 
 
+def run_write(cypher, params=None):
+    """Execute a write query (MERGE / CREATE / SET).
+    Returns row dicts for RETURN clauses; returns [] when there is no RETURN.
+    """
+    payload = _get_api().execute(cypher, params)
+    data = payload.get("data", {})
+    fields = data.get("fields", [])
+    values = data.get("values", [])
+    return [{f: _convert(v) for f, v in zip(fields, row)} for row in values]
+
+
 # ---------------------------------------------------------------------------
 # Loader reuse — a Bolt-session-shaped shim over HTTP
 # ---------------------------------------------------------------------------
