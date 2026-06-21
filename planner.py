@@ -14,6 +14,10 @@ def extract_mutation_profiles(profiles):
 
 def hydrate_mutation():
     # llm based, could be an agent on its own
+    
+    # does mutation fulfill FINAL_SCHEMA?
+    # for each mutation to produce estimated_effect on protein
+
     FINAL_SCHEMA: {
         "mutation_id": "id",
         "protein": "EGFR",
@@ -23,6 +27,7 @@ def hydrate_mutation():
 
 def extract_proteins_for_mutation(mutation):
     # llm based, could be an agent on its own
+    # vector db
 
 def extract_pathways_for_protein(protein):
     # api call based - will need browser info maybe
@@ -32,9 +37,6 @@ def run(profile):
     profile_id = some hash
     mutations =  extract_mutation_profiles(profile)
     
-    # does mutation fulfill FINAL_SCHEMA?
-    # for each mutation to produce estimated_effect on protein
-
     profile_pathway = [] # graph database
  
     for mutation in mutations:
@@ -50,7 +52,7 @@ def run(profile):
         # stream some user feedback ie update frontend
 
         for pathway in pathways:
-            pathway_information = 
+            pathway_information = api
             update_pathway(pathway_information)
             # stream some user feedback ie update frontend
 
