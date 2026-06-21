@@ -4,7 +4,7 @@
 from backend.agents.create_graph.model import MutationProteinEffect, ProteinRecord
 
 
-def extract_mutation_profiles(profiles):
+def extract_mutations_from_profile(profiles):
     # planner should produce a list with details for each mutation
     returns list of mutations
 

@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import type { HydratedMutation, EffectType } from '../types'
+import type { HydratedMutation, EffectType, ContextCard } from '../types'
 
 interface PathwayNode {
   id: string
@@ -129,7 +129,7 @@ const effectBadge: Record<EffectType, string> = {
 interface Props {
   highlights: HydratedMutation[]
   selectedProtein?: string
-  onDiveDeeper?: (context: string) => void
+  onDiveDeeper?: (card: ContextCard) => void
 }
 
 export default function PathwayGraph({ highlights, selectedProtein, onDiveDeeper }: Props) {
@@ -162,6 +162,16 @@ export default function PathwayGraph({ highlights, selectedProtein, onDiveDeeper
 
   const flipLeft = popoverAnchorX > VIEWBOX_W / 2
   const flipUp   = popoverAnchorY > VIEWBOX_H * 0.6
+
+  function buildContextCard(protein: string, meta: ProteinMeta, effect?: HydratedMutation): ContextCard {
+    return {
+      id: `${protein}-${Date.now()}`,
+      protein,
+      effect: (effect?.estimated_effect ?? 'no_effect') as EffectType,
+      mutation_id: effect?.mutation_id ?? '',
+      pathway: meta.pathway,
+    }
+  }
 
   function buildDiveDeeperContext(protein: string, meta: ProteinMeta, effect?: HydratedMutation) {
     const lines = [
@@ -451,7 +461,7 @@ export default function PathwayGraph({ highlights, selectedProtein, onDiveDeeper
               {popoverProteinNode && onDiveDeeper && clickedNode && (
                 <div className="pt-3">
                   <button
-                    onClick={() => onDiveDeeper(buildDiveDeeperContext(clickedNode, popoverMeta, popoverEffect))}
+                    onClick={() => onDiveDeeper(buildContextCard(clickedNode, popoverMeta, popoverEffect))}
                     className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-600 bg-slate-700 px-3 py-2 text-xs font-semibold text-slate-100 transition-colors hover:border-slate-500 hover:bg-slate-600"
                   >
                     <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
