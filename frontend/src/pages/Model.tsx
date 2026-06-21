@@ -13,6 +13,7 @@ export default function Model() {
   const [panelVisible, setPanelVisible] = useState(true)
   const [highlightsOn, setHighlightsOn] = useState(true)
   const [pendingContext, setPendingContext] = useState<ContextCard | null>(null)
+  const [dismissedError, setDismissedError] = useState(false)
 
   const getHydrated = useCallback(
     (): HydratedMutation[] => mutations.filter((m) => m.hydrated).map((m) => m.hydrated!),
@@ -23,6 +24,7 @@ export default function Model() {
   function handleFile(file: File) {
     setFilename(file.name)
     setSelected(null)
+    setDismissedError(false)
     analyze(file)
     setPanelVisible(true)
   }
@@ -32,12 +34,12 @@ export default function Model() {
     setSelected(null)
     setFilename('')
     setPendingContext(null)
+    setDismissedError(false)
     clear()
   }
 
   const hydratedList = mutations.filter((m) => m.hydrated).map((m) => m.hydrated!)
   const hasData = phase !== 'idle'
-  const [dismissedError, setDismissedError] = useState(false)
   const visibleError = dismissedError ? null : analysisError
 
   return (
@@ -114,6 +116,8 @@ export default function Model() {
                 selected={selected}
                 onSelect={setSelected}
                 phase={phase}
+                analysisError={visibleError}
+                onDismissError={() => setDismissedError(true)}
                 filename={filename}
                 messages={messages}
                 busy={busy}
