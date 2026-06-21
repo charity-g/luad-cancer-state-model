@@ -7,7 +7,7 @@ import PathwayGraph from '../components/PathwayGraph'
 import type { HydratedMutation, ContextCard } from '../types'
 
 export default function Model() {
-  const { mutations, phase, analyze, reset } = useAnalysis()
+  const { mutations, phase, error: analysisError, analyze, reset } = useAnalysis()
   const [selected, setSelected] = useState<string | null>(null)
   const [filename, setFilename] = useState('')
   const [panelVisible, setPanelVisible] = useState(true)
@@ -37,6 +37,8 @@ export default function Model() {
 
   const hydratedList = mutations.filter((m) => m.hydrated).map((m) => m.hydrated!)
   const hasData = phase !== 'idle'
+  const [dismissedError, setDismissedError] = useState(false)
+  const visibleError = dismissedError ? null : analysisError
 
   return (
     <div className="flex h-full flex-col">

@@ -1,13 +1,17 @@
 import { useState, useCallback } from 'react'
 import type { MutationEntry, HydratedMutation } from '../types'
 
+export type AnalysisPhase = 'idle' | 'streaming' | 'done' | 'error'
+
 export function useAnalysis() {
   const [mutations, setMutations] = useState<MutationEntry[]>([])
-  const [phase, setPhase] = useState<'idle' | 'streaming' | 'done'>('idle')
+  const [phase, setPhase] = useState<AnalysisPhase>('idle')
+  const [error, setError] = useState<string | null>(null)
 
   const analyze = useCallback(async (file: File) => {
     setMutations([])
     setPhase('streaming')
+    setError(null)
 
     const body = new FormData()
     body.append('file', file)
@@ -16,12 +20,25 @@ export function useAnalysis() {
     try {
       resp = await fetch('/api/profiles/stream', { method: 'POST', body })
     } catch {
-      setPhase('done')
+      setError('Cannot connect to the backend. Is the server running on port 8000?')
+      setPhase('error')
       return
     }
 
-    if (!resp.ok || !resp.body) {
-      setPhase('done')
+    if (!resp.ok) {
+      let detail = `${resp.status} ${resp.statusText}`
+      try {
+        const errBody = (await resp.json()) as Record<string, unknown>
+        detail = String(errBody['detail'] ?? errBody['message'] ?? detail)
+      } catch { /* ignore parse failure, use status text */ }
+      setError(`Upload failed: ${detail}`)
+      setPhase('error')
+      return
+    }
+
+    if (!resp.body) {
+      setError('Server returned an empty response body.')
+      setPhase('error')
       return
     }
 
@@ -29,59 +46,67 @@ export function useAnalysis() {
     const decoder = new TextDecoder()
     let buf = ''
 
-    while (true) {
-      const { done, value } = await reader.read()
-      if (done) break
-      buf += decoder.decode(value, { stream: true })
+    try {
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        buf += decoder.decode(value, { stream: true })
 
-      // Parse SSE frames from buffer
-      const frames = buf.split('\n\n')
-      buf = frames.pop() ?? ''
+        const frames = buf.split('\n\n')
+        buf = frames.pop() ?? ''
 
-      for (const frame of frames) {
-        const eventLine = frame.split('\n').find((l) => l.startsWith('event:'))
-        const dataLine  = frame.split('\n').find((l) => l.startsWith('data:'))
-        if (!eventLine || !dataLine) continue
+        for (const frame of frames) {
+          const eventLine = frame.split('\n').find((l) => l.startsWith('event:'))
+          const dataLine  = frame.split('\n').find((l) => l.startsWith('data:'))
+          if (!eventLine || !dataLine) continue
 
-        const event = eventLine.replace('event:', '').trim()
-        let payload: Record<string, unknown>
-        try {
-          payload = JSON.parse(dataLine.replace('data:', '').trim())
-        } catch {
-          continue
-        }
-
-        if (event === 'mutations_extracted') {
-          // Backend gives us the count but not the IDs yet — wait for hydration events
-        }
-
-        if (event === 'mutation_hydrated') {
-          const raw      = payload['mutation'] as Record<string, unknown>
-          const hydrated = payload['hydrated'] as Record<string, unknown>
-          const mutation_id = String(raw['mutation_id'] ?? '')
-
-          const hydratedMutation: HydratedMutation = {
-            mutation_id,
-            protein:          String(hydrated['protein'] ?? ''),
-            estimated_effect: (hydrated['estimated_effect'] as HydratedMutation['estimated_effect']) ?? 'no_effect',
-            justification:    (hydrated['justification'] as Record<string, unknown>) ?? {},
+          const event = eventLine.replace('event:', '').trim()
+          let payload: Record<string, unknown>
+          try {
+            payload = JSON.parse(dataLine.replace('data:', '').trim()) as Record<string, unknown>
+          } catch {
+            continue // skip malformed frames
           }
 
-          setMutations((prev) => {
-            const exists = prev.find((m) => m.mutation_id === mutation_id)
-            if (exists) {
-              return prev.map((m) =>
-                m.mutation_id === mutation_id ? { ...m, status: 'done', hydrated: hydratedMutation } : m,
-              )
-            }
-            return [...prev, { mutation_id, status: 'done', hydrated: hydratedMutation }]
-          })
-        }
+          if (event === 'error') {
+            setError(String(payload['message'] ?? 'An error occurred during analysis.'))
+            setPhase('error')
+            return
+          }
 
-        if (event === 'complete') {
-          setPhase('done')
+          if (event === 'mutation_hydrated') {
+            const raw      = payload['mutation'] as Record<string, unknown>
+            const hydrated = payload['hydrated'] as Record<string, unknown>
+            const mutation_id = String(raw['mutation_id'] ?? '')
+
+            const hydratedMutation: HydratedMutation = {
+              mutation_id,
+              protein:          String(hydrated['protein'] ?? ''),
+              estimated_effect: (hydrated['estimated_effect'] as HydratedMutation['estimated_effect']) ?? 'no_effect',
+              justification:    (hydrated['justification'] as Record<string, unknown>) ?? {},
+            }
+
+            setMutations((prev) => {
+              const exists = prev.find((m) => m.mutation_id === mutation_id)
+              if (exists) {
+                return prev.map((m) =>
+                  m.mutation_id === mutation_id ? { ...m, status: 'done', hydrated: hydratedMutation } : m,
+                )
+              }
+              return [...prev, { mutation_id, status: 'done', hydrated: hydratedMutation }]
+            })
+          }
+
+          if (event === 'complete') {
+            setPhase('done')
+          }
         }
       }
+    } catch (streamErr) {
+      const msg = streamErr instanceof Error ? streamErr.message : String(streamErr)
+      setError(`Stream interrupted: ${msg}`)
+      setPhase('error')
+      return
     }
 
     setPhase('done')
@@ -90,7 +115,8 @@ export function useAnalysis() {
   const reset = useCallback(() => {
     setMutations([])
     setPhase('idle')
+    setError(null)
   }, [])
 
-  return { mutations, phase, analyze, reset }
+  return { mutations, phase, error, analyze, reset }
 }

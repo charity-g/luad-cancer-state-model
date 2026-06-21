@@ -29,6 +29,25 @@ function renderContent(text: string) {
 
 // ── sub-components ────────────────────────────────────────────────────────────
 
+function ErrorBanner({ message, onDismiss }: { message: string; onDismiss?: () => void }) {
+  return (
+    <div className="mx-3 my-2 flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-xs text-red-700">
+      <svg className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+          d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+      </svg>
+      <p className="flex-1 leading-relaxed">{message}</p>
+      {onDismiss && (
+        <button onClick={onDismiss} className="ml-1 flex-shrink-0 opacity-50 hover:opacity-100">
+          <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      )}
+    </div>
+  )
+}
+
 function ContextChip({ card, onRemove }: { card: ContextCard; onRemove: () => void }) {
   return (
     <div className={`flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium ${effectColors[card.effect]}`}>
@@ -47,9 +66,7 @@ function ContextChip({ card, onRemove }: { card: ContextCard; onRemove: () => vo
 }
 
 function ThreadGroup({
-  thread,
-  msgs,
-  onFollowUp,
+  thread, msgs, onFollowUp,
 }: {
   thread: string
   msgs: ChatMessage[]
@@ -69,14 +86,10 @@ function ThreadGroup({
             {msg.role === 'user' ? (
               <div className="flex justify-end">
                 <div className="max-w-[85%]">
-                  {/* context chips used */}
                   {msg.context.length > 0 && (
                     <div className="mb-1 flex flex-wrap justify-end gap-1">
                       {msg.context.map((c) => (
-                        <span
-                          key={c.id}
-                          className={`rounded-full border px-2 py-0.5 text-[10px] font-medium ${effectColors[c.effect]}`}
-                        >
+                        <span key={c.id} className={`rounded-full border px-2 py-0.5 text-[10px] font-medium ${effectColors[c.effect]}`}>
                           {c.protein}
                         </span>
                       ))}
@@ -87,7 +100,21 @@ function ThreadGroup({
                   </div>
                 </div>
               </div>
+            ) : msg.isError ? (
+              /* error bubble */
+              <div className="flex gap-2">
+                <div className="mt-1 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-red-50">
+                  <svg className="h-3 w-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                      d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                  </svg>
+                </div>
+                <div className="flex-1 min-w-0 rounded-2xl rounded-tl-sm border border-red-100 bg-red-50 px-3.5 py-2.5 text-xs leading-relaxed text-red-700">
+                  {msg.content}
+                </div>
+              </div>
             ) : (
+              /* normal agent bubble */
               <div className="flex gap-2">
                 <div className="mt-1 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-blue-50">
                   <svg className="h-3 w-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -104,23 +131,16 @@ function ThreadGroup({
                             style={{ animationDelay: `${i * 0.15}s` }} />
                         ))}
                       </span>
-                    ) : (
-                      renderContent(msg.content)
-                    )}
+                    ) : renderContent(msg.content)}
                     {msg.streaming && msg.content !== '' && (
                       <span className="ml-1 inline-block h-3.5 w-0.5 animate-pulse bg-slate-400 align-middle" />
                     )}
                   </div>
-
-                  {/* follow-up suggestions */}
                   {!msg.streaming && msg.followUps && msg.followUps.length > 0 && (
                     <div className="mt-2 space-y-1">
                       {msg.followUps.map((f) => (
-                        <button
-                          key={f}
-                          onClick={() => onFollowUp(f)}
-                          className="block w-full rounded-lg border border-slate-200 px-3 py-1.5 text-left text-xs text-slate-500 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-700 transition-colors"
-                        >
+                        <button key={f} onClick={() => onFollowUp(f)}
+                          className="block w-full rounded-lg border border-slate-200 px-3 py-1.5 text-left text-xs text-slate-500 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-700 transition-colors">
                           {f}
                         </button>
                       ))}
@@ -142,7 +162,9 @@ interface Props {
   mutations: MutationEntry[]
   selected: string | null
   onSelect: (id: string) => void
-  phase: 'idle' | 'streaming' | 'done'
+  phase: 'idle' | 'streaming' | 'done' | 'error'
+  analysisError: string | null
+  onDismissError: () => void
   filename: string
   messages: ChatMessage[]
   busy: boolean
@@ -152,19 +174,17 @@ interface Props {
 }
 
 export default function AgentPanel({
-  mutations, selected, onSelect, phase, filename,
+  mutations, selected, onSelect, phase, analysisError, onDismissError, filename,
   messages, busy, onSend, pendingContext, onClearPendingContext,
 }: Props) {
-  // drag-resize state
-  const panelRef    = useRef<HTMLDivElement>(null)
-  const dragging    = useRef(false)
+  const panelRef  = useRef<HTMLDivElement>(null)
+  const dragging  = useRef(false)
   const [splitPct, setSplitPct] = useState(38)
 
   const onMouseMove = useCallback((e: MouseEvent) => {
     if (!dragging.current || !panelRef.current) return
     const rect = panelRef.current.getBoundingClientRect()
-    const pct  = ((e.clientY - rect.top) / rect.height) * 100
-    setSplitPct(Math.max(20, Math.min(65, pct)))
+    setSplitPct(Math.max(20, Math.min(65, ((e.clientY - rect.top) / rect.height) * 100)))
   }, [])
   const onMouseUp = useCallback(() => { dragging.current = false }, [])
 
@@ -177,24 +197,18 @@ export default function AgentPanel({
     }
   }, [onMouseMove, onMouseUp])
 
-  // context chips
   const [contextCards, setContextCards] = useState<ContextCard[]>([])
   const scrollRef = useRef<HTMLDivElement>(null)
   const inputRef  = useRef<HTMLInputElement>(null)
   const [draft, setDraft] = useState('')
 
-  // absorb pending context from graph clicks
   useEffect(() => {
     if (!pendingContext) return
-    setContextCards((prev) => {
-      if (prev.find((c) => c.id === pendingContext.id)) return prev
-      return [...prev, pendingContext]
-    })
+    setContextCards((prev) => prev.find((c) => c.id === pendingContext.id) ? prev : [...prev, pendingContext])
     onClearPendingContext()
     inputRef.current?.focus()
   }, [pendingContext, onClearPendingContext])
 
-  // auto-scroll chat
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight
   }, [messages])
@@ -208,20 +222,12 @@ export default function AgentPanel({
   function handleKey(e: KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend() }
   }
-  function handleFollowUp(text: string) {
-    setDraft(text)
-    inputRef.current?.focus()
-  }
 
-  // group messages into threads
   const threads: Array<{ label: string; msgs: ChatMessage[] }> = []
   for (const msg of messages) {
     const last = threads[threads.length - 1]
-    if (last && last.label === msg.thread) {
-      last.msgs.push(msg)
-    } else {
-      threads.push({ label: msg.thread, msgs: [msg] })
-    }
+    if (last && last.label === msg.thread) last.msgs.push(msg)
+    else threads.push({ label: msg.thread, msgs: [msg] })
   }
 
   const done = mutations.filter((m) => m.status === 'done').length
@@ -229,39 +235,56 @@ export default function AgentPanel({
   return (
     <div ref={panelRef} className="flex h-full w-80 flex-shrink-0 flex-col border-l border-slate-200 bg-white">
 
-      {/* ── TOP: Mutation list ─────────────────────────────────── */}
+      {/* ── TOP: Mutation list ────────────────────────────────── */}
       <div className="flex flex-col overflow-hidden" style={{ height: `${splitPct}%` }}>
-        {/* header */}
         <div className="flex flex-shrink-0 items-center justify-between border-b border-slate-100 px-4 py-2.5">
           <div>
             <p className="text-xs font-semibold text-slate-700">Mutations</p>
             <p className="text-[11px] text-slate-400">
-              {mutations.length} variant{mutations.length !== 1 ? 's' : ''}
-              {phase === 'streaming' && ' · analyzing…'}
-              {phase === 'done' && ` · ${done} annotated`}
+              {phase === 'error' ? (
+                <span className="text-red-500">Analysis failed</span>
+              ) : (
+                <>
+                  {mutations.length} variant{mutations.length !== 1 ? 's' : ''}
+                  {phase === 'streaming' && ' · analyzing…'}
+                  {phase === 'done' && ` · ${done} annotated`}
+                </>
+              )}
             </p>
           </div>
           {phase === 'streaming' && (
             <div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-200 border-t-blue-500" />
           )}
+          {phase === 'error' && (
+            <svg className="h-4 w-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+            </svg>
+          )}
         </div>
 
-        {/* progress bar */}
         {phase === 'streaming' && mutations.length > 0 && (
           <div className="h-0.5 w-full bg-slate-100">
-            <div
-              className="h-full bg-blue-500 transition-all duration-300"
-              style={{ width: `${(done / mutations.length) * 100}%` }}
-            />
+            <div className="h-full bg-blue-500 transition-all duration-300"
+              style={{ width: `${(done / mutations.length) * 100}%` }} />
           </div>
         )}
 
-        {/* list */}
+        {/* analysis error banner */}
+        {phase === 'error' && analysisError && (
+          <ErrorBanner message={analysisError} onDismiss={onDismissError} />
+        )}
+
         <ul className="flex-1 divide-y divide-slate-100 overflow-y-auto">
-          {mutations.length === 0 && (
+          {mutations.length === 0 && phase === 'streaming' && (
             <li className="flex flex-col items-center justify-center py-8 text-slate-400">
               <div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-200 border-t-blue-500" />
               <p className="mt-2 text-xs">Identifying variants…</p>
+            </li>
+          )}
+          {mutations.length === 0 && phase === 'error' && !analysisError && (
+            <li className="flex flex-col items-center justify-center py-8 text-slate-400">
+              <p className="text-xs">No variants were loaded.</p>
             </li>
           )}
           {mutations.map((m) => (
@@ -294,7 +317,7 @@ export default function AgentPanel({
         </ul>
       </div>
 
-      {/* ── DRAG HANDLE ──────────────────────────────────────────── */}
+      {/* ── DRAG HANDLE ─────────────────────────────────────────── */}
       <div
         className="group flex h-3 flex-shrink-0 cursor-row-resize items-center justify-center border-y border-slate-100 bg-slate-50 hover:bg-slate-100"
         onMouseDown={() => { dragging.current = true }}
@@ -308,7 +331,6 @@ export default function AgentPanel({
 
       {/* ── BOTTOM: Agent chat ───────────────────────────────────── */}
       <div className="flex flex-1 flex-col overflow-hidden">
-        {/* header */}
         <div className="flex flex-shrink-0 items-center gap-2 border-b border-slate-100 px-4 py-2">
           <svg className="h-3.5 w-3.5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -318,7 +340,6 @@ export default function AgentPanel({
           {filename && <p className="ml-auto truncate text-[10px] text-slate-400">{filename}</p>}
         </div>
 
-        {/* thread history */}
         <div ref={scrollRef} className="flex-1 overflow-y-auto py-3">
           {threads.length === 0 ? (
             <div className="flex flex-col items-center justify-center px-6 py-10 text-center text-slate-400">
@@ -334,7 +355,7 @@ export default function AgentPanel({
                 key={t.label + t.msgs[0]?.id}
                 thread={t.label}
                 msgs={t.msgs}
-                onFollowUp={handleFollowUp}
+                onFollowUp={(text) => { setDraft(text); inputRef.current?.focus() }}
               />
             ))
           )}
@@ -343,16 +364,11 @@ export default function AgentPanel({
         {/* context tray */}
         {contextCards.length > 0 && (
           <div className="border-t border-slate-100 bg-slate-50 px-3 py-2">
-            <p className="mb-1.5 text-[10px] font-medium uppercase tracking-wider text-slate-400">
-              Context
-            </p>
+            <p className="mb-1.5 text-[10px] font-medium uppercase tracking-wider text-slate-400">Context</p>
             <div className="flex flex-wrap gap-1.5">
               {contextCards.map((c) => (
-                <ContextChip
-                  key={c.id}
-                  card={c}
-                  onRemove={() => setContextCards((prev) => prev.filter((x) => x.id !== c.id))}
-                />
+                <ContextChip key={c.id} card={c}
+                  onRemove={() => setContextCards((prev) => prev.filter((x) => x.id !== c.id))} />
               ))}
             </div>
           </div>
@@ -367,13 +383,7 @@ export default function AgentPanel({
               onChange={(e) => setDraft(e.target.value)}
               onKeyDown={handleKey}
               disabled={busy}
-              placeholder={
-                contextCards.length > 0
-                  ? 'Ask follow-up…'
-                  : busy
-                  ? 'Agent is thinking…'
-                  : 'Ask about this dataset…'
-              }
+              placeholder={contextCards.length > 0 ? 'Ask follow-up…' : busy ? 'Agent is thinking…' : 'Ask about this dataset…'}
               className="flex-1 rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 outline-none focus:border-slate-300 focus:bg-white disabled:opacity-50"
             />
             <button
