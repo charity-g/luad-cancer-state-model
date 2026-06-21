@@ -1,0 +1,474 @@
+<!doctype html>
+<html><head>
+<title>KEGG PATHWAY: hsa04150</title>
+<link type="text/css" rel="stylesheet" href="/css/gn2.css?1781985734">
+<link type="text/css" rel="stylesheet" href="/css/bget.css?1781985734">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link type="text/css" rel="stylesheet" href="/css/bgetm.css?1781985734" media="only screen and (max-width: 768px)">
+<style>.kcfd{display:none;}</style>
+<script>
+<!--
+var getElementsByClassName = document.getElementsByClassName ?
+  function (cl){
+    return document.getElementsByClassName(cl);
+  } :
+  function (cl){
+    var elms = [];
+    var objs = document.getElementsByTagName('*');
+    for(var i=0;i<objs.length;i++){
+      var obj = objs[i];
+      if(obj.className == cl){
+        elms.push(obj);
+      }
+    }
+    return elms;
+  };
+function toggleField(clk,cl,show,hide){
+  var objs = getElementsByClassName(cl);
+  for(var i=0;i<objs.length;i++){
+    var obj = objs[i];
+    if(!obj.style.display||obj.style.display == 'none'){
+      obj.style.display = 'block';
+      clk.innerHTML = '&nbsp;&laquo; '+hide;
+    }
+    else{
+      obj.style.display = 'none';
+      clk.innerHTML = '&nbsp;&raquo; '+show;
+    }
+  }
+}
+function toggleData(bobj,e){
+  var id = bobj.id.replace(/[^0-9]/g,'');
+  var dt = document.getElementById('kcfd'+id);
+  e.preventDefault();
+  if(!dt.style.display||dt.style.display == 'none'){
+    document.getElementById('kcfb'+id).innerHTML = 'Hide';
+    dt.style.display = 'block';
+  }
+  else{
+    document.getElementById('kcfb'+id).innerHTML = 'Show';
+    dt.style.display = 'none';
+  }
+}
+function btn(bobj,img) {
+  bobj.src = "/Fig/bget/button_" + img + ".gif";
+}
+function btn_e(e) {
+  e = e || event;
+  var obj = e.target;
+  var img = e.target.src;
+  var img_base = img.replace(/\\/g,'/').replace(/(b|bd|bh)\.gif$/,'');
+  if(e.type == 'mousedown'||e.type == 'touchstart'){
+    obj.src = img_base +'bd.gif';
+  }
+  else if(e.type == 'mouseover'){
+    obj.src = img_base +'bh.gif';
+  }
+  else if(e.type == 'mouseup'||e.type == 'touchend'){
+    obj.src = img_base +'b.gif';
+  }
+  else if(e.type == 'mouseout'){
+    obj.src = img_base +'b.gif';
+  }
+}
+function init(){
+  for(var i=1;i<=1;i++){
+    if(document.getElementById('kcfb'+i)){
+      document.getElementById('kcfb'+i).onclick = function(e){toggleData(this,e);};
+    }
+  }
+}
+function Link_XtrctSeq2(form) {
+    var dna_from;
+    var dna_to;
+    var dna_len;
+    var plus_up   = Number(form.XtrctSeq_UP.value) ;
+    var plus_down = Number(form.XtrctSeq_DOWN.value);
+    var vector    = Number(form.VECTOR.value);
+    var org       = form.ORG.value;
+    var chr       = form.CHR.value;
+    var kid       = form.KEGGID.value;
+    var url;
+
+    if (plus_up == 0 && plus_down == 0) {
+      url = "/entry/-f+-n+n+" + kid;
+    }
+    else {
+  if (vector == 1) {
+      dna_from  = Number(form.FROM.value)  - plus_up;
+      dna_to    = Number(form.TO.value) + plus_down;
+  } else {
+      dna_from  = Number(form.FROM.value)  - plus_down;
+      dna_to    = Number(form.TO.value) + plus_up;
+  }
+
+  url = "/dbget-bin/cut_sequence_genes.pl?FROM=" + dna_from + "&TO=" + dna_to +"&VECTOR=" + vector + "&ORG=" + org;
+  if (chr) url += "&CHR=" + chr;
+    }
+    //window.open( url, "_self" );
+    location.href = url;
+}
+function go_taxonomy(form,params){
+  for(var key in params){
+    if(form[key]){
+      form.setAttribute(key,params[key]);
+    }
+    else{
+      var obj = document.createElement('input');
+      obj.setAttribute('type','hidden');
+      obj.setAttribute('name',key);
+      obj.setAttribute('value',params[key]);
+      form.appendChild(obj);
+    }
+  }
+  form.submit();
+}
+window.onload=function(){window.focus();init();};
+//--->
+</script>
+
+</head>
+<body>
+<div>
+
+<table border=0 cellpadding=0 cellspacing=0><tr><td>
+<table border=0 cellpadding=0 cellspacing=0 width="650"><tr><td width=70><a href="/kegg/kegg2.html"><img align="middle" alt="KEGG" border=0 src="/Fig/bget/kegg3.gif"></a></td><td>&nbsp;&nbsp;&nbsp;</td><td><a name="pathway:hsa04150"></a><font class="title3">PATHWAY: hsa04150</font></td><td class="tar vbot"><button class="btn" onclick="javascript:void(window.open(&#39;/kegg/document/help_bget_pathway.html&#39;,&#39;KEGG_Help&#39;,&#39;toolbar=no,location=no,directories=no,width=720,height=640,resizable=yes,scrollbars=yes&#39;));return false;">Help</button></td></tr></table><form method="post" action="/entry/" enctype="application/x-www-form-urlencoded" id="form1" name="form1"></form><table class="w1" width="650">
+<tr>
+<td class="fr3 w1">
+<table width="650" class="w2">
+
+<tr><th class="th30 deft tal vmid"><span class="nowrap">Entry</span></th>
+<td class="td30 defd"><table class="w1" width="100%"><tr><td class="tal pd0"><code><span class="nowrap">hsa04150&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pathway&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+</span></code></td></tr></table></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Name</span></th>
+<td class="td31 defd"><div class="cel">mTOR signaling pathway - Homo sapiens (human)</div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Description</span></th>
+<td class="td30 defd"><div class="cel">The mammalian (mechanistic) target of rapamycin (mTOR) is a highly conserved serine/threonine protein kinase, which exists in two complexes termed mTOR complex 1 (mTORC1) and 2 (mTORC2). mTORC1 contains mTOR, Raptor, PRAS40, Deptor, mLST8, Tel2 and Tti1. mTORC1 is activated by the presence of growth factors, amino acids, energy status, stress and oxygen levels to regulate several biological processes, including lipid metabolism, autophagy, protein synthesis and ribosome biogenesis. On the other hand, mTORC2, which consists of mTOR, mSin1, Rictor, Protor, Deptor, mLST8, Tel2 and Tti1, responds to growth factors and controls cytoskeletal organization, metabolism and survival.<br>
+</div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Class</span></th>
+<td class="td31 defd"><div class="cel">Environmental Information Processing; Signal transduction<br>
+<button class="btn" onclick="location.href='/brite/htext=hsa00001.keg&amp;query=hsa04150';return false;">BRITE hierarchy</button></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Pathway&nbsp;map</span></th>
+<td class="td30 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/pathway/hsa04150">hsa04150</a>&nbsp;&nbsp;</span></td><td>mTOR signaling pathway</td></tr></table><center><a href="/pathway/hsa04150"><img src="/kegg/misc/thumbnail/map04150.gif" alt="hsa04150" style="border-style:none;"></a></center><br></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Network</span></th>
+<td class="td31 defd"><div class="cel"><a href="/network/nt06166">nt06166</a>&nbsp;&nbsp;Human papillomavirus (HPV)<br><a href="/network/nt06167">nt06167</a>&nbsp;&nbsp;Human cytomegalovirus (HCMV)<br><a href="/network/nt06168">nt06168</a>&nbsp;&nbsp;Herpes simplex virus 1 (HSV-1)<br><a href="/network/nt06522">nt06522</a>&nbsp;&nbsp;mTOR signaling</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Element</span></th>
+<td class="td30 repd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/N00582">N00582</a>&nbsp;&nbsp;</span></td><td>IGF-IGF1R-PI3K signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/N01575">N01575</a>&nbsp;&nbsp;</span></td><td>TSC1/2-mTORC1 signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/N01576">N01576</a>&nbsp;&nbsp;</span></td><td>STRAD/STK11- TSC signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/N01578">N01578</a>&nbsp;&nbsp;</span></td><td>GATOR1-mTORC1 signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/N01584">N01584</a>&nbsp;&nbsp;</span></td><td>FLCN-mTORC1 signaling pathway</td></tr></table></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Drug</span></th>
+<td class="td31 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D00753">D00753</a>&nbsp;&nbsp;</span></td><td>Sirolimus (JAN/USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D02714">D02714</a>&nbsp;&nbsp;</span></td><td>Everolimus (JAN/USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D05393">D05393</a>&nbsp;&nbsp;</span></td><td>Pegsunercept (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D06068">D06068</a>&nbsp;&nbsp;</span></td><td>Temsirolimus (JAN/USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D06221">D06221</a>&nbsp;&nbsp;</span></td><td>Triciribine phosphate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D06669">D06669</a>&nbsp;&nbsp;</span></td><td>Zotarolimus (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D08900">D08900</a>&nbsp;&nbsp;</span></td><td>Ridaforolimus (JAN/USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D09680">D09680</a>&nbsp;&nbsp;</span></td><td>Teprotumumab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10076">D10076</a>&nbsp;&nbsp;</span></td><td>Olcorolimus (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11183">D11183</a>&nbsp;&nbsp;</span></td><td>Sapanisertib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11440">D11440</a>&nbsp;&nbsp;</span></td><td>Bimiralisib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11501">D11501</a>&nbsp;&nbsp;</span></td><td>Samotolisib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11663">D11663</a>&nbsp;&nbsp;</span></td><td>Onatasertib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11869">D11869</a>&nbsp;&nbsp;</span></td><td>Paxalisib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12443">D12443</a>&nbsp;&nbsp;</span></td><td>Nanvuranlat hydrochloride hydrate (JAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12952">D12952</a>&nbsp;&nbsp;</span></td><td>Veligrotug (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13122">D13122</a>&nbsp;&nbsp;</span></td><td>Inlexisertib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13162">D13162</a>&nbsp;&nbsp;</span></td><td>Remigromig (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13276">D13276</a>&nbsp;&nbsp;</span></td><td>Elegrobart (USAN/INN)</td></tr></table></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Organism</span></th>
+<td class="td30 defd"><div class="cel">Homo sapiens (human) [GN:<a href="/entry/gn:hsa">hsa</a>]<br>
+</div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Gene</span></th>
+<td class="td31 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10000">10000</a>&nbsp;&nbsp;</span></td><td>AKT3; AKT serine/threonine kinase 3 [KO:<a href="/entry/K04456">K04456</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:101927180">101927180</a>&nbsp;&nbsp;</span></td><td>ATP6V1FP2; V-type proton ATPase subunit F-like [KO:<a href="/entry/K02151">K02151</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10325">10325</a>&nbsp;&nbsp;</span></td><td>RRAGB; Ras related GTP binding B [KO:<a href="/entry/K16185">K16185</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10542">10542</a>&nbsp;&nbsp;</span></td><td>LAMTOR5; late endosomal/lysosomal adaptor, MAPK and MTOR activator 5 [KO:<a href="/entry/K16344">K16344</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10641">10641</a>&nbsp;&nbsp;</span></td><td>NPRL2; NPR2 like, GATOR1 complex subunit [KO:<a href="/entry/K20405">K20405</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10670">10670</a>&nbsp;&nbsp;</span></td><td>RRAGA; Ras related GTP binding A [KO:<a href="/entry/K16185">K16185</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:107080638">107080638</a>&nbsp;&nbsp;</span></td><td>[KO:<a href="/entry/K20396">K20396</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:110117499">110117499</a>&nbsp;&nbsp;</span></td><td>P3R3URF-PIK3R3; P3R3URF-PIK3R3 readthrough [KO:<a href="/entry/K02649">K02649</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:11211">11211</a>&nbsp;&nbsp;</span></td><td>FZD10; frizzled class receptor 10 [KO:<a href="/entry/K02842">K02842</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1147">1147</a>&nbsp;&nbsp;</span></td><td>CHUK; component of inhibitor of nuclear factor kappa B kinase complex [KO:<a href="/entry/K04467">K04467</a>] [EC:<a href="/entry/2.7.11.10">2.7.11.10</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:127124">127124</a>&nbsp;&nbsp;</span></td><td>ATP6V1G3; ATPase H+ transporting V1 subunit G3 [KO:<a href="/entry/K02152">K02152</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:153129">153129</a>&nbsp;&nbsp;</span></td><td>SLC38A9; solute carrier family 38 member 9 [KO:<a href="/entry/K14995">K14995</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1855">1855</a>&nbsp;&nbsp;</span></td><td>DVL1; dishevelled segment polarity protein 1 [KO:<a href="/entry/K02353">K02353</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1856">1856</a>&nbsp;&nbsp;</span></td><td>DVL2; dishevelled segment polarity protein 2 [KO:<a href="/entry/K02353">K02353</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1857">1857</a>&nbsp;&nbsp;</span></td><td>DVL3; dishevelled segment polarity protein 3 [KO:<a href="/entry/K02353">K02353</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1975">1975</a>&nbsp;&nbsp;</span></td><td>EIF4B; eukaryotic translation initiation factor 4B [KO:<a href="/entry/K03258">K03258</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1977">1977</a>&nbsp;&nbsp;</span></td><td>EIF4E; eukaryotic translation initiation factor 4E [KO:<a href="/entry/K03259">K03259</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1978">1978</a>&nbsp;&nbsp;</span></td><td>EIF4EBP1; eukaryotic translation initiation factor 4E binding protein 1 [KO:<a href="/entry/K07205">K07205</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:201163">201163</a>&nbsp;&nbsp;</span></td><td>FLCN; folliculin [KO:<a href="/entry/K09594">K09594</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:207">207</a>&nbsp;&nbsp;</span></td><td>AKT1; AKT serine/threonine kinase 1 [KO:<a href="/entry/K04456">K04456</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:208">208</a>&nbsp;&nbsp;</span></td><td>AKT2; AKT serine/threonine kinase 2 [KO:<a href="/entry/K04456">K04456</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:220441">220441</a>&nbsp;&nbsp;</span></td><td>RNF152; ring finger protein 152 [KO:<a href="/entry/K15705">K15705</a>] [EC:<a href="/entry/2.3.2.27">2.3.2.27</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:23175">23175</a>&nbsp;&nbsp;</span></td><td>LPIN1; lipin 1 [KO:<a href="/entry/K15728">K15728</a>] [EC:<a href="/entry/3.1.3.4">3.1.3.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:245973">245973</a>&nbsp;&nbsp;</span></td><td>ATP6V1C2; ATPase H+ transporting V1 subunit C2 [KO:<a href="/entry/K02148">K02148</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2475">2475</a>&nbsp;&nbsp;</span></td><td>MTOR; mechanistic target of rapamycin kinase [KO:<a href="/entry/K07203">K07203</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:253260">253260</a>&nbsp;&nbsp;</span></td><td>RICTOR; RPTOR independent companion of MTOR complex 2 [KO:<a href="/entry/K08267">K08267</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:253314">253314</a>&nbsp;&nbsp;</span></td><td>EIF4E1B; eukaryotic translation initiation factor 4E family member 1B [KO:<a href="/entry/K03259">K03259</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2535">2535</a>&nbsp;&nbsp;</span></td><td>FZD2; frizzled class receptor 2 [KO:<a href="/entry/K02235">K02235</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:27330">27330</a>&nbsp;&nbsp;</span></td><td>RPS6KA6; ribosomal protein S6 kinase A6 [KO:<a href="/entry/K04373">K04373</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2885">2885</a>&nbsp;&nbsp;</span></td><td>GRB2; growth factor receptor bound protein 2 [KO:<a href="/entry/K04364">K04364</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2887">2887</a>&nbsp;&nbsp;</span></td><td>GRB10; growth factor receptor bound protein 10 [KO:<a href="/entry/K20064">K20064</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:28956">28956</a>&nbsp;&nbsp;</span></td><td>LAMTOR2; late endosomal/lysosomal adaptor, MAPK and MTOR activator 2 [KO:<a href="/entry/K20398">K20398</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2932">2932</a>&nbsp;&nbsp;</span></td><td>GSK3B; glycogen synthase kinase 3 beta [KO:<a href="/entry/K03083">K03083</a>] [EC:<a href="/entry/2.7.11.26">2.7.11.26</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3265">3265</a>&nbsp;&nbsp;</span></td><td>HRAS; HRas proto-oncogene, GTPase [KO:<a href="/entry/K02833">K02833</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3479">3479</a>&nbsp;&nbsp;</span></td><td>IGF1; insulin like growth factor 1 [KO:<a href="/entry/K05459">K05459</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3480">3480</a>&nbsp;&nbsp;</span></td><td>IGF1R; insulin like growth factor 1 receptor [KO:<a href="/entry/K05087">K05087</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3551">3551</a>&nbsp;&nbsp;</span></td><td>IKBKB; inhibitor of nuclear factor kappa B kinase subunit beta [KO:<a href="/entry/K07209">K07209</a>] [EC:<a href="/entry/2.7.11.10">2.7.11.10</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3630">3630</a>&nbsp;&nbsp;</span></td><td>INS; insulin [KO:<a href="/entry/K04526">K04526</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3643">3643</a>&nbsp;&nbsp;</span></td><td>INSR; insulin receptor [KO:<a href="/entry/K04527">K04527</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3667">3667</a>&nbsp;&nbsp;</span></td><td>IRS1; insulin receptor substrate 1 [KO:<a href="/entry/K16172">K16172</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3845">3845</a>&nbsp;&nbsp;</span></td><td>KRAS; KRAS proto-oncogene, GTPase [KO:<a href="/entry/K07827">K07827</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:387">387</a>&nbsp;&nbsp;</span></td><td>RHOA; ras homolog family member A [KO:<a href="/entry/K04513">K04513</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:389541">389541</a>&nbsp;&nbsp;</span></td><td>LAMTOR4; late endosomal/lysosomal adaptor, MAPK and MTOR activator 4 [KO:<a href="/entry/K20399">K20399</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4040">4040</a>&nbsp;&nbsp;</span></td><td>LRP6; LDL receptor related protein 6 [KO:<a href="/entry/K03068">K03068</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4041">4041</a>&nbsp;&nbsp;</span></td><td>LRP5; LDL receptor related protein 5 [KO:<a href="/entry/K03068">K03068</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4893">4893</a>&nbsp;&nbsp;</span></td><td>NRAS; NRAS proto-oncogene, GTPase [KO:<a href="/entry/K07828">K07828</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:51256">51256</a>&nbsp;&nbsp;</span></td><td>TBC1D7; TBC1 domain family member 7 [KO:<a href="/entry/K20396">K20396</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:51382">51382</a>&nbsp;&nbsp;</span></td><td>ATP6V1D; ATPase H+ transporting V1 subunit D [KO:<a href="/entry/K02149">K02149</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:51384">51384</a>&nbsp;&nbsp;</span></td><td>WNT16; Wnt family member 16 [KO:<a href="/entry/K01558">K01558</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:51606">51606</a>&nbsp;&nbsp;</span></td><td>ATP6V1H; ATPase H+ transporting V1 subunit H [KO:<a href="/entry/K02144">K02144</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5170">5170</a>&nbsp;&nbsp;</span></td><td>PDPK1; 3-phosphoinositide dependent protein kinase 1 [KO:<a href="/entry/K06276">K06276</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:51719">51719</a>&nbsp;&nbsp;</span></td><td>CAB39; calcium binding protein 39 [KO:<a href="/entry/K08272">K08272</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:523">523</a>&nbsp;&nbsp;</span></td><td>ATP6V1A; ATPase H+ transporting V1 subunit A [KO:<a href="/entry/K02145">K02145</a>] [EC:<a href="/entry/7.1.2.2">7.1.2.2</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:525">525</a>&nbsp;&nbsp;</span></td><td>ATP6V1B1; ATPase H+ transporting V1 subunit B1 [KO:<a href="/entry/K02147">K02147</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:526">526</a>&nbsp;&nbsp;</span></td><td>ATP6V1B2; ATPase H+ transporting V1 subunit B2 [KO:<a href="/entry/K02147">K02147</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:528">528</a>&nbsp;&nbsp;</span></td><td>ATP6V1C1; ATPase H+ transporting V1 subunit C1 [KO:<a href="/entry/K02148">K02148</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:529">529</a>&nbsp;&nbsp;</span></td><td>ATP6V1E1; ATPase H+ transporting V1 subunit E1 [KO:<a href="/entry/K02150">K02150</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5290">5290</a>&nbsp;&nbsp;</span></td><td>PIK3CA; phosphatidylinositol-4,5-bisphosphate 3-kinase catalytic subunit alpha [KO:<a href="/entry/K00922">K00922</a>] [EC:<a href="/entry/2.7.1.153">2.7.1.153</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5291">5291</a>&nbsp;&nbsp;</span></td><td>PIK3CB; phosphatidylinositol-4,5-bisphosphate 3-kinase catalytic subunit beta [KO:<a href="/entry/K00922">K00922</a>] [EC:<a href="/entry/2.7.1.153">2.7.1.153</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5293">5293</a>&nbsp;&nbsp;</span></td><td>PIK3CD; phosphatidylinositol-4,5-bisphosphate 3-kinase catalytic subunit delta [KO:<a href="/entry/K00922">K00922</a>] [EC:<a href="/entry/2.7.1.153">2.7.1.153</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5295">5295</a>&nbsp;&nbsp;</span></td><td>PIK3R1; phosphoinositide-3-kinase regulatory subunit 1 [KO:<a href="/entry/K02649">K02649</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5296">5296</a>&nbsp;&nbsp;</span></td><td>PIK3R2; phosphoinositide-3-kinase regulatory subunit 2 [KO:<a href="/entry/K02649">K02649</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:534">534</a>&nbsp;&nbsp;</span></td><td>ATP6V1G2; ATPase H+ transporting V1 subunit G2 [KO:<a href="/entry/K02152">K02152</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:54361">54361</a>&nbsp;&nbsp;</span></td><td>WNT4; Wnt family member 4 [KO:<a href="/entry/K00408">K00408</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:54468">54468</a>&nbsp;&nbsp;</span></td><td>MIOS; meiosis regulator for oocyte development [KO:<a href="/entry/K20407">K20407</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:54541">54541</a>&nbsp;&nbsp;</span></td><td>DDIT4; DNA damage inducible transcript 4 [KO:<a href="/entry/K08270">K08270</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:55004">55004</a>&nbsp;&nbsp;</span></td><td>LAMTOR1; late endosomal/lysosomal adaptor, MAPK and MTOR activator 1 [KO:<a href="/entry/K20397">K20397</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:55437">55437</a>&nbsp;&nbsp;</span></td><td>STRADB; STE20 related adaptor beta [KO:<a href="/entry/K17532">K17532</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:55615">55615</a>&nbsp;&nbsp;</span></td><td>PRR5; proline rich 5 [KO:<a href="/entry/K20411">K20411</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5562">5562</a>&nbsp;&nbsp;</span></td><td>PRKAA1; protein kinase AMP-activated catalytic subunit alpha 1 [KO:<a href="/entry/K07198">K07198</a>] [EC:<a href="/entry/2.7.11.31">2.7.11.31</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5563">5563</a>&nbsp;&nbsp;</span></td><td>PRKAA2; protein kinase AMP-activated catalytic subunit alpha 2 [KO:<a href="/entry/K07198">K07198</a>] [EC:<a href="/entry/2.7.11.31">2.7.11.31</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5578">5578</a>&nbsp;&nbsp;</span></td><td>PRKCA; protein kinase C alpha [KO:<a href="/entry/K02677">K02677</a>] [EC:<a href="/entry/2.7.11.13">2.7.11.13</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5579">5579</a>&nbsp;&nbsp;</span></td><td>PRKCB; protein kinase C beta [KO:<a href="/entry/K19662">K19662</a>] [EC:<a href="/entry/2.7.11.13">2.7.11.13</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5582">5582</a>&nbsp;&nbsp;</span></td><td>PRKCG; protein kinase C gamma [KO:<a href="/entry/K19663">K19663</a>] [EC:<a href="/entry/2.7.11.13">2.7.11.13</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5594">5594</a>&nbsp;&nbsp;</span></td><td>MAPK1; mitogen-activated protein kinase 1 [KO:<a href="/entry/K04371">K04371</a>] [EC:<a href="/entry/2.7.11.24">2.7.11.24</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5595">5595</a>&nbsp;&nbsp;</span></td><td>MAPK3; mitogen-activated protein kinase 3 [KO:<a href="/entry/K04371">K04371</a>] [EC:<a href="/entry/2.7.11.24">2.7.11.24</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5604">5604</a>&nbsp;&nbsp;</span></td><td>MAP2K1; mitogen-activated protein kinase kinase 1 [KO:<a href="/entry/K04368">K04368</a>] [EC:<a href="/entry/2.7.12.2">2.7.12.2</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5605">5605</a>&nbsp;&nbsp;</span></td><td>MAP2K2; mitogen-activated protein kinase kinase 2 [KO:<a href="/entry/K04369">K04369</a>] [EC:<a href="/entry/2.7.12.2">2.7.12.2</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5728">5728</a>&nbsp;&nbsp;</span></td><td>PTEN; phosphatase and tensin homolog [KO:<a href="/entry/K01110">K01110</a>] [EC:<a href="/entry/3.1.3.16">3.1.3.16</a> <a href="/entry/3.1.3.48">3.1.3.48</a> <a href="/entry/3.1.3.67">3.1.3.67</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:57521">57521</a>&nbsp;&nbsp;</span></td><td>RPTOR; regulatory associated protein of MTOR complex 1 [KO:<a href="/entry/K07204">K07204</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:57600">57600</a>&nbsp;&nbsp;</span></td><td>FNIP2; folliculin interacting protein 2 [KO:<a href="/entry/K20401">K20401</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:58528">58528</a>&nbsp;&nbsp;</span></td><td>RRAGD; Ras related GTP binding D [KO:<a href="/entry/K16186">K16186</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5894">5894</a>&nbsp;&nbsp;</span></td><td>RAF1; Raf-1 proto-oncogene, serine/threonine kinase [KO:<a href="/entry/K04366">K04366</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6009">6009</a>&nbsp;&nbsp;</span></td><td>RHEB; Ras homolog, mTORC1 binding [KO:<a href="/entry/K07208">K07208</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6194">6194</a>&nbsp;&nbsp;</span></td><td>RPS6; ribosomal protein S6 [KO:<a href="/entry/K02991">K02991</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6195">6195</a>&nbsp;&nbsp;</span></td><td>RPS6KA1; ribosomal protein S6 kinase A1 [KO:<a href="/entry/K04373">K04373</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6196">6196</a>&nbsp;&nbsp;</span></td><td>RPS6KA2; ribosomal protein S6 kinase A2 [KO:<a href="/entry/K04373">K04373</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6197">6197</a>&nbsp;&nbsp;</span></td><td>RPS6KA3; ribosomal protein S6 kinase A3 [KO:<a href="/entry/K04373">K04373</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6198">6198</a>&nbsp;&nbsp;</span></td><td>RPS6KB1; ribosomal protein S6 kinase B1 [KO:<a href="/entry/K04688">K04688</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6199">6199</a>&nbsp;&nbsp;</span></td><td>RPS6KB2; ribosomal protein S6 kinase B2 [KO:<a href="/entry/K04688">K04688</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6249">6249</a>&nbsp;&nbsp;</span></td><td>CLIP1; CAP-Gly domain containing linker protein 1 [KO:<a href="/entry/K10421">K10421</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6396">6396</a>&nbsp;&nbsp;</span></td><td>SEC13; SEC13 homolog, nuclear pore and COPII coat complex component [KO:<a href="/entry/K14004">K14004</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:64121">64121</a>&nbsp;&nbsp;</span></td><td>RRAGC; Ras related GTP binding C [KO:<a href="/entry/K16186">K16186</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:64223">64223</a>&nbsp;&nbsp;</span></td><td>MLST8; MTOR associated protein, LST8 homolog [KO:<a href="/entry/K08266">K08266</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6446">6446</a>&nbsp;&nbsp;</span></td><td>SGK1; serum/glucocorticoid regulated kinase 1 [KO:<a href="/entry/K13302">K13302</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:64798">64798</a>&nbsp;&nbsp;</span></td><td>DEPTOR; DEP domain containing MTOR interacting protein [KO:<a href="/entry/K20402">K20402</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:64900">64900</a>&nbsp;&nbsp;</span></td><td>LPIN3; lipin 3 [KO:<a href="/entry/K15728">K15728</a>] [EC:<a href="/entry/3.1.3.4">3.1.3.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6502">6502</a>&nbsp;&nbsp;</span></td><td>SKP2; S-phase kinase associated protein 2 [KO:<a href="/entry/K03875">K03875</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6520">6520</a>&nbsp;&nbsp;</span></td><td>SLC3A2; solute carrier family 3 member 2 [KO:<a href="/entry/K06519">K06519</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:652968">652968</a>&nbsp;&nbsp;</span></td><td>CASTOR1; cytosolic arginine sensor for mTORC1 subunit 1 [KO:<a href="/entry/K23080">K23080</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6654">6654</a>&nbsp;&nbsp;</span></td><td>SOS1; SOS Ras/Rac guanine nucleotide exchange factor 1 [KO:<a href="/entry/K03099">K03099</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6655">6655</a>&nbsp;&nbsp;</span></td><td>SOS2; SOS Ras/Rho guanine nucleotide exchange factor 2 [KO:<a href="/entry/K03099">K03099</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:673">673</a>&nbsp;&nbsp;</span></td><td>BRAF; B-Raf proto-oncogene, serine/threonine kinase [KO:<a href="/entry/K04365">K04365</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6794">6794</a>&nbsp;&nbsp;</span></td><td>STK11; serine/threonine kinase 11 [KO:<a href="/entry/K07298">K07298</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7124">7124</a>&nbsp;&nbsp;</span></td><td>TNF; tumor necrosis factor [KO:<a href="/entry/K03156">K03156</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7132">7132</a>&nbsp;&nbsp;</span></td><td>TNFRSF1A; TNF receptor superfamily member 1A [KO:<a href="/entry/K03158">K03158</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7248">7248</a>&nbsp;&nbsp;</span></td><td>TSC1; TSC complex subunit 1 [KO:<a href="/entry/K07206">K07206</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7249">7249</a>&nbsp;&nbsp;</span></td><td>TSC2; TSC complex subunit 2 [KO:<a href="/entry/K07207">K07207</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:729438">729438</a>&nbsp;&nbsp;</span></td><td>CASTOR2; cytosolic arginine sensor for mTORC1 subunit 2 [KO:<a href="/entry/K23081">K23081</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7471">7471</a>&nbsp;&nbsp;</span></td><td>WNT1; Wnt family member 1 [KO:<a href="/entry/K03209">K03209</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7472">7472</a>&nbsp;&nbsp;</span></td><td>WNT2; Wnt family member 2 [KO:<a href="/entry/K00182">K00182</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7473">7473</a>&nbsp;&nbsp;</span></td><td>WNT3; Wnt family member 3 [KO:<a href="/entry/K00312">K00312</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7474">7474</a>&nbsp;&nbsp;</span></td><td>WNT5A; Wnt family member 5A [KO:<a href="/entry/K00444">K00444</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7475">7475</a>&nbsp;&nbsp;</span></td><td>WNT6; Wnt family member 6 [KO:<a href="/entry/K00445">K00445</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7476">7476</a>&nbsp;&nbsp;</span></td><td>WNT7A; Wnt family member 7A [KO:<a href="/entry/K00572">K00572</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7477">7477</a>&nbsp;&nbsp;</span></td><td>WNT7B; Wnt family member 7B [KO:<a href="/entry/K00572">K00572</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7478">7478</a>&nbsp;&nbsp;</span></td><td>WNT8A; Wnt family member 8A [KO:<a href="/entry/K00714">K00714</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7479">7479</a>&nbsp;&nbsp;</span></td><td>WNT8B; Wnt family member 8B [KO:<a href="/entry/K00714">K00714</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7480">7480</a>&nbsp;&nbsp;</span></td><td>WNT10B; Wnt family member 10B [KO:<a href="/entry/K01357">K01357</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7481">7481</a>&nbsp;&nbsp;</span></td><td>WNT11; Wnt family member 11 [KO:<a href="/entry/K01384">K01384</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7482">7482</a>&nbsp;&nbsp;</span></td><td>WNT2B; Wnt family member 2B [KO:<a href="/entry/K00182">K00182</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7483">7483</a>&nbsp;&nbsp;</span></td><td>WNT9A; Wnt family member 9A [KO:<a href="/entry/K01064">K01064</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7484">7484</a>&nbsp;&nbsp;</span></td><td>WNT9B; Wnt family member 9B [KO:<a href="/entry/K01064">K01064</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7855">7855</a>&nbsp;&nbsp;</span></td><td>FZD5; frizzled class receptor 5 [KO:<a href="/entry/K02375">K02375</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:79109">79109</a>&nbsp;&nbsp;</span></td><td>MAPKAP1; MAPK associated protein 1 [KO:<a href="/entry/K20410">K20410</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:79726">79726</a>&nbsp;&nbsp;</span></td><td>WDR59; WD repeat domain 59 [KO:<a href="/entry/K20409">K20409</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7976">7976</a>&nbsp;&nbsp;</span></td><td>FZD3; frizzled class receptor 3 [KO:<a href="/entry/K02329">K02329</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:79899">79899</a>&nbsp;&nbsp;</span></td><td>PRR5L; proline rich 5 like [KO:<a href="/entry/K20411">K20411</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:80326">80326</a>&nbsp;&nbsp;</span></td><td>WNT10A; Wnt family member 10A [KO:<a href="/entry/K01357">K01357</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:81029">81029</a>&nbsp;&nbsp;</span></td><td>WNT5B; Wnt family member 5B [KO:<a href="/entry/K00444">K00444</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8131">8131</a>&nbsp;&nbsp;</span></td><td>NPRL3; NPR3 like, GATOR1 complex subunit [KO:<a href="/entry/K20406">K20406</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8140">8140</a>&nbsp;&nbsp;</span></td><td>SLC7A5; solute carrier family 7 member 5 [KO:<a href="/entry/K13780">K13780</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:81617">81617</a>&nbsp;&nbsp;</span></td><td>CAB39L; calcium binding protein 39 like [KO:<a href="/entry/K08272">K08272</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:81929">81929</a>&nbsp;&nbsp;</span></td><td>SEH1L; SEH1 like nucleoporin [KO:<a href="/entry/K14299">K14299</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8321">8321</a>&nbsp;&nbsp;</span></td><td>FZD1; frizzled class receptor 1 [KO:<a href="/entry/K02432">K02432</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8322">8322</a>&nbsp;&nbsp;</span></td><td>FZD4; frizzled class receptor 4 [KO:<a href="/entry/K02354">K02354</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8323">8323</a>&nbsp;&nbsp;</span></td><td>FZD6; frizzled class receptor 6 [KO:<a href="/entry/K02376">K02376</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8324">8324</a>&nbsp;&nbsp;</span></td><td>FZD7; frizzled class receptor 7 [KO:<a href="/entry/K02432">K02432</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8325">8325</a>&nbsp;&nbsp;</span></td><td>FZD8; frizzled class receptor 8 [KO:<a href="/entry/K02375">K02375</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8326">8326</a>&nbsp;&nbsp;</span></td><td>FZD9; frizzled class receptor 9 [KO:<a href="/entry/K02842">K02842</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:83667">83667</a>&nbsp;&nbsp;</span></td><td>SESN2; sestrin 2 [KO:<a href="/entry/K20394">K20394</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8408">8408</a>&nbsp;&nbsp;</span></td><td>ULK1; unc-51 like autophagy activating kinase 1 [KO:<a href="/entry/K21357">K21357</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:84219">84219</a>&nbsp;&nbsp;</span></td><td>WDR24; WD repeat domain 24 [KO:<a href="/entry/K20408">K20408</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:84335">84335</a>&nbsp;&nbsp;</span></td><td>AKT1S1; AKT1 substrate 1 [KO:<a href="/entry/K16184">K16184</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8503">8503</a>&nbsp;&nbsp;</span></td><td>PIK3R3; phosphoinositide-3-kinase regulatory subunit 3 [KO:<a href="/entry/K02649">K02649</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8649">8649</a>&nbsp;&nbsp;</span></td><td>LAMTOR3; late endosomal/lysosomal adaptor, MAPK and MTOR activator 3 [KO:<a href="/entry/K04370">K04370</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:89780">89780</a>&nbsp;&nbsp;</span></td><td>WNT3A; Wnt family member 3A [KO:<a href="/entry/K00312">K00312</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:90423">90423</a>&nbsp;&nbsp;</span></td><td>ATP6V1E2; ATPase H+ transporting V1 subunit E2 [KO:<a href="/entry/K02150">K02150</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:92335">92335</a>&nbsp;&nbsp;</span></td><td>STRADA; STE20 related adaptor alpha [KO:<a href="/entry/K08271">K08271</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9296">9296</a>&nbsp;&nbsp;</span></td><td>ATP6V1F; ATPase H+ transporting V1 subunit F [KO:<a href="/entry/K02151">K02151</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9470">9470</a>&nbsp;&nbsp;</span></td><td>EIF4E2; eukaryotic translation initiation factor 4E family member 2 [KO:<a href="/entry/K03259">K03259</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9550">9550</a>&nbsp;&nbsp;</span></td><td>ATP6V1G1; ATPase H+ transporting V1 subunit G1 [KO:<a href="/entry/K02152">K02152</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:96459">96459</a>&nbsp;&nbsp;</span></td><td>FNIP1; folliculin interacting protein 1 [KO:<a href="/entry/K20400">K20400</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9663">9663</a>&nbsp;&nbsp;</span></td><td>LPIN2; lipin 2 [KO:<a href="/entry/K15728">K15728</a>] [EC:<a href="/entry/3.1.3.4">3.1.3.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9675">9675</a>&nbsp;&nbsp;</span></td><td>TTI1; TELO2 interacting protein 1 [KO:<a href="/entry/K20403">K20403</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9681">9681</a>&nbsp;&nbsp;</span></td><td>DEPDC5; DEP domain containing 5, GATOR1 subcomplex subunit [KO:<a href="/entry/K20404">K20404</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9706">9706</a>&nbsp;&nbsp;</span></td><td>ULK2; unc-51 like autophagy activating kinase 2 [KO:<a href="/entry/K08269">K08269</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9894">9894</a>&nbsp;&nbsp;</span></td><td>TELO2; telomere maintenance 2 [KO:<a href="/entry/K11137">K11137</a>]</td></tr></table></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Compound</span></th>
+<td class="td30 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/C00020">C00020</a>&nbsp;&nbsp;</span></td><td>AMP</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/C00062">C00062</a>&nbsp;&nbsp;</span></td><td>L-Arginine</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/C00123">C00123</a>&nbsp;&nbsp;</span></td><td>L-Leucine</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/C05981">C05981</a>&nbsp;&nbsp;</span></td><td>Phosphatidylinositol-3,4,5-trisphosphate</td></tr></table></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/27304501">27304501</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Kennedy BK, Lamming DW</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">The Mechanistic Target of Rapamycin: The Grand ConducTOR of Metabolism and Aging.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Cell Metab 23:990-1003 (2016)<br>DOI:<a href="https://doi.org/10.1016/j.cmet.2016.05.009">10.1016/j.cmet.2016.05.009</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/24556838">24556838</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Shimobayashi M, Hall MN</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Making new contacts: the mTOR network in metabolism and signalling crosstalk.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Nat Rev Mol Cell Biol 15:155-62 (2014)<br>DOI:<a href="https://doi.org/10.1038/nrm3757">10.1038/nrm3757</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/25242279">25242279</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Huang K, Fingar DC</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Growing knowledge of the mTOR signaling network.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Semin Cell Dev Biol 36:79-90 (2014)<br>DOI:<a href="https://doi.org/10.1016/j.semcdb.2014.09.011">10.1016/j.semcdb.2014.09.011</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/26269525">26269525</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Bockaert J, Marin P</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">mTOR in Brain Physiology and Pathologies.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Physiol Rev 95:1157-87 (2015)<br>DOI:<a href="https://doi.org/10.1152/physrev.00038.2014">10.1152/physrev.00038.2014</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/26185979">26185979</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Caron A, Richard D, Laplante M</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">The Roles of mTOR Complexes in Lipid Metabolism.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Annu Rev Nutr 35:321-48 (2015)<br>DOI:<a href="https://doi.org/10.1146/annurev-nutr-071714-034355">10.1146/annurev-nutr-071714-034355</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/26658722">26658722</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Shimobayashi M, Hall MN</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Multiple amino acid sensing inputs to mTORC1.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Cell Res 26:7-20 (2016)<br>DOI:<a href="https://doi.org/10.1038/cr.2015.146">10.1038/cr.2015.146</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/24698685">24698685</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Bar-Peled L, Sabatini DM</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Regulation of mTORC1 by amino acids.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Trends Cell Biol 24:400-6 (2014)<br>DOI:<a href="https://doi.org/10.1016/j.tcb.2014.03.003">10.1016/j.tcb.2014.03.003</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/26046644">26046644</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Fingar DC</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Rag Ubiquitination Recruits a GATOR1: Attenuation of Amino Acid-Induced mTORC1 Signaling.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Mol Cell 58:713-5 (2015)<br>DOI:<a href="https://doi.org/10.1016/j.molcel.2015.05.029">10.1016/j.molcel.2015.05.029</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/26700098">26700098</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Cai H, Dong LQ, Liu F</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Recent Advances in Adipose mTOR Signaling and Function: Therapeutic Prospects.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Trends Pharmacol Sci 37:303-17 (2016)<br>DOI:<a href="https://doi.org/10.1016/j.tips.2015.11.011">10.1016/j.tips.2015.11.011</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/24842496">24842496</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Eyre TA, Collins GP, Goldstone AH, Cwynarski K</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Time now to TORC the TORC? New developments in mTOR pathway inhibition in lymphoid malignancies.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Br J Haematol 166:336-51 (2014)<br>DOI:<a href="https://doi.org/10.1111/bjh.12945">10.1111/bjh.12945</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/23465396">23465396</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Jewell JL, Guan KL</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Nutrient signaling to mTOR and cell growth.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Trends Biochem Sci 38:233-42 (2013)<br>DOI:<a href="https://doi.org/10.1016/j.tibs.2013.01.004">10.1016/j.tibs.2013.01.004</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/23421405">23421405</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Wood TL, Bercury KK, Cifelli SE, Mursch LE, Min J, Dai J, Macklin WB</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">mTOR: a link from the extracellular milieu to transcriptional regulation of oligodendrocyte development.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">ASN Neuro 5:e00108 (2013)<br>DOI:<a href="https://doi.org/10.1042/AN20120092">10.1042/AN20120092</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/23694989">23694989</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Kim SG, Buel GR, Blenis J</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Nutrient regulation of the mTOR complex 1 signaling pathway.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Mol Cells 35:463-73 (2013)<br>DOI:<a href="https://doi.org/10.1007/s10059-013-0138-2">10.1007/s10059-013-0138-2</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/19812304">19812304</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Laplante M, Sabatini DM</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">mTOR signaling at a glance.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">J Cell Sci 122:3589-94 (2009)<br>DOI:<a href="https://doi.org/10.1242/jcs.051011">10.1242/jcs.051011</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/16756488">16756488</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Alessi DR, Sakamoto K, Bayascas JR</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">LKB1-dependent signaling pathways.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Annu Rev Biochem 75:137-63 (2006)<br>DOI:<a href="https://doi.org/10.1146/annurev.biochem.75.103004.142702">10.1146/annurev.biochem.75.103004.142702</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/27027448">27027448</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Dan HC, Antonia RJ, Baldwin AS</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">PI3K/Akt promotes feedforward mTORC2 activation through IKKalpha.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Oncotarget 7:21064-75 (2016)<br>DOI:<a href="https://doi.org/10.18632/oncotarget.8383">10.18632/oncotarget.8383</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/28283069">28283069</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Saxton RA, Sabatini DM</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">mTOR Signaling in Growth, Metabolism, and Disease.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Cell 168:960-976 (2017)<br>DOI:<a href="https://doi.org/10.1016/j.cell.2017.02.004">10.1016/j.cell.2017.02.004</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Related<br>pathway</span></th>
+<td class="td31 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa00561">hsa00561</a>&nbsp;&nbsp;</span></td><td>Glycerolipid metabolism</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04010">hsa04010</a>&nbsp;&nbsp;</span></td><td>MAPK signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04140">hsa04140</a>&nbsp;&nbsp;</span></td><td>Autophagy - animal</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04151">hsa04151</a>&nbsp;&nbsp;</span></td><td>PI3K-Akt signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04152">hsa04152</a>&nbsp;&nbsp;</span></td><td>AMPK signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04810">hsa04810</a>&nbsp;&nbsp;</span></td><td>Regulation of actin cytoskeleton</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04910">hsa04910</a>&nbsp;&nbsp;</span></td><td>Insulin signaling pathway</td></tr></table></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">KO&nbsp;pathway</span></th>
+<td class="td30 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/ko04150">ko04150</a>&nbsp;&nbsp;</span></td><td>&nbsp;</td></tr></table></td></tr>
+
+</table></td></tr></table>
+<br></td></tr></table>
+
+
+<a href="/dbget/">DBGET</a> integrated database retrieval system</div>
+
+</body>
+</html>

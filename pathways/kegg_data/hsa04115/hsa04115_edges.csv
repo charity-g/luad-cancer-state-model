@@ -1,0 +1,76 @@
+id,source,target,type,subtypes,source_entry_id,target_entry_id
+relation_1,entry_10,entry_9,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",10,9
+relation_2,entry_8,entry_7,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",8,7
+relation_3,entry_8,entry_50,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",8,50
+relation_4,entry_7,entry_50,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",7,50
+relation_5,entry_9,entry_50,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",9,50
+relation_6,entry_10,entry_50,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",10,50
+relation_7,entry_34,entry_49,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",34,49
+relation_8,entry_6,entry_49,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",6,49
+relation_9,entry_50,entry_49,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",50,49
+relation_10,entry_6,entry_50,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",6,50
+relation_11,entry_35,entry_162,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",35,162
+relation_12,entry_35,entry_163,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",35,163
+relation_13,entry_12,entry_164,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",12,164
+relation_14,entry_53,entry_164,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",53,164
+relation_15,entry_30,entry_31,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",30,31
+relation_16,entry_50,entry_35,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,35
+relation_17,entry_50,entry_12,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,12
+relation_18,entry_50,entry_11,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,11
+relation_19,entry_50,entry_53,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,53
+relation_20,entry_50,entry_40,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,40
+relation_21,entry_50,entry_39,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,39
+relation_22,entry_50,entry_42,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,42
+relation_23,entry_50,entry_43,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,43
+relation_24,entry_50,entry_41,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,41
+relation_25,entry_50,entry_66,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,66
+relation_26,entry_65,entry_50,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",65,50
+relation_27,entry_65,entry_64,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",65,64
+relation_28,entry_50,entry_38,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,38
+relation_29,entry_50,entry_57,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,57
+relation_30,entry_50,entry_56,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,56
+relation_31,entry_50,entry_36,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,36
+relation_32,entry_50,entry_63,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,63
+relation_33,entry_50,entry_30,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,30
+relation_34,entry_50,entry_32,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,32
+relation_35,entry_50,entry_33,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,33
+relation_36,entry_50,entry_27,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,27
+relation_37,entry_50,entry_29,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,29
+relation_38,entry_50,entry_26,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,26
+relation_39,entry_50,entry_23,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,23
+relation_40,entry_50,entry_22,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,22
+relation_41,entry_50,entry_5,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,5
+relation_42,entry_50,entry_58,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,58
+relation_43,entry_50,entry_25,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,25
+relation_44,entry_50,entry_17,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,17
+relation_45,entry_50,entry_4,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,4
+relation_46,entry_50,entry_24,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,24
+relation_47,entry_50,entry_51,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,51
+relation_48,entry_50,entry_21,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,21
+relation_49,entry_50,entry_52,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,52
+relation_50,entry_50,entry_20,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,20
+relation_51,entry_50,entry_3,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,3
+relation_52,entry_50,entry_18,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,18
+relation_53,entry_50,entry_19,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,19
+relation_54,entry_37,entry_47,PPrel,"[{""name"": ""indirect effect"", ""value"": ""..>""}]",37,47
+relation_55,entry_64,entry_47,PPrel,"[{""name"": ""indirect effect"", ""value"": ""..>""}]",64,47
+relation_56,entry_63,entry_47,PPrel,"[{""name"": ""indirect effect"", ""value"": ""..>""}]",63,47
+relation_57,entry_47,entry_48,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",47,48
+relation_58,entry_46,entry_48,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",46,48
+relation_59,entry_48,entry_60,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",48,60
+relation_60,entry_44,entry_60,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",44,60
+relation_61,entry_43,entry_44,PPrel,"[{""name"": ""indirect effect"", ""value"": ""..>""}]",43,44
+relation_62,entry_50,entry_146,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,146
+relation_63,entry_50,entry_154,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,154
+relation_64,entry_146,entry_147,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",146,147
+relation_65,entry_146,entry_148,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",146,148
+relation_66,entry_147,entry_41,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",147,41
+relation_67,entry_148,entry_41,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",148,41
+relation_68,entry_50,entry_157,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",50,157
+relation_69,entry_161,entry_50,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",161,50
+component_1,entry_162,entry_54,component_of,[],162,54
+component_2,entry_162,entry_55,component_of,[],162,55
+component_3,entry_163,entry_13,component_of,[],163,13
+component_4,entry_163,entry_14,component_of,[],163,14
+component_5,entry_164,entry_45,component_of,[],164,45
+component_6,entry_164,entry_59,component_of,[],164,59

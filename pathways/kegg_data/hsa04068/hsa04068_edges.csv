@@ -1,0 +1,80 @@
+id,source,target,type,subtypes,source_entry_id,target_entry_id
+relation_1,entry_133,entry_134,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",133,134
+relation_2,entry_135,entry_134,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",135,134
+relation_3,entry_175,entry_173,PCrel,"[{""name"": ""activation"", ""value"": ""-->""}]",175,173
+relation_4,entry_176,entry_173,PCrel,"[{""name"": ""activation"", ""value"": ""-->""}]",176,173
+relation_5,entry_173,entry_7,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",173,7
+relation_6,entry_173,entry_10,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",173,10
+relation_7,entry_187,entry_133,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",187,133
+relation_8,entry_7,entry_10,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",7,10
+relation_9,entry_72,entry_73,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",72,73
+relation_10,entry_8,entry_14,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",8,14
+relation_11,entry_73,entry_21,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",73,21
+relation_12,entry_14,entry_21,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",14,21
+relation_13,entry_21,entry_19,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",21,19
+relation_14,entry_19,entry_22,PCrel,"[{""name"": ""activation"", ""value"": ""-->""}]",19,22
+relation_15,entry_22,entry_20,PCrel,"[{""name"": ""activation"", ""value"": ""-->""}]",22,20
+relation_16,entry_20,entry_4,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",20,4
+relation_17,entry_20,entry_18,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",20,18
+relation_18,entry_20,entry_129,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",20,129
+relation_19,entry_18,entry_4,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",18,4
+relation_20,entry_4,entry_10,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",4,10
+relation_21,entry_18,entry_10,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",18,10
+relation_22,entry_129,entry_10,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",129,10
+relation_23,entry_154,entry_10,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",154,10
+relation_24,entry_79,entry_10,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",79,10
+relation_25,entry_119,entry_10,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",119,10
+relation_26,entry_158,entry_10,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",158,10
+relation_27,entry_180,entry_115,PCrel,"[{""name"": ""activation"", ""value"": ""-->""}]",180,115
+relation_28,entry_53,entry_43,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",53,43
+relation_29,entry_43,entry_44,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",43,44
+relation_30,entry_44,entry_11,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",44,11
+relation_31,entry_11,entry_12,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",11,12
+relation_32,entry_12,entry_15,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",12,15
+relation_33,entry_15,entry_13,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",15,13
+relation_34,entry_13,entry_6,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",13,6
+relation_35,entry_5,entry_10,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",5,10
+relation_36,entry_48,entry_10,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",48,10
+relation_37,entry_4,entry_61,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",4,61
+relation_38,entry_61,entry_22,PCrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""dephosphorylation"", ""value"": ""-p""}]",61,22
+relation_39,entry_76,entry_82,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,82
+relation_40,entry_76,entry_83,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,83
+relation_41,entry_76,entry_179,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,179
+relation_42,entry_76,entry_84,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,84
+relation_43,entry_76,entry_85,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,85
+relation_44,entry_76,entry_86,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,86
+relation_45,entry_76,entry_87,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,87
+relation_46,entry_76,entry_88,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,88
+relation_47,entry_76,entry_89,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,89
+relation_48,entry_76,entry_90,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,90
+relation_49,entry_76,entry_91,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,91
+relation_50,entry_76,entry_92,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,92
+relation_51,entry_76,entry_93,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,93
+relation_52,entry_76,entry_94,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,94
+relation_53,entry_76,entry_123,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,123
+relation_54,entry_76,entry_125,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,125
+relation_55,entry_76,entry_124,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,124
+relation_56,entry_76,entry_95,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,95
+relation_57,entry_76,entry_96,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,96
+relation_58,entry_76,entry_97,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,97
+relation_59,entry_76,entry_98,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,98
+relation_60,entry_76,entry_16,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,16
+relation_61,entry_76,entry_17,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,17
+relation_62,entry_76,entry_99,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,99
+relation_63,entry_76,entry_100,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,100
+relation_64,entry_76,entry_101,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,101
+relation_65,entry_76,entry_102,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,102
+relation_66,entry_76,entry_103,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,103
+relation_67,entry_76,entry_166,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,166
+relation_68,entry_149,entry_147,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""indirect effect"", ""value"": ""..>""}]",149,147
+relation_69,entry_150,entry_147,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""indirect effect"", ""value"": ""..>""}]",150,147
+relation_70,entry_147,entry_10,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",147,10
+relation_71,entry_162,entry_10,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""methylation"", ""value"": ""+m""}]",162,10
+relation_72,entry_159,entry_10,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""methylation"", ""value"": ""+m""}]",159,10
+relation_73,entry_115,entry_117,PPrel,"[{""name"": ""binding/association"", ""value"": ""---""}]",115,117
+relation_74,entry_115,entry_118,PPrel,"[{""name"": ""binding/association"", ""value"": ""---""}]",115,118
+relation_75,entry_117,entry_19,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""indirect effect"", ""value"": ""..>""}]",117,19
+relation_76,entry_118,entry_19,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""indirect effect"", ""value"": ""..>""}]",118,19
+relation_77,entry_6,entry_10,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",6,10
+relation_78,entry_164,entry_76,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",164,76
+relation_79,entry_76,entry_189,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",76,189

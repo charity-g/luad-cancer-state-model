@@ -1,0 +1,5065 @@
+{
+  "meta": {
+    "title": "KEGG MAPK signaling pathway",
+    "entry_page": "https://www.kegg.jp/entry/hsa04010",
+    "kgml_url": "https://rest.kegg.jp/get/hsa04010/kgml",
+    "reference_entry_id": "hsa04010",
+    "pathway_id": "hsa04010",
+    "node_count": 134,
+    "edge_count": 174
+  },
+  "nodes": [
+    {
+      "id": "entry_19",
+      "entry_id": 19,
+      "label": "C00338",
+      "type": "compound",
+      "name": "cpd:C00338",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?C00338",
+      "graphics": {
+        "name": "C00338",
+        "type": "circle",
+        "fgcolor": "#000000",
+        "bgcolor": "#FFFFFF",
+        "x": 138,
+        "y": 743,
+        "width": 8,
+        "height": 8
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_20",
+      "entry_id": 20,
+      "label": "RASGRF1, CDC25, CDC25L, GNRP, GRF1, GRF55, H-GRF55, PP13187, ras-GRF1...",
+      "type": "gene",
+      "name": "hsa:5923 hsa:5924",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5923+hsa:5924",
+      "graphics": {
+        "name": "RASGRF1, CDC25, CDC25L, GNRP, GRF1, GRF55, H-GRF55, PP13187, ras-GRF1...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 392,
+        "y": 236,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_21",
+      "entry_id": 21,
+      "label": "DUSP10, MKP-5, MKP5...",
+      "type": "gene",
+      "name": "hsa:11221 hsa:1843 hsa:1844 hsa:1846 hsa:1847 hsa:1848 hsa:1849 hsa:1850 hsa:1852 hsa:80824",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:11221+hsa:1843+hsa:1844+hsa:1846+hsa:1847+hsa:1848+hsa:1849+hsa:1850+hsa:1852+hsa:80824",
+      "graphics": {
+        "name": "DUSP10, MKP-5, MKP5...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 789,
+        "y": 364,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_22",
+      "entry_id": 22,
+      "label": "DUSP3, VHR...",
+      "type": "gene",
+      "name": "hsa:1845 hsa:5778 hsa:5801 hsa:84867",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:1845+hsa:5778+hsa:5801+hsa:84867",
+      "graphics": {
+        "name": "DUSP3, VHR...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 740,
+        "y": 364,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_23",
+      "entry_id": 23,
+      "label": "PPM1B, PP2C-beta, PP2C-beta-X, PP2CB, PP2CBETA, PPC2BETAX",
+      "type": "gene",
+      "name": "hsa:5495",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5495",
+      "graphics": {
+        "name": "PPM1B, PP2C-beta, PP2C-beta-X, PP2CB, PP2CBETA, PPC2BETAX",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 596,
+        "y": 770,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_24",
+      "entry_id": 24,
+      "label": "FASLG, ALPS1B, APT1LG1, APTL, CD178, CD95-L, CD95L, FASL, TNFSF6, TNLG1A",
+      "type": "gene",
+      "name": "hsa:356",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:356",
+      "graphics": {
+        "name": "FASLG, ALPS1B, APT1LG1, APTL, CD178, CD95-L, CD95L, FASL, TNFSF6, TNLG1A",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 137,
+        "y": 692,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_25",
+      "entry_id": 25,
+      "label": "C00165",
+      "type": "compound",
+      "name": "cpd:C00165",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?C00165",
+      "graphics": {
+        "name": "C00165",
+        "type": "circle",
+        "fgcolor": "#000000",
+        "bgcolor": "#FFFFFF",
+        "x": 487,
+        "y": 136,
+        "width": 8,
+        "height": 8
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_26",
+      "entry_id": 26,
+      "label": "C00575",
+      "type": "compound",
+      "name": "cpd:C00575",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?C00575",
+      "graphics": {
+        "name": "C00575",
+        "type": "circle",
+        "fgcolor": "#000000",
+        "bgcolor": "#FFFFFF",
+        "x": 447,
+        "y": 123,
+        "width": 8,
+        "height": 8
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_27",
+      "entry_id": 27,
+      "label": "C01245",
+      "type": "compound",
+      "name": "cpd:C01245",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?C01245",
+      "graphics": {
+        "name": "C01245",
+        "type": "circle",
+        "fgcolor": "#000000",
+        "bgcolor": "#FFFFFF",
+        "x": 410,
+        "y": 136,
+        "width": 8,
+        "height": 8
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_28",
+      "entry_id": 28,
+      "label": "C00076",
+      "type": "compound",
+      "name": "cpd:C00076",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?C00076",
+      "graphics": {
+        "name": "C00076",
+        "type": "circle",
+        "fgcolor": "#000000",
+        "bgcolor": "#FFFFFF",
+        "x": 314,
+        "y": 175,
+        "width": 8,
+        "height": 8
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_29",
+      "entry_id": 29,
+      "label": "MAP4K4, FLH21957, HEL-S-31, HGK, MEKKK4, NIK",
+      "type": "gene",
+      "name": "hsa:9448",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:9448",
+      "graphics": {
+        "name": "MAP4K4, FLH21957, HEL-S-31, HGK, MEKKK4, NIK",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 494,
+        "y": 487,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_30",
+      "entry_id": 30,
+      "label": "PLA2G4B, HsT16992, cPLA2-beta...",
+      "type": "gene",
+      "name": "hsa:100137049 hsa:123745 hsa:255189 hsa:283748 hsa:5321 hsa:8605 hsa:8681",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:100137049+hsa:123745+hsa:255189+hsa:283748+hsa:5321+hsa:8605+hsa:8681",
+      "graphics": {
+        "name": "PLA2G4B, HsT16992, cPLA2-beta...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 850,
+        "y": 219,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_31",
+      "entry_id": 31,
+      "label": "STMN1, C1orf215, LAP18, Lag, OP18, PP17, PP19, PR22, SMN",
+      "type": "gene",
+      "name": "hsa:3925",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:3925",
+      "graphics": {
+        "name": "STMN1, C1orf215, LAP18, Lag, OP18, PP17, PP19, PR22, SMN",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 850,
+        "y": 195,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_32",
+      "entry_id": 32,
+      "label": "MAPT, DDPAC, FTD1, FTDP-17, MAPTL, MSTD, MTBT1, MTBT2, PPND, PPP1R103, TAU, Tau-PHF6, tau-40",
+      "type": "gene",
+      "name": "hsa:4137",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:4137",
+      "graphics": {
+        "name": "MAPT, DDPAC, FTD1, FTDP-17, MAPTL, MSTD, MTBT1, MTBT2, PPND, PPP1R103, TAU, Tau-PHF6, tau-40",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 850,
+        "y": 174,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_33",
+      "entry_id": 33,
+      "label": "NFKB1, CVID12, EBP-1, KBF1, NF-kB, NF-kB1, NF-kappa-B1, NF-kappaB, NF-kappabeta, NFKB-p105, NFKB-p50, NFkappaB...",
+      "type": "gene",
+      "name": "hsa:4790 hsa:4791 hsa:5970 hsa:5971",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:4790+hsa:4791+hsa:5970+hsa:5971",
+      "graphics": {
+        "name": "NFKB1, CVID12, EBP-1, KBF1, NF-kB, NF-kB1, NF-kappa-B1, NF-kappaB, NF-kappabeta, NFKB-p105, NFKB-p50, NFkappaB...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 914,
+        "y": 131,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_34",
+      "entry_id": 34,
+      "label": "CHUK, BPS2, IKBKA, IKK-1, IKK-alpha, IKK1, IKKA, NFKBIKA, TCF16...",
+      "type": "gene",
+      "name": "hsa:1147 hsa:3551 hsa:8517",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:1147+hsa:3551+hsa:8517",
+      "graphics": {
+        "name": "CHUK, BPS2, IKBKA, IKK-1, IKK-alpha, IKK1, IKKA, NFKBIKA, TCF16...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 786,
+        "y": 142,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_35",
+      "entry_id": 35,
+      "label": "MAP3K14, FTDCR1B, HS, HSNIK, IMD112, NIK",
+      "type": "gene",
+      "name": "hsa:9020",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:9020",
+      "graphics": {
+        "name": "MAP3K14, FTDCR1B, HS, HSNIK, IMD112, NIK",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 786,
+        "y": 121,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_36",
+      "entry_id": 36,
+      "label": "MAPK1, ERK, ERK-2, ERK2, ERT1, MAPK2, NS13, P42MAPK, PRKM1, PRKM2, p38, p40, p41, p41mapk, p42-MAPK...",
+      "type": "gene",
+      "name": "hsa:5594 hsa:5595",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5594+hsa:5595",
+      "graphics": {
+        "name": "MAPK1, ERK, ERK-2, ERK2, ERT1, MAPK2, NS13, P42MAPK, PRKM1, PRKM2, p38, p40, p41, p41mapk, p42-MAPK...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 763,
+        "y": 311,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_37",
+      "entry_id": 37,
+      "label": "LAMTOR3, MAP2K1IP1, MAPBP, MAPKSP1, MP1, PRO0633, Ragulator3",
+      "type": "gene",
+      "name": "hsa:8649",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:8649",
+      "graphics": {
+        "name": "LAMTOR3, MAP2K1IP1, MAPBP, MAPKSP1, MP1, PRO0633, Ragulator3",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 737,
+        "y": 286,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_38",
+      "entry_id": 38,
+      "label": "MAP2K2, CFC4, MAPKK2, MEK2, MKK2, PRKMK2",
+      "type": "gene",
+      "name": "hsa:5605",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5605",
+      "graphics": {
+        "name": "MAP2K2, CFC4, MAPKK2, MEK2, MKK2, PRKMK2",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 676,
+        "y": 322,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_39",
+      "entry_id": 39,
+      "label": "MAP2K1, CFC3, MAPKK1, MEK1, MEL, MKK1, PRKMK1",
+      "type": "gene",
+      "name": "hsa:5604",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5604",
+      "graphics": {
+        "name": "MAP2K1, CFC3, MAPKK1, MEK1, MEL, MKK1, PRKMK1",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 676,
+        "y": 300,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_40",
+      "entry_id": 40,
+      "label": "RAF1, CMD1NN, CRAF, NS5, Raf-1, c-Raf",
+      "type": "gene",
+      "name": "hsa:5894",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5894",
+      "graphics": {
+        "name": "RAF1, CMD1NN, CRAF, NS5, Raf-1, c-Raf",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 581,
+        "y": 336,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_41",
+      "entry_id": 41,
+      "label": "BRAF, B-RAF1, B-raf, BRAF-1, BRAF1, NS7, RAFB1",
+      "type": "gene",
+      "name": "hsa:673",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:673",
+      "graphics": {
+        "name": "BRAF, B-RAF1, B-raf, BRAF-1, BRAF1, NS7, RAFB1",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 581,
+        "y": 312,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_42",
+      "entry_id": 42,
+      "label": "RASA1, CM-AVM, CMAVM, CMAVM1, GAP, PKWS, RASA, RASGAP, p120, p120GAP, p120RASGAP",
+      "type": "gene",
+      "name": "hsa:5921",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5921",
+      "graphics": {
+        "name": "RASA1, CM-AVM, CMAVM, CMAVM1, GAP, PKWS, RASA, RASGAP, p120, p120GAP, p120RASGAP",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 421,
+        "y": 371,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_43",
+      "entry_id": 43,
+      "label": "NF1, NFNS, VRNF, WSS",
+      "type": "gene",
+      "name": "hsa:4763",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:4763",
+      "graphics": {
+        "name": "NF1, NFNS, VRNF, WSS",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 421,
+        "y": 350,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_44",
+      "entry_id": 44,
+      "label": "PRKCA, AAG6, PKC-alpha, PKCA, PKCI+/-, PKCalpha, PRKACA...",
+      "type": "gene",
+      "name": "hsa:5578 hsa:5579 hsa:5582",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5578+hsa:5579+hsa:5582",
+      "graphics": {
+        "name": "PRKCA, AAG6, PKC-alpha, PKCA, PKCI+/-, PKCalpha, PRKACA...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 487,
+        "y": 257,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_45",
+      "entry_id": 45,
+      "label": "RAP1A, C21KG, G-22K, KREV-1, KREV1, RAP1, SMGP21...",
+      "type": "gene",
+      "name": "hsa:5906 hsa:5908",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5906+hsa:5908",
+      "graphics": {
+        "name": "RAP1A, C21KG, G-22K, KREV-1, KREV1, RAP1, SMGP21...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 528,
+        "y": 219,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_46",
+      "entry_id": 46,
+      "label": "PRKACA, CAFD1, PKACA, PPNAD4...",
+      "type": "gene",
+      "name": "hsa:5566 hsa:5567 hsa:5568",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5566+hsa:5567+hsa:5568",
+      "graphics": {
+        "name": "PRKACA, CAFD1, PKACA, PPNAD4...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 528,
+        "y": 170,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_47",
+      "entry_id": 47,
+      "label": "RAPGEF2, CNrasGEF, NRAPGEP, PDZ-GEF1, PDZGEF1, RA-GEF, RA-GEF-1, RAGEF, Rap-GEP, nRap_GEP",
+      "type": "gene",
+      "name": "hsa:9693",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:9693",
+      "graphics": {
+        "name": "RAPGEF2, CNrasGEF, NRAPGEP, PDZ-GEF1, PDZGEF1, RA-GEF, RA-GEF-1, RAGEF, Rap-GEP, nRap_GEP",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 447,
+        "y": 229,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_48",
+      "entry_id": 48,
+      "label": "RASA2, GAP1M",
+      "type": "gene",
+      "name": "hsa:5922",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5922",
+      "graphics": {
+        "name": "RASA2, GAP1M",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 357,
+        "y": 364,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_49",
+      "entry_id": 49,
+      "label": "RRAS2, NS12, TC21...",
+      "type": "gene",
+      "name": "hsa:22800 hsa:22808 hsa:3265 hsa:3845 hsa:4893 hsa:6237",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:22800+hsa:22808+hsa:3265+hsa:3845+hsa:4893+hsa:6237",
+      "graphics": {
+        "name": "RRAS2, NS12, TC21...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 408,
+        "y": 311,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_50",
+      "entry_id": 50,
+      "label": "RASGRP1, CALDAG-GEFI, CALDAG-GEFII, IMD64, RASGRP...",
+      "type": "gene",
+      "name": "hsa:10125 hsa:10235 hsa:115727 hsa:25780",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:10125+hsa:10235+hsa:115727+hsa:25780",
+      "graphics": {
+        "name": "RASGRP1, CALDAG-GEFI, CALDAG-GEFII, IMD64, RASGRP...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 392,
+        "y": 257,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_51",
+      "entry_id": 51,
+      "label": "SOS1, GF1, GGF1, GINGF, HGF, NS4, SOS-1...",
+      "type": "gene",
+      "name": "hsa:6654 hsa:6655",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:6654+hsa:6655",
+      "graphics": {
+        "name": "SOS1, GF1, GGF1, GINGF, HGF, NS4, SOS-1...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 346,
+        "y": 311,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_52",
+      "entry_id": 52,
+      "label": "GNA12, HG1M1, NNX3, RMP, gep...",
+      "type": "gene",
+      "name": "hsa:2768 hsa:55970",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:2768+hsa:55970",
+      "graphics": {
+        "name": "GNA12, HG1M1, NNX3, RMP, gep...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 262,
+        "y": 364,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_53",
+      "entry_id": 53,
+      "label": "GRB2, ASH, EGFRBP-GRB2, Grb3-3, MST084, MSTP084, NCKAP2",
+      "type": "gene",
+      "name": "hsa:2885",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:2885",
+      "graphics": {
+        "name": "GRB2, ASH, EGFRBP-GRB2, Grb3-3, MST084, MSTP084, NCKAP2",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 283,
+        "y": 311,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_54",
+      "entry_id": 54,
+      "label": "CSF1R, BANDDOS, C-FMS, CD115, CSF-1R, CSFR, FIM2, FMS, GPSC, HDLS, HDLS1, M-CSF-R...",
+      "type": "gene",
+      "name": "hsa:1436 hsa:1956 hsa:1969 hsa:2064 hsa:2065 hsa:2066 hsa:2260 hsa:2261 hsa:2263 hsa:2264 hsa:2321 hsa:2322 hsa:2324 hsa:3480 hsa:3643 hsa:3791 hsa:3815 hsa:4233 hsa:4804 hsa:4914 hsa:4915 hsa:5156 hsa:5159 hsa:5979 hsa:7010",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:1436+hsa:1956+hsa:1969+hsa:2064+hsa:2065+hsa:2066+hsa:2260+hsa:2261+hsa:2263+hsa:2264+hsa:2321+hsa:2322+hsa:2324+hsa:3480+hsa:3643+hsa:3791+hsa:3815+hsa:4233+hsa:4804+hsa:4914+hsa:4915+hsa:5156+hsa:5159+hsa:5979+hsa:7010",
+      "graphics": {
+        "name": "CSF1R, BANDDOS, C-FMS, CD115, CSF-1R, CSFR, FIM2, FMS, GPSC, HDLS, HDLS1, M-CSF-R...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 220,
+        "y": 311,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_55",
+      "entry_id": 55,
+      "label": "CACNG3...",
+      "type": "gene",
+      "name": "hsa:10368 hsa:10369 hsa:27091 hsa:27092 hsa:55799 hsa:59283 hsa:59284 hsa:59285 hsa:773 hsa:774 hsa:775 hsa:776 hsa:777 hsa:778 hsa:779 hsa:781 hsa:782 hsa:783 hsa:784 hsa:785 hsa:786 hsa:8911 hsa:8912 hsa:8913 hsa:9254 hsa:93589",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:10368+hsa:10369+hsa:27091+hsa:27092+hsa:55799+hsa:59283+hsa:59284+hsa:59285+hsa:773+hsa:774+hsa:775+hsa:776+hsa:777+hsa:778+hsa:779+hsa:781+hsa:782+hsa:783+hsa:784+hsa:785+hsa:786+hsa:8911+hsa:8912+hsa:8913+hsa:9254+hsa:93589",
+      "graphics": {
+        "name": "CACNG3...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 220,
+        "y": 176,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_56",
+      "entry_id": 56,
+      "label": "TITLE:MAPK signaling pathway",
+      "type": "map",
+      "name": "path:hsa04010",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa04010",
+      "graphics": {
+        "name": "TITLE:MAPK signaling pathway",
+        "type": "roundrectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#FFFFFF",
+        "x": 154,
+        "y": 58,
+        "width": 228,
+        "height": 25
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_57",
+      "entry_id": 57,
+      "label": "Phosphatidylinositol signaling system",
+      "type": "map",
+      "name": "path:hsa04070",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa04070",
+      "graphics": {
+        "name": "Phosphatidylinositol signaling system",
+        "type": "roundrectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#FFFFFF",
+        "x": 630,
+        "y": 86,
+        "width": 121,
+        "height": 38
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_58",
+      "entry_id": 58,
+      "label": "Cell cycle",
+      "type": "map",
+      "name": "path:hsa04110",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa04110",
+      "graphics": {
+        "name": "Cell cycle",
+        "type": "roundrectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#FFFFFF",
+        "x": 1301,
+        "y": 602,
+        "width": 34,
+        "height": 271
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_59",
+      "entry_id": 59,
+      "label": "Apoptosis",
+      "type": "map",
+      "name": "path:hsa04210",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa04210",
+      "graphics": {
+        "name": "Apoptosis",
+        "type": "roundrectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#FFFFFF",
+        "x": 1223,
+        "y": 623,
+        "width": 94,
+        "height": 26
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_60",
+      "entry_id": 60,
+      "label": "Wnt signaling pathway",
+      "type": "map",
+      "name": "path:hsa04310",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa04310",
+      "graphics": {
+        "name": "Wnt signaling pathway",
+        "type": "roundrectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#FFFFFF",
+        "x": 1039,
+        "y": 852,
+        "width": 94,
+        "height": 38
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_61",
+      "entry_id": 61,
+      "label": "p53 signaling pathway",
+      "type": "map",
+      "name": "path:hsa04115",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa04115",
+      "graphics": {
+        "name": "p53 signaling pathway",
+        "type": "roundrectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#FFFFFF",
+        "x": 1039,
+        "y": 614,
+        "width": 94,
+        "height": 38
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_62",
+      "entry_id": 62,
+      "label": "NR4A1, GFRP1, HMR, N10, NAK-1, NGFIB, NP10, NUR77, TR3",
+      "type": "gene",
+      "name": "hsa:3164",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:3164",
+      "graphics": {
+        "name": "NR4A1, GFRP1, HMR, N10, NAK-1, NGFIB, NP10, NUR77, TR3",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 914,
+        "y": 915,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_63",
+      "entry_id": 63,
+      "label": "MAPK7, BMK1, ERK4, ERK5, PRKM7",
+      "type": "gene",
+      "name": "hsa:5598",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5598",
+      "graphics": {
+        "name": "MAPK7, BMK1, ERK4, ERK5, PRKM7",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 763,
+        "y": 915,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_64",
+      "entry_id": 64,
+      "label": "MAP2K5, HsT17454, MAPKK5, MEK5, PRKMK5",
+      "type": "gene",
+      "name": "hsa:5607",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5607",
+      "graphics": {
+        "name": "MAP2K5, HsT17454, MAPKK5, MEK5, PRKMK5",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 676,
+        "y": 915,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_65",
+      "entry_id": 65,
+      "label": "NLK",
+      "type": "gene",
+      "name": "hsa:51701",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:51701",
+      "graphics": {
+        "name": "NLK",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 786,
+        "y": 852,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_66",
+      "entry_id": 66,
+      "label": "CDC25B",
+      "type": "gene",
+      "name": "hsa:994",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:994",
+      "graphics": {
+        "name": "CDC25B",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 851,
+        "y": 822,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_67",
+      "entry_id": 67,
+      "label": "RPS6KA4, MSK2, RSK-B, S6K-alpha-4...",
+      "type": "gene",
+      "name": "hsa:8986 hsa:9252",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:8986+hsa:9252",
+      "graphics": {
+        "name": "RPS6KA4, MSK2, RSK-B, S6K-alpha-4...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 851,
+        "y": 800,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_68",
+      "entry_id": 68,
+      "label": "MAPKAPK3, 3PK, MAPKAP-K3, MAPKAP3, MAPKAPK-3, MDPT3, MK-3, MK3...",
+      "type": "gene",
+      "name": "hsa:7867 hsa:9261",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:7867+hsa:9261",
+      "graphics": {
+        "name": "MAPKAPK3, 3PK, MAPKAP-K3, MAPKAP3, MAPKAPK-3, MDPT3, MK-3, MK3...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 851,
+        "y": 779,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_69",
+      "entry_id": 69,
+      "label": "ATF4, CREB-2, CREB2, TAXREB67, TXREB",
+      "type": "gene",
+      "name": "hsa:468",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:468",
+      "graphics": {
+        "name": "ATF4, CREB-2, CREB2, TAXREB67, TXREB",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 914,
+        "y": 801,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_70",
+      "entry_id": 70,
+      "label": "MEF2C, C5DELq14.3, DEL5q14.3, NEDHSIL",
+      "type": "gene",
+      "name": "hsa:4208",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:4208",
+      "graphics": {
+        "name": "MEF2C, C5DELq14.3, DEL5q14.3, NEDHSIL",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 914,
+        "y": 736,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_71",
+      "entry_id": 71,
+      "label": "MAX, PDMCS, bHLHd4",
+      "type": "gene",
+      "name": "hsa:4149",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:4149",
+      "graphics": {
+        "name": "MAX, PDMCS, bHLHd4",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 914,
+        "y": 714,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_72",
+      "entry_id": 72,
+      "label": "DDIT3, AltDDIT3, C/EBPzeta, CEBPZ, CHOP, CHOP-10, CHOP10, GADD153",
+      "type": "gene",
+      "name": "hsa:1649",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:1649",
+      "graphics": {
+        "name": "DDIT3, AltDDIT3, C/EBPzeta, CEBPZ, CHOP, CHOP-10, CHOP10, GADD153",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 914,
+        "y": 692,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_73",
+      "entry_id": 73,
+      "label": "ELK4, SAP1",
+      "type": "gene",
+      "name": "hsa:2005",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:2005",
+      "graphics": {
+        "name": "ELK4, SAP1",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 914,
+        "y": 670,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_74",
+      "entry_id": 74,
+      "label": "TP53, BCC7, BMFS5, LFS1, P53, TRP53",
+      "type": "gene",
+      "name": "hsa:7157",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:7157",
+      "graphics": {
+        "name": "TP53, BCC7, BMFS5, LFS1, P53, TRP53",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 914,
+        "y": 614,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_75",
+      "entry_id": 75,
+      "label": "ELK1",
+      "type": "gene",
+      "name": "hsa:2002",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:2002",
+      "graphics": {
+        "name": "ELK1",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 914,
+        "y": 593,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_76",
+      "entry_id": 76,
+      "label": "ATF2, CRE-BP1, CREB-2, CREB2, HB16, TREB7",
+      "type": "gene",
+      "name": "hsa:1386",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:1386",
+      "graphics": {
+        "name": "ATF2, CRE-BP1, CREB-2, CREB2, HB16, TREB7",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 914,
+        "y": 571,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_77",
+      "entry_id": 77,
+      "label": "MAPK14, CSBP, CSBP1, CSBP2, CSPB1, EXIP, Mxi2, PRKM14, PRKM15, RK, SAPK2A, p38, p38ALPHA...",
+      "type": "gene",
+      "name": "hsa:1432 hsa:5600 hsa:5603 hsa:6300",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:1432+hsa:5600+hsa:5603+hsa:6300",
+      "graphics": {
+        "name": "MAPK14, CSBP, CSBP1, CSBP2, CSPB1, EXIP, Mxi2, PRKM14, PRKM15, RK, SAPK2A, p38, p38ALPHA...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 763,
+        "y": 703,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_78",
+      "entry_id": 78,
+      "label": "PPP5C, PP5, PPP5, PPT",
+      "type": "gene",
+      "name": "hsa:5536",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5536",
+      "graphics": {
+        "name": "PPP5C, PP5, PPP5, PPT",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 657,
+        "y": 756,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_79",
+      "entry_id": 79,
+      "label": "MAP2K6, MAPKK6, MEK6, MKK6, PRKMK6, SAPKK-3, SAPKK3",
+      "type": "gene",
+      "name": "hsa:5608",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5608",
+      "graphics": {
+        "name": "MAP2K6, MAPKK6, MEK6, MKK6, PRKMK6, SAPKK-3, SAPKK3",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 676,
+        "y": 719,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_80",
+      "entry_id": 80,
+      "label": "MAP2K3, MAPKK3, MEK3, MKK3, PRKMK3, SAPKK-2, SAPKK2",
+      "type": "gene",
+      "name": "hsa:5606",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5606",
+      "graphics": {
+        "name": "MAP2K3, MAPKK3, MEK3, MKK3, PRKMK3, SAPKK-2, SAPKK2",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 676,
+        "y": 688,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_81",
+      "entry_id": 81,
+      "label": "DUSP10, MKP-5, MKP5...",
+      "type": "gene",
+      "name": "hsa:11221 hsa:1844 hsa:1846 hsa:1847 hsa:1849 hsa:1850 hsa:1852 hsa:80824",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:11221+hsa:1844+hsa:1846+hsa:1847+hsa:1849+hsa:1850+hsa:1852+hsa:80824",
+      "graphics": {
+        "name": "DUSP10, MKP-5, MKP5...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 787,
+        "y": 592,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_82",
+      "entry_id": 82,
+      "label": "DUSP3, VHR...",
+      "type": "gene",
+      "name": "hsa:1845 hsa:5778 hsa:5801 hsa:84867",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:1845+hsa:5778+hsa:5801+hsa:84867",
+      "graphics": {
+        "name": "DUSP3, VHR...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 743,
+        "y": 614,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_83",
+      "entry_id": 83,
+      "label": "PPM1A, PP2C-ALPHA, PP2CA, PP2Calpha",
+      "type": "gene",
+      "name": "hsa:5494",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5494",
+      "graphics": {
+        "name": "PPM1A, PP2C-ALPHA, PP2CA, PP2Calpha",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 686,
+        "y": 592,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_84",
+      "entry_id": 84,
+      "label": "AKT3, MPPH, MPPH2, PKB-GAMMA, PKBG, PRKBG, RAC-PK-gamma, RAC-gamma, STK-2...",
+      "type": "gene",
+      "name": "hsa:10000 hsa:207 hsa:208",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:10000+hsa:207+hsa:208",
+      "graphics": {
+        "name": "AKT3, MPPH, MPPH2, PKB-GAMMA, PKBG, PRKBG, RAC-PK-gamma, RAC-gamma, STK-2...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 643,
+        "y": 614,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_85",
+      "entry_id": 85,
+      "label": "TAOK3, DPK, JIK, MAP3K18, hKFC-A...",
+      "type": "gene",
+      "name": "hsa:51347 hsa:57551 hsa:9344",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:51347+hsa:57551+hsa:9344",
+      "graphics": {
+        "name": "TAOK3, DPK, JIK, MAP3K18, hKFC-A...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 580,
+        "y": 827,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_86",
+      "entry_id": 86,
+      "label": "MAP3K4, MAPKKK4, MEKK_4, MEKK4, MTK1, PRO0412",
+      "type": "gene",
+      "name": "hsa:4216",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:4216",
+      "graphics": {
+        "name": "MAP3K4, MAPKKK4, MEKK_4, MEKK4, MTK1, PRO0412",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 580,
+        "y": 800,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_87",
+      "entry_id": 87,
+      "label": "HSPB1, CMT2F, HEL-S-102, HMN2B, HMND3, HS.76067, HSP27, HSP28, Hsp25, SRP27",
+      "type": "gene",
+      "name": "hsa:3315",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:3315",
+      "graphics": {
+        "name": "HSPB1, CMT2F, HEL-S-102, HMN2B, HMND3, HS.76067, HSP27, HSP28, Hsp25, SRP27",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 914,
+        "y": 769,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_88",
+      "entry_id": 88,
+      "label": "MAP3K7, CSCF, FMD2, MEKK7, TAK1, TGF1a",
+      "type": "gene",
+      "name": "hsa:6885",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:6885",
+      "graphics": {
+        "name": "MAP3K7, CSCF, FMD2, MEKK7, TAK1, TGF1a",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 580,
+        "y": 733,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_89",
+      "entry_id": 89,
+      "label": "MAP3K5, ASK1, MAPKKK5, MEKK5",
+      "type": "gene",
+      "name": "hsa:4217",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:4217",
+      "graphics": {
+        "name": "MAP3K5, ASK1, MAPKKK5, MEKK5",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 580,
+        "y": 703,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_90",
+      "entry_id": 90,
+      "label": "MAP3K6, ASK2, MAPKKK6, MEKK6",
+      "type": "gene",
+      "name": "hsa:9064",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:9064",
+      "graphics": {
+        "name": "MAP3K6, ASK2, MAPKKK6, MEKK6",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 580,
+        "y": 673,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_91",
+      "entry_id": 91,
+      "label": "MAP3K20, AZK, CNM6, MLK7, MLT, MLTK, MLTKalpha, MLTKbeta, MRK, SFMMP, ZAK, mlklak, pk",
+      "type": "gene",
+      "name": "hsa:51776",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:51776",
+      "graphics": {
+        "name": "MAP3K20, AZK, CNM6, MLK7, MLT, MLTK, MLTKalpha, MLTKbeta, MRK, SFMMP, ZAK, mlklak, pk",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 580,
+        "y": 629,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_92",
+      "entry_id": 92,
+      "label": "MAP3K12, DLK, HP09298, MEKK12, MUK, ZPK, ZPKP1...",
+      "type": "gene",
+      "name": "hsa:7786 hsa:9175",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:7786+hsa:9175",
+      "graphics": {
+        "name": "MAP3K12, DLK, HP09298, MEKK12, MUK, ZPK, ZPKP1...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 580,
+        "y": 609,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_93",
+      "entry_id": 93,
+      "label": "MAP3K9, MEKK9, MLK1, PRKE1...",
+      "type": "gene",
+      "name": "hsa:4293 hsa:4294 hsa:84451",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:4293+hsa:4294+hsa:84451",
+      "graphics": {
+        "name": "MAP3K9, MEKK9, MLK1, PRKE1...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 580,
+        "y": 589,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_94",
+      "entry_id": 94,
+      "label": "MAP4K2, BL44, GCK, RAB8IP",
+      "type": "gene",
+      "name": "hsa:5871",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5871",
+      "graphics": {
+        "name": "MAP4K2, BL44, GCK, RAB8IP",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 494,
+        "y": 653,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_95",
+      "entry_id": 95,
+      "label": "STK3, KRS1, MST2...",
+      "type": "gene",
+      "name": "hsa:6788 hsa:6789",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:6788+hsa:6789",
+      "graphics": {
+        "name": "STK3, KRS1, MST2...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 494,
+        "y": 613,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_96",
+      "entry_id": 96,
+      "label": "ECSIT, SITPEC",
+      "type": "gene",
+      "name": "hsa:51295",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:51295",
+      "graphics": {
+        "name": "ECSIT, SITPEC",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 427,
+        "y": 779,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_97",
+      "entry_id": 97,
+      "label": "TAB2, CHTD2, MAP3K7IP2, TAB-2",
+      "type": "gene",
+      "name": "hsa:23118",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:23118",
+      "graphics": {
+        "name": "TAB2, CHTD2, MAP3K7IP2, TAB-2",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 427,
+        "y": 755,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_98",
+      "entry_id": 98,
+      "label": "TAB1, 3'-Tab1, MAP3K7IP1",
+      "type": "gene",
+      "name": "hsa:10454",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:10454",
+      "graphics": {
+        "name": "TAB1, 3'-Tab1, MAP3K7IP1",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 427,
+        "y": 733,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_99",
+      "entry_id": 99,
+      "label": "GADD45G, CR6, DDIT2, GADD45gamma, GRP17...",
+      "type": "gene",
+      "name": "hsa:10912 hsa:1647 hsa:4616",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:10912+hsa:1647+hsa:4616",
+      "graphics": {
+        "name": "GADD45G, CR6, DDIT2, GADD45gamma, GRP17...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 361,
+        "y": 800,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_100",
+      "entry_id": 100,
+      "label": "TRAF6, MGC:3310, RNF85",
+      "type": "gene",
+      "name": "hsa:7189",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:7189",
+      "graphics": {
+        "name": "TRAF6, MGC:3310, RNF85",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 361,
+        "y": 768,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_101",
+      "entry_id": 101,
+      "label": "DAXX, BING2, DAP6, EAP1, SMIM40",
+      "type": "gene",
+      "name": "hsa:1616",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:1616",
+      "graphics": {
+        "name": "DAXX, BING2, DAP6, EAP1, SMIM40",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 455,
+        "y": 703,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_102",
+      "entry_id": 102,
+      "label": "TRAF2, MGC:45012, RNF117, TRAP, TRAP3",
+      "type": "gene",
+      "name": "hsa:7186",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:7186",
+      "graphics": {
+        "name": "TRAF2, MGC:45012, RNF117, TRAP, TRAP3",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 392,
+        "y": 653,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_103",
+      "entry_id": 103,
+      "label": "CASP3, CPP32, CPP32B, SCA-1",
+      "type": "gene",
+      "name": "hsa:836",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:836",
+      "graphics": {
+        "name": "CASP3, CPP32, CPP32B, SCA-1",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 392,
+        "y": 613,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_104",
+      "entry_id": 104,
+      "label": "CD14",
+      "type": "gene",
+      "name": "hsa:929",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:929",
+      "graphics": {
+        "name": "CD14",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 220,
+        "y": 743,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_105",
+      "entry_id": 105,
+      "label": "TGFBR1, AAT5, ACVRLK4, ALK-5, ALK5, ESS1, LDS1, LDS1A, LDS2A, MSSE, SKR4, TBR-i, TBRI, TGFR-1, tbetaR-I...",
+      "type": "gene",
+      "name": "hsa:7046 hsa:7048",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:7046+hsa:7048",
+      "graphics": {
+        "name": "TGFBR1, AAT5, ACVRLK4, ALK-5, ALK5, ESS1, LDS1, LDS1A, LDS2A, MSSE, SKR4, TBR-i, TBRI, TGFR-1, tbetaR-I...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 220,
+        "y": 714,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_106",
+      "entry_id": 106,
+      "label": "FAS, ALPS1A, APO-1, APT1, CD95, FAS1, FASTM, TNFRSF6",
+      "type": "gene",
+      "name": "hsa:355",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:355",
+      "graphics": {
+        "name": "FAS, ALPS1A, APO-1, APT1, CD95, FAS1, FASTM, TNFRSF6",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 220,
+        "y": 692,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_107",
+      "entry_id": 107,
+      "label": "IL1R1, CD121A, CRMO3, D2S1473, IL-1R-alpha, IL-1RT1, IL1R, IL1RA, P80...",
+      "type": "gene",
+      "name": "hsa:3554 hsa:3556",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:3554+hsa:3556",
+      "graphics": {
+        "name": "IL1R1, CD121A, CRMO3, D2S1473, IL-1R-alpha, IL-1RT1, IL1R, IL1RA, P80...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 220,
+        "y": 663,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_108",
+      "entry_id": 108,
+      "label": "TNFRSF1A, CD120a, FPF, TBP1, TNF-R, TNF-R-I, TNF-R55, TNFAR, TNFR1, TNFR55, TNFR60, p55, p55-R, p60",
+      "type": "gene",
+      "name": "hsa:7132",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:7132",
+      "graphics": {
+        "name": "TNFRSF1A, CD120a, FPF, TBP1, TNF-R, TNF-R-I, TNF-R55, TNFAR, TNFR1, TNFR55, TNFR60, p55, p55-R, p60",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 220,
+        "y": 630,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_109",
+      "entry_id": 109,
+      "label": "TGFB1, CED, DPD1, IBDIMDE, LAP, TGF-beta1, TGFB, TGFbeta...",
+      "type": "gene",
+      "name": "hsa:7040 hsa:7042 hsa:7043",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:7040+hsa:7042+hsa:7043",
+      "graphics": {
+        "name": "TGFB1, CED, DPD1, IBDIMDE, LAP, TGF-beta1, TGFB, TGFbeta...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 137,
+        "y": 714,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_110",
+      "entry_id": 110,
+      "label": "IL1A, IL-1_alpha, IL-1A, IL1, IL1-ALPHA, IL1F1...",
+      "type": "gene",
+      "name": "hsa:3552 hsa:3553",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:3552+hsa:3553",
+      "graphics": {
+        "name": "IL1A, IL-1_alpha, IL-1A, IL1, IL1-ALPHA, IL1F1...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 137,
+        "y": 663,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_111",
+      "entry_id": 111,
+      "label": "TNF, DIF, IMD127, TNF-alpha, TNFA, TNFSF2, TNLG1F",
+      "type": "gene",
+      "name": "hsa:7124",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:7124",
+      "graphics": {
+        "name": "TNF, DIF, IMD127, TNF-alpha, TNFA, TNFSF2, TNLG1F",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 137,
+        "y": 630,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_112",
+      "entry_id": 112,
+      "label": "MAPKAPK5, MAPKAP-K5, MK-5, MK5, NCFD, PRAK",
+      "type": "gene",
+      "name": "hsa:8550",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:8550",
+      "graphics": {
+        "name": "MAPKAPK5, MAPKAP-K5, MK-5, MK5, NCFD, PRAK",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 851,
+        "y": 757,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_113",
+      "entry_id": 113,
+      "label": "RAC1, MIG5, MRD48, Rac-1, TC-25, p21-Rac1...",
+      "type": "gene",
+      "name": "hsa:5879 hsa:5880 hsa:5881 hsa:998",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5879+hsa:5880+hsa:5881+hsa:998",
+      "graphics": {
+        "name": "RAC1, MIG5, MRD48, Rac-1, TC-25, p21-Rac1...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 408,
+        "y": 552,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_114",
+      "entry_id": 114,
+      "label": "PAK1, IDDMSSD, PAKalpha, alpha-PAK, p65-PAK...",
+      "type": "gene",
+      "name": "hsa:5058 hsa:5062",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5058+hsa:5062",
+      "graphics": {
+        "name": "PAK1, IDDMSSD, PAKalpha, alpha-PAK, p65-PAK...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 494,
+        "y": 552,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_115",
+      "entry_id": 115,
+      "label": "MAP3K2, MEKK2, MEKK2B...",
+      "type": "gene",
+      "name": "hsa:10746 hsa:4215",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:10746+hsa:4215",
+      "graphics": {
+        "name": "MAP3K2, MEKK2, MEKK2B...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 580,
+        "y": 552,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_116",
+      "entry_id": 116,
+      "label": "MAPK8IP2, IB-2, IB2, JIP2, PRKM8IPL...",
+      "type": "gene",
+      "name": "hsa:23542 hsa:9479",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:23542+hsa:9479",
+      "graphics": {
+        "name": "MAPK8IP2, IB-2, IB2, JIP2, PRKM8IPL...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 724,
+        "y": 531,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_117",
+      "entry_id": 117,
+      "label": "MAP3K11, MEKK11, MLK-3, MLK3, PTK1, SPRK",
+      "type": "gene",
+      "name": "hsa:4296",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:4296",
+      "graphics": {
+        "name": "MAP3K11, MEKK11, MLK-3, MLK3, PTK1, SPRK",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 580,
+        "y": 520,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_118",
+      "entry_id": 118,
+      "label": "MAP2K7, JNKK2, MAPKK7, MEK, MEK_7, MKK7, PRKMK7, SAPKK-4, SAPKK4",
+      "type": "gene",
+      "name": "hsa:5609",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5609",
+      "graphics": {
+        "name": "MAP2K7, JNKK2, MAPKK7, MEK, MEK_7, MKK7, PRKMK7, SAPKK-4, SAPKK4",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 676,
+        "y": 520,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_119",
+      "entry_id": 119,
+      "label": "MAPK8, JNK, JNK-46, JNK1, JNK1A2, JNK21B1/2, PRKM8, SAPK1, SAPK1c...",
+      "type": "gene",
+      "name": "hsa:5599 hsa:5601 hsa:5602",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5599+hsa:5601+hsa:5602",
+      "graphics": {
+        "name": "MAPK8, JNK, JNK-46, JNK1, JNK1A2, JNK21B1/2, PRKM8, SAPK1, SAPK1c...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 763,
+        "y": 503,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_120",
+      "entry_id": 120,
+      "label": "MAP2K4, JNKK, JNKK1, MAPKK4, MEK4, MKK4, PRKMK4, SAPKK-1, SAPKK1, SEK1, SERK1, SKK1",
+      "type": "gene",
+      "name": "hsa:6416",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:6416",
+      "graphics": {
+        "name": "MAP2K4, JNKK, JNKK1, MAPKK4, MEK4, MKK4, PRKMK4, SAPKK-1, SAPKK1, SEK1, SERK1, SKK1",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 676,
+        "y": 487,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_121",
+      "entry_id": 121,
+      "label": "CRK, CRKII, p38...",
+      "type": "gene",
+      "name": "hsa:1398 hsa:1399",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:1398+hsa:1399",
+      "graphics": {
+        "name": "CRK, CRKII, p38...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 718,
+        "y": 451,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_122",
+      "entry_id": 122,
+      "label": "ARRB1, ARB1, ARR1...",
+      "type": "gene",
+      "name": "hsa:408 hsa:409",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:408+hsa:409",
+      "graphics": {
+        "name": "ARRB1, ARB1, ARR1...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 665,
+        "y": 451,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_123",
+      "entry_id": 123,
+      "label": "MECOM, AML1-EVI-1, EVI1, KMT8E, MDS1, MDS1-EVI1, PRDM3, RUSAT2",
+      "type": "gene",
+      "name": "hsa:2122",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:2122",
+      "graphics": {
+        "name": "MECOM, AML1-EVI-1, EVI1, KMT8E, MDS1, MDS1-EVI1, PRDM3, RUSAT2",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 793,
+        "y": 455,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_124",
+      "entry_id": 124,
+      "label": "HSPA1A, HEL-S-103, HSP70, HSP70-1, HSP70-1A, HSP70-2, HSP70.1, HSP70.2, HSP70I, HSP72, HSPA1...",
+      "type": "gene",
+      "name": "hsa:3303 hsa:3304 hsa:3305 hsa:3310 hsa:3312",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:3303+hsa:3304+hsa:3305+hsa:3310+hsa:3312",
+      "graphics": {
+        "name": "HSPA1A, HEL-S-103, HSP70, HSP70-1, HSP70-1A, HSP70-2, HSP70.1, HSP70.2, HSP70I, HSP72, HSPA1...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 793,
+        "y": 434,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_125",
+      "entry_id": 125,
+      "label": "JUND, AP-1",
+      "type": "gene",
+      "name": "hsa:3727",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:3727",
+      "graphics": {
+        "name": "JUND, AP-1",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 914,
+        "y": 514,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_126",
+      "entry_id": 126,
+      "label": "FOS, AP-1, C-FOS, p55...",
+      "type": "gene",
+      "name": "hsa:2353 hsa:3725",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:2353+hsa:3725",
+      "graphics": {
+        "name": "FOS, AP-1, C-FOS, p55...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 914,
+        "y": 492,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_127",
+      "entry_id": 127,
+      "label": "NFATC3, NF-AT4c, NFAT4, NFATX, n339260",
+      "type": "gene",
+      "name": "hsa:4775",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:4775",
+      "graphics": {
+        "name": "NFATC3, NF-AT4c, NFAT4, NFATX, n339260",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 914,
+        "y": 467,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_128",
+      "entry_id": 128,
+      "label": "NFATC1, NF-ATC, NF-ATc1.2, NFAT2, NFATc",
+      "type": "gene",
+      "name": "hsa:4772",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:4772",
+      "graphics": {
+        "name": "NFATC1, NF-ATC, NF-ATc1.2, NFAT2, NFATc",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 914,
+        "y": 446,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_129",
+      "entry_id": 129,
+      "label": "PPP3CA, ACCIID, CALN, CALNA, CALNA1, CCN1, CNA1, DEE91, IECEE, IECEE1, PPP2B...",
+      "type": "gene",
+      "name": "hsa:5530 hsa:5532 hsa:5533 hsa:5534 hsa:5535",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:5530+hsa:5532+hsa:5533+hsa:5534+hsa:5535",
+      "graphics": {
+        "name": "PPP3CA, ACCIID, CALN, CALNA, CALNA1, CCN1, CNA1, DEE91, IECEE, IECEE1, PPP2B...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 849,
+        "y": 391,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_131",
+      "entry_id": 131,
+      "label": "MAPK8IP3, JIP-3, JIP3, JSAP1, NEDBA, SYD2, syd",
+      "type": "gene",
+      "name": "hsa:23162",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:23162",
+      "graphics": {
+        "name": "MAPK8IP3, JIP-3, JIP3, JSAP1, NEDBA, SYD2, syd",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 737,
+        "y": 430,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_132",
+      "entry_id": 132,
+      "label": "FLNA, ABP-280, ABPX, CSBS, CVD1, FGS2, FLN, FLN-A, FLN1, FMD, MNS, NHBP, OPD, OPD1, OPD2, XLVD, XMVD",
+      "type": "gene",
+      "name": "hsa:2316",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:2316",
+      "graphics": {
+        "name": "FLNA, ABP-280, ABPX, CSBS, CVD1, FGS2, FLN, FLN-A, FLN1, FMD, MNS, NHBP, OPD, OPD1, OPD2, XLVD, XMVD",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 684,
+        "y": 430,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_133",
+      "entry_id": 133,
+      "label": "MAP3K1, MAPKKK1, MEKK, MEKK_1, MEKK1, SRXY6",
+      "type": "gene",
+      "name": "hsa:4214",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:4214",
+      "graphics": {
+        "name": "MAP3K1, MAPKKK1, MEKK, MEKK_1, MEKK1, SRXY6",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 580,
+        "y": 476,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_134",
+      "entry_id": 134,
+      "label": "MAP3K8, AURA2, COT, EST, ESTF, MEKK8, TPL2, Tpl-2, c-COT",
+      "type": "gene",
+      "name": "hsa:1326",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:1326",
+      "graphics": {
+        "name": "MAP3K8, AURA2, COT, EST, ESTF, MEKK8, TPL2, Tpl-2, c-COT",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 580,
+        "y": 452,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_135",
+      "entry_id": 135,
+      "label": "MAP4K1, HPK1",
+      "type": "gene",
+      "name": "hsa:11184",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:11184",
+      "graphics": {
+        "name": "MAP4K1, HPK1",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 494,
+        "y": 520,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_136",
+      "entry_id": 136,
+      "label": "MAP4K3, GLK, MAPKKKK3, MEKKK_3, MEKKK3, RAB8IPL1",
+      "type": "gene",
+      "name": "hsa:8491",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:8491",
+      "graphics": {
+        "name": "MAP4K3, GLK, MAPKKKK3, MEKKK_3, MEKKK3, RAB8IPL1",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 494,
+        "y": 454,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_137",
+      "entry_id": 137,
+      "label": "FOS, AP-1, C-FOS, p55",
+      "type": "gene",
+      "name": "hsa:2353",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:2353",
+      "graphics": {
+        "name": "FOS, AP-1, C-FOS, p55",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 1080,
+        "y": 311,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_138",
+      "entry_id": 138,
+      "label": "SRF, MCM1",
+      "type": "gene",
+      "name": "hsa:6722",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:6722",
+      "graphics": {
+        "name": "SRF, MCM1",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 978,
+        "y": 311,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_139",
+      "entry_id": 139,
+      "label": "MYC, MRTL, MYCC, bHLHe39, c-Myc",
+      "type": "gene",
+      "name": "hsa:4609",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:4609",
+      "graphics": {
+        "name": "MYC, MRTL, MYCC, bHLHe39, c-Myc",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 914,
+        "y": 344,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_140",
+      "entry_id": 140,
+      "label": "ELK4, SAP1",
+      "type": "gene",
+      "name": "hsa:2005",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:2005",
+      "graphics": {
+        "name": "ELK4, SAP1",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 914,
+        "y": 322,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_141",
+      "entry_id": 141,
+      "label": "ELK1",
+      "type": "gene",
+      "name": "hsa:2002",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:2002",
+      "graphics": {
+        "name": "ELK1",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 914,
+        "y": 300,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_142",
+      "entry_id": 142,
+      "label": "ATF4, CREB-2, CREB2, TAXREB67, TXREB",
+      "type": "gene",
+      "name": "hsa:468",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:468",
+      "graphics": {
+        "name": "ATF4, CREB-2, CREB2, TAXREB67, TXREB",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 914,
+        "y": 272,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_143",
+      "entry_id": 143,
+      "label": "RPS6KA6, PP90RSK4, RSK-4, RSK4, S6K-alpha-6, p90RSK6...",
+      "type": "gene",
+      "name": "hsa:27330 hsa:6195 hsa:6196 hsa:6197",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:27330+hsa:6195+hsa:6196+hsa:6197",
+      "graphics": {
+        "name": "RPS6KA6, PP90RSK4, RSK-4, RSK4, S6K-alpha-6, p90RSK6...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 850,
+        "y": 282,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_144",
+      "entry_id": 144,
+      "label": "MKNK2, GPRK7, MNK2...",
+      "type": "gene",
+      "name": "hsa:2872 hsa:8569",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:2872+hsa:8569",
+      "graphics": {
+        "name": "MKNK2, GPRK7, MNK2...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 850,
+        "y": 261,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_274",
+      "entry_id": 274,
+      "label": "EFNA4-EFNA3...",
+      "type": "gene",
+      "name": "hsa:125467750 hsa:1435 hsa:1942 hsa:1943 hsa:1944 hsa:1945 hsa:1946 hsa:1950 hsa:2069 hsa:2246 hsa:2247 hsa:2248 hsa:2249 hsa:2250 hsa:2251 hsa:2252 hsa:2253 hsa:2254 hsa:2255 hsa:2277 hsa:2323 hsa:26281 hsa:26291 hsa:2668 hsa:27006 hsa:284 hsa:285 hsa:3082 hsa:3479 hsa:3481 hsa:3630 hsa:374 hsa:4254 hsa:4803 hsa:4902 hsa:4908 hsa:4909 hsa:51378 hsa:5154 hsa:5155 hsa:5228 hsa:56034 hsa:5623 hsa:627 hsa:7039 hsa:7422 hsa:7423 hsa:7424 hsa:80310 hsa:8074 hsa:8817 hsa:8822 hsa:8823 hsa:9048 hsa:9965",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:125467750+hsa:1435+hsa:1942+hsa:1943+hsa:1944+hsa:1945+hsa:1946+hsa:1950+hsa:2069+hsa:2246+hsa:2247+hsa:2248+hsa:2249+hsa:2250+hsa:2251+hsa:2252+hsa:2253+hsa:2254+hsa:2255+hsa:2277+hsa:2323+hsa:26281+hsa:26291+hsa:2668+hsa:27006+hsa:284+hsa:285+hsa:3082+hsa:3479+hsa:3481+hsa:3630+hsa:374+hsa:4254+hsa:4803+hsa:4902+hsa:4908+hsa:4909+hsa:51378+hsa:5154+hsa:5155+hsa:5228+hsa:56034+hsa:5623+hsa:627+hsa:7039+hsa:7422+hsa:7423+hsa:7424+hsa:80310+hsa:8074+hsa:8817+hsa:8822+hsa:8823+hsa:9048+hsa:9965",
+      "graphics": {
+        "name": "EFNA4-EFNA3...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 137,
+        "y": 311,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_275",
+      "entry_id": 275,
+      "label": "TRADD, Hs.89862",
+      "type": "gene",
+      "name": "hsa:8717",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:8717",
+      "graphics": {
+        "name": "TRADD, Hs.89862",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 299,
+        "y": 630,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_278",
+      "entry_id": 278,
+      "label": "MYD88, IMD68, MYD88D, WM1",
+      "type": "gene",
+      "name": "hsa:4615",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:4615",
+      "graphics": {
+        "name": "MYD88, IMD68, MYD88D, WM1",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 299,
+        "y": 663,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_279",
+      "entry_id": 279,
+      "label": "IRAK1, IRAK, pelle...",
+      "type": "gene",
+      "name": "hsa:3654 hsa:51135",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:3654+hsa:51135",
+      "graphics": {
+        "name": "IRAK1, IRAK, pelle...",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 329,
+        "y": 716,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_283",
+      "entry_id": 283,
+      "label": "TNF signaling pathway",
+      "type": "map",
+      "name": "path:hsa04668",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa04668",
+      "graphics": {
+        "name": "TNF signaling pathway",
+        "type": "roundrectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#FFFFFF",
+        "x": 292,
+        "y": 595,
+        "width": 94,
+        "height": 38
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_284",
+      "entry_id": 284,
+      "label": "ARAF, A-RAF, ARAF1, PKS2, RAFA1",
+      "type": "gene",
+      "name": "hsa:369",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:369",
+      "graphics": {
+        "name": "ARAF, A-RAF, ARAF1, PKS2, RAFA1",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 581,
+        "y": 288,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_286",
+      "entry_id": 286,
+      "label": "MAX, PDMCS, bHLHd4",
+      "type": "gene",
+      "name": "hsa:4149",
+      "link": "https://www.kegg.jp/dbget-bin/www_bget?hsa:4149",
+      "graphics": {
+        "name": "MAX, PDMCS, bHLHd4",
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#BFFFBF",
+        "x": 914,
+        "y": 361,
+        "width": 46,
+        "height": 17
+      },
+      "component_entry_ids": []
+    },
+    {
+      "id": "entry_287",
+      "entry_id": 287,
+      "label": "undefined",
+      "type": "group",
+      "name": "undefined",
+      "link": null,
+      "graphics": {
+        "name": null,
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#FFFFFF",
+        "x": 914,
+        "y": 352,
+        "width": 46,
+        "height": 34
+      },
+      "component_entry_ids": [
+        139,
+        286
+      ]
+    },
+    {
+      "id": "entry_288",
+      "entry_id": 288,
+      "label": "undefined",
+      "type": "group",
+      "name": "undefined",
+      "link": null,
+      "graphics": {
+        "name": null,
+        "type": "rectangle",
+        "fgcolor": "#000000",
+        "bgcolor": "#FFFFFF",
+        "x": 946,
+        "y": 311,
+        "width": 110,
+        "height": 39
+      },
+      "component_entry_ids": [
+        138,
+        140,
+        141
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "relation_1",
+      "source": "entry_52",
+      "target": "entry_48",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 52,
+      "target_entry_id": 48
+    },
+    {
+      "id": "relation_2",
+      "source": "entry_47",
+      "target": "entry_49",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 47,
+      "target_entry_id": 49
+    },
+    {
+      "id": "relation_3",
+      "source": "entry_20",
+      "target": "entry_49",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 20,
+      "target_entry_id": 49
+    },
+    {
+      "id": "relation_4",
+      "source": "entry_50",
+      "target": "entry_49",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 50,
+      "target_entry_id": 49
+    },
+    {
+      "id": "relation_5",
+      "source": "entry_45",
+      "target": "entry_41",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 45,
+      "target_entry_id": 41
+    },
+    {
+      "id": "relation_6",
+      "source": "entry_111",
+      "target": "entry_108",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 111,
+      "target_entry_id": 108
+    },
+    {
+      "id": "relation_7",
+      "source": "entry_110",
+      "target": "entry_107",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 110,
+      "target_entry_id": 107
+    },
+    {
+      "id": "relation_8",
+      "source": "entry_24",
+      "target": "entry_106",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 24,
+      "target_entry_id": 106
+    },
+    {
+      "id": "relation_9",
+      "source": "entry_109",
+      "target": "entry_105",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 109,
+      "target_entry_id": 105
+    },
+    {
+      "id": "relation_10",
+      "source": "entry_106",
+      "target": "entry_101",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 106,
+      "target_entry_id": 101
+    },
+    {
+      "id": "relation_11",
+      "source": "entry_105",
+      "target": "entry_101",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 105,
+      "target_entry_id": 101
+    },
+    {
+      "id": "relation_12",
+      "source": "entry_53",
+      "target": "entry_54",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 53,
+      "target_entry_id": 54
+    },
+    {
+      "id": "relation_13",
+      "source": "entry_51",
+      "target": "entry_53",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 51,
+      "target_entry_id": 53
+    },
+    {
+      "id": "relation_14",
+      "source": "entry_97",
+      "target": "entry_100",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 97,
+      "target_entry_id": 100
+    },
+    {
+      "id": "relation_15",
+      "source": "entry_96",
+      "target": "entry_100",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 96,
+      "target_entry_id": 100
+    },
+    {
+      "id": "relation_16",
+      "source": "entry_138",
+      "target": "entry_141",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 138,
+      "target_entry_id": 141
+    },
+    {
+      "id": "relation_17",
+      "source": "entry_138",
+      "target": "entry_140",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 138,
+      "target_entry_id": 140
+    },
+    {
+      "id": "relation_18",
+      "source": "entry_37",
+      "target": "entry_39",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 37,
+      "target_entry_id": 39
+    },
+    {
+      "id": "relation_19",
+      "source": "entry_37",
+      "target": "entry_38",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 37,
+      "target_entry_id": 38
+    },
+    {
+      "id": "relation_20",
+      "source": "entry_36",
+      "target": "entry_37",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 36,
+      "target_entry_id": 37
+    },
+    {
+      "id": "relation_21",
+      "source": "entry_116",
+      "target": "entry_119",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 116,
+      "target_entry_id": 119
+    },
+    {
+      "id": "relation_22",
+      "source": "entry_116",
+      "target": "entry_118",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 116,
+      "target_entry_id": 118
+    },
+    {
+      "id": "relation_23",
+      "source": "entry_116",
+      "target": "entry_117",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 116,
+      "target_entry_id": 117
+    },
+    {
+      "id": "relation_24",
+      "source": "entry_116",
+      "target": "entry_135",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 116,
+      "target_entry_id": 135
+    },
+    {
+      "id": "relation_25",
+      "source": "entry_119",
+      "target": "entry_131",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 119,
+      "target_entry_id": 131
+    },
+    {
+      "id": "relation_26",
+      "source": "entry_120",
+      "target": "entry_131",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 120,
+      "target_entry_id": 131
+    },
+    {
+      "id": "relation_27",
+      "source": "entry_118",
+      "target": "entry_131",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 118,
+      "target_entry_id": 131
+    },
+    {
+      "id": "relation_28",
+      "source": "entry_131",
+      "target": "entry_133",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 131,
+      "target_entry_id": 133
+    },
+    {
+      "id": "relation_29",
+      "source": "entry_117",
+      "target": "entry_131",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 117,
+      "target_entry_id": 131
+    },
+    {
+      "id": "relation_30",
+      "source": "entry_119",
+      "target": "entry_121",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 119,
+      "target_entry_id": 121
+    },
+    {
+      "id": "relation_31",
+      "source": "entry_120",
+      "target": "entry_121",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 120,
+      "target_entry_id": 121
+    },
+    {
+      "id": "relation_32",
+      "source": "entry_120",
+      "target": "entry_132",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 120,
+      "target_entry_id": 132
+    },
+    {
+      "id": "relation_33",
+      "source": "entry_120",
+      "target": "entry_122",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 120,
+      "target_entry_id": 122
+    },
+    {
+      "id": "relation_34",
+      "source": "entry_46",
+      "target": "entry_45",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 46,
+      "target_entry_id": 45
+    },
+    {
+      "id": "relation_35",
+      "source": "entry_44",
+      "target": "entry_49",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 44,
+      "target_entry_id": 49
+    },
+    {
+      "id": "relation_36",
+      "source": "entry_44",
+      "target": "entry_40",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 44,
+      "target_entry_id": 40
+    },
+    {
+      "id": "relation_37",
+      "source": "entry_51",
+      "target": "entry_49",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 51,
+      "target_entry_id": 49
+    },
+    {
+      "id": "relation_38",
+      "source": "entry_49",
+      "target": "entry_41",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 49,
+      "target_entry_id": 41
+    },
+    {
+      "id": "relation_39",
+      "source": "entry_49",
+      "target": "entry_40",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 49,
+      "target_entry_id": 40
+    },
+    {
+      "id": "relation_40",
+      "source": "entry_41",
+      "target": "entry_39",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 41,
+      "target_entry_id": 39
+    },
+    {
+      "id": "relation_41",
+      "source": "entry_41",
+      "target": "entry_38",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 41,
+      "target_entry_id": 38
+    },
+    {
+      "id": "relation_42",
+      "source": "entry_40",
+      "target": "entry_39",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 40,
+      "target_entry_id": 39
+    },
+    {
+      "id": "relation_43",
+      "source": "entry_40",
+      "target": "entry_38",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 40,
+      "target_entry_id": 38
+    },
+    {
+      "id": "relation_44",
+      "source": "entry_39",
+      "target": "entry_36",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 39,
+      "target_entry_id": 36
+    },
+    {
+      "id": "relation_45",
+      "source": "entry_38",
+      "target": "entry_36",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 38,
+      "target_entry_id": 36
+    },
+    {
+      "id": "relation_46",
+      "source": "entry_36",
+      "target": "entry_32",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 36,
+      "target_entry_id": 32
+    },
+    {
+      "id": "relation_47",
+      "source": "entry_36",
+      "target": "entry_31",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 36,
+      "target_entry_id": 31
+    },
+    {
+      "id": "relation_48",
+      "source": "entry_36",
+      "target": "entry_30",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 36,
+      "target_entry_id": 30
+    },
+    {
+      "id": "relation_49",
+      "source": "entry_36",
+      "target": "entry_144",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 36,
+      "target_entry_id": 144
+    },
+    {
+      "id": "relation_50",
+      "source": "entry_36",
+      "target": "entry_143",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 36,
+      "target_entry_id": 143
+    },
+    {
+      "id": "relation_51",
+      "source": "entry_36",
+      "target": "entry_141",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 36,
+      "target_entry_id": 141
+    },
+    {
+      "id": "relation_52",
+      "source": "entry_36",
+      "target": "entry_140",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 36,
+      "target_entry_id": 140
+    },
+    {
+      "id": "relation_53",
+      "source": "entry_144",
+      "target": "entry_142",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 144,
+      "target_entry_id": 142
+    },
+    {
+      "id": "relation_54",
+      "source": "entry_143",
+      "target": "entry_142",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 143,
+      "target_entry_id": 142
+    },
+    {
+      "id": "relation_55",
+      "source": "entry_36",
+      "target": "entry_287",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 36,
+      "target_entry_id": 287
+    },
+    {
+      "id": "relation_56",
+      "source": "entry_113",
+      "target": "entry_133",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 113,
+      "target_entry_id": 133
+    },
+    {
+      "id": "relation_57",
+      "source": "entry_113",
+      "target": "entry_114",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 113,
+      "target_entry_id": 114
+    },
+    {
+      "id": "relation_58",
+      "source": "entry_103",
+      "target": "entry_95",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 103,
+      "target_entry_id": 95
+    },
+    {
+      "id": "relation_59",
+      "source": "entry_102",
+      "target": "entry_94",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 102,
+      "target_entry_id": 94
+    },
+    {
+      "id": "relation_60",
+      "source": "entry_102",
+      "target": "entry_89",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 102,
+      "target_entry_id": 89
+    },
+    {
+      "id": "relation_61",
+      "source": "entry_102",
+      "target": "entry_133",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 102,
+      "target_entry_id": 133
+    },
+    {
+      "id": "relation_62",
+      "source": "entry_101",
+      "target": "entry_89",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 101,
+      "target_entry_id": 89
+    },
+    {
+      "id": "relation_63",
+      "source": "entry_99",
+      "target": "entry_86",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 99,
+      "target_entry_id": 86
+    },
+    {
+      "id": "relation_64",
+      "source": "entry_114",
+      "target": "entry_115",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 114,
+      "target_entry_id": 115
+    },
+    {
+      "id": "relation_65",
+      "source": "entry_135",
+      "target": "entry_117",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 135,
+      "target_entry_id": 117
+    },
+    {
+      "id": "relation_66",
+      "source": "entry_29",
+      "target": "entry_133",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 29,
+      "target_entry_id": 133
+    },
+    {
+      "id": "relation_67",
+      "source": "entry_136",
+      "target": "entry_133",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 136,
+      "target_entry_id": 133
+    },
+    {
+      "id": "relation_68",
+      "source": "entry_92",
+      "target": "entry_118",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 92,
+      "target_entry_id": 118
+    },
+    {
+      "id": "relation_69",
+      "source": "entry_93",
+      "target": "entry_118",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 93,
+      "target_entry_id": 118
+    },
+    {
+      "id": "relation_70",
+      "source": "entry_91",
+      "target": "entry_118",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 91,
+      "target_entry_id": 118
+    },
+    {
+      "id": "relation_71",
+      "source": "entry_89",
+      "target": "entry_80",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 89,
+      "target_entry_id": 80
+    },
+    {
+      "id": "relation_72",
+      "source": "entry_89",
+      "target": "entry_79",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 89,
+      "target_entry_id": 79
+    },
+    {
+      "id": "relation_73",
+      "source": "entry_88",
+      "target": "entry_35",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 88,
+      "target_entry_id": 35
+    },
+    {
+      "id": "relation_74",
+      "source": "entry_88",
+      "target": "entry_34",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 88,
+      "target_entry_id": 34
+    },
+    {
+      "id": "relation_75",
+      "source": "entry_88",
+      "target": "entry_80",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 88,
+      "target_entry_id": 80
+    },
+    {
+      "id": "relation_76",
+      "source": "entry_88",
+      "target": "entry_79",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 88,
+      "target_entry_id": 79
+    },
+    {
+      "id": "relation_77",
+      "source": "entry_88",
+      "target": "entry_65",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 88,
+      "target_entry_id": 65
+    },
+    {
+      "id": "relation_78",
+      "source": "entry_90",
+      "target": "entry_80",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 90,
+      "target_entry_id": 80
+    },
+    {
+      "id": "relation_79",
+      "source": "entry_90",
+      "target": "entry_79",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 90,
+      "target_entry_id": 79
+    },
+    {
+      "id": "relation_80",
+      "source": "entry_80",
+      "target": "entry_77",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 80,
+      "target_entry_id": 77
+    },
+    {
+      "id": "relation_81",
+      "source": "entry_79",
+      "target": "entry_77",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 79,
+      "target_entry_id": 77
+    },
+    {
+      "id": "relation_82",
+      "source": "entry_77",
+      "target": "entry_76",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 77,
+      "target_entry_id": 76
+    },
+    {
+      "id": "relation_83",
+      "source": "entry_77",
+      "target": "entry_75",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 77,
+      "target_entry_id": 75
+    },
+    {
+      "id": "relation_84",
+      "source": "entry_77",
+      "target": "entry_74",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 77,
+      "target_entry_id": 74
+    },
+    {
+      "id": "relation_85",
+      "source": "entry_77",
+      "target": "entry_73",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 77,
+      "target_entry_id": 73
+    },
+    {
+      "id": "relation_86",
+      "source": "entry_77",
+      "target": "entry_72",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 77,
+      "target_entry_id": 72
+    },
+    {
+      "id": "relation_87",
+      "source": "entry_77",
+      "target": "entry_71",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 77,
+      "target_entry_id": 71
+    },
+    {
+      "id": "relation_88",
+      "source": "entry_77",
+      "target": "entry_70",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 77,
+      "target_entry_id": 70
+    },
+    {
+      "id": "relation_89",
+      "source": "entry_77",
+      "target": "entry_112",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 77,
+      "target_entry_id": 112
+    },
+    {
+      "id": "relation_90",
+      "source": "entry_77",
+      "target": "entry_68",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 77,
+      "target_entry_id": 68
+    },
+    {
+      "id": "relation_91",
+      "source": "entry_77",
+      "target": "entry_67",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 77,
+      "target_entry_id": 67
+    },
+    {
+      "id": "relation_92",
+      "source": "entry_77",
+      "target": "entry_66",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 77,
+      "target_entry_id": 66
+    },
+    {
+      "id": "relation_93",
+      "source": "entry_112",
+      "target": "entry_87",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 112,
+      "target_entry_id": 87
+    },
+    {
+      "id": "relation_94",
+      "source": "entry_68",
+      "target": "entry_87",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 68,
+      "target_entry_id": 87
+    },
+    {
+      "id": "relation_95",
+      "source": "entry_68",
+      "target": "entry_69",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 68,
+      "target_entry_id": 69
+    },
+    {
+      "id": "relation_96",
+      "source": "entry_67",
+      "target": "entry_69",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 67,
+      "target_entry_id": 69
+    },
+    {
+      "id": "relation_97",
+      "source": "entry_64",
+      "target": "entry_63",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 64,
+      "target_entry_id": 63
+    },
+    {
+      "id": "relation_98",
+      "source": "entry_63",
+      "target": "entry_62",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 63,
+      "target_entry_id": 62
+    },
+    {
+      "id": "relation_99",
+      "source": "entry_134",
+      "target": "entry_35",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 134,
+      "target_entry_id": 35
+    },
+    {
+      "id": "relation_100",
+      "source": "entry_134",
+      "target": "entry_34",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 134,
+      "target_entry_id": 34
+    },
+    {
+      "id": "relation_101",
+      "source": "entry_134",
+      "target": "entry_39",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 134,
+      "target_entry_id": 39
+    },
+    {
+      "id": "relation_102",
+      "source": "entry_134",
+      "target": "entry_38",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 134,
+      "target_entry_id": 38
+    },
+    {
+      "id": "relation_103",
+      "source": "entry_133",
+      "target": "entry_34",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 133,
+      "target_entry_id": 34
+    },
+    {
+      "id": "relation_104",
+      "source": "entry_133",
+      "target": "entry_120",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 133,
+      "target_entry_id": 120
+    },
+    {
+      "id": "relation_105",
+      "source": "entry_117",
+      "target": "entry_118",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 117,
+      "target_entry_id": 118
+    },
+    {
+      "id": "relation_106",
+      "source": "entry_133",
+      "target": "entry_39",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 133,
+      "target_entry_id": 39
+    },
+    {
+      "id": "relation_107",
+      "source": "entry_133",
+      "target": "entry_38",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 133,
+      "target_entry_id": 38
+    },
+    {
+      "id": "relation_108",
+      "source": "entry_120",
+      "target": "entry_119",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 120,
+      "target_entry_id": 119
+    },
+    {
+      "id": "relation_109",
+      "source": "entry_118",
+      "target": "entry_119",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 118,
+      "target_entry_id": 119
+    },
+    {
+      "id": "relation_110",
+      "source": "entry_119",
+      "target": "entry_126",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 119,
+      "target_entry_id": 126
+    },
+    {
+      "id": "relation_111",
+      "source": "entry_119",
+      "target": "entry_125",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 119,
+      "target_entry_id": 125
+    },
+    {
+      "id": "relation_112",
+      "source": "entry_119",
+      "target": "entry_75",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 119,
+      "target_entry_id": 75
+    },
+    {
+      "id": "relation_113",
+      "source": "entry_119",
+      "target": "entry_74",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 119,
+      "target_entry_id": 74
+    },
+    {
+      "id": "relation_114",
+      "source": "entry_119",
+      "target": "entry_128",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "inhibition",
+          "value": "--|"
+        },
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 119,
+      "target_entry_id": 128
+    },
+    {
+      "id": "relation_115",
+      "source": "entry_119",
+      "target": "entry_127",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "inhibition",
+          "value": "--|"
+        },
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 119,
+      "target_entry_id": 127
+    },
+    {
+      "id": "relation_116",
+      "source": "entry_129",
+      "target": "entry_128",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "dephosphorylation",
+          "value": "-p"
+        }
+      ],
+      "source_entry_id": 129,
+      "target_entry_id": 128
+    },
+    {
+      "id": "relation_117",
+      "source": "entry_84",
+      "target": "entry_89",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "inhibition",
+          "value": "--|"
+        },
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 84,
+      "target_entry_id": 89
+    },
+    {
+      "id": "relation_118",
+      "source": "entry_84",
+      "target": "entry_120",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "inhibition",
+          "value": "--|"
+        },
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 84,
+      "target_entry_id": 120
+    },
+    {
+      "id": "relation_119",
+      "source": "entry_129",
+      "target": "entry_127",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "dephosphorylation",
+          "value": "-p"
+        }
+      ],
+      "source_entry_id": 129,
+      "target_entry_id": 127
+    },
+    {
+      "id": "relation_120",
+      "source": "entry_48",
+      "target": "entry_49",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "inhibition",
+          "value": "--|"
+        }
+      ],
+      "source_entry_id": 48,
+      "target_entry_id": 49
+    },
+    {
+      "id": "relation_121",
+      "source": "entry_43",
+      "target": "entry_49",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "inhibition",
+          "value": "--|"
+        }
+      ],
+      "source_entry_id": 43,
+      "target_entry_id": 49
+    },
+    {
+      "id": "relation_122",
+      "source": "entry_42",
+      "target": "entry_49",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "inhibition",
+          "value": "--|"
+        }
+      ],
+      "source_entry_id": 42,
+      "target_entry_id": 49
+    },
+    {
+      "id": "relation_123",
+      "source": "entry_22",
+      "target": "entry_36",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "inhibition",
+          "value": "--|"
+        },
+        {
+          "name": "dephosphorylation",
+          "value": "-p"
+        }
+      ],
+      "source_entry_id": 22,
+      "target_entry_id": 36
+    },
+    {
+      "id": "relation_124",
+      "source": "entry_21",
+      "target": "entry_36",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "inhibition",
+          "value": "--|"
+        },
+        {
+          "name": "dephosphorylation",
+          "value": "-p"
+        }
+      ],
+      "source_entry_id": 21,
+      "target_entry_id": 36
+    },
+    {
+      "id": "relation_125",
+      "source": "entry_81",
+      "target": "entry_119",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "inhibition",
+          "value": "--|"
+        },
+        {
+          "name": "dephosphorylation",
+          "value": "-p"
+        }
+      ],
+      "source_entry_id": 81,
+      "target_entry_id": 119
+    },
+    {
+      "id": "relation_126",
+      "source": "entry_81",
+      "target": "entry_77",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "inhibition",
+          "value": "--|"
+        },
+        {
+          "name": "dephosphorylation",
+          "value": "-p"
+        }
+      ],
+      "source_entry_id": 81,
+      "target_entry_id": 77
+    },
+    {
+      "id": "relation_127",
+      "source": "entry_82",
+      "target": "entry_119",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "inhibition",
+          "value": "--|"
+        },
+        {
+          "name": "dephosphorylation",
+          "value": "-p"
+        }
+      ],
+      "source_entry_id": 82,
+      "target_entry_id": 119
+    },
+    {
+      "id": "relation_128",
+      "source": "entry_82",
+      "target": "entry_77",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "inhibition",
+          "value": "--|"
+        },
+        {
+          "name": "dephosphorylation",
+          "value": "-p"
+        }
+      ],
+      "source_entry_id": 82,
+      "target_entry_id": 77
+    },
+    {
+      "id": "relation_129",
+      "source": "entry_83",
+      "target": "entry_80",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "inhibition",
+          "value": "--|"
+        },
+        {
+          "name": "dephosphorylation",
+          "value": "-p"
+        }
+      ],
+      "source_entry_id": 83,
+      "target_entry_id": 80
+    },
+    {
+      "id": "relation_130",
+      "source": "entry_83",
+      "target": "entry_79",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "inhibition",
+          "value": "--|"
+        },
+        {
+          "name": "dephosphorylation",
+          "value": "-p"
+        }
+      ],
+      "source_entry_id": 83,
+      "target_entry_id": 79
+    },
+    {
+      "id": "relation_131",
+      "source": "entry_83",
+      "target": "entry_118",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "inhibition",
+          "value": "--|"
+        },
+        {
+          "name": "dephosphorylation",
+          "value": "-p"
+        }
+      ],
+      "source_entry_id": 83,
+      "target_entry_id": 118
+    },
+    {
+      "id": "relation_132",
+      "source": "entry_83",
+      "target": "entry_120",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "inhibition",
+          "value": "--|"
+        },
+        {
+          "name": "dephosphorylation",
+          "value": "-p"
+        }
+      ],
+      "source_entry_id": 83,
+      "target_entry_id": 120
+    },
+    {
+      "id": "relation_133",
+      "source": "entry_78",
+      "target": "entry_89",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "inhibition",
+          "value": "--|"
+        },
+        {
+          "name": "dephosphorylation",
+          "value": "-p"
+        }
+      ],
+      "source_entry_id": 78,
+      "target_entry_id": 89
+    },
+    {
+      "id": "relation_134",
+      "source": "entry_23",
+      "target": "entry_88",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "inhibition",
+          "value": "--|"
+        },
+        {
+          "name": "dephosphorylation",
+          "value": "-p"
+        }
+      ],
+      "source_entry_id": 23,
+      "target_entry_id": 88
+    },
+    {
+      "id": "relation_135",
+      "source": "entry_123",
+      "target": "entry_119",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "inhibition",
+          "value": "--|"
+        }
+      ],
+      "source_entry_id": 123,
+      "target_entry_id": 119
+    },
+    {
+      "id": "relation_136",
+      "source": "entry_124",
+      "target": "entry_119",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "inhibition",
+          "value": "--|"
+        }
+      ],
+      "source_entry_id": 124,
+      "target_entry_id": 119
+    },
+    {
+      "id": "relation_137",
+      "source": "entry_288",
+      "target": "entry_137",
+      "type": "GErel",
+      "subtypes": [
+        {
+          "name": "expression",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 288,
+      "target_entry_id": 137
+    },
+    {
+      "id": "relation_138",
+      "source": "entry_104",
+      "target": "entry_98",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "indirect effect",
+          "value": "..>"
+        }
+      ],
+      "source_entry_id": 104,
+      "target_entry_id": 98
+    },
+    {
+      "id": "relation_139",
+      "source": "entry_35",
+      "target": "entry_33",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "indirect effect",
+          "value": "..>"
+        }
+      ],
+      "source_entry_id": 35,
+      "target_entry_id": 33
+    },
+    {
+      "id": "relation_140",
+      "source": "entry_34",
+      "target": "entry_33",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "indirect effect",
+          "value": "..>"
+        }
+      ],
+      "source_entry_id": 34,
+      "target_entry_id": 33
+    },
+    {
+      "id": "relation_141",
+      "source": "entry_55",
+      "target": "entry_20",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "compound",
+          "value": "28"
+        }
+      ],
+      "source_entry_id": 55,
+      "target_entry_id": 20
+    },
+    {
+      "id": "relation_142",
+      "source": "entry_55",
+      "target": "entry_50",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "compound",
+          "value": "28"
+        }
+      ],
+      "source_entry_id": 55,
+      "target_entry_id": 50
+    },
+    {
+      "id": "relation_143",
+      "source": "entry_19",
+      "target": "entry_104",
+      "type": "PCrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 19,
+      "target_entry_id": 104
+    },
+    {
+      "id": "relation_144",
+      "source": "entry_26",
+      "target": "entry_47",
+      "type": "PCrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 26,
+      "target_entry_id": 47
+    },
+    {
+      "id": "relation_145",
+      "source": "entry_25",
+      "target": "entry_44",
+      "type": "PCrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 25,
+      "target_entry_id": 44
+    },
+    {
+      "id": "relation_146",
+      "source": "entry_25",
+      "target": "entry_46",
+      "type": "PCrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 25,
+      "target_entry_id": 46
+    },
+    {
+      "id": "relation_147",
+      "source": "entry_26",
+      "target": "entry_46",
+      "type": "PCrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 26,
+      "target_entry_id": 46
+    },
+    {
+      "id": "relation_148",
+      "source": "entry_103",
+      "target": "entry_114",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 103,
+      "target_entry_id": 114
+    },
+    {
+      "id": "relation_149",
+      "source": "entry_103",
+      "target": "entry_133",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 103,
+      "target_entry_id": 133
+    },
+    {
+      "id": "relation_150",
+      "source": "entry_35",
+      "target": "entry_34",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 35,
+      "target_entry_id": 34
+    },
+    {
+      "id": "relation_151",
+      "source": "entry_98",
+      "target": "entry_88",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 98,
+      "target_entry_id": 88
+    },
+    {
+      "id": "relation_152",
+      "source": "entry_97",
+      "target": "entry_88",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 97,
+      "target_entry_id": 88
+    },
+    {
+      "id": "relation_153",
+      "source": "entry_108",
+      "target": "entry_275",
+      "type": "PPrel",
+      "subtypes": [],
+      "source_entry_id": 108,
+      "target_entry_id": 275
+    },
+    {
+      "id": "relation_154",
+      "source": "entry_275",
+      "target": "entry_102",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 275,
+      "target_entry_id": 102
+    },
+    {
+      "id": "relation_155",
+      "source": "entry_275",
+      "target": "entry_103",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        },
+        {
+          "name": "indirect effect",
+          "value": "..>"
+        }
+      ],
+      "source_entry_id": 275,
+      "target_entry_id": 103
+    },
+    {
+      "id": "relation_156",
+      "source": "entry_107",
+      "target": "entry_278",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 107,
+      "target_entry_id": 278
+    },
+    {
+      "id": "relation_157",
+      "source": "entry_278",
+      "target": "entry_279",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 278,
+      "target_entry_id": 279
+    },
+    {
+      "id": "relation_158",
+      "source": "entry_102",
+      "target": "entry_98",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 102,
+      "target_entry_id": 98
+    },
+    {
+      "id": "relation_159",
+      "source": "entry_279",
+      "target": "entry_100",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        },
+        {
+          "name": "indirect effect",
+          "value": "..>"
+        }
+      ],
+      "source_entry_id": 279,
+      "target_entry_id": 100
+    },
+    {
+      "id": "relation_160",
+      "source": "entry_100",
+      "target": "entry_98",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "binding/association",
+          "value": "---"
+        }
+      ],
+      "source_entry_id": 100,
+      "target_entry_id": 98
+    },
+    {
+      "id": "relation_161",
+      "source": "entry_274",
+      "target": "entry_54",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 274,
+      "target_entry_id": 54
+    },
+    {
+      "id": "relation_162",
+      "source": "entry_49",
+      "target": "entry_284",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        }
+      ],
+      "source_entry_id": 49,
+      "target_entry_id": 284
+    },
+    {
+      "id": "relation_163",
+      "source": "entry_284",
+      "target": "entry_39",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        },
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 284,
+      "target_entry_id": 39
+    },
+    {
+      "id": "relation_164",
+      "source": "entry_284",
+      "target": "entry_38",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        },
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 284,
+      "target_entry_id": 38
+    },
+    {
+      "id": "relation_165",
+      "source": "entry_86",
+      "target": "entry_80",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        },
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 86,
+      "target_entry_id": 80
+    },
+    {
+      "id": "relation_166",
+      "source": "entry_86",
+      "target": "entry_79",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        },
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 86,
+      "target_entry_id": 79
+    },
+    {
+      "id": "relation_167",
+      "source": "entry_85",
+      "target": "entry_80",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        },
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 85,
+      "target_entry_id": 80
+    },
+    {
+      "id": "relation_168",
+      "source": "entry_85",
+      "target": "entry_79",
+      "type": "PPrel",
+      "subtypes": [
+        {
+          "name": "activation",
+          "value": "-->"
+        },
+        {
+          "name": "phosphorylation",
+          "value": "+p"
+        }
+      ],
+      "source_entry_id": 85,
+      "target_entry_id": 79
+    },
+    {
+      "id": "relation_169",
+      "source": "entry_49",
+      "target": "entry_133",
+      "type": "PPrel",
+      "subtypes": [],
+      "source_entry_id": 49,
+      "target_entry_id": 133
+    },
+    {
+      "id": "component_1",
+      "source": "entry_287",
+      "target": "entry_139",
+      "type": "component_of",
+      "subtypes": [],
+      "source_entry_id": 287,
+      "target_entry_id": 139
+    },
+    {
+      "id": "component_2",
+      "source": "entry_287",
+      "target": "entry_286",
+      "type": "component_of",
+      "subtypes": [],
+      "source_entry_id": 287,
+      "target_entry_id": 286
+    },
+    {
+      "id": "component_3",
+      "source": "entry_288",
+      "target": "entry_138",
+      "type": "component_of",
+      "subtypes": [],
+      "source_entry_id": 288,
+      "target_entry_id": 138
+    },
+    {
+      "id": "component_4",
+      "source": "entry_288",
+      "target": "entry_140",
+      "type": "component_of",
+      "subtypes": [],
+      "source_entry_id": 288,
+      "target_entry_id": 140
+    },
+    {
+      "id": "component_5",
+      "source": "entry_288",
+      "target": "entry_141",
+      "type": "component_of",
+      "subtypes": [],
+      "source_entry_id": 288,
+      "target_entry_id": 141
+    }
+  ]
+}

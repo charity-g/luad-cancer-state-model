@@ -1,0 +1,430 @@
+<!doctype html>
+<html><head>
+<title>KEGG PATHWAY: hsa04115</title>
+<link type="text/css" rel="stylesheet" href="/css/gn2.css?1781985740">
+<link type="text/css" rel="stylesheet" href="/css/bget.css?1781985740">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link type="text/css" rel="stylesheet" href="/css/bgetm.css?1781985740" media="only screen and (max-width: 768px)">
+<style>.kcfd{display:none;}</style>
+<script>
+<!--
+var getElementsByClassName = document.getElementsByClassName ?
+  function (cl){
+    return document.getElementsByClassName(cl);
+  } :
+  function (cl){
+    var elms = [];
+    var objs = document.getElementsByTagName('*');
+    for(var i=0;i<objs.length;i++){
+      var obj = objs[i];
+      if(obj.className == cl){
+        elms.push(obj);
+      }
+    }
+    return elms;
+  };
+function toggleField(clk,cl,show,hide){
+  var objs = getElementsByClassName(cl);
+  for(var i=0;i<objs.length;i++){
+    var obj = objs[i];
+    if(!obj.style.display||obj.style.display == 'none'){
+      obj.style.display = 'block';
+      clk.innerHTML = '&nbsp;&laquo; '+hide;
+    }
+    else{
+      obj.style.display = 'none';
+      clk.innerHTML = '&nbsp;&raquo; '+show;
+    }
+  }
+}
+function toggleData(bobj,e){
+  var id = bobj.id.replace(/[^0-9]/g,'');
+  var dt = document.getElementById('kcfd'+id);
+  e.preventDefault();
+  if(!dt.style.display||dt.style.display == 'none'){
+    document.getElementById('kcfb'+id).innerHTML = 'Hide';
+    dt.style.display = 'block';
+  }
+  else{
+    document.getElementById('kcfb'+id).innerHTML = 'Show';
+    dt.style.display = 'none';
+  }
+}
+function btn(bobj,img) {
+  bobj.src = "/Fig/bget/button_" + img + ".gif";
+}
+function btn_e(e) {
+  e = e || event;
+  var obj = e.target;
+  var img = e.target.src;
+  var img_base = img.replace(/\\/g,'/').replace(/(b|bd|bh)\.gif$/,'');
+  if(e.type == 'mousedown'||e.type == 'touchstart'){
+    obj.src = img_base +'bd.gif';
+  }
+  else if(e.type == 'mouseover'){
+    obj.src = img_base +'bh.gif';
+  }
+  else if(e.type == 'mouseup'||e.type == 'touchend'){
+    obj.src = img_base +'b.gif';
+  }
+  else if(e.type == 'mouseout'){
+    obj.src = img_base +'b.gif';
+  }
+}
+function init(){
+  for(var i=1;i<=1;i++){
+    if(document.getElementById('kcfb'+i)){
+      document.getElementById('kcfb'+i).onclick = function(e){toggleData(this,e);};
+    }
+  }
+}
+function Link_XtrctSeq2(form) {
+    var dna_from;
+    var dna_to;
+    var dna_len;
+    var plus_up   = Number(form.XtrctSeq_UP.value) ;
+    var plus_down = Number(form.XtrctSeq_DOWN.value);
+    var vector    = Number(form.VECTOR.value);
+    var org       = form.ORG.value;
+    var chr       = form.CHR.value;
+    var kid       = form.KEGGID.value;
+    var url;
+
+    if (plus_up == 0 && plus_down == 0) {
+      url = "/entry/-f+-n+n+" + kid;
+    }
+    else {
+  if (vector == 1) {
+      dna_from  = Number(form.FROM.value)  - plus_up;
+      dna_to    = Number(form.TO.value) + plus_down;
+  } else {
+      dna_from  = Number(form.FROM.value)  - plus_down;
+      dna_to    = Number(form.TO.value) + plus_up;
+  }
+
+  url = "/dbget-bin/cut_sequence_genes.pl?FROM=" + dna_from + "&TO=" + dna_to +"&VECTOR=" + vector + "&ORG=" + org;
+  if (chr) url += "&CHR=" + chr;
+    }
+    //window.open( url, "_self" );
+    location.href = url;
+}
+function go_taxonomy(form,params){
+  for(var key in params){
+    if(form[key]){
+      form.setAttribute(key,params[key]);
+    }
+    else{
+      var obj = document.createElement('input');
+      obj.setAttribute('type','hidden');
+      obj.setAttribute('name',key);
+      obj.setAttribute('value',params[key]);
+      form.appendChild(obj);
+    }
+  }
+  form.submit();
+}
+window.onload=function(){window.focus();init();};
+//--->
+</script>
+
+</head>
+<body>
+<div>
+
+<table border=0 cellpadding=0 cellspacing=0><tr><td>
+<table border=0 cellpadding=0 cellspacing=0 width="650"><tr><td width=70><a href="/kegg/kegg2.html"><img align="middle" alt="KEGG" border=0 src="/Fig/bget/kegg3.gif"></a></td><td>&nbsp;&nbsp;&nbsp;</td><td><a name="pathway:hsa04115"></a><font class="title3">PATHWAY: hsa04115</font></td><td class="tar vbot"><button class="btn" onclick="javascript:void(window.open(&#39;/kegg/document/help_bget_pathway.html&#39;,&#39;KEGG_Help&#39;,&#39;toolbar=no,location=no,directories=no,width=720,height=640,resizable=yes,scrollbars=yes&#39;));return false;">Help</button></td></tr></table><form method="post" action="/entry/" enctype="application/x-www-form-urlencoded" id="form1" name="form1"></form><table class="w1" width="650">
+<tr>
+<td class="fr3 w1">
+<table width="650" class="w2">
+
+<tr><th class="th30 deft tal vmid"><span class="nowrap">Entry</span></th>
+<td class="td30 defd"><table class="w1" width="100%"><tr><td class="tal pd0"><code><span class="nowrap">hsa04115&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pathway&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+</span></code></td></tr></table></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Name</span></th>
+<td class="td31 defd"><div class="cel">p53 signaling pathway - Homo sapiens (human)</div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Description</span></th>
+<td class="td30 defd"><div class="cel">p53 activation is induced by a number of stress signals, including DNA damage, oxidative stress and activated oncogenes. The p53 protein is employed as a transcriptional activator of p53-regulated genes. This results in three major outputs; cell cycle arrest, cellular senescence or apoptosis. Other p53-regulated gene functions communicate with adjacent cells, repair the damaged DNA or set up positive and negative feedback loops that enhance or attenuate the functions of the p53 protein and integrate these stress responses with other signal transduction pathways.<br>
+</div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Class</span></th>
+<td class="td31 defd"><div class="cel">Cellular Processes; Cell growth and death<br>
+<button class="btn" onclick="location.href='/brite/htext=hsa00001.keg&amp;query=hsa04115';return false;">BRITE hierarchy</button></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Pathway&nbsp;map</span></th>
+<td class="td30 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/pathway/hsa04115">hsa04115</a>&nbsp;&nbsp;</span></td><td>p53 signaling pathway</td></tr></table><center><a href="/pathway/hsa04115"><img src="/kegg/misc/thumbnail/map04115.gif" alt="hsa04115" style="border-style:none;"></a></center><br></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Drug</span></th>
+<td class="td31 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D00341">D00341</a>&nbsp;&nbsp;</span></td><td>Hydroxyurea (USP)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D08887">D08887</a>&nbsp;&nbsp;</span></td><td>Cenersen sodium (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D09604">D09604</a>&nbsp;&nbsp;</span></td><td>Dinaciclib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D09888">D09888</a>&nbsp;&nbsp;</span></td><td>Drozitumab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11148">D11148</a>&nbsp;&nbsp;</span></td><td>Berzosertib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11206">D11206</a>&nbsp;&nbsp;</span></td><td>Prexasertib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11219">D11219</a>&nbsp;&nbsp;</span></td><td>Idasanutlin (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11455">D11455</a>&nbsp;&nbsp;</span></td><td>Lerociclib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11787">D11787</a>&nbsp;&nbsp;</span></td><td>Ceralasertib (JAN/USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12321">D12321</a>&nbsp;&nbsp;</span></td><td>Camonsertib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12378">D12378</a>&nbsp;&nbsp;</span></td><td>Navtemadlin (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12399">D12399</a>&nbsp;&nbsp;</span></td><td>Sulanemadlin (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12417">D12417</a>&nbsp;&nbsp;</span></td><td>Siremadlin (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12418">D12418</a>&nbsp;&nbsp;</span></td><td>Siremadlin succinate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12458">D12458</a>&nbsp;&nbsp;</span></td><td>Ozekibart (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12621">D12621</a>&nbsp;&nbsp;</span></td><td>Milademetan (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12622">D12622</a>&nbsp;&nbsp;</span></td><td>Milademetan tosylate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12834">D12834</a>&nbsp;&nbsp;</span></td><td>Atirmociclib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12842">D12842</a>&nbsp;&nbsp;</span></td><td>Brigimadlin (JAN/USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12882">D12882</a>&nbsp;&nbsp;</span></td><td>Tuvusertib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13010">D13010</a>&nbsp;&nbsp;</span></td><td>Lartesertib (USAN/INN)</td></tr></table></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Organism</span></th>
+<td class="td30 defd"><div class="cel">Homo sapiens (human) [GN:<a href="/entry/gn:hsa">hsa</a>]<br>
+</div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Gene</span></th>
+<td class="td31 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1017">1017</a>&nbsp;&nbsp;</span></td><td>CDK2; cyclin dependent kinase 2 [KO:<a href="/entry/K02206">K02206</a>] [EC:<a href="/entry/2.7.11.22">2.7.11.22</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1019">1019</a>&nbsp;&nbsp;</span></td><td>CDK4; cyclin dependent kinase 4 [KO:<a href="/entry/K02089">K02089</a>] [EC:<a href="/entry/2.7.11.22">2.7.11.22</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1021">1021</a>&nbsp;&nbsp;</span></td><td>CDK6; cyclin dependent kinase 6 [KO:<a href="/entry/K02091">K02091</a>] [EC:<a href="/entry/2.7.11.22">2.7.11.22</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1026">1026</a>&nbsp;&nbsp;</span></td><td>CDKN1A; cyclin dependent kinase inhibitor 1A [KO:<a href="/entry/K06625">K06625</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1029">1029</a>&nbsp;&nbsp;</span></td><td>CDKN2A; cyclin dependent kinase inhibitor 2A [KO:<a href="/entry/K06621">K06621</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10572">10572</a>&nbsp;&nbsp;</span></td><td>SIVA1; SIVA1 apoptosis inducing factor [KO:<a href="/entry/K22744">K22744</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10848">10848</a>&nbsp;&nbsp;</span></td><td>PPP1R13L; protein phosphatase 1 regulatory subunit 13 like [KO:<a href="/entry/K27356">K27356</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10912">10912</a>&nbsp;&nbsp;</span></td><td>GADD45G; growth arrest and DNA damage inducible gamma [KO:<a href="/entry/K04402">K04402</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1111">1111</a>&nbsp;&nbsp;</span></td><td>CHEK1; checkpoint kinase 1 [KO:<a href="/entry/K02216">K02216</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:11200">11200</a>&nbsp;&nbsp;</span></td><td>CHEK2; checkpoint kinase 2 [KO:<a href="/entry/K06641">K06641</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:143686">143686</a>&nbsp;&nbsp;</span></td><td>SESN3; sestrin 3 [KO:<a href="/entry/K10141">K10141</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1643">1643</a>&nbsp;&nbsp;</span></td><td>DDB2; damage specific DNA binding protein 2 [KO:<a href="/entry/K10140">K10140</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1647">1647</a>&nbsp;&nbsp;</span></td><td>GADD45A; growth arrest and DNA damage inducible alpha [KO:<a href="/entry/K04402">K04402</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:25898">25898</a>&nbsp;&nbsp;</span></td><td>RCHY1; ring finger and CHY zinc finger domain containing 1 [KO:<a href="/entry/K10144">K10144</a>] [EC:<a href="/entry/2.3.2.27">2.3.2.27</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:25946">25946</a>&nbsp;&nbsp;</span></td><td>ZNF385A; zinc finger protein 385A [KO:<a href="/entry/K26543">K26543</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:27113">27113</a>&nbsp;&nbsp;</span></td><td>BBC3; BCL2 binding component 3 [KO:<a href="/entry/K10132">K10132</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:27244">27244</a>&nbsp;&nbsp;</span></td><td>SESN1; sestrin 1 [KO:<a href="/entry/K10141">K10141</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2810">2810</a>&nbsp;&nbsp;</span></td><td>SFN; stratifin [KO:<a href="/entry/K06644">K06644</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:317">317</a>&nbsp;&nbsp;</span></td><td>APAF1; apoptotic peptidase activating factor 1 [KO:<a href="/entry/K02084">K02084</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3479">3479</a>&nbsp;&nbsp;</span></td><td>IGF1; insulin like growth factor 1 [KO:<a href="/entry/K05459">K05459</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3486">3486</a>&nbsp;&nbsp;</span></td><td>IGFBP3; insulin like growth factor binding protein 3 [KO:<a href="/entry/K10138">K10138</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:355">355</a>&nbsp;&nbsp;</span></td><td>FAS; Fas cell surface death receptor [KO:<a href="/entry/K04390">K04390</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3732">3732</a>&nbsp;&nbsp;</span></td><td>CD82; CD82 molecule [KO:<a href="/entry/K06509">K06509</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4193">4193</a>&nbsp;&nbsp;</span></td><td>MDM2; MDM2 proto-oncogene [KO:<a href="/entry/K06643">K06643</a>] [EC:<a href="/entry/2.3.2.27">2.3.2.27</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4194">4194</a>&nbsp;&nbsp;</span></td><td>MDM4; MDM4 regulator of p53 [KO:<a href="/entry/K10127">K10127</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4616">4616</a>&nbsp;&nbsp;</span></td><td>GADD45B; growth arrest and DNA damage inducible beta [KO:<a href="/entry/K04402">K04402</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:472">472</a>&nbsp;&nbsp;</span></td><td>ATM; ATM serine/threonine kinase [KO:<a href="/entry/K04728">K04728</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:50484">50484</a>&nbsp;&nbsp;</span></td><td>RRM2B; ribonucleotide reductase regulatory TP53 inducible subunit M2B [KO:<a href="/entry/K10808">K10808</a>] [EC:<a href="/entry/1.17.4.1">1.17.4.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5054">5054</a>&nbsp;&nbsp;</span></td><td>SERPINE1; serpin family E member 1 [KO:<a href="/entry/K03982">K03982</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:51246">51246</a>&nbsp;&nbsp;</span></td><td>SHISA5; shisa family member 5 [KO:<a href="/entry/K10135">K10135</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:51512">51512</a>&nbsp;&nbsp;</span></td><td>GTSE1; G2 and S-phase expressed 1 [KO:<a href="/entry/K10129">K10129</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5268">5268</a>&nbsp;&nbsp;</span></td><td>SERPINB5; serpin family B member 5 [KO:<a href="/entry/K10139">K10139</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5366">5366</a>&nbsp;&nbsp;</span></td><td>PMAIP1; phorbol-12-myristate-13-acetate-induced protein 1 [KO:<a href="/entry/K10131">K10131</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:54205">54205</a>&nbsp;&nbsp;</span></td><td>CYCS; cytochrome c, somatic [KO:<a href="/entry/K08738">K08738</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:545">545</a>&nbsp;&nbsp;</span></td><td>ATR; ATR serine/threonine kinase [KO:<a href="/entry/K06640">K06640</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:55240">55240</a>&nbsp;&nbsp;</span></td><td>STEAP3; STEAP3 metalloreductase [KO:<a href="/entry/K10142">K10142</a>] [EC:1.16.1.-]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:55367">55367</a>&nbsp;&nbsp;</span></td><td>PIDD1; p53-induced death domain protein 1 [KO:<a href="/entry/K10130">K10130</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:56475">56475</a>&nbsp;&nbsp;</span></td><td>RPRM; reprimo, TP53 dependent G2 arrest mediator homolog [KO:<a href="/entry/K10128">K10128</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5728">5728</a>&nbsp;&nbsp;</span></td><td>PTEN; phosphatase and tensin homolog [KO:<a href="/entry/K01110">K01110</a>] [EC:<a href="/entry/3.1.3.16">3.1.3.16</a> <a href="/entry/3.1.3.48">3.1.3.48</a> <a href="/entry/3.1.3.67">3.1.3.67</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:575">575</a>&nbsp;&nbsp;</span></td><td>ADGRB1; adhesion G protein-coupled receptor B1 [KO:<a href="/entry/K04596">K04596</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:581">581</a>&nbsp;&nbsp;</span></td><td>BAX; BCL2 associated X, apoptosis regulator [KO:<a href="/entry/K02159">K02159</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:595">595</a>&nbsp;&nbsp;</span></td><td>CCND1; cyclin D1 [KO:<a href="/entry/K04503">K04503</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:596">596</a>&nbsp;&nbsp;</span></td><td>BCL2; BCL2 apoptosis regulator [KO:<a href="/entry/K02161">K02161</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:598">598</a>&nbsp;&nbsp;</span></td><td>BCL2L1; BCL2 like 1 [KO:<a href="/entry/K04570">K04570</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6241">6241</a>&nbsp;&nbsp;</span></td><td>RRM2; ribonucleotide reductase regulatory subunit M2 [KO:<a href="/entry/K10808">K10808</a>] [EC:<a href="/entry/1.17.4.1">1.17.4.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:637">637</a>&nbsp;&nbsp;</span></td><td>BID; BH3 interacting domain death agonist [KO:<a href="/entry/K04726">K04726</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:63970">63970</a>&nbsp;&nbsp;</span></td><td>TP53AIP1; tumor protein p53 regulated apoptosis inducing protein 1 [KO:<a href="/entry/K13773">K13773</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:64065">64065</a>&nbsp;&nbsp;</span></td><td>PERP; p53 apoptosis effector related to PMP22 [KO:<a href="/entry/K10136">K10136</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:64326">64326</a>&nbsp;&nbsp;</span></td><td>COP1; COP1 E3 ubiquitin ligase [KO:<a href="/entry/K10143">K10143</a>] [EC:<a href="/entry/2.3.2.27">2.3.2.27</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:64393">64393</a>&nbsp;&nbsp;</span></td><td>ZMAT3; zinc finger matrin-type 3 [KO:<a href="/entry/K10137">K10137</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6477">6477</a>&nbsp;&nbsp;</span></td><td>SIAH1; siah E3 ubiquitin protein ligase 1 [KO:<a href="/entry/K04506">K04506</a>] [EC:<a href="/entry/2.3.2.27">2.3.2.27</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7057">7057</a>&nbsp;&nbsp;</span></td><td>THBS1; thrombospondin 1 [KO:<a href="/entry/K16857">K16857</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7157">7157</a>&nbsp;&nbsp;</span></td><td>TP53; tumor protein p53 [KO:<a href="/entry/K04451">K04451</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7161">7161</a>&nbsp;&nbsp;</span></td><td>TP73; tumor protein p73 [KO:<a href="/entry/K10148">K10148</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7249">7249</a>&nbsp;&nbsp;</span></td><td>TSC2; TSC complex subunit 2 [KO:<a href="/entry/K07207">K07207</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:836">836</a>&nbsp;&nbsp;</span></td><td>CASP3; caspase 3 [KO:<a href="/entry/K02187">K02187</a>] [EC:<a href="/entry/3.4.22.56">3.4.22.56</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:83667">83667</a>&nbsp;&nbsp;</span></td><td>SESN2; sestrin 2 [KO:<a href="/entry/K20394">K20394</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:841">841</a>&nbsp;&nbsp;</span></td><td>CASP8; caspase 8 [KO:<a href="/entry/K04398">K04398</a>] [EC:<a href="/entry/3.4.22.61">3.4.22.61</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:842">842</a>&nbsp;&nbsp;</span></td><td>CASP9; caspase 9 [KO:<a href="/entry/K04399">K04399</a>] [EC:<a href="/entry/3.4.22.62">3.4.22.62</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:84883">84883</a>&nbsp;&nbsp;</span></td><td>AIFM2; apoptosis inducing factor mitochondria associated 2 [KO:<a href="/entry/K22745">K22745</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8493">8493</a>&nbsp;&nbsp;</span></td><td>PPM1D; protein phosphatase, Mg2+/Mn2+ dependent 1D [KO:<a href="/entry/K10147">K10147</a>] [EC:<a href="/entry/3.1.3.16">3.1.3.16</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8795">8795</a>&nbsp;&nbsp;</span></td><td>TNFRSF10B; TNF receptor superfamily member 10b [KO:<a href="/entry/K04722">K04722</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8797">8797</a>&nbsp;&nbsp;</span></td><td>TNFRSF10A; TNF receptor superfamily member 10a [KO:<a href="/entry/K04722">K04722</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:891">891</a>&nbsp;&nbsp;</span></td><td>CCNB1; cyclin B1 [KO:<a href="/entry/K05868">K05868</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:894">894</a>&nbsp;&nbsp;</span></td><td>CCND2; cyclin D2 [KO:<a href="/entry/K10151">K10151</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:896">896</a>&nbsp;&nbsp;</span></td><td>CCND3; cyclin D3 [KO:<a href="/entry/K10152">K10152</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:898">898</a>&nbsp;&nbsp;</span></td><td>CCNE1; cyclin E1 [KO:<a href="/entry/K06626">K06626</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:900">900</a>&nbsp;&nbsp;</span></td><td>CCNG1; cyclin G1 [KO:<a href="/entry/K10145">K10145</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:901">901</a>&nbsp;&nbsp;</span></td><td>CCNG2; cyclin G2 [KO:<a href="/entry/K10146">K10146</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9133">9133</a>&nbsp;&nbsp;</span></td><td>CCNB2; cyclin B2 [KO:<a href="/entry/K21770">K21770</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9134">9134</a>&nbsp;&nbsp;</span></td><td>CCNE2; cyclin E2 [KO:<a href="/entry/K06626">K06626</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:92344">92344</a>&nbsp;&nbsp;</span></td><td>GORAB; golgin, RAB6 interacting [KO:<a href="/entry/K19748">K19748</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9538">9538</a>&nbsp;&nbsp;</span></td><td>EI24; EI24 autophagy associated transmembrane protein [KO:<a href="/entry/K10134">K10134</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9540">9540</a>&nbsp;&nbsp;</span></td><td>TP53I3; tumor protein p53 inducible protein 3 [KO:<a href="/entry/K10133">K10133</a>] [EC:1.-.-.-]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:983">983</a>&nbsp;&nbsp;</span></td><td>CDK1; cyclin dependent kinase 1 [KO:<a href="/entry/K02087">K02087</a>] [EC:<a href="/entry/2.7.11.22">2.7.11.22</a> <a href="/entry/2.7.11.23">2.7.11.23</a>]</td></tr></table></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/16557269">16557269</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Levine AJ, Hu W, Feng Z.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">The P53 pathway: what questions remain to be explored?</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Cell Death Differ 13:1027-36 (2006)<br>DOI:<a href="https://doi.org/10.1038/sj.cdd.4401910">10.1038/sj.cdd.4401910</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/15838523">15838523</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Harris SL, Levine AJ.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">The p53 pathway: positive and negative feedback loops.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Oncogene 24:2899-908 (2005)<br>DOI:<a href="https://doi.org/10.1038/sj.onc.1208615">10.1038/sj.onc.1208615</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/11747320">11747320</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Balint E E, Vousden KH.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Activation and activities of the p53 tumour suppressor protein.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Br J Cancer 85:1813-23 (2001)<br>DOI:<a href="https://doi.org/10.1054/bjoc.2001.2128">10.1054/bjoc.2001.2128</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/11313928">11313928</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Taylor WR, Stark GR.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Regulation of the G2/M transition by p53.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Oncogene 20:1803-15 (2001)<br>DOI:<a href="https://doi.org/10.1038/sj.onc.1204252">10.1038/sj.onc.1204252</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/15116721">15116721</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Hofseth LJ, Hussain SP, Harris CC.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">p53: 25 years after its discovery.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Trends Pharmacol Sci 25:177-81 (2004)<br>DOI:<a href="https://doi.org/10.1016/j.tips.2004.02.009">10.1016/j.tips.2004.02.009</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/12505356">12505356</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Pietenpol JA, Stewart ZA.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Cell cycle checkpoint signaling: cell cycle arrest versus apoptosis.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Toxicology 181-182:475-81 (2002)<br>DOI:<a href="https://doi.org/10.1016/S0300-483X(02)00460-2">10.1016/S0300-483X(02)00460-2</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/10714958">10714958</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Tokino T, Nakamura Y.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">The role of p53-target genes in human cancer.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Crit Rev Oncol Hematol 33:1-6 (2000)<br>DOI:<a href="https://doi.org/10.1016/S1040-8428(99)00051-7">10.1016/S1040-8428(99)00051-7</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/16697662">16697662</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Hermeking H, Benzinger A.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">14-3-3 proteins in cell cycle regulation.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Semin Cancer Biol 16:183-92 (2006)<br>DOI:<a href="https://doi.org/10.1016/j.semcancer.2006.03.002">10.1016/j.semcancer.2006.03.002</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/16915296">16915296</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Sherr CJ.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Divorcing ARF and p53: an unsettled case.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Nat Rev Cancer 6:663-73 (2006)<br>DOI:<a href="https://doi.org/10.1038/nrc1954">10.1038/nrc1954</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/17409411">17409411</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Feng Z, Hu W, de Stanchina E, Teresky AK, Jin S, Lowe S, Levine AJ.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">The regulation of AMPK beta1, TSC2, and PTEN expression by p53: stress, cell and tissue specificity, and the role of these gene products in modulating the IGF-1-AKT-mTOR pathways.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Cancer Res 67:3043-53 (2007)<br>DOI:<a href="https://doi.org/10.1158/0008-5472.CAN-06-4149">10.1158/0008-5472.CAN-06-4149</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/26037915">26037915</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Resnick-Silverman L, Manfredi JJ</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Two Faces of SIVA.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Cancer Discov 5:581-3 (2015)<br>DOI:<a href="https://doi.org/10.1158/2159-8290.CD-15-0484">10.1158/2159-8290.CD-15-0484</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/19584092">19584092</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Resch U, Schichl YM, Winsauer G, Gudi R, Prasad K, de Martin R</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Siva1 is a XIAP-interacting protein that balances NFkappaB and JNK signalling to promote apoptosis.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">J Cell Sci 122:2651-61 (2009)<br>DOI:<a href="https://doi.org/10.1242/jcs.049940">10.1242/jcs.049940</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/19240372">19240372</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Barkinge JL, Gudi R, Sarah H, Chu F, Borthakur A, Prabhakar BS, Prasad KV</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">The p53-induced Siva-1 plays a significant role in cisplatin-mediated apoptosis.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">J Carcinog 8:2 (2009)<br>DOI:<a href="https://doi.org/10.4103/1477-3163.45389">10.4103/1477-3163.45389</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/12135761">12135761</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Ohiro Y, Garkavtsev I, Kobayashi S, Sreekumar KR, Nantz R, Higashikubo BT, Duffy SL, Higashikubo R, Usheva A, Gius D, Kley N, Horikoshi N</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">A novel p53-inducible apoptogenic gene, PRG3, encodes a homologue of the apoptosis-inducing factor (AIF).</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">FEBS Lett 524:163-71 (2002)<br>DOI:<a href="https://doi.org/10.1016/S0014-5793(02)03049-1">10.1016/S0014-5793(02)03049-1</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/26646590">26646590</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Hu Y, Ge W, Wang X, Sutendra G, Zhao K, Dedeic Z, Slee EA, Baer C, Lu X</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Caspase cleavage of iASPP potentiates its ability to inhibit p53 and NF-kappaB.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Oncotarget 6:42478-90 (2015)<br>DOI:<a href="https://doi.org/10.18632/oncotarget.6478">10.18632/oncotarget.6478</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Related<br>pathway</span></th>
+<td class="td30 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04110">hsa04110</a>&nbsp;&nbsp;</span></td><td>Cell cycle</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04210">hsa04210</a>&nbsp;&nbsp;</span></td><td>Apoptosis</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04218">hsa04218</a>&nbsp;&nbsp;</span></td><td>Cellular senescence</td></tr></table></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">KO&nbsp;pathway</span></th>
+<td class="td31 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/ko04115">ko04115</a>&nbsp;&nbsp;</span></td><td>&nbsp;</td></tr></table></td></tr>
+
+</table></td></tr></table>
+<br></td></tr></table>
+
+
+<a href="/dbget/">DBGET</a> integrated database retrieval system</div>
+
+</body>
+</html>

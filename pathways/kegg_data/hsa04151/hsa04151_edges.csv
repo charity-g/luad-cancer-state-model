@@ -1,0 +1,104 @@
+id,source,target,type,subtypes,source_entry_id,target_entry_id
+relation_1,entry_95,entry_43,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",95,43
+relation_2,entry_43,entry_97,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",43,97
+relation_3,entry_97,entry_98,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",97,98
+relation_4,entry_98,entry_99,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",98,99
+relation_5,entry_99,entry_166,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",99,166
+relation_6,entry_166,entry_170,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",166,170
+relation_7,entry_170,entry_171,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",170,171
+relation_8,entry_12,entry_10,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",12,10
+relation_9,entry_10,entry_9,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",10,9
+relation_10,entry_10,entry_8,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",10,8
+relation_11,entry_249,entry_118,PCrel,"[{""name"": ""activation"", ""value"": ""-->""}]",249,118
+relation_12,entry_120,entry_118,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",120,118
+relation_13,entry_118,entry_263,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",118,263
+relation_14,entry_14,entry_264,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",14,264
+relation_15,entry_43,entry_37,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",43,37
+relation_16,entry_37,entry_19,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",37,19
+relation_17,entry_99,entry_19,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",99,19
+relation_18,entry_193,entry_194,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",193,194
+relation_19,entry_194,entry_19,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",194,19
+relation_20,entry_181,entry_180,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",181,180
+relation_21,entry_265,entry_19,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",265,19
+relation_22,entry_202,entry_266,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",202,266
+relation_23,entry_199,entry_19,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",199,19
+relation_24,entry_189,entry_267,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",189,267
+relation_25,entry_190,entry_19,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",190,19
+relation_26,entry_19,entry_5,PCrel,"[{""name"": ""activation"", ""value"": ""-->""}]",19,5
+relation_27,entry_5,entry_18,PCrel,"[{""name"": ""activation"", ""value"": ""-->""}]",5,18
+relation_28,entry_18,entry_10,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",18,10
+relation_29,entry_18,entry_230,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",18,230
+relation_30,entry_18,entry_231,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",18,231
+relation_31,entry_18,entry_232,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",18,232
+relation_32,entry_268,entry_175,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",268,175
+relation_33,entry_175,entry_5,PCrel,"[{""name"": ""activation"", ""value"": ""-->""}]",175,5
+relation_34,entry_5,entry_17,PCrel,"[{""name"": ""activation"", ""value"": ""-->""}]",5,17
+relation_35,entry_269,entry_17,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",269,17
+relation_36,entry_17,entry_113,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",17,113
+relation_37,entry_17,entry_208,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",17,208
+relation_38,entry_17,entry_79,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",17,79
+relation_39,entry_17,entry_53,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",17,53
+relation_40,entry_263,entry_14,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",263,14
+relation_41,entry_17,entry_166,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",17,166
+relation_42,entry_17,entry_45,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",17,45
+relation_43,entry_17,entry_139,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",17,139
+relation_44,entry_17,entry_140,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",17,140
+relation_45,entry_17,entry_51,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",17,51
+relation_46,entry_17,entry_52,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",17,52
+relation_47,entry_17,entry_150,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",17,150
+relation_48,entry_45,entry_56,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",45,56
+relation_49,entry_45,entry_46,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",45,46
+relation_50,entry_45,entry_57,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",45,57
+relation_51,entry_139,entry_270,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",139,270
+relation_52,entry_140,entry_270,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",140,270
+relation_53,entry_51,entry_47,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",51,47
+relation_54,entry_51,entry_48,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",51,48
+relation_55,entry_51,entry_58,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",51,58
+relation_56,entry_51,entry_59,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",51,59
+relation_57,entry_51,entry_49,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",51,49
+relation_58,entry_51,entry_50,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",51,50
+relation_59,entry_208,entry_214,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",208,214
+relation_60,entry_208,entry_215,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",208,215
+relation_61,entry_80,entry_220,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",80,220
+relation_62,entry_80,entry_221,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",80,221
+relation_63,entry_53,entry_55,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",53,55
+relation_64,entry_89,entry_51,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",89,51
+relation_65,entry_89,entry_52,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",89,52
+relation_66,entry_52,entry_54,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",52,54
+relation_67,entry_52,entry_241,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",52,241
+relation_68,entry_7,entry_6,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",7,6
+relation_69,entry_264,entry_7,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",264,7
+relation_70,entry_134,entry_17,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",134,17
+relation_71,entry_18,entry_17,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",18,17
+relation_72,entry_135,entry_17,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""dephosphorylation"", ""value"": ""-p""}]",135,17
+relation_73,entry_105,entry_17,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""dephosphorylation"", ""value"": ""-p""}]",105,17
+relation_74,entry_34,entry_5,PCrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""dephosphorylation"", ""value"": ""-p""}]",34,5
+relation_75,entry_17,entry_263,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",17,263
+relation_76,entry_119,entry_263,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""indirect effect"", ""value"": ""..>""}]",119,263
+relation_77,entry_104,entry_17,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",104,17
+relation_78,entry_79,entry_80,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""indirect effect"", ""value"": ""..>""}]",79,80
+relation_79,entry_250,entry_17,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",250,17
+relation_80,entry_253,entry_254,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",253,254
+relation_81,entry_253,entry_258,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",253,258
+relation_82,entry_17,entry_253,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",17,253
+relation_83,entry_179,entry_181,PPrel,"[{""name"": ""binding/association"", ""value"": ""---""}]",179,181
+relation_84,entry_262,entry_34,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",262,34
+relation_85,entry_17,entry_206,PPrel,[],17,206
+component_1,entry_263,entry_15,component_of,[],263,15
+component_2,entry_263,entry_16,component_of,[],263,16
+component_3,entry_264,entry_11,component_of,[],264,11
+component_4,entry_264,entry_12,component_of,[],264,12
+component_5,entry_264,entry_13,component_of,[],264,13
+component_6,entry_265,entry_180,component_of,[],265,180
+component_7,entry_265,entry_244,component_of,[],265,244
+component_8,entry_266,entry_198,component_of,[],266,198
+component_9,entry_266,entry_199,component_of,[],266,199
+component_10,entry_267,entry_187,component_of,[],267,187
+component_11,entry_267,entry_188,component_of,[],267,188
+component_12,entry_267,entry_190,component_of,[],267,190
+component_13,entry_268,entry_185,component_of,[],268,185
+component_14,entry_268,entry_44,component_of,[],268,44
+component_15,entry_269,entry_106,component_of,[],269,106
+component_16,entry_269,entry_107,component_of,[],269,107
+component_17,entry_270,entry_145,component_of,[],270,145
+component_18,entry_270,entry_245,component_of,[],270,245

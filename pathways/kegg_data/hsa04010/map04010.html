@@ -1,0 +1,441 @@
+<!doctype html>
+<html><head>
+<title>KEGG PATHWAY: map04010</title>
+<link type="text/css" rel="stylesheet" href="/css/gn2.css?1781985332">
+<link type="text/css" rel="stylesheet" href="/css/bget.css?1781985332">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link type="text/css" rel="stylesheet" href="/css/bgetm.css?1781985332" media="only screen and (max-width: 768px)">
+<style>.kcfd{display:none;}</style>
+<script>
+<!--
+var getElementsByClassName = document.getElementsByClassName ?
+  function (cl){
+    return document.getElementsByClassName(cl);
+  } :
+  function (cl){
+    var elms = [];
+    var objs = document.getElementsByTagName('*');
+    for(var i=0;i<objs.length;i++){
+      var obj = objs[i];
+      if(obj.className == cl){
+        elms.push(obj);
+      }
+    }
+    return elms;
+  };
+function toggleField(clk,cl,show,hide){
+  var objs = getElementsByClassName(cl);
+  for(var i=0;i<objs.length;i++){
+    var obj = objs[i];
+    if(!obj.style.display||obj.style.display == 'none'){
+      obj.style.display = 'block';
+      clk.innerHTML = '&nbsp;&laquo; '+hide;
+    }
+    else{
+      obj.style.display = 'none';
+      clk.innerHTML = '&nbsp;&raquo; '+show;
+    }
+  }
+}
+function toggleData(bobj,e){
+  var id = bobj.id.replace(/[^0-9]/g,'');
+  var dt = document.getElementById('kcfd'+id);
+  e.preventDefault();
+  if(!dt.style.display||dt.style.display == 'none'){
+    document.getElementById('kcfb'+id).innerHTML = 'Hide';
+    dt.style.display = 'block';
+  }
+  else{
+    document.getElementById('kcfb'+id).innerHTML = 'Show';
+    dt.style.display = 'none';
+  }
+}
+function btn(bobj,img) {
+  bobj.src = "/Fig/bget/button_" + img + ".gif";
+}
+function btn_e(e) {
+  e = e || event;
+  var obj = e.target;
+  var img = e.target.src;
+  var img_base = img.replace(/\\/g,'/').replace(/(b|bd|bh)\.gif$/,'');
+  if(e.type == 'mousedown'||e.type == 'touchstart'){
+    obj.src = img_base +'bd.gif';
+  }
+  else if(e.type == 'mouseover'){
+    obj.src = img_base +'bh.gif';
+  }
+  else if(e.type == 'mouseup'||e.type == 'touchend'){
+    obj.src = img_base +'b.gif';
+  }
+  else if(e.type == 'mouseout'){
+    obj.src = img_base +'b.gif';
+  }
+}
+function init(){
+  for(var i=1;i<=1;i++){
+    if(document.getElementById('kcfb'+i)){
+      document.getElementById('kcfb'+i).onclick = function(e){toggleData(this,e);};
+    }
+  }
+}
+function Link_XtrctSeq2(form) {
+    var dna_from;
+    var dna_to;
+    var dna_len;
+    var plus_up   = Number(form.XtrctSeq_UP.value) ;
+    var plus_down = Number(form.XtrctSeq_DOWN.value);
+    var vector    = Number(form.VECTOR.value);
+    var org       = form.ORG.value;
+    var chr       = form.CHR.value;
+    var kid       = form.KEGGID.value;
+    var url;
+
+    if (plus_up == 0 && plus_down == 0) {
+      url = "/entry/-f+-n+n+" + kid;
+    }
+    else {
+  if (vector == 1) {
+      dna_from  = Number(form.FROM.value)  - plus_up;
+      dna_to    = Number(form.TO.value) + plus_down;
+  } else {
+      dna_from  = Number(form.FROM.value)  - plus_down;
+      dna_to    = Number(form.TO.value) + plus_up;
+  }
+
+  url = "/dbget-bin/cut_sequence_genes.pl?FROM=" + dna_from + "&TO=" + dna_to +"&VECTOR=" + vector + "&ORG=" + org;
+  if (chr) url += "&CHR=" + chr;
+    }
+    //window.open( url, "_self" );
+    location.href = url;
+}
+function go_taxonomy(form,params){
+  for(var key in params){
+    if(form[key]){
+      form.setAttribute(key,params[key]);
+    }
+    else{
+      var obj = document.createElement('input');
+      obj.setAttribute('type','hidden');
+      obj.setAttribute('name',key);
+      obj.setAttribute('value',params[key]);
+      form.appendChild(obj);
+    }
+  }
+  form.submit();
+}
+window.onload=function(){window.focus();init();};
+//--->
+</script>
+
+</head>
+<body>
+<div>
+
+<table border=0 cellpadding=0 cellspacing=0><tr><td>
+<table border=0 cellpadding=0 cellspacing=0 width="650"><tr><td width=70><a href="/kegg/kegg2.html"><img align="middle" alt="KEGG" border=0 src="/Fig/bget/kegg3.gif"></a></td><td>&nbsp;&nbsp;&nbsp;</td><td><a name="pathway:map04010"></a><font class="title3">PATHWAY: map04010</font></td><td class="tar vbot"><button class="btn" onclick="javascript:void(window.open(&#39;/kegg/document/help_bget_pathway.html&#39;,&#39;KEGG_Help&#39;,&#39;toolbar=no,location=no,directories=no,width=720,height=640,resizable=yes,scrollbars=yes&#39;));return false;">Help</button></td></tr></table><form method="post" action="/entry/" enctype="application/x-www-form-urlencoded" id="form1" name="form1"></form><table class="w1" width="650">
+<tr>
+<td class="fr3 w1">
+<table width="650" class="w2">
+
+<tr><th class="th30 deft tal vmid"><span class="nowrap">Entry</span></th>
+<td class="td30 defd"><table class="w1" width="100%"><tr><td class="tal pd0"><code><span class="nowrap">map04010&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pathway&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+</span></code></td></tr></table></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Name</span></th>
+<td class="td31 defd"><div class="cel">MAPK signaling pathway</div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Description</span></th>
+<td class="td30 defd"><div class="cel">The mitogen-activated protein kinase (MAPK) cascade is a highly conserved module that is involved in various cellular functions, including cell proliferation, differentiation and migration. Mammals express at least four distinctly regulated groups of MAPKs, extracellular signal-related kinases (ERK)-1/2, Jun amino-terminal kinases (JNK1/2/3), p38 proteins (p38alpha/beta/gamma/delta) and ERK5, that are activated by specific MAPKKs: MEK1/2 for ERK1/2, MKK3/6 for the p38, MKK4/7 (JNKK1/2) for the JNKs, and MEK5 for ERK5. Each MAPKK, however, can be activated by more than one MAPKKK, increasing the complexity and diversity of MAPK signalling. Presumably each MAPKKK confers responsiveness to distinct stimuli. For example, activation of ERK1/2 by growth factors depends on the MAPKKK c-Raf, but other MAPKKKs may activate ERK1/2 in response to pro-inflammatory stimuli.<br>
+</div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Class</span></th>
+<td class="td31 defd"><div class="cel">Environmental Information Processing; Signal transduction<br>
+<button class="btn" onclick="location.href='/brite/htext=ko00001.keg&amp;query=ko04010';return false;">BRITE hierarchy</button></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Pathway&nbsp;map</span></th>
+<td class="td30 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/pathway/map04010">map04010</a>&nbsp;&nbsp;</span></td><td>MAPK signaling pathway</td></tr></table><center><a href="/pathway/map04010"><img src="/kegg/misc/thumbnail/map04010.gif" alt="map04010" style="border-style:none;"></a></center><br></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Disease</span></th>
+<td class="td31 defd"><div class="cel"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/H02157">H02157</a>&nbsp;&nbsp;</span></td><td>Short-rib thoracic dysplasia</td></tr></table></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Other DBs</span></th>
+<td class="td30 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap">GO:&nbsp;</span></td><td><a href="http://amigo.geneontology.org/amigo/term/GO:0000165">0000165</a></td></tr></table></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/11749383">11749383</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Chen Z, Gibson TB, Robinson F, Silvestro L, Pearson G, Xu B, Wright A, Vanderbilt C, Cobb MH.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">MAP kinases.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Chem Rev 101:2449-76 (2001)<br>DOI:<a href="https://doi.org/10.1021/cr000241p">10.1021/cr000241p</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/12191611">12191611</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Tanoue T, Nishida E.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Docking interactions in the mitogen-activated protein kinase cascades.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Pharmacol Ther 93:193-202 (2002)<br>DOI:<a href="https://doi.org/10.1016/S0163-7258(02)00188-2">10.1016/S0163-7258(02)00188-2</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/12947395">12947395</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Dent P, Yacoub A, Fisher PB, Hagan MP, Grant S.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">MAPK pathways in radiation responses.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Oncogene 22:5885-96 (2003)<br>DOI:<a href="https://doi.org/10.1038/sj.onc.1206701">10.1038/sj.onc.1206701</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/12676795">12676795</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Huang EJ, Reichardt LF.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Trk receptors: roles in neuronal signal transduction.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Annu Rev Biochem 72:609-42 (2003)<br>DOI:<a href="https://doi.org/10.1146/annurev.biochem.72.121801.161629">10.1146/annurev.biochem.72.121801.161629</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/11369511">11369511</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Harper SJ, LoGrasso P.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Signalling for survival and death in neurones: the role of stress-activated kinases, JNK and p38.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Cell Signal 13:299-310 (2001)<br>DOI:<a href="https://doi.org/10.1016/S0898-6568(01)00148-6">10.1016/S0898-6568(01)00148-6</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/12390245">12390245</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Takeda K, Ichijo H</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Neuronal p38 MAPK signalling: an emerging regulator of cell fate and function in the nervous system.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Genes Cells 7:1099-111 (2002)<br>DOI:<a href="https://doi.org/10.1046/j.1365-2443.2002.00591.x">10.1046/j.1365-2443.2002.00591.x</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/14597384">14597384</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Yang SH, Sharrocks AD, Whitmarsh AJ.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Transcriptional regulation by the MAP kinase signaling cascades.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Gene 320:3-21 (2003)<br>DOI:<a href="https://doi.org/10.1016/S0378-1119(03)00816-3">10.1016/S0378-1119(03)00816-3</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/12566928">12566928</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Zhu X, Lee HG, Raina AK, Perry G, Smith MA.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">The role of mitogen-activated protein kinase pathways in Alzheimer's disease.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Neurosignals 11:270-81 (2002)<br>DOI:<a href="https://doi.org/10.1159/000067426">10.1159/000067426</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/12849693">12849693</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Cho H, Lee J, Kwak NJ, Lee KH, Rha S, Kim YH, Cho YY, Yang KH, Kim K, Lim Y.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Silica induces nuclear factor-kappaB activation through TAK1 and NIK in Rat2 cell line.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Toxicol Lett 143:323-30 (2003)<br>DOI:<a href="https://doi.org/10.1016/S0378-4274(03)00193-0">10.1016/S0378-4274(03)00193-0</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/20602996">20602996</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Lemmon MA, Schlessinger J</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Cell signaling by receptor tyrosine kinases.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Cell 141:1117-34 (2010)<br>DOI:<a href="https://doi.org/10.1016/j.cell.2010.06.011">10.1016/j.cell.2010.06.011</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/22367796">22367796</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Skaper SD</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">The neurotrophin family of neurotrophic factors: an overview.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Methods Mol Biol 846:1-12 (2012)<br>DOI:<a href="https://doi.org/10.1007/978-1-61779-536-7_1">10.1007/978-1-61779-536-7_1</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/23085193">23085193</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Chu WM</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Tumor necrosis factor.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Cancer Lett 328:222-5 (2013)<br>DOI:<a href="https://doi.org/10.1016/j.canlet.2012.10.014">10.1016/j.canlet.2012.10.014</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/22296764">22296764</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Newton K, Dixit VM</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Signaling in innate immunity and inflammation.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Cold Spring Harb Perspect Biol 4:a006049 (2012)<br>DOI:<a href="https://doi.org/10.1101/cshperspect.a006049">10.1101/cshperspect.a006049</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/19483709">19483709</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Gaestel M, Kotlyarov A, Kracht M</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Targeting innate immunity protein kinase signalling in inflammation.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Nat Rev Drug Discov 8:480-99 (2009)<br>DOI:<a href="https://doi.org/10.1038/nrd2829">10.1038/nrd2829</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/23664135">23664135</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Ajibade AA, Wang HY, Wang RF</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Cell type-specific function of TAK1 in innate immune signaling.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Trends Immunol 34:307-16 (2013)<br>DOI:<a href="https://doi.org/10.1016/j.it.2013.03.007">10.1016/j.it.2013.03.007</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/24892271">24892271</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Turner MD, Nedjai B, Hurst T, Pennington DJ</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Cytokines and chemokines: At the crossroads of cell signalling and inflammatory disease.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Biochim Biophys Acta 1843:2563-2582 (2014)<br>DOI:<a href="https://doi.org/10.1016/j.bbamcr.2014.05.014">10.1016/j.bbamcr.2014.05.014</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Related<br>pathway</span></th>
+<td class="td31 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/map04070">map04070</a>&nbsp;&nbsp;</span></td><td>Phosphatidylinositol signaling system</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/map04110">map04110</a>&nbsp;&nbsp;</span></td><td>Cell cycle</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/map04115">map04115</a>&nbsp;&nbsp;</span></td><td>p53 signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/map04210">map04210</a>&nbsp;&nbsp;</span></td><td>Apoptosis</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/map04310">map04310</a>&nbsp;&nbsp;</span></td><td>Wnt signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/map04668">map04668</a>&nbsp;&nbsp;</span></td><td>TNF signaling pathway</td></tr></table></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">KO&nbsp;pathway</span></th>
+<td class="td30 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/ko04010">ko04010</a>&nbsp;&nbsp;</span></td><td>&nbsp;</td></tr></table></td></tr>
+
+</table></td></tr></table>
+<br></td></tr></table>
+
+
+<a href="/dbget/">DBGET</a> integrated database retrieval system</div>
+
+</body>
+</html>

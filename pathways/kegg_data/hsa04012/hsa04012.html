@@ -1,0 +1,442 @@
+<!doctype html>
+<html><head>
+<title>KEGG PATHWAY: hsa04012</title>
+<link type="text/css" rel="stylesheet" href="/css/gn2.css?1781985723">
+<link type="text/css" rel="stylesheet" href="/css/bget.css?1781985723">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link type="text/css" rel="stylesheet" href="/css/bgetm.css?1781985723" media="only screen and (max-width: 768px)">
+<style>.kcfd{display:none;}</style>
+<script>
+<!--
+var getElementsByClassName = document.getElementsByClassName ?
+  function (cl){
+    return document.getElementsByClassName(cl);
+  } :
+  function (cl){
+    var elms = [];
+    var objs = document.getElementsByTagName('*');
+    for(var i=0;i<objs.length;i++){
+      var obj = objs[i];
+      if(obj.className == cl){
+        elms.push(obj);
+      }
+    }
+    return elms;
+  };
+function toggleField(clk,cl,show,hide){
+  var objs = getElementsByClassName(cl);
+  for(var i=0;i<objs.length;i++){
+    var obj = objs[i];
+    if(!obj.style.display||obj.style.display == 'none'){
+      obj.style.display = 'block';
+      clk.innerHTML = '&nbsp;&laquo; '+hide;
+    }
+    else{
+      obj.style.display = 'none';
+      clk.innerHTML = '&nbsp;&raquo; '+show;
+    }
+  }
+}
+function toggleData(bobj,e){
+  var id = bobj.id.replace(/[^0-9]/g,'');
+  var dt = document.getElementById('kcfd'+id);
+  e.preventDefault();
+  if(!dt.style.display||dt.style.display == 'none'){
+    document.getElementById('kcfb'+id).innerHTML = 'Hide';
+    dt.style.display = 'block';
+  }
+  else{
+    document.getElementById('kcfb'+id).innerHTML = 'Show';
+    dt.style.display = 'none';
+  }
+}
+function btn(bobj,img) {
+  bobj.src = "/Fig/bget/button_" + img + ".gif";
+}
+function btn_e(e) {
+  e = e || event;
+  var obj = e.target;
+  var img = e.target.src;
+  var img_base = img.replace(/\\/g,'/').replace(/(b|bd|bh)\.gif$/,'');
+  if(e.type == 'mousedown'||e.type == 'touchstart'){
+    obj.src = img_base +'bd.gif';
+  }
+  else if(e.type == 'mouseover'){
+    obj.src = img_base +'bh.gif';
+  }
+  else if(e.type == 'mouseup'||e.type == 'touchend'){
+    obj.src = img_base +'b.gif';
+  }
+  else if(e.type == 'mouseout'){
+    obj.src = img_base +'b.gif';
+  }
+}
+function init(){
+  for(var i=1;i<=1;i++){
+    if(document.getElementById('kcfb'+i)){
+      document.getElementById('kcfb'+i).onclick = function(e){toggleData(this,e);};
+    }
+  }
+}
+function Link_XtrctSeq2(form) {
+    var dna_from;
+    var dna_to;
+    var dna_len;
+    var plus_up   = Number(form.XtrctSeq_UP.value) ;
+    var plus_down = Number(form.XtrctSeq_DOWN.value);
+    var vector    = Number(form.VECTOR.value);
+    var org       = form.ORG.value;
+    var chr       = form.CHR.value;
+    var kid       = form.KEGGID.value;
+    var url;
+
+    if (plus_up == 0 && plus_down == 0) {
+      url = "/entry/-f+-n+n+" + kid;
+    }
+    else {
+  if (vector == 1) {
+      dna_from  = Number(form.FROM.value)  - plus_up;
+      dna_to    = Number(form.TO.value) + plus_down;
+  } else {
+      dna_from  = Number(form.FROM.value)  - plus_down;
+      dna_to    = Number(form.TO.value) + plus_up;
+  }
+
+  url = "/dbget-bin/cut_sequence_genes.pl?FROM=" + dna_from + "&TO=" + dna_to +"&VECTOR=" + vector + "&ORG=" + org;
+  if (chr) url += "&CHR=" + chr;
+    }
+    //window.open( url, "_self" );
+    location.href = url;
+}
+function go_taxonomy(form,params){
+  for(var key in params){
+    if(form[key]){
+      form.setAttribute(key,params[key]);
+    }
+    else{
+      var obj = document.createElement('input');
+      obj.setAttribute('type','hidden');
+      obj.setAttribute('name',key);
+      obj.setAttribute('value',params[key]);
+      form.appendChild(obj);
+    }
+  }
+  form.submit();
+}
+window.onload=function(){window.focus();init();};
+//--->
+</script>
+
+</head>
+<body>
+<div>
+
+<table border=0 cellpadding=0 cellspacing=0><tr><td>
+<table border=0 cellpadding=0 cellspacing=0 width="650"><tr><td width=70><a href="/kegg/kegg2.html"><img align="middle" alt="KEGG" border=0 src="/Fig/bget/kegg3.gif"></a></td><td>&nbsp;&nbsp;&nbsp;</td><td><a name="pathway:hsa04012"></a><font class="title3">PATHWAY: hsa04012</font></td><td class="tar vbot"><button class="btn" onclick="javascript:void(window.open(&#39;/kegg/document/help_bget_pathway.html&#39;,&#39;KEGG_Help&#39;,&#39;toolbar=no,location=no,directories=no,width=720,height=640,resizable=yes,scrollbars=yes&#39;));return false;">Help</button></td></tr></table><form method="post" action="/entry/" enctype="application/x-www-form-urlencoded" id="form1" name="form1"></form><table class="w1" width="650">
+<tr>
+<td class="fr3 w1">
+<table width="650" class="w2">
+
+<tr><th class="th30 deft tal vmid"><span class="nowrap">Entry</span></th>
+<td class="td30 defd"><table class="w1" width="100%"><tr><td class="tal pd0"><code><span class="nowrap">hsa04012&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pathway&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+</span></code></td></tr></table></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Name</span></th>
+<td class="td31 defd"><div class="cel">ErbB signaling pathway - Homo sapiens (human)</div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Description</span></th>
+<td class="td30 defd"><div class="cel">The ErbB family of receptor tyrosine kinases (RTKs) couples binding of extracellular growth factor ligands to intracellular signaling pathways regulating diverse biologic responses, including proliferation, differentiation, cell motility, and survival. Ligand binding to the four closely related members of this RTK family -epidermal growth factor receptor (EGFR, also known as ErbB-1 or HER1), ErbB-2 (HER2), ErbB-3 (HER3), and ErbB-4 (HER4)-induces the formation of receptor homo- and heterodimers and the activation of the intrinsic kinase domain, resulting in phosphorylation on specific tyrosine residues (pY) within the cytoplasmic tail. Signaling effectors containing binding pockets for pY-containing peptides are recruited to activated receptors and induce the various signaling pathways. The Shc- and/or Grb2-activated mitogen-activated protein kinase (MAPK) pathway is a common target downstream of all ErbB receptors. Similarly, the phosphatidylinositol-3-kinase (PI-3K) pathway is directly or indirectly activated by most ErbBs. Several cytoplasmic docking proteins appear to be recruited by specific ErbB receptors and less exploited by others. These include the adaptors Crk, Nck, the phospholipase C gamma (PLCgamma), the intracellular tyrosine kinase Src, or the Cbl E3 ubiquitin protein ligase.<br>
+</div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Class</span></th>
+<td class="td31 defd"><div class="cel">Environmental Information Processing; Signal transduction<br>
+<button class="btn" onclick="location.href='/brite/htext=hsa00001.keg&amp;query=hsa04012';return false;">BRITE hierarchy</button></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Pathway&nbsp;map</span></th>
+<td class="td30 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/pathway/hsa04012">hsa04012</a>&nbsp;&nbsp;</span></td><td>ErbB signaling pathway</td></tr></table><center><a href="/pathway/hsa04012"><img src="/kegg/misc/thumbnail/map04012.gif" alt="hsa04012" style="border-style:none;"></a></center><br></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Network</span></th>
+<td class="td31 defd"><div class="cel"><a href="/network/nt06210">nt06210</a>&nbsp;&nbsp;ERK signaling (cancer)<br><a href="/network/nt06214">nt06214</a>&nbsp;&nbsp;PI3K signaling (cancer)<br><a href="/network/nt06260">nt06260</a>&nbsp;&nbsp;Colorectal cancer<br><a href="/network/nt06261">nt06261</a>&nbsp;&nbsp;Gastric cancer<br><a href="/network/nt06263">nt06263</a>&nbsp;&nbsp;Hepatocellular carcinoma<br><a href="/network/nt06265">nt06265</a>&nbsp;&nbsp;Bladder cancer<br><a href="/network/nt06270">nt06270</a>&nbsp;&nbsp;Breast cancer<br><a href="/network/nt06464">nt06464</a>&nbsp;&nbsp;Amyotrophic lateral sclerosis<br><a href="/network/nt06543">nt06543</a>&nbsp;&nbsp;NRG-ERBB signaling</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Element</span></th>
+<td class="td30 repd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/N00021">N00021</a>&nbsp;&nbsp;</span></td><td>EGF-ERBB2-RAS-ERK signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/N00231">N00231</a>&nbsp;&nbsp;</span></td><td>TGFA-EGFR-PI3K signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/N01163">N01163</a>&nbsp;&nbsp;</span></td><td>NRG-ERBB4-PI3K signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/N01874">N01874</a>&nbsp;&nbsp;</span></td><td>NRG-ERBB2/ERBB3 pathway (RAS-ERK signaling)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/N01875">N01875</a>&nbsp;&nbsp;</span></td><td>NRG-ERBB2/ERBB3 pathway (P13K signaling)</td></tr></table></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Drug</span></th>
+<td class="td31 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D01977">D01977</a>&nbsp;&nbsp;</span></td><td>Gefitinib (JP19/USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D02714">D02714</a>&nbsp;&nbsp;</span></td><td>Everolimus (JAN/USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D03252">D03252</a>&nbsp;&nbsp;</span></td><td>Bosutinib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D03257">D03257</a>&nbsp;&nbsp;</span></td><td>Trastuzumab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D03350">D03350</a>&nbsp;&nbsp;</span></td><td>Canertinib dihydrochloride (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D03455">D03455</a>&nbsp;&nbsp;</span></td><td>Cetuximab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D03658">D03658</a>&nbsp;&nbsp;</span></td><td>Dasatinib (JAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D04023">D04023</a>&nbsp;&nbsp;</span></td><td>Erlotinib hydrochloride (JAN/USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D04024">D04024</a>&nbsp;&nbsp;</span></td><td>Lapatinib ditosylate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D04025">D04025</a>&nbsp;&nbsp;</span></td><td>Mubritinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D04862">D04862</a>&nbsp;&nbsp;</span></td><td>Masoprocol (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D05350">D05350</a>&nbsp;&nbsp;</span></td><td>Panitumumab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D05399">D05399</a>&nbsp;&nbsp;</span></td><td>Pelitinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D05446">D05446</a>&nbsp;&nbsp;</span></td><td>Pertuzumab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D06068">D06068</a>&nbsp;&nbsp;</span></td><td>Temsirolimus (JAN/USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D06272">D06272</a>&nbsp;&nbsp;</span></td><td>Sorafenib tosylate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D06407">D06407</a>&nbsp;&nbsp;</span></td><td>Vandetanib (JAN/USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D06413">D06413</a>&nbsp;&nbsp;</span></td><td>Nilotinib hydrochloride hydrate (JAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D06414">D06414</a>&nbsp;&nbsp;</span></td><td>Dasatinib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D06610">D06610</a>&nbsp;&nbsp;</span></td><td>Lapuleucel-T (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D07907">D07907</a>&nbsp;&nbsp;</span></td><td>Erlotinib (INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D08108">D08108</a>&nbsp;&nbsp;</span></td><td>Lapatinib (INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D08279">D08279</a>&nbsp;&nbsp;</span></td><td>Tozasertib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D08344">D08344</a>&nbsp;&nbsp;</span></td><td>Tozasertib lactate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D08524">D08524</a>&nbsp;&nbsp;</span></td><td>Sorafenib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D08950">D08950</a>&nbsp;&nbsp;</span></td><td>Neratinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D08953">D08953</a>&nbsp;&nbsp;</span></td><td>Nilotinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D09660">D09660</a>&nbsp;&nbsp;</span></td><td>Rindopepimut (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D09664">D09664</a>&nbsp;&nbsp;</span></td><td>Saracatinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D09665">D09665</a>&nbsp;&nbsp;</span></td><td>Saracatinib difumarate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D09666">D09666</a>&nbsp;&nbsp;</span></td><td>Selumetinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D09689">D09689</a>&nbsp;&nbsp;</span></td><td>Varlitinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D09690">D09690</a>&nbsp;&nbsp;</span></td><td>Varlitinib tosylate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D09724">D09724</a>&nbsp;&nbsp;</span></td><td>Afatinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D09728">D09728</a>&nbsp;&nbsp;</span></td><td>Bosutinib hydrate (JAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D09733">D09733</a>&nbsp;&nbsp;</span></td><td>Afatinib dimaleate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D09883">D09883</a>&nbsp;&nbsp;</span></td><td>Dacomitinib (INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D09980">D09980</a>&nbsp;&nbsp;</span></td><td>Trastuzumab emtansine (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D09996">D09996</a>&nbsp;&nbsp;</span></td><td>Vemurafenib (JAN/USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10018">D10018</a>&nbsp;&nbsp;</span></td><td>Necitumumab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10024">D10024</a>&nbsp;&nbsp;</span></td><td>Selumetinib sulfate (JAN/USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10031">D10031</a>&nbsp;&nbsp;</span></td><td>Zalutumumab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10064">D10064</a>&nbsp;&nbsp;</span></td><td>Dabrafenib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10104">D10104</a>&nbsp;&nbsp;</span></td><td>Dabrafenib mesylate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10175">D10175</a>&nbsp;&nbsp;</span></td><td>Trametinib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10176">D10176</a>&nbsp;&nbsp;</span></td><td>Trametinib dimethyl sulfoxide (JAN/USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10405">D10405</a>&nbsp;&nbsp;</span></td><td>Cobimetinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10426">D10426</a>&nbsp;&nbsp;</span></td><td>Pimasertib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10446">D10446</a>&nbsp;&nbsp;</span></td><td>Margetuximab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10486">D10486</a>&nbsp;&nbsp;</span></td><td>Pimasertib hydrochloride (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10514">D10514</a>&nbsp;&nbsp;</span></td><td>Dacomitinib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10615">D10615</a>&nbsp;&nbsp;</span></td><td>Cobimetinib fumarate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10766">D10766</a>&nbsp;&nbsp;</span></td><td>Osimertinib mesylate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10858">D10858</a>&nbsp;&nbsp;</span></td><td>Rociletinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10859">D10859</a>&nbsp;&nbsp;</span></td><td>Olmutinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10898">D10898</a>&nbsp;&nbsp;</span></td><td>Neratinib maleate</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10943">D10943</a>&nbsp;&nbsp;</span></td><td>Istiratumab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10958">D10958</a>&nbsp;&nbsp;</span></td><td>Naquotinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11053">D11053</a>&nbsp;&nbsp;</span></td><td>Encorafenib (JAN/USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11115">D11115</a>&nbsp;&nbsp;</span></td><td>Olmutinib hydrochloride (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11141">D11141</a>&nbsp;&nbsp;</span></td><td>Tucatinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11239">D11239</a>&nbsp;&nbsp;</span></td><td>Lumretuzumab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11410">D11410</a>&nbsp;&nbsp;</span></td><td>Lifirafenib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11411">D11411</a>&nbsp;&nbsp;</span></td><td>Lifirafenib maleate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11430">D11430</a>&nbsp;&nbsp;</span></td><td>Nazartinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11434">D11434</a>&nbsp;&nbsp;</span></td><td>Nazartinib mesylate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11529">D11529</a>&nbsp;&nbsp;</span></td><td>Trastuzumab deruxtecan (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11675">D11675</a>&nbsp;&nbsp;</span></td><td>Mirdametinib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11750">D11750</a>&nbsp;&nbsp;</span></td><td>Duligotuzumab (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11777">D11777</a>&nbsp;&nbsp;</span></td><td>Seribantumab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11803">D11803</a>&nbsp;&nbsp;</span></td><td>Cetuximab sarotalocan (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11805">D11805</a>&nbsp;&nbsp;</span></td><td>Cetuximab sarotalocan sodium (genetical recombination) (JAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11869">D11869</a>&nbsp;&nbsp;</span></td><td>Paxalisib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11872">D11872</a>&nbsp;&nbsp;</span></td><td>Serclutamab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11874">D11874</a>&nbsp;&nbsp;</span></td><td>Serclutamab talirine (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11969">D11969</a>&nbsp;&nbsp;</span></td><td>Mobocertinib succinate (JAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11980">D11980</a>&nbsp;&nbsp;</span></td><td>Lazertinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11991">D11991</a>&nbsp;&nbsp;</span></td><td>Zenocutuzumab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12001">D12001</a>&nbsp;&nbsp;</span></td><td>Mobocertinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12011">D12011</a>&nbsp;&nbsp;</span></td><td>Zanidatamab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12184">D12184</a>&nbsp;&nbsp;</span></td><td>Patritumab deruxtecan (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12185">D12185</a>&nbsp;&nbsp;</span></td><td>Patritumab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12229">D12229</a>&nbsp;&nbsp;</span></td><td>Poziotinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12230">D12230</a>&nbsp;&nbsp;</span></td><td>Poziotinib hydrochloride (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12236">D12236</a>&nbsp;&nbsp;</span></td><td>Runimotamab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12245">D12245</a>&nbsp;&nbsp;</span></td><td>Lazertinib mesylate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12258">D12258</a>&nbsp;&nbsp;</span></td><td>Aumolertinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12259">D12259</a>&nbsp;&nbsp;</span></td><td>Aumolertinib mesylate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12343">D12343</a>&nbsp;&nbsp;</span></td><td>Fepixnebart (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12416">D12416</a>&nbsp;&nbsp;</span></td><td>Petosemtamab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12444">D12444</a>&nbsp;&nbsp;</span></td><td>Nilotinib hydrochloride dihydrate (JAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12457">D12457</a>&nbsp;&nbsp;</span></td><td>Tuxobertinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12506">D12506</a>&nbsp;&nbsp;</span></td><td>Sunvozertinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12515">D12515</a>&nbsp;&nbsp;</span></td><td>Avutometinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12534">D12534</a>&nbsp;&nbsp;</span></td><td>Avutometinib potassium (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12730">D12730</a>&nbsp;&nbsp;</span></td><td>Tigozertinib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12859">D12859</a>&nbsp;&nbsp;</span></td><td>Pebezertinib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12879">D12879</a>&nbsp;&nbsp;</span></td><td>Zongertinib (JAN/USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12947">D12947</a>&nbsp;&nbsp;</span></td><td>Claturafenib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12956">D12956</a>&nbsp;&nbsp;</span></td><td>Firmonertinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12957">D12957</a>&nbsp;&nbsp;</span></td><td>Firmonertinib mesylate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13008">D13008</a>&nbsp;&nbsp;</span></td><td>Nilotinib D-tartrate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13039">D13039</a>&nbsp;&nbsp;</span></td><td>Nedometinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13052">D13052</a>&nbsp;&nbsp;</span></td><td>Izalontamab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13062">D13062</a>&nbsp;&nbsp;</span></td><td>Zipalertinib (JAN/USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13097">D13097</a>&nbsp;&nbsp;</span></td><td>Polfurmetinib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13098">D13098</a>&nbsp;&nbsp;</span></td><td>Sevabertinib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13116">D13116</a>&nbsp;&nbsp;</span></td><td>Sevabertinib hydrate (JAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13174">D13174</a>&nbsp;&nbsp;</span></td><td>Mosperafenib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13204">D13204</a>&nbsp;&nbsp;</span></td><td>Plixorafenib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13235">D13235</a>&nbsp;&nbsp;</span></td><td>Mifanertinib (INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13236">D13236</a>&nbsp;&nbsp;</span></td><td>Tunlametinib (INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13300">D13300</a>&nbsp;&nbsp;</span></td><td>Silevertinib (USAN/INN)</td></tr></table></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Organism</span></th>
+<td class="td30 defd"><div class="cel">Homo sapiens (human) [GN:<a href="/entry/gn:hsa">hsa</a>]<br>
+</div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Gene</span></th>
+<td class="td31 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10000">10000</a>&nbsp;&nbsp;</span></td><td>AKT3; AKT serine/threonine kinase 3 [KO:<a href="/entry/K04456">K04456</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1026">1026</a>&nbsp;&nbsp;</span></td><td>CDKN1A; cyclin dependent kinase inhibitor 1A [KO:<a href="/entry/K06625">K06625</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1027">1027</a>&nbsp;&nbsp;</span></td><td>CDKN1B; cyclin dependent kinase inhibitor 1B [KO:<a href="/entry/K06624">K06624</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10298">10298</a>&nbsp;&nbsp;</span></td><td>PAK4; p21 (RAC1) activated kinase 4 [KO:<a href="/entry/K05734">K05734</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:106821730">106821730</a>&nbsp;&nbsp;</span></td><td>BUB1B-PAK6; BUB1B-PAK6 readthrough [KO:<a href="/entry/K05735">K05735</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10718">10718</a>&nbsp;&nbsp;</span></td><td>NRG3; neuregulin 3 [KO:<a href="/entry/K05457">K05457</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:110117499">110117499</a>&nbsp;&nbsp;</span></td><td>P3R3URF-PIK3R3; P3R3URF-PIK3R3 readthrough [KO:<a href="/entry/K02649">K02649</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1398">1398</a>&nbsp;&nbsp;</span></td><td>CRK; CRK proto-oncogene, adaptor protein [KO:<a href="/entry/K04438">K04438</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1399">1399</a>&nbsp;&nbsp;</span></td><td>CRKL; CRK like proto-oncogene, adaptor protein [KO:<a href="/entry/K04438">K04438</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:145957">145957</a>&nbsp;&nbsp;</span></td><td>NRG4; neuregulin 4 [KO:<a href="/entry/K05458">K05458</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1839">1839</a>&nbsp;&nbsp;</span></td><td>HBEGF; heparin binding EGF like growth factor [KO:<a href="/entry/K08523">K08523</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1950">1950</a>&nbsp;&nbsp;</span></td><td>EGF; epidermal growth factor [KO:<a href="/entry/K04357">K04357</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1956">1956</a>&nbsp;&nbsp;</span></td><td>EGFR; epidermal growth factor receptor [KO:<a href="/entry/K04361">K04361</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1978">1978</a>&nbsp;&nbsp;</span></td><td>EIF4EBP1; eukaryotic translation initiation factor 4E binding protein 1 [KO:<a href="/entry/K07205">K07205</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2002">2002</a>&nbsp;&nbsp;</span></td><td>ELK1; ETS transcription factor ELK1 [KO:<a href="/entry/K04375">K04375</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2064">2064</a>&nbsp;&nbsp;</span></td><td>ERBB2; erb-b2 receptor tyrosine kinase 2 [KO:<a href="/entry/K05083">K05083</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2065">2065</a>&nbsp;&nbsp;</span></td><td>ERBB3; erb-b2 receptor tyrosine kinase 3 [KO:<a href="/entry/K05084">K05084</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2066">2066</a>&nbsp;&nbsp;</span></td><td>ERBB4; erb-b2 receptor tyrosine kinase 4 [KO:<a href="/entry/K05085">K05085</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2069">2069</a>&nbsp;&nbsp;</span></td><td>EREG; epiregulin [KO:<a href="/entry/K09784">K09784</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:207">207</a>&nbsp;&nbsp;</span></td><td>AKT1; AKT serine/threonine kinase 1 [KO:<a href="/entry/K04456">K04456</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:208">208</a>&nbsp;&nbsp;</span></td><td>AKT2; AKT serine/threonine kinase 2 [KO:<a href="/entry/K04456">K04456</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2475">2475</a>&nbsp;&nbsp;</span></td><td>MTOR; mechanistic target of rapamycin kinase [KO:<a href="/entry/K07203">K07203</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:25">25</a>&nbsp;&nbsp;</span></td><td>ABL1; ABL proto-oncogene 1, non-receptor tyrosine kinase [KO:<a href="/entry/K06619">K06619</a>] [EC:<a href="/entry/2.7.10.2">2.7.10.2</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2549">2549</a>&nbsp;&nbsp;</span></td><td>GAB1; GRB2 associated binding protein 1 [KO:<a href="/entry/K09593">K09593</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:25759">25759</a>&nbsp;&nbsp;</span></td><td>SHC2; SHC adaptor protein 2 [KO:<a href="/entry/K17447">K17447</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:27">27</a>&nbsp;&nbsp;</span></td><td>ABL2; ABL proto-oncogene 2, non-receptor tyrosine kinase [KO:<a href="/entry/K08887">K08887</a>] [EC:<a href="/entry/2.7.10.2">2.7.10.2</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2885">2885</a>&nbsp;&nbsp;</span></td><td>GRB2; growth factor receptor bound protein 2 [KO:<a href="/entry/K04364">K04364</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2932">2932</a>&nbsp;&nbsp;</span></td><td>GSK3B; glycogen synthase kinase 3 beta [KO:<a href="/entry/K03083">K03083</a>] [EC:<a href="/entry/2.7.11.26">2.7.11.26</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3084">3084</a>&nbsp;&nbsp;</span></td><td>NRG1; neuregulin 1 [KO:<a href="/entry/K05455">K05455</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3265">3265</a>&nbsp;&nbsp;</span></td><td>HRAS; HRas proto-oncogene, GTPase [KO:<a href="/entry/K02833">K02833</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:369">369</a>&nbsp;&nbsp;</span></td><td>ARAF; A-Raf proto-oncogene, serine/threonine kinase [KO:<a href="/entry/K08845">K08845</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3725">3725</a>&nbsp;&nbsp;</span></td><td>JUN; Jun proto-oncogene, AP-1 transcription factor subunit [KO:<a href="/entry/K04448">K04448</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:374">374</a>&nbsp;&nbsp;</span></td><td>AREG; amphiregulin [KO:<a href="/entry/K09782">K09782</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3845">3845</a>&nbsp;&nbsp;</span></td><td>KRAS; KRAS proto-oncogene, GTPase [KO:<a href="/entry/K07827">K07827</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:399694">399694</a>&nbsp;&nbsp;</span></td><td>SHC4; SHC adaptor protein 4 [KO:<a href="/entry/K17449">K17449</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4609">4609</a>&nbsp;&nbsp;</span></td><td>MYC; MYC proto-oncogene, bHLH transcription factor [KO:<a href="/entry/K04377">K04377</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4690">4690</a>&nbsp;&nbsp;</span></td><td>NCK1; NCK adaptor protein 1 [KO:<a href="/entry/K07365">K07365</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4893">4893</a>&nbsp;&nbsp;</span></td><td>NRAS; NRAS proto-oncogene, GTPase [KO:<a href="/entry/K07828">K07828</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5058">5058</a>&nbsp;&nbsp;</span></td><td>PAK1; p21 (RAC1) activated kinase 1 [KO:<a href="/entry/K04409">K04409</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5062">5062</a>&nbsp;&nbsp;</span></td><td>PAK2; p21 (RAC1) activated kinase 2 [KO:<a href="/entry/K04410">K04410</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5063">5063</a>&nbsp;&nbsp;</span></td><td>PAK3; p21 (RAC1) activated kinase 3 [KO:<a href="/entry/K05733">K05733</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5290">5290</a>&nbsp;&nbsp;</span></td><td>PIK3CA; phosphatidylinositol-4,5-bisphosphate 3-kinase catalytic subunit alpha [KO:<a href="/entry/K00922">K00922</a>] [EC:<a href="/entry/2.7.1.153">2.7.1.153</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5291">5291</a>&nbsp;&nbsp;</span></td><td>PIK3CB; phosphatidylinositol-4,5-bisphosphate 3-kinase catalytic subunit beta [KO:<a href="/entry/K00922">K00922</a>] [EC:<a href="/entry/2.7.1.153">2.7.1.153</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5293">5293</a>&nbsp;&nbsp;</span></td><td>PIK3CD; phosphatidylinositol-4,5-bisphosphate 3-kinase catalytic subunit delta [KO:<a href="/entry/K00922">K00922</a>] [EC:<a href="/entry/2.7.1.153">2.7.1.153</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5295">5295</a>&nbsp;&nbsp;</span></td><td>PIK3R1; phosphoinositide-3-kinase regulatory subunit 1 [KO:<a href="/entry/K02649">K02649</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5296">5296</a>&nbsp;&nbsp;</span></td><td>PIK3R2; phosphoinositide-3-kinase regulatory subunit 2 [KO:<a href="/entry/K02649">K02649</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5335">5335</a>&nbsp;&nbsp;</span></td><td>PLCG1; phospholipase C gamma 1 [KO:<a href="/entry/K01116">K01116</a>] [EC:<a href="/entry/3.1.4.11">3.1.4.11</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:53358">53358</a>&nbsp;&nbsp;</span></td><td>SHC3; SHC adaptor protein 3 [KO:<a href="/entry/K17448">K17448</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5336">5336</a>&nbsp;&nbsp;</span></td><td>PLCG2; phospholipase C gamma 2 [KO:<a href="/entry/K05859">K05859</a>] [EC:<a href="/entry/3.1.4.11">3.1.4.11</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5578">5578</a>&nbsp;&nbsp;</span></td><td>PRKCA; protein kinase C alpha [KO:<a href="/entry/K02677">K02677</a>] [EC:<a href="/entry/2.7.11.13">2.7.11.13</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5579">5579</a>&nbsp;&nbsp;</span></td><td>PRKCB; protein kinase C beta [KO:<a href="/entry/K19662">K19662</a>] [EC:<a href="/entry/2.7.11.13">2.7.11.13</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5582">5582</a>&nbsp;&nbsp;</span></td><td>PRKCG; protein kinase C gamma [KO:<a href="/entry/K19663">K19663</a>] [EC:<a href="/entry/2.7.11.13">2.7.11.13</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5594">5594</a>&nbsp;&nbsp;</span></td><td>MAPK1; mitogen-activated protein kinase 1 [KO:<a href="/entry/K04371">K04371</a>] [EC:<a href="/entry/2.7.11.24">2.7.11.24</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5595">5595</a>&nbsp;&nbsp;</span></td><td>MAPK3; mitogen-activated protein kinase 3 [KO:<a href="/entry/K04371">K04371</a>] [EC:<a href="/entry/2.7.11.24">2.7.11.24</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5599">5599</a>&nbsp;&nbsp;</span></td><td>MAPK8; mitogen-activated protein kinase 8 [KO:<a href="/entry/K04440">K04440</a>] [EC:<a href="/entry/2.7.11.24">2.7.11.24</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5601">5601</a>&nbsp;&nbsp;</span></td><td>MAPK9; mitogen-activated protein kinase 9 [KO:<a href="/entry/K04440">K04440</a>] [EC:<a href="/entry/2.7.11.24">2.7.11.24</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5602">5602</a>&nbsp;&nbsp;</span></td><td>MAPK10; mitogen-activated protein kinase 10 [KO:<a href="/entry/K04440">K04440</a>] [EC:<a href="/entry/2.7.11.24">2.7.11.24</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5604">5604</a>&nbsp;&nbsp;</span></td><td>MAP2K1; mitogen-activated protein kinase kinase 1 [KO:<a href="/entry/K04368">K04368</a>] [EC:<a href="/entry/2.7.12.2">2.7.12.2</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5605">5605</a>&nbsp;&nbsp;</span></td><td>MAP2K2; mitogen-activated protein kinase kinase 2 [KO:<a href="/entry/K04369">K04369</a>] [EC:<a href="/entry/2.7.12.2">2.7.12.2</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5609">5609</a>&nbsp;&nbsp;</span></td><td>MAP2K7; mitogen-activated protein kinase kinase 7 [KO:<a href="/entry/K04431">K04431</a>] [EC:<a href="/entry/2.7.12.2">2.7.12.2</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:56924">56924</a>&nbsp;&nbsp;</span></td><td>PAK6; p21 (RAC1) activated kinase 6 [KO:<a href="/entry/K05735">K05735</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:57144">57144</a>&nbsp;&nbsp;</span></td><td>PAK5; p21 (RAC1) activated kinase 5 [KO:<a href="/entry/K05736">K05736</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:572">572</a>&nbsp;&nbsp;</span></td><td>BAD; BCL2 associated agonist of cell death [KO:<a href="/entry/K02158">K02158</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5747">5747</a>&nbsp;&nbsp;</span></td><td>PTK2; protein tyrosine kinase 2 [KO:<a href="/entry/K05725">K05725</a>] [EC:<a href="/entry/2.7.10.2">2.7.10.2</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5894">5894</a>&nbsp;&nbsp;</span></td><td>RAF1; Raf-1 proto-oncogene, serine/threonine kinase [KO:<a href="/entry/K04366">K04366</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6198">6198</a>&nbsp;&nbsp;</span></td><td>RPS6KB1; ribosomal protein S6 kinase B1 [KO:<a href="/entry/K04688">K04688</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6199">6199</a>&nbsp;&nbsp;</span></td><td>RPS6KB2; ribosomal protein S6 kinase B2 [KO:<a href="/entry/K04688">K04688</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6416">6416</a>&nbsp;&nbsp;</span></td><td>MAP2K4; mitogen-activated protein kinase kinase 4 [KO:<a href="/entry/K04430">K04430</a>] [EC:<a href="/entry/2.7.12.2">2.7.12.2</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6464">6464</a>&nbsp;&nbsp;</span></td><td>SHC1; SHC adaptor protein 1 [KO:<a href="/entry/K06279">K06279</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6654">6654</a>&nbsp;&nbsp;</span></td><td>SOS1; SOS Ras/Rac guanine nucleotide exchange factor 1 [KO:<a href="/entry/K03099">K03099</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6655">6655</a>&nbsp;&nbsp;</span></td><td>SOS2; SOS Ras/Rho guanine nucleotide exchange factor 2 [KO:<a href="/entry/K03099">K03099</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6714">6714</a>&nbsp;&nbsp;</span></td><td>SRC; SRC proto-oncogene, non-receptor tyrosine kinase [KO:<a href="/entry/K05704">K05704</a>] [EC:<a href="/entry/2.7.10.2">2.7.10.2</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:673">673</a>&nbsp;&nbsp;</span></td><td>BRAF; B-Raf proto-oncogene, serine/threonine kinase [KO:<a href="/entry/K04365">K04365</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6776">6776</a>&nbsp;&nbsp;</span></td><td>STAT5A; signal transducer and activator of transcription 5A [KO:<a href="/entry/K11223">K11223</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6777">6777</a>&nbsp;&nbsp;</span></td><td>STAT5B; signal transducer and activator of transcription 5B [KO:<a href="/entry/K11224">K11224</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:685">685</a>&nbsp;&nbsp;</span></td><td>BTC; betacellulin [KO:<a href="/entry/K09783">K09783</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7039">7039</a>&nbsp;&nbsp;</span></td><td>TGFA; transforming growth factor alpha [KO:<a href="/entry/K08774">K08774</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:815">815</a>&nbsp;&nbsp;</span></td><td>CAMK2A; calcium/calmodulin dependent protein kinase II alpha [KO:<a href="/entry/K04515">K04515</a>] [EC:<a href="/entry/2.7.11.17">2.7.11.17</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:816">816</a>&nbsp;&nbsp;</span></td><td>CAMK2B; calcium/calmodulin dependent protein kinase II beta [KO:<a href="/entry/K04515">K04515</a>] [EC:<a href="/entry/2.7.11.17">2.7.11.17</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:817">817</a>&nbsp;&nbsp;</span></td><td>CAMK2D; calcium/calmodulin dependent protein kinase II delta [KO:<a href="/entry/K04515">K04515</a>] [EC:<a href="/entry/2.7.11.17">2.7.11.17</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:818">818</a>&nbsp;&nbsp;</span></td><td>CAMK2G; calcium/calmodulin dependent protein kinase II gamma [KO:<a href="/entry/K04515">K04515</a>] [EC:<a href="/entry/2.7.11.17">2.7.11.17</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8440">8440</a>&nbsp;&nbsp;</span></td><td>NCK2; NCK adaptor protein 2 [KO:<a href="/entry/K19862">K19862</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8503">8503</a>&nbsp;&nbsp;</span></td><td>PIK3R3; phosphoinositide-3-kinase regulatory subunit 3 [KO:<a href="/entry/K02649">K02649</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:867">867</a>&nbsp;&nbsp;</span></td><td>CBL; Cbl proto-oncogene [KO:<a href="/entry/K04707">K04707</a>] [EC:<a href="/entry/2.3.2.27">2.3.2.27</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:868">868</a>&nbsp;&nbsp;</span></td><td>CBLB; Cbl proto-oncogene B [KO:<a href="/entry/K22517">K22517</a>] [EC:<a href="/entry/2.3.2.27">2.3.2.27</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9542">9542</a>&nbsp;&nbsp;</span></td><td>NRG2; neuregulin 2 [KO:<a href="/entry/K05456">K05456</a>]</td></tr></table></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Compound</span></th>
+<td class="td30 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/C00076">C00076</a>&nbsp;&nbsp;</span></td><td>Calcium cation</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/C00165">C00165</a>&nbsp;&nbsp;</span></td><td>Diacylglycerol</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/C01245">C01245</a>&nbsp;&nbsp;</span></td><td>D-myo-Inositol 1,4,5-trisphosphate</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/C05981">C05981</a>&nbsp;&nbsp;</span></td><td>Phosphatidylinositol-3,4,5-trisphosphate</td></tr></table></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/14967450">14967450</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Marmor MD, Skaria KB, Yarden Y.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Signal transduction and oncogenesis by ErbB/HER receptors.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Int J Radiat Oncol Biol Phys 58:903-13 (2004)<br>DOI:<a href="https://doi.org/10.1016/j.ijrobp.2003.06.002">10.1016/j.ijrobp.2003.06.002</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/11252954">11252954</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Yarden Y, Sliwkowski MX.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Untangling the ErbB signalling network.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Nat Rev Mol Cell Biol 2:127-37 (2001)<br>DOI:<a href="https://doi.org/10.1038/35052073">10.1038/35052073</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/16829981">16829981</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Citri A, Yarden Y.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">EGF-ERBB signalling: towards the systems level.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Nat Rev Mol Cell Biol 7:505-16 (2006)<br>DOI:<a href="https://doi.org/10.1038/nrm1962">10.1038/nrm1962</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/17000658">17000658</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Scaltriti M, Baselga J.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">The epidermal growth factor receptor pathway: a model for targeted therapy.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Clin Cancer Res 12:5268-72 (2006)<br>DOI:<a href="https://doi.org/10.1158/1078-0432.CCR-05-1554">10.1158/1078-0432.CCR-05-1554</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/16377102">16377102</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Normanno N, De Luca A, Bianco C, Strizzi L, Mancino M, Maiello MR, Carotenuto A, De Feo G, Caponigro F, Salomon DS.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Epidermal growth factor receptor (EGFR) signaling in cancer.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Gene 366:2-16 (2006)<br>DOI:<a href="https://doi.org/10.1016/j.gene.2005.10.018">10.1016/j.gene.2005.10.018</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/14744244">14744244</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Holbro T, Hynes NE.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">ErbB receptors: directing key signaling networks throughout life.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Annu Rev Pharmacol Toxicol 44:195-217 (2004)<br>DOI:<a href="https://doi.org/10.1146/annurev.pharmtox.44.101802.121440">10.1146/annurev.pharmtox.44.101802.121440</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/12851486">12851486</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Liang J, Slingerland JM.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Multiple roles of the PI3K/PKB (Akt) pathway in cell cycle progression.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Cell Cycle 2:339-45 (2003)<br>DOI:<a href="https://doi.org/10.4161/cc.2.4.433">10.4161/cc.2.4.433</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/15864276">15864276</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Hynes NE, Lane HA.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">ERBB receptors and cancer: the complexity of targeted inhibitors.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Nat Rev Cancer 5:341-54 (2005)<br>DOI:<a href="https://doi.org/10.1038/nrc1609">10.1038/nrc1609</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/16729045">16729045</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Oda K, Matsuoka Y, Funahashi A, Kitano H.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">A comprehensive pathway map of epidermal growth factor receptor signaling.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Mol Syst Biol 1:2005.0010 (2005)<br>DOI:<a href="https://doi.org/10.1038/msb4100014">10.1038/msb4100014</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/16729043">16729043</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Schulze WX, Deng L, Mann M.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Phosphotyrosine interactome of the ErbB-receptor kinase family.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Mol Syst Biol 1:2005.0008 (2005)<br>DOI:<a href="https://doi.org/10.1038/msb4100012">10.1038/msb4100012</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/10880430">10880430</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Olayioye MA, Neve RM, Lane HA, Hynes NE.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">The ErbB signaling network: receptor heterodimerization in development and cancer.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">EMBO J 19:3159-67 (2000)<br>DOI:<a href="https://doi.org/10.1093/emboj/19.13.3159">10.1093/emboj/19.13.3159</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/9872057">9872057</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">McCarty JH.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">The Nck SH2/SH3 adaptor protein: a regulator of multiple intracellular signal transduction events.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Bioessays 20:913-21 (1998)<br>DOI:<a href="https://doi.org/10.1002/(SICI)1521-1878(199811)20:11&lt;913::AID-BIES6&gt;3.0.CO;2-T">10.1002/(SICI)1521-1878(199811)20:11&lt;913::AID-BIES6&gt;3.0.CO;2-T</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/15863494">15863494</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Clark DE, Williams CC, Duplessis TT, Moring KL, Notwick AR, Long W, Lane WS, Beuvink I, Hynes NE, Jones FE.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">ERBB4/HER4 potentiates STAT5A transcriptional activity by regulating novel STAT5A serine phosphorylation events.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">J Biol Chem 280:24175-80 (2005)<br>DOI:<a href="https://doi.org/10.1074/jbc.M414044200">10.1074/jbc.M414044200</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/10490623">10490623</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Muthuswamy SK, Gilman M, Brugge JS.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Controlled dimerization of ErbB receptors provides evidence for differential signaling by homo- and heterodimers.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Mol Cell Biol 19:6845-57 (1999)<br>DOI:<a href="https://doi.org/10.1128/MCB.19.10.6845">10.1128/MCB.19.10.6845</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/9642287">9642287</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Hashimoto Y, Katayama H, Kiyokawa E, Ota S, Kurata T, Gotoh N, Otsuka N, Shibata M, Matsuda M.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Phosphorylation of CrkII adaptor protein at tyrosine 221 by epidermal growth factor receptor.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">J Biol Chem 273:17186-91 (1998)<br>DOI:<a href="https://doi.org/10.1074/jbc.273.27.17186">10.1074/jbc.273.27.17186</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Related<br>pathway</span></th>
+<td class="td31 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04010">hsa04010</a>&nbsp;&nbsp;</span></td><td>MAPK signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04020">hsa04020</a>&nbsp;&nbsp;</span></td><td>Calcium signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04110">hsa04110</a>&nbsp;&nbsp;</span></td><td>Cell cycle</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04150">hsa04150</a>&nbsp;&nbsp;</span></td><td>mTOR signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04151">hsa04151</a>&nbsp;&nbsp;</span></td><td>PI3K-Akt signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa05212">hsa05212</a>&nbsp;&nbsp;</span></td><td>Pancreatic cancer</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa05213">hsa05213</a>&nbsp;&nbsp;</span></td><td>Endometrial cancer</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa05214">hsa05214</a>&nbsp;&nbsp;</span></td><td>Glioma</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa05223">hsa05223</a>&nbsp;&nbsp;</span></td><td>Non-small cell lung cancer</td></tr></table></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">KO&nbsp;pathway</span></th>
+<td class="td30 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/ko04012">ko04012</a>&nbsp;&nbsp;</span></td><td>&nbsp;</td></tr></table></td></tr>
+
+</table></td></tr></table>
+<br></td></tr></table>
+
+
+<a href="/dbget/">DBGET</a> integrated database retrieval system</div>
+
+</body>
+</html>

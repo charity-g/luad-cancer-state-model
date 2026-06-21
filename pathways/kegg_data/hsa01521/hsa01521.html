@@ -1,0 +1,506 @@
+<!doctype html>
+<html><head>
+<title>KEGG PATHWAY: hsa01521</title>
+<link type="text/css" rel="stylesheet" href="/css/gn2.css?1781985715">
+<link type="text/css" rel="stylesheet" href="/css/bget.css?1781985715">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link type="text/css" rel="stylesheet" href="/css/bgetm.css?1781985715" media="only screen and (max-width: 768px)">
+<style>.kcfd{display:none;}</style>
+<script>
+<!--
+var getElementsByClassName = document.getElementsByClassName ?
+  function (cl){
+    return document.getElementsByClassName(cl);
+  } :
+  function (cl){
+    var elms = [];
+    var objs = document.getElementsByTagName('*');
+    for(var i=0;i<objs.length;i++){
+      var obj = objs[i];
+      if(obj.className == cl){
+        elms.push(obj);
+      }
+    }
+    return elms;
+  };
+function toggleField(clk,cl,show,hide){
+  var objs = getElementsByClassName(cl);
+  for(var i=0;i<objs.length;i++){
+    var obj = objs[i];
+    if(!obj.style.display||obj.style.display == 'none'){
+      obj.style.display = 'block';
+      clk.innerHTML = '&nbsp;&laquo; '+hide;
+    }
+    else{
+      obj.style.display = 'none';
+      clk.innerHTML = '&nbsp;&raquo; '+show;
+    }
+  }
+}
+function toggleData(bobj,e){
+  var id = bobj.id.replace(/[^0-9]/g,'');
+  var dt = document.getElementById('kcfd'+id);
+  e.preventDefault();
+  if(!dt.style.display||dt.style.display == 'none'){
+    document.getElementById('kcfb'+id).innerHTML = 'Hide';
+    dt.style.display = 'block';
+  }
+  else{
+    document.getElementById('kcfb'+id).innerHTML = 'Show';
+    dt.style.display = 'none';
+  }
+}
+function btn(bobj,img) {
+  bobj.src = "/Fig/bget/button_" + img + ".gif";
+}
+function btn_e(e) {
+  e = e || event;
+  var obj = e.target;
+  var img = e.target.src;
+  var img_base = img.replace(/\\/g,'/').replace(/(b|bd|bh)\.gif$/,'');
+  if(e.type == 'mousedown'||e.type == 'touchstart'){
+    obj.src = img_base +'bd.gif';
+  }
+  else if(e.type == 'mouseover'){
+    obj.src = img_base +'bh.gif';
+  }
+  else if(e.type == 'mouseup'||e.type == 'touchend'){
+    obj.src = img_base +'b.gif';
+  }
+  else if(e.type == 'mouseout'){
+    obj.src = img_base +'b.gif';
+  }
+}
+function init(){
+  for(var i=1;i<=1;i++){
+    if(document.getElementById('kcfb'+i)){
+      document.getElementById('kcfb'+i).onclick = function(e){toggleData(this,e);};
+    }
+  }
+}
+function Link_XtrctSeq2(form) {
+    var dna_from;
+    var dna_to;
+    var dna_len;
+    var plus_up   = Number(form.XtrctSeq_UP.value) ;
+    var plus_down = Number(form.XtrctSeq_DOWN.value);
+    var vector    = Number(form.VECTOR.value);
+    var org       = form.ORG.value;
+    var chr       = form.CHR.value;
+    var kid       = form.KEGGID.value;
+    var url;
+
+    if (plus_up == 0 && plus_down == 0) {
+      url = "/entry/-f+-n+n+" + kid;
+    }
+    else {
+  if (vector == 1) {
+      dna_from  = Number(form.FROM.value)  - plus_up;
+      dna_to    = Number(form.TO.value) + plus_down;
+  } else {
+      dna_from  = Number(form.FROM.value)  - plus_down;
+      dna_to    = Number(form.TO.value) + plus_up;
+  }
+
+  url = "/dbget-bin/cut_sequence_genes.pl?FROM=" + dna_from + "&TO=" + dna_to +"&VECTOR=" + vector + "&ORG=" + org;
+  if (chr) url += "&CHR=" + chr;
+    }
+    //window.open( url, "_self" );
+    location.href = url;
+}
+function go_taxonomy(form,params){
+  for(var key in params){
+    if(form[key]){
+      form.setAttribute(key,params[key]);
+    }
+    else{
+      var obj = document.createElement('input');
+      obj.setAttribute('type','hidden');
+      obj.setAttribute('name',key);
+      obj.setAttribute('value',params[key]);
+      form.appendChild(obj);
+    }
+  }
+  form.submit();
+}
+window.onload=function(){window.focus();init();};
+//--->
+</script>
+
+</head>
+<body>
+<div>
+
+<table border=0 cellpadding=0 cellspacing=0><tr><td>
+<table border=0 cellpadding=0 cellspacing=0 width="650"><tr><td width=70><a href="/kegg/kegg2.html"><img align="middle" alt="KEGG" border=0 src="/Fig/bget/kegg3.gif"></a></td><td>&nbsp;&nbsp;&nbsp;</td><td><a name="pathway:hsa01521"></a><font class="title3">PATHWAY: hsa01521</font></td><td class="tar vbot"><button class="btn" onclick="javascript:void(window.open(&#39;/kegg/document/help_bget_pathway.html&#39;,&#39;KEGG_Help&#39;,&#39;toolbar=no,location=no,directories=no,width=720,height=640,resizable=yes,scrollbars=yes&#39;));return false;">Help</button></td></tr></table><form method="post" action="/entry/" enctype="application/x-www-form-urlencoded" id="form1" name="form1"></form><table class="w1" width="650">
+<tr>
+<td class="fr3 w1">
+<table width="650" class="w2">
+
+<tr><th class="th30 deft tal vmid"><span class="nowrap">Entry</span></th>
+<td class="td30 defd"><table class="w1" width="100%"><tr><td class="tal pd0"><code><span class="nowrap">hsa01521&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pathway&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+</span></code></td></tr></table></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Name</span></th>
+<td class="td31 defd"><div class="cel">EGFR tyrosine kinase inhibitor resistance - Homo sapiens (human)</div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Description</span></th>
+<td class="td30 defd"><div class="cel">EGFR is a tyrosine kinase that participates in the regulation of cellular homeostasis. EGFR also serves as a stimulus for cancer growth. EGFR gene mutations and protein overexpression, both of which activate down- stream pathways, are associated with cancers, especially lung cancer. Several tyrosine kinase inhibitor (TKI) therapies against EGFR are currently administered and are initially effective in cancer patients who have EGFR mutations or aberrant activation of EGFR. However, the development of TKI resistance is common and results in the recurrence of tumors. Studies over the last decade have identified mechanisms that drive resistance to EGFR TKI treatment. Most outstanding mechanisms are: the secondary EGFR mutation (T790M), activation of alternative pathways (c-Met, HGF, AXL), aberrance of the downstream pathways (K-RAS mutations, loss of PTEN), impairment of the EGFR-TKIs-mediated apoptosis pathway (BCL2-like 11/BIM deletion polymorphism), histologic transformation, etc.<br>
+</div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Class</span></th>
+<td class="td31 defd"><div class="cel">Human Diseases; Drug resistance: antineoplastic<br>
+<button class="btn" onclick="location.href='/brite/htext=hsa00001.keg&amp;query=hsa01521';return false;">BRITE hierarchy</button></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Pathway&nbsp;map</span></th>
+<td class="td30 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/pathway/hsa01521">hsa01521</a>&nbsp;&nbsp;</span></td><td>EGFR tyrosine kinase inhibitor resistance</td></tr></table><center><a href="/pathway/hsa01521"><img src="/kegg/misc/thumbnail/map01521.gif" alt="hsa01521" style="border-style:none;"></a></center><br></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Drug</span></th>
+<td class="td31 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D08950">D08950</a>&nbsp;&nbsp;</span></td><td>Neratinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D09371">D09371</a>&nbsp;&nbsp;</span></td><td>Ramucirumab (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10766">D10766</a>&nbsp;&nbsp;</span></td><td>Osimertinib mesylate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10898">D10898</a>&nbsp;&nbsp;</span></td><td>Neratinib maleate</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11244">D11244</a>&nbsp;&nbsp;</span></td><td>Vanucizumab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11251">D11251</a>&nbsp;&nbsp;</span></td><td>Icotinib</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11307">D11307</a>&nbsp;&nbsp;</span></td><td>Telisotuzumab (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11344">D11344</a>&nbsp;&nbsp;</span></td><td>Telisotuzumab vedotin (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11417">D11417</a>&nbsp;&nbsp;</span></td><td>Pemigatinib (JAN/USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11529">D11529</a>&nbsp;&nbsp;</span></td><td>Trastuzumab deruxtecan (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11725">D11725</a>&nbsp;&nbsp;</span></td><td>Futibatinib (JAN/USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11772">D11772</a>&nbsp;&nbsp;</span></td><td>Tesevatinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11773">D11773</a>&nbsp;&nbsp;</span></td><td>Tesevatinib tosylate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11969">D11969</a>&nbsp;&nbsp;</span></td><td>Mobocertinib succinate (JAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11980">D11980</a>&nbsp;&nbsp;</span></td><td>Lazertinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12219">D12219</a>&nbsp;&nbsp;</span></td><td>Mecbotamab (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12220">D12220</a>&nbsp;&nbsp;</span></td><td>Mecbotamab vedotin</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12245">D12245</a>&nbsp;&nbsp;</span></td><td>Lazertinib mesylate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12258">D12258</a>&nbsp;&nbsp;</span></td><td>Aumolertinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12259">D12259</a>&nbsp;&nbsp;</span></td><td>Aumolertinib mesylate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12730">D12730</a>&nbsp;&nbsp;</span></td><td>Tigozertinib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12879">D12879</a>&nbsp;&nbsp;</span></td><td>Zongertinib (JAN/USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13062">D13062</a>&nbsp;&nbsp;</span></td><td>Zipalertinib (JAN/USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13300">D13300</a>&nbsp;&nbsp;</span></td><td>Silevertinib (USAN/INN)</td></tr></table></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Organism</span></th>
+<td class="td30 defd"><div class="cel">Homo sapiens (human) [GN:<a href="/entry/gn:hsa">hsa</a>]<br>
+</div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/26579470">26579470</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Huang L, Fu L</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Mechanisms of resistance to EGFR tyrosine kinase inhibitors.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Acta Pharm Sin B 5:390-401 (2015)<br>DOI:<a href="https://doi.org/10.1016/j.apsb.2015.07.001">10.1016/j.apsb.2015.07.001</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/23358468">23358468</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Hrustanovic G, Lee BJ, Bivona TG</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Mechanisms of resistance to EGFR targeted therapies.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Cancer Biol Ther 14:304-14 (2013)<br>DOI:<a href="https://doi.org/10.4161/cbt.23627">10.4161/cbt.23627</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/25232485">25232485</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Lin Y, Wang X, Jin H</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">EGFR-TKI resistance in NSCLC patients: mechanisms and strategies.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Am J Cancer Res 4:411-35 (2014)</div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/19632948">19632948</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Nguyen KS, Kobayashi S, Costa DB</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Acquired resistance to epidermal growth factor receptor tyrosine kinase inhibitors in non-small-cell lung cancers dependent on the epidermal growth factor receptor pathway.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Clin Lung Cancer 10:281-9 (2009)<br>DOI:<a href="https://doi.org/10.3816/CLC.2009.n.039">10.3816/CLC.2009.n.039</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/18483355">18483355</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Engelman JA, Janne PA</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Mechanisms of acquired resistance to epidermal growth factor receptor tyrosine kinase inhibitors in non-small cell lung cancer.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Clin Cancer Res 14:2895-9 (2008)<br>DOI:<a href="https://doi.org/10.1158/1078-0432.CCR-07-2248">10.1158/1078-0432.CCR-07-2248</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/23401451">23401451</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Ohashi K, Maruvka YE, Michor F, Pao W</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Epidermal growth factor receptor tyrosine kinase inhibitor-resistant disease.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">J Clin Oncol 31:1070-80 (2013)<br>DOI:<a href="https://doi.org/10.1200/JCO.2012.43.3912">10.1200/JCO.2012.43.3912</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/24307395">24307395</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Carrera S, Buque A, Azkona E, Aresti U, Calvo B, Sancho A, Arruti M, Nuno M, Rubio I, de Lobera AR, Lopez C, Vivanco GL</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Epidermal growth factor receptor tyrosine-kinase inhibitor treatment resistance in non-small cell lung cancer: biological basis and therapeutic strategies.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Clin Transl Oncol 16:339-50 (2014)<br>DOI:<a href="https://doi.org/10.1007/s12094-013-1143-9">10.1007/s12094-013-1143-9</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/22970367">22970367</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Lin L, Bivona TG</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Mechanisms of Resistance to Epidermal Growth Factor Receptor Inhibitors and Novel Therapeutic Strategies to Overcome Resistance in NSCLC Patients.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Chemother Res Pract 2012:817297 (2012)<br>DOI:<a href="https://doi.org/10.1155/2012/817297">10.1155/2012/817297</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Song X.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Targeting PI3K/AKT/mTOR pathway and mutant EGFR to overcome resistance to tyrosine kinase inhibitors in mutant EGFR-mediated lung cancer</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Onco Reviews 1:13-19 (2013)<br>DOI:<a href="https://doi.org/10.14259/or.v1i1.81">10.14259/or.v1i1.81</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/24202392">24202392</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Chong CR, Janne PA</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">The quest to overcome resistance to EGFR-targeted therapies in cancer.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Nat Med 19:1389-400 (2013)<br>DOI:<a href="https://doi.org/10.1038/nm.3388">10.1038/nm.3388</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/20551942">20551942</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Wheeler DL, Dunn EF, Harari PM</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Understanding resistance to EGFR inhibitors-impact on future treatment strategies.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Nat Rev Clin Oncol 7:493-507 (2010)<br>DOI:<a href="https://doi.org/10.1038/nrclinonc.2010.97">10.1038/nrclinonc.2010.97</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/23361103">23361103</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Gonzalez de Castro D, Clarke PA, Al-Lazikani B, Workman P</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Personalized cancer medicine: molecular diagnostics, predictive biomarkers, and drug resistance.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Clin Pharmacol Ther 93:252-9 (2013)<br>DOI:<a href="https://doi.org/10.1038/clpt.2012.237">10.1038/clpt.2012.237</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/20966921">20966921</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Pao W, Chmielecki J</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Rational, biologically based treatment of EGFR-mutant non-small-cell lung cancer.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Nat Rev Cancer 10:760-74 (2010)<br>DOI:<a href="https://doi.org/10.1038/nrc2947">10.1038/nrc2947</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/22956644">22956644</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Takezawa K, Pirazzoli V, Arcila ME, Nebhan CA, Song X, de Stanchina E, Ohashi K, Janjigian YY, Spitzler PJ, Melnick MA, Riely GJ, Kris MG, Miller VA, Ladanyi M, Politi K, Pao W</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">HER2 amplification: a potential mechanism of acquired resistance to EGFR inhibition in EGFR-mutant lung cancers that lack the second-site EGFRT790M mutation.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Cancer Discov 2:922-33 (2012)<br>DOI:<a href="https://doi.org/10.1158/2159-8290.CD-12-0108">10.1158/2159-8290.CD-12-0108</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/16843264">16843264</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Zhou BB, Peyton M, He B, Liu C, Girard L, Caudler E, Lo Y, Baribaud F, Mikami I, Reguart N, Yang G, Li Y, Yao W, Vaddi K, Gazdar AF, Friedman SM, Jablons DM, Newton RC, Fridman JS, Minna JD, Scherle PA</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Targeting ADAM-mediated ligand cleavage to inhibit HER3 and EGFR pathways in non-small cell lung cancer.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Cancer Cell 10:39-50 (2006)<br>DOI:<a href="https://doi.org/10.1016/j.ccr.2006.05.024">10.1016/j.ccr.2006.05.024</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/22474259">22474259</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Logue JS, Morrison DK</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Complexity in the signaling network: insights from the use of targeted inhibitors in cancer therapy.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Genes Dev 26:641-50 (2012)<br>DOI:<a href="https://doi.org/10.1101/gad.186965.112">10.1101/gad.186965.112</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/24493829">24493829</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Costa C, Molina MA, Drozdowskyj A, Gimenez-Capitan A, Bertran-Alamillo J, Karachaliou N, Gervais R, Massuti B, Wei J, Moran T, Majem M, Felip E, Carcereny E, Garcia-Campelo R, Viteri S, Taron M, Ono M, Giannikopoulos P, Bivona T, Rosell R</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">The impact of EGFR T790M mutations and BIM mRNA expression on outcome in patients with EGFR-mutant NSCLC treated with erlotinib or chemotherapy in the randomized phase III EURTAC trial.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Clin Cancer Res 20:2001-10 (2014)<br>DOI:<a href="https://doi.org/10.1158/1078-0432.CCR-13-2233">10.1158/1078-0432.CCR-13-2233</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/23071030">23071030</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Blakely CM, Bivona TG</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">Resiliency of lung cancers to EGFR inhibitor treatment unveiled, offering opportunities to divide and conquer EGFR inhibitor resistance.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Cancer Discov 2:872-5 (2012)<br>DOI:<a href="https://doi.org/10.1158/2159-8290.CD-12-0387">10.1158/2159-8290.CD-12-0387</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/25337673">25337673</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Wu X, Liu X, Koul S, Lee CY, Zhang Z, Halmos B</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">AXL kinase as a novel target for cancer therapy.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Oncotarget 5:9546-63 (2014)<br>DOI:<a href="https://doi.org/10.18632/oncotarget.2542">10.18632/oncotarget.2542</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td31 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/17554333">17554333</a></div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td30 repd"><div class="cel">Arteaga CL</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td31 repd"><div class="cel">HER3 and mutant EGFR meet MET.</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td30 repd"><div class="cel">Nat Med 13:675-7 (2007)<br>DOI:<a href="https://doi.org/10.1038/nm0607-675">10.1038/nm0607-675</a></div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Related<br>pathway</span></th>
+<td class="td31 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04010">hsa04010</a>&nbsp;&nbsp;</span></td><td>MAPK signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04012">hsa04012</a>&nbsp;&nbsp;</span></td><td>ErbB signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04150">hsa04150</a>&nbsp;&nbsp;</span></td><td>mTOR signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04151">hsa04151</a>&nbsp;&nbsp;</span></td><td>PI3K-Akt signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04210">hsa04210</a>&nbsp;&nbsp;</span></td><td>Apoptosis</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04630">hsa04630</a>&nbsp;&nbsp;</span></td><td>JAK-STAT signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa05212">hsa05212</a>&nbsp;&nbsp;</span></td><td>Pancreatic cancer</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa05214">hsa05214</a>&nbsp;&nbsp;</span></td><td>Glioma</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa05223">hsa05223</a>&nbsp;&nbsp;</span></td><td>Non-small cell lung cancer</td></tr></table></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">KO&nbsp;pathway</span></th>
+<td class="td30 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/ko01521">ko01521</a>&nbsp;&nbsp;</span></td><td>&nbsp;</td></tr></table></td></tr>
+
+</table></td></tr></table>
+<br></td></tr></table>
+
+
+<a href="/dbget/">DBGET</a> integrated database retrieval system</div>
+
+</body>
+</html>

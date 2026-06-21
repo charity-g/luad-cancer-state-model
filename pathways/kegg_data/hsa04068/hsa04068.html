@@ -1,0 +1,502 @@
+<!doctype html>
+<html><head>
+<title>KEGG PATHWAY: hsa04068</title>
+<link type="text/css" rel="stylesheet" href="/css/gn2.css?1781985729">
+<link type="text/css" rel="stylesheet" href="/css/bget.css?1781985729">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link type="text/css" rel="stylesheet" href="/css/bgetm.css?1781985729" media="only screen and (max-width: 768px)">
+<style>.kcfd{display:none;}</style>
+<script>
+<!--
+var getElementsByClassName = document.getElementsByClassName ?
+  function (cl){
+    return document.getElementsByClassName(cl);
+  } :
+  function (cl){
+    var elms = [];
+    var objs = document.getElementsByTagName('*');
+    for(var i=0;i<objs.length;i++){
+      var obj = objs[i];
+      if(obj.className == cl){
+        elms.push(obj);
+      }
+    }
+    return elms;
+  };
+function toggleField(clk,cl,show,hide){
+  var objs = getElementsByClassName(cl);
+  for(var i=0;i<objs.length;i++){
+    var obj = objs[i];
+    if(!obj.style.display||obj.style.display == 'none'){
+      obj.style.display = 'block';
+      clk.innerHTML = '&nbsp;&laquo; '+hide;
+    }
+    else{
+      obj.style.display = 'none';
+      clk.innerHTML = '&nbsp;&raquo; '+show;
+    }
+  }
+}
+function toggleData(bobj,e){
+  var id = bobj.id.replace(/[^0-9]/g,'');
+  var dt = document.getElementById('kcfd'+id);
+  e.preventDefault();
+  if(!dt.style.display||dt.style.display == 'none'){
+    document.getElementById('kcfb'+id).innerHTML = 'Hide';
+    dt.style.display = 'block';
+  }
+  else{
+    document.getElementById('kcfb'+id).innerHTML = 'Show';
+    dt.style.display = 'none';
+  }
+}
+function btn(bobj,img) {
+  bobj.src = "/Fig/bget/button_" + img + ".gif";
+}
+function btn_e(e) {
+  e = e || event;
+  var obj = e.target;
+  var img = e.target.src;
+  var img_base = img.replace(/\\/g,'/').replace(/(b|bd|bh)\.gif$/,'');
+  if(e.type == 'mousedown'||e.type == 'touchstart'){
+    obj.src = img_base +'bd.gif';
+  }
+  else if(e.type == 'mouseover'){
+    obj.src = img_base +'bh.gif';
+  }
+  else if(e.type == 'mouseup'||e.type == 'touchend'){
+    obj.src = img_base +'b.gif';
+  }
+  else if(e.type == 'mouseout'){
+    obj.src = img_base +'b.gif';
+  }
+}
+function init(){
+  for(var i=1;i<=1;i++){
+    if(document.getElementById('kcfb'+i)){
+      document.getElementById('kcfb'+i).onclick = function(e){toggleData(this,e);};
+    }
+  }
+}
+function Link_XtrctSeq2(form) {
+    var dna_from;
+    var dna_to;
+    var dna_len;
+    var plus_up   = Number(form.XtrctSeq_UP.value) ;
+    var plus_down = Number(form.XtrctSeq_DOWN.value);
+    var vector    = Number(form.VECTOR.value);
+    var org       = form.ORG.value;
+    var chr       = form.CHR.value;
+    var kid       = form.KEGGID.value;
+    var url;
+
+    if (plus_up == 0 && plus_down == 0) {
+      url = "/entry/-f+-n+n+" + kid;
+    }
+    else {
+  if (vector == 1) {
+      dna_from  = Number(form.FROM.value)  - plus_up;
+      dna_to    = Number(form.TO.value) + plus_down;
+  } else {
+      dna_from  = Number(form.FROM.value)  - plus_down;
+      dna_to    = Number(form.TO.value) + plus_up;
+  }
+
+  url = "/dbget-bin/cut_sequence_genes.pl?FROM=" + dna_from + "&TO=" + dna_to +"&VECTOR=" + vector + "&ORG=" + org;
+  if (chr) url += "&CHR=" + chr;
+    }
+    //window.open( url, "_self" );
+    location.href = url;
+}
+function go_taxonomy(form,params){
+  for(var key in params){
+    if(form[key]){
+      form.setAttribute(key,params[key]);
+    }
+    else{
+      var obj = document.createElement('input');
+      obj.setAttribute('type','hidden');
+      obj.setAttribute('name',key);
+      obj.setAttribute('value',params[key]);
+      form.appendChild(obj);
+    }
+  }
+  form.submit();
+}
+window.onload=function(){window.focus();init();};
+//--->
+</script>
+
+</head>
+<body>
+<div>
+
+<table border=0 cellpadding=0 cellspacing=0><tr><td>
+<table border=0 cellpadding=0 cellspacing=0 width="650"><tr><td width=70><a href="/kegg/kegg2.html"><img align="middle" alt="KEGG" border=0 src="/Fig/bget/kegg3.gif"></a></td><td>&nbsp;&nbsp;&nbsp;</td><td><a name="pathway:hsa04068"></a><font class="title3">PATHWAY: hsa04068</font></td><td class="tar vbot"><button class="btn" onclick="javascript:void(window.open(&#39;/kegg/document/help_bget_pathway.html&#39;,&#39;KEGG_Help&#39;,&#39;toolbar=no,location=no,directories=no,width=720,height=640,resizable=yes,scrollbars=yes&#39;));return false;">Help</button></td></tr></table><form method="post" action="/entry/" enctype="application/x-www-form-urlencoded" id="form1" name="form1"></form><table class="w1" width="650">
+<tr>
+<td class="fr3 w1">
+<table width="650" class="w2">
+
+<tr><th class="th30 deft tal vmid"><span class="nowrap">Entry</span></th>
+<td class="td30 defd"><table class="w1" width="100%"><tr><td class="tal pd0"><code><span class="nowrap">hsa04068&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pathway&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+</span></code></td></tr></table></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Name</span></th>
+<td class="td31 defd"><div class="cel">FoxO signaling pathway - Homo sapiens (human)</div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Description</span></th>
+<td class="td30 defd"><div class="cel">The forkhead box O (FOXO) family of transcription factors regulates the expression of genes in cellular physiological events including apoptosis, cell-cycle control, glucose metabolism, oxidative stress resistance, and longevity. A central regulatory mechanism of FOXO proteins is phosphorylation by the serine-threonine kinase Akt/protein kinase B (Akt/PKB), downstream of phosphatidylinositol 3-kinase (PI3K), in response to insulin or several growth factors. Phosphorylation at three conserved residues results in the export of FOXO proteins from the nucleus to the cytoplasm, thereby decreasing expression of FOXO target genes. In contrast, the stress-activated c-Jun N-terminal kinase (JNK) and the energy sensing AMP-activated protein kinase (AMPK), upon oxidative and nutrient stress stimuli phosphorylate and activate FoxOs. Aside from PKB, JNK and AMPK, FOXOs are regulated by multiple players through several post-translational modifications, including phosphorylation, but also acetylation, methylation and ubiquitylation.<br>
+</div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Class</span></th>
+<td class="td31 defd"><div class="cel">Environmental Information Processing; Signal transduction<br>
+<button class="btn" onclick="location.href='/brite/htext=hsa00001.keg&amp;query=hsa04068';return false;">BRITE hierarchy</button></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Pathway&nbsp;map</span></th>
+<td class="td30 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/pathway/hsa04068">hsa04068</a>&nbsp;&nbsp;</span></td><td>FoxO signaling pathway</td></tr></table><center><a href="/pathway/hsa04068"><img src="/kegg/misc/thumbnail/map04068.gif" alt="hsa04068" style="border-style:none;"></a></center><br></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Drug</span></th>
+<td class="td31 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D09680">D09680</a>&nbsp;&nbsp;</span></td><td>Teprotumumab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11322">D11322</a>&nbsp;&nbsp;</span></td><td>Umbralisib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11323">D11323</a>&nbsp;&nbsp;</span></td><td>Umbralisib tosylate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12291">D12291</a>&nbsp;&nbsp;</span></td><td>Tovorafenib (JAN/USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12394">D12394</a>&nbsp;&nbsp;</span></td><td>Inobrodib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12768">D12768</a>&nbsp;&nbsp;</span></td><td>Ficerafusp alfa (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12771">D12771</a>&nbsp;&nbsp;</span></td><td>Mocravimod (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12772">D12772</a>&nbsp;&nbsp;</span></td><td>Mocravimod hydrochloride (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12924">D12924</a>&nbsp;&nbsp;</span></td><td>Pocenbrodib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12925">D12925</a>&nbsp;&nbsp;</span></td><td>Pocenbrodib hydrochloride (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13010">D13010</a>&nbsp;&nbsp;</span></td><td>Lartesertib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13132">D13132</a>&nbsp;&nbsp;</span></td><td>Flezurafenib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13276">D13276</a>&nbsp;&nbsp;</span></td><td>Elegrobart (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13288">D13288</a>&nbsp;&nbsp;</span></td><td>Toviblideg (USAN)</td></tr></table></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Other DBs</span></th>
+<td class="td30 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap">GO:&nbsp;</span></td><td><a href="http://amigo.geneontology.org/amigo/term/GO:0009267">0009267</a></td></tr></table></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Organism</span></th>
+<td class="td31 defd"><div class="cel">Homo sapiens (human) [GN:<a href="/entry/gn:hsa">hsa</a>]<br>
+</div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Gene</span></th>
+<td class="td30 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10000">10000</a>&nbsp;&nbsp;</span></td><td>AKT3; AKT serine/threonine kinase 3 [KO:<a href="/entry/K04456">K04456</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:100132074">100132074</a>&nbsp;&nbsp;</span></td><td>FOXO6; forkhead box O6 [KO:<a href="/entry/K17847">K17847</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10018">10018</a>&nbsp;&nbsp;</span></td><td>BCL2L11; BCL2 like 11 [KO:<a href="/entry/K16341">K16341</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:100533105">100533105</a>&nbsp;&nbsp;</span></td><td>C8orf44-SGK3; C8orf44-SGK3 readthrough [KO:<a href="/entry/K13304">K13304</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10110">10110</a>&nbsp;&nbsp;</span></td><td>SGK2; serum/glucocorticoid regulated kinase 2 [KO:<a href="/entry/K13303">K13303</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1017">1017</a>&nbsp;&nbsp;</span></td><td>CDK2; cyclin dependent kinase 2 [KO:<a href="/entry/K02206">K02206</a>] [EC:<a href="/entry/2.7.11.22">2.7.11.22</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1026">1026</a>&nbsp;&nbsp;</span></td><td>CDKN1A; cyclin dependent kinase inhibitor 1A [KO:<a href="/entry/K06625">K06625</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1027">1027</a>&nbsp;&nbsp;</span></td><td>CDKN1B; cyclin dependent kinase inhibitor 1B [KO:<a href="/entry/K06624">K06624</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:102800317">102800317</a>&nbsp;&nbsp;</span></td><td>TPTEP2-CSNK1E; TPTEP2-CSNK1E readthrough [KO:<a href="/entry/K08960">K08960</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1030">1030</a>&nbsp;&nbsp;</span></td><td>CDKN2B; cyclin dependent kinase inhibitor 2B [KO:<a href="/entry/K04685">K04685</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1032">1032</a>&nbsp;&nbsp;</span></td><td>CDKN2D; cyclin dependent kinase inhibitor 2D [KO:<a href="/entry/K06623">K06623</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10365">10365</a>&nbsp;&nbsp;</span></td><td>KLF2; KLF transcription factor 2 [KO:<a href="/entry/K17845">K17845</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10733">10733</a>&nbsp;&nbsp;</span></td><td>PLK4; polo like kinase 4 [KO:<a href="/entry/K08863">K08863</a>] [EC:<a href="/entry/2.7.11.21">2.7.11.21</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10769">10769</a>&nbsp;&nbsp;</span></td><td>PLK2; polo like kinase 2 [KO:<a href="/entry/K08861">K08861</a>] [EC:<a href="/entry/2.7.11.21">2.7.11.21</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10912">10912</a>&nbsp;&nbsp;</span></td><td>GADD45G; growth arrest and DNA damage inducible gamma [KO:<a href="/entry/K04402">K04402</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:110117499">110117499</a>&nbsp;&nbsp;</span></td><td>P3R3URF-PIK3R3; P3R3URF-PIK3R3 readthrough [KO:<a href="/entry/K02649">K02649</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:11067">11067</a>&nbsp;&nbsp;</span></td><td>DEPP1; DEPP autophagy regulator 1 [KO:<a href="/entry/K27679">K27679</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:11337">11337</a>&nbsp;&nbsp;</span></td><td>GABARAP; GABA type A receptor-associated protein [KO:<a href="/entry/K08341">K08341</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:11345">11345</a>&nbsp;&nbsp;</span></td><td>GABARAPL2; GABA type A receptor associated protein like 2 [KO:<a href="/entry/K08341">K08341</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1147">1147</a>&nbsp;&nbsp;</span></td><td>CHUK; component of inhibitor of nuclear factor kappa B kinase complex [KO:<a href="/entry/K04467">K04467</a>] [EC:<a href="/entry/2.7.11.10">2.7.11.10</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:114907">114907</a>&nbsp;&nbsp;</span></td><td>FBXO32; F-box protein 32 [KO:<a href="/entry/K10305">K10305</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:116986">116986</a>&nbsp;&nbsp;</span></td><td>AGAP2; ArfGAP with GTPase domain, ankyrin repeat and PH domain 2 [KO:<a href="/entry/K17848">K17848</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1263">1263</a>&nbsp;&nbsp;</span></td><td>PLK3; polo like kinase 3 [KO:<a href="/entry/K08862">K08862</a>] [EC:<a href="/entry/2.7.11.21">2.7.11.21</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1387">1387</a>&nbsp;&nbsp;</span></td><td>CREBBP; CREB binding protein [KO:<a href="/entry/K04498">K04498</a>] [EC:<a href="/entry/2.3.1.48">2.3.1.48</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1432">1432</a>&nbsp;&nbsp;</span></td><td>MAPK14; mitogen-activated protein kinase 14 [KO:<a href="/entry/K04441">K04441</a>] [EC:<a href="/entry/2.7.11.24">2.7.11.24</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1454">1454</a>&nbsp;&nbsp;</span></td><td>CSNK1E; casein kinase 1 epsilon [KO:<a href="/entry/K08960">K08960</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1647">1647</a>&nbsp;&nbsp;</span></td><td>GADD45A; growth arrest and DNA damage inducible alpha [KO:<a href="/entry/K04402">K04402</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1901">1901</a>&nbsp;&nbsp;</span></td><td>S1PR1; sphingosine-1-phosphate receptor 1 [KO:<a href="/entry/K04288">K04288</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1950">1950</a>&nbsp;&nbsp;</span></td><td>EGF; epidermal growth factor [KO:<a href="/entry/K04357">K04357</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1956">1956</a>&nbsp;&nbsp;</span></td><td>EGFR; epidermal growth factor receptor [KO:<a href="/entry/K04361">K04361</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2033">2033</a>&nbsp;&nbsp;</span></td><td>EP300; E1A binding protein p300 [KO:<a href="/entry/K04498">K04498</a>] [EC:<a href="/entry/2.3.1.48">2.3.1.48</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:207">207</a>&nbsp;&nbsp;</span></td><td>AKT1; AKT serine/threonine kinase 1 [KO:<a href="/entry/K04456">K04456</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:208">208</a>&nbsp;&nbsp;</span></td><td>AKT2; AKT serine/threonine kinase 2 [KO:<a href="/entry/K04456">K04456</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2290">2290</a>&nbsp;&nbsp;</span></td><td>FOXG1; forkhead box G1 [KO:<a href="/entry/K09385">K09385</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2308">2308</a>&nbsp;&nbsp;</span></td><td>FOXO1; forkhead box O1 [KO:<a href="/entry/K07201">K07201</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2309">2309</a>&nbsp;&nbsp;</span></td><td>FOXO3; forkhead box O3 [KO:<a href="/entry/K09408">K09408</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:23411">23411</a>&nbsp;&nbsp;</span></td><td>SIRT1; sirtuin 1 [KO:<a href="/entry/K11411">K11411</a>] [EC:<a href="/entry/2.3.1.286">2.3.1.286</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:23678">23678</a>&nbsp;&nbsp;</span></td><td>SGK3; serum/glucocorticoid regulated kinase family member 3 [KO:<a href="/entry/K13304">K13304</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:23710">23710</a>&nbsp;&nbsp;</span></td><td>GABARAPL1; GABA type A receptor associated protein like 1 [KO:<a href="/entry/K08341">K08341</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2538">2538</a>&nbsp;&nbsp;</span></td><td>G6PC1; glucose-6-phosphatase catalytic subunit 1 [KO:<a href="/entry/K01084">K01084</a>] [EC:<a href="/entry/3.1.3.9">3.1.3.9</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:26260">26260</a>&nbsp;&nbsp;</span></td><td>FBXO25; F-box protein 25 [KO:<a href="/entry/K10305">K10305</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2885">2885</a>&nbsp;&nbsp;</span></td><td>GRB2; growth factor receptor bound protein 2 [KO:<a href="/entry/K04364">K04364</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2911">2911</a>&nbsp;&nbsp;</span></td><td>GRM1; glutamate metabotropic receptor 1 [KO:<a href="/entry/K04603">K04603</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3265">3265</a>&nbsp;&nbsp;</span></td><td>HRAS; HRas proto-oncogene, GTPase [KO:<a href="/entry/K02833">K02833</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3276">3276</a>&nbsp;&nbsp;</span></td><td>PRMT1; protein arginine methyltransferase 1 [KO:<a href="/entry/K11434">K11434</a>] [EC:<a href="/entry/2.1.1.319">2.1.1.319</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3479">3479</a>&nbsp;&nbsp;</span></td><td>IGF1; insulin like growth factor 1 [KO:<a href="/entry/K05459">K05459</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3480">3480</a>&nbsp;&nbsp;</span></td><td>IGF1R; insulin like growth factor 1 receptor [KO:<a href="/entry/K05087">K05087</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3551">3551</a>&nbsp;&nbsp;</span></td><td>IKBKB; inhibitor of nuclear factor kappa B kinase subunit beta [KO:<a href="/entry/K07209">K07209</a>] [EC:<a href="/entry/2.7.11.10">2.7.11.10</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:356">356</a>&nbsp;&nbsp;</span></td><td>FASLG; Fas ligand [KO:<a href="/entry/K04389">K04389</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3569">3569</a>&nbsp;&nbsp;</span></td><td>IL6; interleukin 6 [KO:<a href="/entry/K05405">K05405</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3575">3575</a>&nbsp;&nbsp;</span></td><td>IL7R; interleukin 7 receptor [KO:<a href="/entry/K05072">K05072</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3586">3586</a>&nbsp;&nbsp;</span></td><td>IL10; interleukin 10 [KO:<a href="/entry/K05443">K05443</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3630">3630</a>&nbsp;&nbsp;</span></td><td>INS; insulin [KO:<a href="/entry/K04526">K04526</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3643">3643</a>&nbsp;&nbsp;</span></td><td>INSR; insulin receptor [KO:<a href="/entry/K04527">K04527</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3667">3667</a>&nbsp;&nbsp;</span></td><td>IRS1; insulin receptor substrate 1 [KO:<a href="/entry/K16172">K16172</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:369">369</a>&nbsp;&nbsp;</span></td><td>ARAF; A-Raf proto-oncogene, serine/threonine kinase [KO:<a href="/entry/K08845">K08845</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3845">3845</a>&nbsp;&nbsp;</span></td><td>KRAS; KRAS proto-oncogene, GTPase [KO:<a href="/entry/K07827">K07827</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4088">4088</a>&nbsp;&nbsp;</span></td><td>SMAD3; SMAD family member 3 [KO:<a href="/entry/K23605">K23605</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4089">4089</a>&nbsp;&nbsp;</span></td><td>SMAD4; SMAD family member 4 [KO:<a href="/entry/K04501">K04501</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4193">4193</a>&nbsp;&nbsp;</span></td><td>MDM2; MDM2 proto-oncogene [KO:<a href="/entry/K06643">K06643</a>] [EC:<a href="/entry/2.3.2.27">2.3.2.27</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4303">4303</a>&nbsp;&nbsp;</span></td><td>FOXO4; forkhead box O4 [KO:<a href="/entry/K12358">K12358</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4616">4616</a>&nbsp;&nbsp;</span></td><td>GADD45B; growth arrest and DNA damage inducible beta [KO:<a href="/entry/K04402">K04402</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:472">472</a>&nbsp;&nbsp;</span></td><td>ATM; ATM serine/threonine kinase [KO:<a href="/entry/K04728">K04728</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4893">4893</a>&nbsp;&nbsp;</span></td><td>NRAS; NRAS proto-oncogene, GTPase [KO:<a href="/entry/K07828">K07828</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5105">5105</a>&nbsp;&nbsp;</span></td><td>PCK1; phosphoenolpyruvate carboxykinase 1 [KO:<a href="/entry/K01596">K01596</a>] [EC:<a href="/entry/4.1.1.32">4.1.1.32</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5106">5106</a>&nbsp;&nbsp;</span></td><td>PCK2; phosphoenolpyruvate carboxykinase 2, mitochondrial [KO:<a href="/entry/K01596">K01596</a>] [EC:<a href="/entry/4.1.1.32">4.1.1.32</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:51422">51422</a>&nbsp;&nbsp;</span></td><td>PRKAG2; protein kinase AMP-activated non-catalytic subunit gamma 2 [KO:<a href="/entry/K07200">K07200</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5170">5170</a>&nbsp;&nbsp;</span></td><td>PDPK1; 3-phosphoinositide dependent protein kinase 1 [KO:<a href="/entry/K06276">K06276</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:51701">51701</a>&nbsp;&nbsp;</span></td><td>NLK; nemo like kinase [KO:<a href="/entry/K04468">K04468</a>] [EC:<a href="/entry/2.7.11.24">2.7.11.24</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5290">5290</a>&nbsp;&nbsp;</span></td><td>PIK3CA; phosphatidylinositol-4,5-bisphosphate 3-kinase catalytic subunit alpha [KO:<a href="/entry/K00922">K00922</a>] [EC:<a href="/entry/2.7.1.153">2.7.1.153</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5291">5291</a>&nbsp;&nbsp;</span></td><td>PIK3CB; phosphatidylinositol-4,5-bisphosphate 3-kinase catalytic subunit beta [KO:<a href="/entry/K00922">K00922</a>] [EC:<a href="/entry/2.7.1.153">2.7.1.153</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5293">5293</a>&nbsp;&nbsp;</span></td><td>PIK3CD; phosphatidylinositol-4,5-bisphosphate 3-kinase catalytic subunit delta [KO:<a href="/entry/K00922">K00922</a>] [EC:<a href="/entry/2.7.1.153">2.7.1.153</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5295">5295</a>&nbsp;&nbsp;</span></td><td>PIK3R1; phosphoinositide-3-kinase regulatory subunit 1 [KO:<a href="/entry/K02649">K02649</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5296">5296</a>&nbsp;&nbsp;</span></td><td>PIK3R2; phosphoinositide-3-kinase regulatory subunit 2 [KO:<a href="/entry/K02649">K02649</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5347">5347</a>&nbsp;&nbsp;</span></td><td>PLK1; polo like kinase 1 [KO:<a href="/entry/K06631">K06631</a>] [EC:<a href="/entry/2.7.11.21">2.7.11.21</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:53632">53632</a>&nbsp;&nbsp;</span></td><td>PRKAG3; protein kinase AMP-activated non-catalytic subunit gamma 3 [KO:<a href="/entry/K07200">K07200</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5562">5562</a>&nbsp;&nbsp;</span></td><td>PRKAA1; protein kinase AMP-activated catalytic subunit alpha 1 [KO:<a href="/entry/K07198">K07198</a>] [EC:<a href="/entry/2.7.11.31">2.7.11.31</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5563">5563</a>&nbsp;&nbsp;</span></td><td>PRKAA2; protein kinase AMP-activated catalytic subunit alpha 2 [KO:<a href="/entry/K07198">K07198</a>] [EC:<a href="/entry/2.7.11.31">2.7.11.31</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5564">5564</a>&nbsp;&nbsp;</span></td><td>PRKAB1; protein kinase AMP-activated non-catalytic subunit beta 1 [KO:<a href="/entry/K07199">K07199</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5565">5565</a>&nbsp;&nbsp;</span></td><td>PRKAB2; protein kinase AMP-activated non-catalytic subunit beta 2 [KO:<a href="/entry/K07199">K07199</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5571">5571</a>&nbsp;&nbsp;</span></td><td>PRKAG1; protein kinase AMP-activated non-catalytic subunit gamma 1 [KO:<a href="/entry/K07200">K07200</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5594">5594</a>&nbsp;&nbsp;</span></td><td>MAPK1; mitogen-activated protein kinase 1 [KO:<a href="/entry/K04371">K04371</a>] [EC:<a href="/entry/2.7.11.24">2.7.11.24</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5595">5595</a>&nbsp;&nbsp;</span></td><td>MAPK3; mitogen-activated protein kinase 3 [KO:<a href="/entry/K04371">K04371</a>] [EC:<a href="/entry/2.7.11.24">2.7.11.24</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5599">5599</a>&nbsp;&nbsp;</span></td><td>MAPK8; mitogen-activated protein kinase 8 [KO:<a href="/entry/K04440">K04440</a>] [EC:<a href="/entry/2.7.11.24">2.7.11.24</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5600">5600</a>&nbsp;&nbsp;</span></td><td>MAPK11; mitogen-activated protein kinase 11 [KO:<a href="/entry/K04441">K04441</a>] [EC:<a href="/entry/2.7.11.24">2.7.11.24</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5601">5601</a>&nbsp;&nbsp;</span></td><td>MAPK9; mitogen-activated protein kinase 9 [KO:<a href="/entry/K04440">K04440</a>] [EC:<a href="/entry/2.7.11.24">2.7.11.24</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5602">5602</a>&nbsp;&nbsp;</span></td><td>MAPK10; mitogen-activated protein kinase 10 [KO:<a href="/entry/K04440">K04440</a>] [EC:<a href="/entry/2.7.11.24">2.7.11.24</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5603">5603</a>&nbsp;&nbsp;</span></td><td>MAPK13; mitogen-activated protein kinase 13 [KO:<a href="/entry/K04441">K04441</a>] [EC:<a href="/entry/2.7.11.24">2.7.11.24</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5604">5604</a>&nbsp;&nbsp;</span></td><td>MAP2K1; mitogen-activated protein kinase kinase 1 [KO:<a href="/entry/K04368">K04368</a>] [EC:<a href="/entry/2.7.12.2">2.7.12.2</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5605">5605</a>&nbsp;&nbsp;</span></td><td>MAP2K2; mitogen-activated protein kinase kinase 2 [KO:<a href="/entry/K04369">K04369</a>] [EC:<a href="/entry/2.7.12.2">2.7.12.2</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5728">5728</a>&nbsp;&nbsp;</span></td><td>PTEN; phosphatase and tensin homolog [KO:<a href="/entry/K01110">K01110</a>] [EC:<a href="/entry/3.1.3.16">3.1.3.16</a> <a href="/entry/3.1.3.48">3.1.3.48</a> <a href="/entry/3.1.3.67">3.1.3.67</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:57818">57818</a>&nbsp;&nbsp;</span></td><td>G6PC2; glucose-6-phosphatase catalytic subunit 2 [KO:<a href="/entry/K01084">K01084</a>] [EC:<a href="/entry/3.1.3.9">3.1.3.9</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5894">5894</a>&nbsp;&nbsp;</span></td><td>RAF1; Raf-1 proto-oncogene, serine/threonine kinase [KO:<a href="/entry/K04366">K04366</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5896">5896</a>&nbsp;&nbsp;</span></td><td>RAG1; recombination activating 1 [KO:<a href="/entry/K10628">K10628</a>] [EC:<a href="/entry/2.3.2.27">2.3.2.27</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5897">5897</a>&nbsp;&nbsp;</span></td><td>RAG2; recombination activating 2 [KO:<a href="/entry/K10988">K10988</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5934">5934</a>&nbsp;&nbsp;</span></td><td>RBL2; RB transcriptional corepressor like 2 [KO:<a href="/entry/K16332">K16332</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:595">595</a>&nbsp;&nbsp;</span></td><td>CCND1; cyclin D1 [KO:<a href="/entry/K04503">K04503</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:604">604</a>&nbsp;&nbsp;</span></td><td>BCL6; BCL6 transcription repressor [KO:<a href="/entry/K15618">K15618</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6300">6300</a>&nbsp;&nbsp;</span></td><td>MAPK12; mitogen-activated protein kinase 12 [KO:<a href="/entry/K04441">K04441</a>] [EC:<a href="/entry/2.7.11.24">2.7.11.24</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6446">6446</a>&nbsp;&nbsp;</span></td><td>SGK1; serum/glucocorticoid regulated kinase 1 [KO:<a href="/entry/K13302">K13302</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6502">6502</a>&nbsp;&nbsp;</span></td><td>SKP2; S-phase kinase associated protein 2 [KO:<a href="/entry/K03875">K03875</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6517">6517</a>&nbsp;&nbsp;</span></td><td>SLC2A4; solute carrier family 2 member 4 [KO:<a href="/entry/K07191">K07191</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:664">664</a>&nbsp;&nbsp;</span></td><td>BNIP3; BCL2 interacting protein 3 [KO:<a href="/entry/K15464">K15464</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6648">6648</a>&nbsp;&nbsp;</span></td><td>SOD2; superoxide dismutase 2 [KO:<a href="/entry/K04564">K04564</a>] [EC:<a href="/entry/1.15.1.1">1.15.1.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6654">6654</a>&nbsp;&nbsp;</span></td><td>SOS1; SOS Ras/Rac guanine nucleotide exchange factor 1 [KO:<a href="/entry/K03099">K03099</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6655">6655</a>&nbsp;&nbsp;</span></td><td>SOS2; SOS Ras/Rho guanine nucleotide exchange factor 2 [KO:<a href="/entry/K03099">K03099</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:673">673</a>&nbsp;&nbsp;</span></td><td>BRAF; B-Raf proto-oncogene, serine/threonine kinase [KO:<a href="/entry/K04365">K04365</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6774">6774</a>&nbsp;&nbsp;</span></td><td>STAT3; signal transducer and activator of transcription 3 [KO:<a href="/entry/K04692">K04692</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6789">6789</a>&nbsp;&nbsp;</span></td><td>STK4; serine/threonine kinase 4 [KO:<a href="/entry/K04411">K04411</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6794">6794</a>&nbsp;&nbsp;</span></td><td>STK11; serine/threonine kinase 11 [KO:<a href="/entry/K07298">K07298</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7040">7040</a>&nbsp;&nbsp;</span></td><td>TGFB1; transforming growth factor beta 1 [KO:<a href="/entry/K13375">K13375</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7042">7042</a>&nbsp;&nbsp;</span></td><td>TGFB2; transforming growth factor beta 2 [KO:<a href="/entry/K13376">K13376</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7043">7043</a>&nbsp;&nbsp;</span></td><td>TGFB3; transforming growth factor beta 3 [KO:<a href="/entry/K13377">K13377</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7046">7046</a>&nbsp;&nbsp;</span></td><td>TGFBR1; transforming growth factor beta receptor 1 [KO:<a href="/entry/K04674">K04674</a>] [EC:<a href="/entry/2.7.11.30">2.7.11.30</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7048">7048</a>&nbsp;&nbsp;</span></td><td>TGFBR2; transforming growth factor beta receptor 2 [KO:<a href="/entry/K04388">K04388</a>] [EC:<a href="/entry/2.7.11.30">2.7.11.30</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7874">7874</a>&nbsp;&nbsp;</span></td><td>USP7; ubiquitin specific peptidase 7 [KO:<a href="/entry/K11838">K11838</a>] [EC:<a href="/entry/3.4.19.12">3.4.19.12</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:80854">80854</a>&nbsp;&nbsp;</span></td><td>SETD7; SET domain containing 7, histone lysine methyltransferase [KO:<a href="/entry/K11431">K11431</a>] [EC:<a href="/entry/2.1.1.364">2.1.1.364</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:847">847</a>&nbsp;&nbsp;</span></td><td>CAT; catalase [KO:<a href="/entry/K03781">K03781</a>] [EC:<a href="/entry/1.11.1.6">1.11.1.6</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8471">8471</a>&nbsp;&nbsp;</span></td><td>IRS4; insulin receptor substrate 4 [KO:<a href="/entry/K17446">K17446</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8503">8503</a>&nbsp;&nbsp;</span></td><td>PIK3R3; phosphoinositide-3-kinase regulatory subunit 3 [KO:<a href="/entry/K02649">K02649</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:85417">85417</a>&nbsp;&nbsp;</span></td><td>CCNB3; cyclin B3 [KO:<a href="/entry/K21771">K21771</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8660">8660</a>&nbsp;&nbsp;</span></td><td>IRS2; insulin receptor substrate 2 [KO:<a href="/entry/K07187">K07187</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8698">8698</a>&nbsp;&nbsp;</span></td><td>S1PR4; sphingosine-1-phosphate receptor 4 [KO:<a href="/entry/K04293">K04293</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8743">8743</a>&nbsp;&nbsp;</span></td><td>TNFSF10; TNF superfamily member 10 [KO:<a href="/entry/K04721">K04721</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:891">891</a>&nbsp;&nbsp;</span></td><td>CCNB1; cyclin B1 [KO:<a href="/entry/K05868">K05868</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:894">894</a>&nbsp;&nbsp;</span></td><td>CCND2; cyclin D2 [KO:<a href="/entry/K10151">K10151</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:901">901</a>&nbsp;&nbsp;</span></td><td>CCNG2; cyclin G2 [KO:<a href="/entry/K10146">K10146</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9133">9133</a>&nbsp;&nbsp;</span></td><td>CCNB2; cyclin B2 [KO:<a href="/entry/K21770">K21770</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9140">9140</a>&nbsp;&nbsp;</span></td><td>ATG12; autophagy related 12 [KO:<a href="/entry/K08336">K08336</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:92579">92579</a>&nbsp;&nbsp;</span></td><td>G6PC3; glucose-6-phosphatase catalytic subunit 3 [KO:<a href="/entry/K01084">K01084</a>] [EC:<a href="/entry/3.1.3.9">3.1.3.9</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9454">9454</a>&nbsp;&nbsp;</span></td><td>HOMER3; homer scaffold protein 3 [KO:<a href="/entry/K15010">K15010</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9455">9455</a>&nbsp;&nbsp;</span></td><td>HOMER2; homer scaffold protein 2 [KO:<a href="/entry/K15010">K15010</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9456">9456</a>&nbsp;&nbsp;</span></td><td>HOMER1; homer scaffold protein 1 [KO:<a href="/entry/K15010">K15010</a>]</td></tr></table></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Compound</span></th>
+<td class="td31 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/C00008">C00008</a>&nbsp;&nbsp;</span></td><td>ADP</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/C00020">C00020</a>&nbsp;&nbsp;</span></td><td>AMP</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/C00025">C00025</a>&nbsp;&nbsp;</span></td><td>L-Glutamate</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/C00031">C00031</a>&nbsp;&nbsp;</span></td><td>D-Glucose</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/C05981">C05981</a>&nbsp;&nbsp;</span></td><td>Phosphatidylinositol-3,4,5-trisphosphate</td></tr></table></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/17470511">17470511</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Glauser DA, Schlegel W</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">The emerging role of FOXO transcription factors in pancreatic beta cells.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">J Endocrinol 193:195-207 (2007)<br>DOI:<a href="https://doi.org/10.1677/JOE-06-0191">10.1677/JOE-06-0191</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/17522590">17522590</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">van der Horst A, Burgering BM</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Stressing the role of FoxO proteins in lifespan and disease.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Nat Rev Mol Cell Biol 8:440-50 (2007)<br>DOI:<a href="https://doi.org/10.1038/nrm2190">10.1038/nrm2190</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/21440011">21440011</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Zhang X, Tang N, Hadden TJ, Rishi AK</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Akt, FoxO and regulation of apoptosis.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Biochim Biophys Acta 1813:1978-86 (2011)<br>DOI:<a href="https://doi.org/10.1016/j.bbamcr.2011.03.010">10.1016/j.bbamcr.2011.03.010</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/23325358">23325358</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Eijkelenboom A, Burgering BM</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">FOXOs: signalling integrators for homeostasis maintenance.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Nat Rev Mol Cell Biol 14:83-97 (2013)<br>DOI:<a href="https://doi.org/10.1038/nrm3507">10.1038/nrm3507</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/17569704">17569704</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Daitoku H, Fukamizu A</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">FOXO transcription factors in the regulatory networks of longevity.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">J Biochem 141:769-74 (2007)<br>DOI:<a href="https://doi.org/10.1093/jb/mvm104">10.1093/jb/mvm104</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/19701188">19701188</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Hedrick SM</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">The cunning little vixen: Foxo and the cycle of life and death.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Nat Immunol 10:1057-63 (2009)<br>DOI:<a href="https://doi.org/10.1038/ni.1784">10.1038/ni.1784</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/15516968">15516968</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Coffer PJ, Burgering BM</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Forkhead-box transcription factors and their role in the immune system.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Nat Rev Immunol 4:889-99 (2004)<br>DOI:<a href="https://doi.org/10.1038/nri1488">10.1038/nri1488</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/22902436">22902436</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Ro SH, Liu D, Yeo H, Paik JH</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">FoxOs in neural stem cell fate decision.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Arch Biochem Biophys 534:55-63 (2013)<br>DOI:<a href="https://doi.org/10.1016/j.abb.2012.07.017">10.1016/j.abb.2012.07.017</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/18403263">18403263</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Maiese K, Chong ZZ, Shang YC</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">OutFOXOing disease and disability: the therapeutic potential of targeting FoxO proteins.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Trends Mol Med 14:219-27 (2008)<br>DOI:<a href="https://doi.org/10.1016/j.molmed.2008.03.002">10.1016/j.molmed.2008.03.002</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/23801966">23801966</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Hagenbuchner J, Ausserlechner MJ</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Mitochondria and FOXO3: breath or die.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Front Physiol 4:147 (2013)<br>DOI:<a href="https://doi.org/10.3389/fphys.2013.00147">10.3389/fphys.2013.00147</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/18045156">18045156</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Maiese K, Chong ZZ, Shang YC</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">"Sly as a FOXO": new paths with Forkhead signaling in the brain.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Curr Neurovasc Res 4:295-302 (2007)<br>DOI:<a href="https://doi.org/10.2174/156720207782446306">10.2174/156720207782446306</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/22761423">22761423</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Oh HM, Yu CR, Dambuza I, Marrero B, Egwuagu CE</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">STAT3 protein interacts with Class O Forkhead transcription factors in the cytoplasm and regulates nuclear/cytoplasmic localization of FoxO1 and FoxO3a proteins in CD4(+) T cells.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">J Biol Chem 287:30436-43 (2012)<br>DOI:<a href="https://doi.org/10.1074/jbc.M112.359661">10.1074/jbc.M112.359661</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/21238503">21238503</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Huang H, Tindall DJ</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Regulation of FOXO protein stability via ubiquitination and proteasome degradation.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Biochim Biophys Acta 1813:1961-4 (2011)<br>DOI:<a href="https://doi.org/10.1016/j.bbamcr.2011.01.007">10.1016/j.bbamcr.2011.01.007</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/16288288">16288288</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Greer EL, Brunet A</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">FOXO transcription factors at the interface between longevity and tumor suppression.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Oncogene 24:7410-25 (2005)<br>DOI:<a href="https://doi.org/10.1038/sj.onc.1209086">10.1038/sj.onc.1209086</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/15084259">15084259</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Seoane J, Le HV, Shen L, Anderson SA, Massague J</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Integration of Smad and forkhead pathways in the control of neuroepithelial and glioblastoma cell proliferation.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Cell 117:211-23 (2004)<br>DOI:<a href="https://doi.org/10.1016/S0092-8674(04)00298-3">10.1016/S0092-8674(04)00298-3</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/18951090">18951090</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Yamagata K, Daitoku H, Takahashi Y, Namiki K, Hisatake K, Kako K, Mukai H, Kasuya Y, Fukamizu A</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Arginine methylation of FOXO transcription factors inhibits their phosphorylation by Akt.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Mol Cell 32:221-31 (2008)<br>DOI:<a href="https://doi.org/10.1016/j.molcel.2008.09.013">10.1016/j.molcel.2008.09.013</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/16964248">16964248</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">van der Horst A, de Vries-Smits AM, Brenkman AB, van Triest MH, van den Broek N, Colland F, Maurice MM, Burgering BM</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">FOXO4 transcriptional activity is regulated by monoubiquitination and USP7/HAUSP.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Nat Cell Biol 8:1064-73 (2006)<br>DOI:<a href="https://doi.org/10.1038/ncb1469">10.1038/ncb1469</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/21613825">21613825</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Zhang Y, Gan B, Liu D, Paik JH</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">FoxO family members in cancer.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Cancer Biol Ther 12:253-9 (2011)<br>DOI:<a href="https://doi.org/10.4161/cbt.12.4.15954">10.4161/cbt.12.4.15954</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/15005655">15005655</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Van Der Heide LP, Hoekman MF, Smidt MP</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">The ins and outs of FoxO shuttling: mechanisms of FoxO translocation and transcriptional regulation.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Biochem J 380:297-309 (2004)<br>DOI:<a href="https://doi.org/10.1042/BJ20040167">10.1042/BJ20040167</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Related<br>pathway</span></th>
+<td class="td30 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa00010">hsa00010</a>&nbsp;&nbsp;</span></td><td>Glycolysis / Gluconeogenesis</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa00020">hsa00020</a>&nbsp;&nbsp;</span></td><td>Citrate cycle (TCA cycle)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa00190">hsa00190</a>&nbsp;&nbsp;</span></td><td>Oxidative phosphorylation</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04010">hsa04010</a>&nbsp;&nbsp;</span></td><td>MAPK signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04110">hsa04110</a>&nbsp;&nbsp;</span></td><td>Cell cycle</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04120">hsa04120</a>&nbsp;&nbsp;</span></td><td>Ubiquitin mediated proteolysis</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04140">hsa04140</a>&nbsp;&nbsp;</span></td><td>Autophagy - animal</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04151">hsa04151</a>&nbsp;&nbsp;</span></td><td>PI3K-Akt signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04210">hsa04210</a>&nbsp;&nbsp;</span></td><td>Apoptosis</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04350">hsa04350</a>&nbsp;&nbsp;</span></td><td>TGF-beta signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04630">hsa04630</a>&nbsp;&nbsp;</span></td><td>JAK-STAT signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04910">hsa04910</a>&nbsp;&nbsp;</span></td><td>Insulin signaling pathway</td></tr></table></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">KO&nbsp;pathway</span></th>
+<td class="td31 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/ko04068">ko04068</a>&nbsp;&nbsp;</span></td><td>&nbsp;</td></tr></table></td></tr>
+
+</table></td></tr></table>
+<br></td></tr></table>
+
+
+<a href="/dbget/">DBGET</a> integrated database retrieval system</div>
+
+</body>
+</html>

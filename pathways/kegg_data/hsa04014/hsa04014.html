@@ -1,0 +1,638 @@
+<!doctype html>
+<html><head>
+<title>KEGG PATHWAY: hsa04014</title>
+<link type="text/css" rel="stylesheet" href="/css/gn2.css?1781985726">
+<link type="text/css" rel="stylesheet" href="/css/bget.css?1781985726">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link type="text/css" rel="stylesheet" href="/css/bgetm.css?1781985726" media="only screen and (max-width: 768px)">
+<style>.kcfd{display:none;}</style>
+<script>
+<!--
+var getElementsByClassName = document.getElementsByClassName ?
+  function (cl){
+    return document.getElementsByClassName(cl);
+  } :
+  function (cl){
+    var elms = [];
+    var objs = document.getElementsByTagName('*');
+    for(var i=0;i<objs.length;i++){
+      var obj = objs[i];
+      if(obj.className == cl){
+        elms.push(obj);
+      }
+    }
+    return elms;
+  };
+function toggleField(clk,cl,show,hide){
+  var objs = getElementsByClassName(cl);
+  for(var i=0;i<objs.length;i++){
+    var obj = objs[i];
+    if(!obj.style.display||obj.style.display == 'none'){
+      obj.style.display = 'block';
+      clk.innerHTML = '&nbsp;&laquo; '+hide;
+    }
+    else{
+      obj.style.display = 'none';
+      clk.innerHTML = '&nbsp;&raquo; '+show;
+    }
+  }
+}
+function toggleData(bobj,e){
+  var id = bobj.id.replace(/[^0-9]/g,'');
+  var dt = document.getElementById('kcfd'+id);
+  e.preventDefault();
+  if(!dt.style.display||dt.style.display == 'none'){
+    document.getElementById('kcfb'+id).innerHTML = 'Hide';
+    dt.style.display = 'block';
+  }
+  else{
+    document.getElementById('kcfb'+id).innerHTML = 'Show';
+    dt.style.display = 'none';
+  }
+}
+function btn(bobj,img) {
+  bobj.src = "/Fig/bget/button_" + img + ".gif";
+}
+function btn_e(e) {
+  e = e || event;
+  var obj = e.target;
+  var img = e.target.src;
+  var img_base = img.replace(/\\/g,'/').replace(/(b|bd|bh)\.gif$/,'');
+  if(e.type == 'mousedown'||e.type == 'touchstart'){
+    obj.src = img_base +'bd.gif';
+  }
+  else if(e.type == 'mouseover'){
+    obj.src = img_base +'bh.gif';
+  }
+  else if(e.type == 'mouseup'||e.type == 'touchend'){
+    obj.src = img_base +'b.gif';
+  }
+  else if(e.type == 'mouseout'){
+    obj.src = img_base +'b.gif';
+  }
+}
+function init(){
+  for(var i=1;i<=1;i++){
+    if(document.getElementById('kcfb'+i)){
+      document.getElementById('kcfb'+i).onclick = function(e){toggleData(this,e);};
+    }
+  }
+}
+function Link_XtrctSeq2(form) {
+    var dna_from;
+    var dna_to;
+    var dna_len;
+    var plus_up   = Number(form.XtrctSeq_UP.value) ;
+    var plus_down = Number(form.XtrctSeq_DOWN.value);
+    var vector    = Number(form.VECTOR.value);
+    var org       = form.ORG.value;
+    var chr       = form.CHR.value;
+    var kid       = form.KEGGID.value;
+    var url;
+
+    if (plus_up == 0 && plus_down == 0) {
+      url = "/entry/-f+-n+n+" + kid;
+    }
+    else {
+  if (vector == 1) {
+      dna_from  = Number(form.FROM.value)  - plus_up;
+      dna_to    = Number(form.TO.value) + plus_down;
+  } else {
+      dna_from  = Number(form.FROM.value)  - plus_down;
+      dna_to    = Number(form.TO.value) + plus_up;
+  }
+
+  url = "/dbget-bin/cut_sequence_genes.pl?FROM=" + dna_from + "&TO=" + dna_to +"&VECTOR=" + vector + "&ORG=" + org;
+  if (chr) url += "&CHR=" + chr;
+    }
+    //window.open( url, "_self" );
+    location.href = url;
+}
+function go_taxonomy(form,params){
+  for(var key in params){
+    if(form[key]){
+      form.setAttribute(key,params[key]);
+    }
+    else{
+      var obj = document.createElement('input');
+      obj.setAttribute('type','hidden');
+      obj.setAttribute('name',key);
+      obj.setAttribute('value',params[key]);
+      form.appendChild(obj);
+    }
+  }
+  form.submit();
+}
+window.onload=function(){window.focus();init();};
+//--->
+</script>
+
+</head>
+<body>
+<div>
+
+<table border=0 cellpadding=0 cellspacing=0><tr><td>
+<table border=0 cellpadding=0 cellspacing=0 width="650"><tr><td width=70><a href="/kegg/kegg2.html"><img align="middle" alt="KEGG" border=0 src="/Fig/bget/kegg3.gif"></a></td><td>&nbsp;&nbsp;&nbsp;</td><td><a name="pathway:hsa04014"></a><font class="title3">PATHWAY: hsa04014</font></td><td class="tar vbot"><button class="btn" onclick="javascript:void(window.open(&#39;/kegg/document/help_bget_pathway.html&#39;,&#39;KEGG_Help&#39;,&#39;toolbar=no,location=no,directories=no,width=720,height=640,resizable=yes,scrollbars=yes&#39;));return false;">Help</button></td></tr></table><form method="post" action="/entry/" enctype="application/x-www-form-urlencoded" id="form1" name="form1"></form><table class="w1" width="650">
+<tr>
+<td class="fr3 w1">
+<table width="650" class="w2">
+
+<tr><th class="th30 deft tal vmid"><span class="nowrap">Entry</span></th>
+<td class="td30 defd"><table class="w1" width="100%"><tr><td class="tal pd0"><code><span class="nowrap">hsa04014&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pathway&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+</span></code></td></tr></table></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Name</span></th>
+<td class="td31 defd"><div class="cel">Ras signaling pathway - Homo sapiens (human)</div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Description</span></th>
+<td class="td30 defd"><div class="cel">The Ras proteins are GTPases that function as molecular switches for signaling pathways regulating cell proliferation, survival, growth, migration, differentiation or cytoskeletal dynamism. Ras proteins transduce signals from extracellular growth factors by cycling between inactive GDP-bound and active GTP-bound states. The exchange of GTP for GDP on RAS is regulated by guanine nucleotide exchange factors (GEFs) and GTPase-activating proteins (GAPs). Activated RAS (RAS-GTP) regulates multiple cellular functions through effectors including Raf, phosphatidylinositol 3-kinase (PI3K) and Ral guanine nucleotide-dissociation stimulator (RALGDS).<br>
+</div></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Class</span></th>
+<td class="td31 defd"><div class="cel">Environmental Information Processing; Signal transduction<br>
+<button class="btn" onclick="location.href='/brite/htext=hsa00001.keg&amp;query=hsa04014';return false;">BRITE hierarchy</button></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Pathway&nbsp;map</span></th>
+<td class="td30 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/pathway/hsa04014">hsa04014</a>&nbsp;&nbsp;</span></td><td>Ras signaling pathway</td></tr></table><center><a href="/pathway/hsa04014"><img src="/kegg/misc/thumbnail/map04014.gif" alt="hsa04014" style="border-style:none;"></a></center><br></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Network</span></th>
+<td class="td31 defd"><div class="cel"><a href="/network/nt06213">nt06213</a>&nbsp;&nbsp;Other RAS signaling (cancer)<br><a href="/network/nt06260">nt06260</a>&nbsp;&nbsp;Colorectal cancer<br><a href="/network/nt06262">nt06262</a>&nbsp;&nbsp;Pancreatic cancer<br><a href="/network/nt06266">nt06266</a>&nbsp;&nbsp;Non-small cell lung cancer<br><a href="/network/nt06526">nt06526</a>&nbsp;&nbsp;MAPK signaling</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Element</span></th>
+<td class="td30 repd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/N00096">N00096</a>&nbsp;&nbsp;</span></td><td>EGF-EGFR-RAS-RASSF1 signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/N00103">N00103</a>&nbsp;&nbsp;</span></td><td>EGF-EGFR-RAS-RalGDS signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/N01595">N01595</a>&nbsp;&nbsp;</span></td><td>Regulation of GF-RTK-RAS-ERK signaling pathway, adaptor proteins</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/N01598">N01598</a>&nbsp;&nbsp;</span></td><td>Regulation of GF-RTK-RAS-ERK signaling, MRAS-SHOC2-PP1 holophosphatase</td></tr></table></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Drug</span></th>
+<td class="td31 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D00967">D00967</a>&nbsp;&nbsp;</span></td><td>Toremifene citrate (JAN/USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D02970">D02970</a>&nbsp;&nbsp;</span></td><td>Aprinocarsen sodium (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D04014">D04014</a>&nbsp;&nbsp;</span></td><td>Enzastaurin hydrochloride (JAN/USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D06402">D06402</a>&nbsp;&nbsp;</span></td><td>Sunitinib malate (JAN/USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D08279">D08279</a>&nbsp;&nbsp;</span></td><td>Tozasertib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D08344">D08344</a>&nbsp;&nbsp;</span></td><td>Tozasertib lactate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D08552">D08552</a>&nbsp;&nbsp;</span></td><td>Sunitinib (INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D08620">D08620</a>&nbsp;&nbsp;</span></td><td>Toremifene (INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D09371">D09371</a>&nbsp;&nbsp;</span></td><td>Ramucirumab (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D09666">D09666</a>&nbsp;&nbsp;</span></td><td>Selumetinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10024">D10024</a>&nbsp;&nbsp;</span></td><td>Selumetinib sulfate (JAN/USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10062">D10062</a>&nbsp;&nbsp;</span></td><td>Cabozantinib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10095">D10095</a>&nbsp;&nbsp;</span></td><td>Cabozantinib s-malate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10173">D10173</a>&nbsp;&nbsp;</span></td><td>Tivantinib (JAN/USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10175">D10175</a>&nbsp;&nbsp;</span></td><td>Trametinib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10176">D10176</a>&nbsp;&nbsp;</span></td><td>Trametinib dimethyl sulfoxide (JAN/USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10190">D10190</a>&nbsp;&nbsp;</span></td><td>Tivozanib hydrochloride (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10224">D10224</a>&nbsp;&nbsp;</span></td><td>Golvatinib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10405">D10405</a>&nbsp;&nbsp;</span></td><td>Cobimetinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10426">D10426</a>&nbsp;&nbsp;</span></td><td>Pimasertib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10465">D10465</a>&nbsp;&nbsp;</span></td><td>Golvatinib tartrate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10486">D10486</a>&nbsp;&nbsp;</span></td><td>Pimasertib hydrochloride (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10615">D10615</a>&nbsp;&nbsp;</span></td><td>Cobimetinib fumarate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10696">D10696</a>&nbsp;&nbsp;</span></td><td>Capmatinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10800">D10800</a>&nbsp;&nbsp;</span></td><td>Gilteritinib fumarate (JAN/USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D10891">D10891</a>&nbsp;&nbsp;</span></td><td>Capmatinib hydrochloride (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11038">D11038</a>&nbsp;&nbsp;</span></td><td>Ulixertinib (INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11073">D11073</a>&nbsp;&nbsp;</span></td><td>Tepotinib hydrochloride (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11125">D11125</a>&nbsp;&nbsp;</span></td><td>Modotuximab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11126">D11126</a>&nbsp;&nbsp;</span></td><td>Navicixizumab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11279">D11279</a>&nbsp;&nbsp;</span></td><td>Avapritinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11285">D11285</a>&nbsp;&nbsp;</span></td><td>Ravoxertinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11642">D11642</a>&nbsp;&nbsp;</span></td><td>Dilpacimab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11675">D11675</a>&nbsp;&nbsp;</span></td><td>Mirdametinib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11717">D11717</a>&nbsp;&nbsp;</span></td><td>Tepotinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11786">D11786</a>&nbsp;&nbsp;</span></td><td>Vodobatinib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11885">D11885</a>&nbsp;&nbsp;</span></td><td>Surufatinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11894">D11894</a>&nbsp;&nbsp;</span></td><td>Amivantamab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D11935">D11935</a>&nbsp;&nbsp;</span></td><td>Enzastaurin (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12055">D12055</a>&nbsp;&nbsp;</span></td><td>Sotorasib (JAN/USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12059">D12059</a>&nbsp;&nbsp;</span></td><td>Temuterkib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12060">D12060</a>&nbsp;&nbsp;</span></td><td>Temuterkib mesylate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12175">D12175</a>&nbsp;&nbsp;</span></td><td>Olverembatinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12301">D12301</a>&nbsp;&nbsp;</span></td><td>Adagrasib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12392">D12392</a>&nbsp;&nbsp;</span></td><td>Fosgonimeton (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12393">D12393</a>&nbsp;&nbsp;</span></td><td>Fosgonimeton sodium (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12404">D12404</a>&nbsp;&nbsp;</span></td><td>Tasurgratinib (INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12405">D12405</a>&nbsp;&nbsp;</span></td><td>Tasurgratinib succinate (JAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12416">D12416</a>&nbsp;&nbsp;</span></td><td>Petosemtamab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12424">D12424</a>&nbsp;&nbsp;</span></td><td>Davutamig (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12444">D12444</a>&nbsp;&nbsp;</span></td><td>Nilotinib hydrochloride dihydrate (JAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12450">D12450</a>&nbsp;&nbsp;</span></td><td>Elenestinib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12476">D12476</a>&nbsp;&nbsp;</span></td><td>Tuspetinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12515">D12515</a>&nbsp;&nbsp;</span></td><td>Avutometinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12534">D12534</a>&nbsp;&nbsp;</span></td><td>Avutometinib potassium (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12557">D12557</a>&nbsp;&nbsp;</span></td><td>Elzovantinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12600">D12600</a>&nbsp;&nbsp;</span></td><td>Bezuclastinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12635">D12635</a>&nbsp;&nbsp;</span></td><td>Sozinibercept (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12639">D12639</a>&nbsp;&nbsp;</span></td><td>Divarasib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12640">D12640</a>&nbsp;&nbsp;</span></td><td>Divarasib adipate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12650">D12650</a>&nbsp;&nbsp;</span></td><td>Zanzalintinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12651">D12651</a>&nbsp;&nbsp;</span></td><td>Zanzalintinib fumarate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12705">D12705</a>&nbsp;&nbsp;</span></td><td>Gumarontinib hydrate (JAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12799">D12799</a>&nbsp;&nbsp;</span></td><td>Vociprotafib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12808">D12808</a>&nbsp;&nbsp;</span></td><td>Ivonescimab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12809">D12809</a>&nbsp;&nbsp;</span></td><td>Bafisontamab (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12853">D12853</a>&nbsp;&nbsp;</span></td><td>Olomorasib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12854">D12854</a>&nbsp;&nbsp;</span></td><td>Nilotinib laurylsulfate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12865">D12865</a>&nbsp;&nbsp;</span></td><td>Beroterkib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12892">D12892</a>&nbsp;&nbsp;</span></td><td>Migoprotafib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12921">D12921</a>&nbsp;&nbsp;</span></td><td>Tizaterkib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D12922">D12922</a>&nbsp;&nbsp;</span></td><td>Tizaterkib adipate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13008">D13008</a>&nbsp;&nbsp;</span></td><td>Nilotinib D-tartrate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13038">D13038</a>&nbsp;&nbsp;</span></td><td>Opnurasib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13039">D13039</a>&nbsp;&nbsp;</span></td><td>Nedometinib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13066">D13066</a>&nbsp;&nbsp;</span></td><td>Tilatamig (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13067">D13067</a>&nbsp;&nbsp;</span></td><td>Tilatamig samrotecan (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13097">D13097</a>&nbsp;&nbsp;</span></td><td>Polfurmetinib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13132">D13132</a>&nbsp;&nbsp;</span></td><td>Flezurafenib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13156">D13156</a>&nbsp;&nbsp;</span></td><td>Pamvatamig (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13203">D13203</a>&nbsp;&nbsp;</span></td><td>Vepugratinib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13229">D13229</a>&nbsp;&nbsp;</span></td><td>Amivantamab (genetical recombination) and vorhyaluronidase alfa (genetical recombination)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13236">D13236</a>&nbsp;&nbsp;</span></td><td>Tunlametinib (INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13250">D13250</a>&nbsp;&nbsp;</span></td><td>Zoldonrasib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13256">D13256</a>&nbsp;&nbsp;</span></td><td>Cabozantinib laurylsulfate (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13265">D13265</a>&nbsp;&nbsp;</span></td><td>Daraxonrasib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13266">D13266</a>&nbsp;&nbsp;</span></td><td>Elironrasib (USAN/INN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13267">D13267</a>&nbsp;&nbsp;</span></td><td>Debecarasib (USAN)</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/D13308">D13308</a>&nbsp;&nbsp;</span></td><td>Nilotinib butanedisulfonate (USAN)</td></tr></table></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Other DBs</span></th>
+<td class="td30 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap">GO:&nbsp;</span></td><td><a href="http://amigo.geneontology.org/amigo/term/GO:0032318">0032318</a></td></tr></table></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Organism</span></th>
+<td class="td31 defd"><div class="cel">Homo sapiens (human) [GN:<a href="/entry/gn:hsa">hsa</a>]<br>
+</div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Gene</span></th>
+<td class="td30 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10000">10000</a>&nbsp;&nbsp;</span></td><td>AKT3; AKT serine/threonine kinase 3 [KO:<a href="/entry/K04456">K04456</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:100137049">100137049</a>&nbsp;&nbsp;</span></td><td>PLA2G4B; phospholipase A2 group IVB [KO:<a href="/entry/K16342">K16342</a>] [EC:<a href="/entry/3.1.1.4">3.1.1.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:100271927">100271927</a>&nbsp;&nbsp;</span></td><td>RASA4B; RAS p21 protein activator 4B [KO:<a href="/entry/K17630">K17630</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10125">10125</a>&nbsp;&nbsp;</span></td><td>RASGRP1; RAS guanyl releasing protein 1 [KO:<a href="/entry/K04350">K04350</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10156">10156</a>&nbsp;&nbsp;</span></td><td>RASA4; RAS p21 protein activator 4 [KO:<a href="/entry/K17630">K17630</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10235">10235</a>&nbsp;&nbsp;</span></td><td>RASGRP2; RAS guanyl releasing protein 2 [KO:<a href="/entry/K12361">K12361</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10298">10298</a>&nbsp;&nbsp;</span></td><td>PAK4; p21 (RAC1) activated kinase 4 [KO:<a href="/entry/K05734">K05734</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10681">10681</a>&nbsp;&nbsp;</span></td><td>GNB5; G protein subunit beta 5 [KO:<a href="/entry/K04539">K04539</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:106821730">106821730</a>&nbsp;&nbsp;</span></td><td>BUB1B-PAK6; BUB1B-PAK6 readthrough [KO:<a href="/entry/K05735">K05735</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:10928">10928</a>&nbsp;&nbsp;</span></td><td>RALBP1; ralA binding protein 1 [KO:<a href="/entry/K08773">K08773</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:110117499">110117499</a>&nbsp;&nbsp;</span></td><td>P3R3URF-PIK3R3; P3R3URF-PIK3R3 readthrough [KO:<a href="/entry/K02649">K02649</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:11145">11145</a>&nbsp;&nbsp;</span></td><td>PLAAT3; phospholipase A and acyltransferase 3 [KO:<a href="/entry/K16817">K16817</a>] [EC:<a href="/entry/3.1.1.32">3.1.1.32</a> <a href="/entry/3.1.1.4">3.1.1.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:11186">11186</a>&nbsp;&nbsp;</span></td><td>RASSF1; Ras association domain family member 1 [KO:<a href="/entry/K09850">K09850</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1147">1147</a>&nbsp;&nbsp;</span></td><td>CHUK; component of inhibitor of nuclear factor kappa B kinase complex [KO:<a href="/entry/K04467">K04467</a>] [EC:<a href="/entry/2.7.11.10">2.7.11.10</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:115727">115727</a>&nbsp;&nbsp;</span></td><td>RASGRP4; RAS guanyl releasing protein 4 [KO:<a href="/entry/K12363">K12363</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:123745">123745</a>&nbsp;&nbsp;</span></td><td>PLA2G4E; phospholipase A2 group IVE [KO:<a href="/entry/K16342">K16342</a>] [EC:<a href="/entry/3.1.1.4">3.1.1.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:125467750">125467750</a>&nbsp;&nbsp;</span></td><td>EFNA4-EFNA3; EFNA4-EFNA3 readthrough [KO:<a href="/entry/K05462">K05462</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1435">1435</a>&nbsp;&nbsp;</span></td><td>CSF1; colony stimulating factor 1 [KO:<a href="/entry/K05453">K05453</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1436">1436</a>&nbsp;&nbsp;</span></td><td>CSF1R; colony stimulating factor 1 receptor [KO:<a href="/entry/K05090">K05090</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:163688">163688</a>&nbsp;&nbsp;</span></td><td>CALML6; calmodulin like 6 [KO:<a href="/entry/K02183">K02183</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1942">1942</a>&nbsp;&nbsp;</span></td><td>EFNA1; ephrin A1 [KO:<a href="/entry/K05462">K05462</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1943">1943</a>&nbsp;&nbsp;</span></td><td>EFNA2; ephrin A2 [KO:<a href="/entry/K05462">K05462</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1944">1944</a>&nbsp;&nbsp;</span></td><td>EFNA3; ephrin A3 [KO:<a href="/entry/K05462">K05462</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1945">1945</a>&nbsp;&nbsp;</span></td><td>EFNA4; ephrin A4 [KO:<a href="/entry/K05462">K05462</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1946">1946</a>&nbsp;&nbsp;</span></td><td>EFNA5; ephrin A5 [KO:<a href="/entry/K05462">K05462</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1950">1950</a>&nbsp;&nbsp;</span></td><td>EGF; epidermal growth factor [KO:<a href="/entry/K04357">K04357</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1956">1956</a>&nbsp;&nbsp;</span></td><td>EGFR; epidermal growth factor receptor [KO:<a href="/entry/K04361">K04361</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:1969">1969</a>&nbsp;&nbsp;</span></td><td>EPHA2; EPH receptor A2 [KO:<a href="/entry/K05103">K05103</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2002">2002</a>&nbsp;&nbsp;</span></td><td>ELK1; ETS transcription factor ELK1 [KO:<a href="/entry/K04375">K04375</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:207">207</a>&nbsp;&nbsp;</span></td><td>AKT1; AKT serine/threonine kinase 1 [KO:<a href="/entry/K04456">K04456</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:208">208</a>&nbsp;&nbsp;</span></td><td>AKT2; AKT serine/threonine kinase 2 [KO:<a href="/entry/K04456">K04456</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2113">2113</a>&nbsp;&nbsp;</span></td><td>ETS1; ETS proto-oncogene 1, transcription factor [KO:<a href="/entry/K02678">K02678</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2114">2114</a>&nbsp;&nbsp;</span></td><td>ETS2; ETS proto-oncogene 2, transcription factor [KO:<a href="/entry/K21932">K21932</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2246">2246</a>&nbsp;&nbsp;</span></td><td>FGF1; fibroblast growth factor 1 [KO:<a href="/entry/K18496">K18496</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2247">2247</a>&nbsp;&nbsp;</span></td><td>FGF2; fibroblast growth factor 2 [KO:<a href="/entry/K18497">K18497</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2248">2248</a>&nbsp;&nbsp;</span></td><td>FGF3; fibroblast growth factor 3 [KO:<a href="/entry/K04358">K04358</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2249">2249</a>&nbsp;&nbsp;</span></td><td>FGF4; fibroblast growth factor 4 [KO:<a href="/entry/K04358">K04358</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2250">2250</a>&nbsp;&nbsp;</span></td><td>FGF5; fibroblast growth factor 5 [KO:<a href="/entry/K04358">K04358</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2251">2251</a>&nbsp;&nbsp;</span></td><td>FGF6; fibroblast growth factor 6 [KO:<a href="/entry/K04358">K04358</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2252">2252</a>&nbsp;&nbsp;</span></td><td>FGF7; fibroblast growth factor 7 [KO:<a href="/entry/K04358">K04358</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2253">2253</a>&nbsp;&nbsp;</span></td><td>FGF8; fibroblast growth factor 8 [KO:<a href="/entry/K04358">K04358</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2254">2254</a>&nbsp;&nbsp;</span></td><td>FGF9; fibroblast growth factor 9 [KO:<a href="/entry/K04358">K04358</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2255">2255</a>&nbsp;&nbsp;</span></td><td>FGF10; fibroblast growth factor 10 [KO:<a href="/entry/K04358">K04358</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2260">2260</a>&nbsp;&nbsp;</span></td><td>FGFR1; fibroblast growth factor receptor 1 [KO:<a href="/entry/K04362">K04362</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2261">2261</a>&nbsp;&nbsp;</span></td><td>FGFR3; fibroblast growth factor receptor 3 [KO:<a href="/entry/K05094">K05094</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2263">2263</a>&nbsp;&nbsp;</span></td><td>FGFR2; fibroblast growth factor receptor 2 [KO:<a href="/entry/K05093">K05093</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2264">2264</a>&nbsp;&nbsp;</span></td><td>FGFR4; fibroblast growth factor receptor 4 [KO:<a href="/entry/K05095">K05095</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2277">2277</a>&nbsp;&nbsp;</span></td><td>VEGFD; vascular endothelial growth factor D [KO:<a href="/entry/K05449">K05449</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:22800">22800</a>&nbsp;&nbsp;</span></td><td>RRAS2; RAS related 2 [KO:<a href="/entry/K07830">K07830</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:22808">22808</a>&nbsp;&nbsp;</span></td><td>MRAS; muscle RAS oncogene homolog [KO:<a href="/entry/K07831">K07831</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:22821">22821</a>&nbsp;&nbsp;</span></td><td>RASA3; RAS p21 protein activator 3 [KO:<a href="/entry/K12380">K12380</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:23179">23179</a>&nbsp;&nbsp;</span></td><td>RGL1; ral guanine nucleotide dissociation stimulator like 1 [KO:<a href="/entry/K17635">K17635</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2321">2321</a>&nbsp;&nbsp;</span></td><td>FLT1; fms related receptor tyrosine kinase 1 [KO:<a href="/entry/K05096">K05096</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2322">2322</a>&nbsp;&nbsp;</span></td><td>FLT3; fms related receptor tyrosine kinase 3 [KO:<a href="/entry/K05092">K05092</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2323">2323</a>&nbsp;&nbsp;</span></td><td>FLT3LG; fms related receptor tyrosine kinase 3 ligand [KO:<a href="/entry/K05454">K05454</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2324">2324</a>&nbsp;&nbsp;</span></td><td>FLT4; fms related receptor tyrosine kinase 4 [KO:<a href="/entry/K05097">K05097</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:25">25</a>&nbsp;&nbsp;</span></td><td>ABL1; ABL proto-oncogene 1, non-receptor tyrosine kinase [KO:<a href="/entry/K06619">K06619</a>] [EC:<a href="/entry/2.7.10.2">2.7.10.2</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:253959">253959</a>&nbsp;&nbsp;</span></td><td>RALGAPA1; Ral GTPase activating protein catalytic subunit alpha 1 [KO:<a href="/entry/K25768">K25768</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2549">2549</a>&nbsp;&nbsp;</span></td><td>GAB1; GRB2 associated binding protein 1 [KO:<a href="/entry/K09593">K09593</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:255189">255189</a>&nbsp;&nbsp;</span></td><td>PLA2G4F; phospholipase A2 group IVF [KO:<a href="/entry/K16342">K16342</a>] [EC:<a href="/entry/3.1.1.4">3.1.1.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:25759">25759</a>&nbsp;&nbsp;</span></td><td>SHC2; SHC adaptor protein 2 [KO:<a href="/entry/K17447">K17447</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:25780">25780</a>&nbsp;&nbsp;</span></td><td>RASGRP3; RAS guanyl releasing protein 3 [KO:<a href="/entry/K12362">K12362</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:26279">26279</a>&nbsp;&nbsp;</span></td><td>PLA2G2D; phospholipase A2 group IID [KO:<a href="/entry/K01047">K01047</a>] [EC:<a href="/entry/3.1.1.4">3.1.1.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:26281">26281</a>&nbsp;&nbsp;</span></td><td>FGF20; fibroblast growth factor 20 [KO:<a href="/entry/K04358">K04358</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:26291">26291</a>&nbsp;&nbsp;</span></td><td>FGF21; fibroblast growth factor 21 [KO:<a href="/entry/K22429">K22429</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:27">27</a>&nbsp;&nbsp;</span></td><td>ABL2; ABL proto-oncogene 2, non-receptor tyrosine kinase [KO:<a href="/entry/K08887">K08887</a>] [EC:<a href="/entry/2.7.10.2">2.7.10.2</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:27006">27006</a>&nbsp;&nbsp;</span></td><td>FGF22; fibroblast growth factor 22 [KO:<a href="/entry/K04358">K04358</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:27040">27040</a>&nbsp;&nbsp;</span></td><td>LAT; linker for activation of T cells [KO:<a href="/entry/K07362">K07362</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2782">2782</a>&nbsp;&nbsp;</span></td><td>GNB1; G protein subunit beta 1 [KO:<a href="/entry/K04536">K04536</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2783">2783</a>&nbsp;&nbsp;</span></td><td>GNB2; G protein subunit beta 2 [KO:<a href="/entry/K04537">K04537</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2784">2784</a>&nbsp;&nbsp;</span></td><td>GNB3; G protein subunit beta 3 [KO:<a href="/entry/K07825">K07825</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2785">2785</a>&nbsp;&nbsp;</span></td><td>GNG3; G protein subunit gamma 3 [KO:<a href="/entry/K04540">K04540</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2786">2786</a>&nbsp;&nbsp;</span></td><td>GNG4; G protein subunit gamma 4 [KO:<a href="/entry/K04541">K04541</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2787">2787</a>&nbsp;&nbsp;</span></td><td>GNG5; G protein subunit gamma 5 [KO:<a href="/entry/K04542">K04542</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2788">2788</a>&nbsp;&nbsp;</span></td><td>GNG7; G protein subunit gamma 7 [KO:<a href="/entry/K04543">K04543</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2790">2790</a>&nbsp;&nbsp;</span></td><td>GNG10; G protein subunit gamma 10 [KO:<a href="/entry/K04545">K04545</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2791">2791</a>&nbsp;&nbsp;</span></td><td>GNG11; G protein subunit gamma 11 [KO:<a href="/entry/K04546">K04546</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2792">2792</a>&nbsp;&nbsp;</span></td><td>GNGT1; G protein subunit gamma transducin 1 [KO:<a href="/entry/K04548">K04548</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2793">2793</a>&nbsp;&nbsp;</span></td><td>GNGT2; G protein subunit gamma transducin 2 [KO:<a href="/entry/K04549">K04549</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:283455">283455</a>&nbsp;&nbsp;</span></td><td>KSR2; kinase suppressor of ras 2 [KO:<a href="/entry/K18529">K18529</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:283748">283748</a>&nbsp;&nbsp;</span></td><td>PLA2G4D; phospholipase A2 group IVD [KO:<a href="/entry/K16342">K16342</a>] [EC:<a href="/entry/3.1.1.4">3.1.1.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:284">284</a>&nbsp;&nbsp;</span></td><td>ANGPT1; angiopoietin 1 [KO:<a href="/entry/K05465">K05465</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:285">285</a>&nbsp;&nbsp;</span></td><td>ANGPT2; angiopoietin 2 [KO:<a href="/entry/K05466">K05466</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2885">2885</a>&nbsp;&nbsp;</span></td><td>GRB2; growth factor receptor bound protein 2 [KO:<a href="/entry/K04364">K04364</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2902">2902</a>&nbsp;&nbsp;</span></td><td>GRIN1; glutamate ionotropic receptor NMDA type subunit 1 [KO:<a href="/entry/K05208">K05208</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2903">2903</a>&nbsp;&nbsp;</span></td><td>GRIN2A; glutamate ionotropic receptor NMDA type subunit 2A [KO:<a href="/entry/K05209">K05209</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:2904">2904</a>&nbsp;&nbsp;</span></td><td>GRIN2B; glutamate ionotropic receptor NMDA type subunit 2B [KO:<a href="/entry/K05210">K05210</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:29110">29110</a>&nbsp;&nbsp;</span></td><td>TBK1; TANK binding kinase 1 [KO:<a href="/entry/K05410">K05410</a>] [EC:<a href="/entry/2.7.11.10">2.7.11.10</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:30814">30814</a>&nbsp;&nbsp;</span></td><td>PLA2G2E; phospholipase A2 group IIE [KO:<a href="/entry/K01047">K01047</a>] [EC:<a href="/entry/3.1.1.4">3.1.1.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3082">3082</a>&nbsp;&nbsp;</span></td><td>HGF; hepatocyte growth factor [KO:<a href="/entry/K05460">K05460</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3265">3265</a>&nbsp;&nbsp;</span></td><td>HRAS; HRas proto-oncogene, GTPase [KO:<a href="/entry/K02833">K02833</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3363">3363</a>&nbsp;&nbsp;</span></td><td>HTR7; 5-hydroxytryptamine receptor 7 [KO:<a href="/entry/K04163">K04163</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3479">3479</a>&nbsp;&nbsp;</span></td><td>IGF1; insulin like growth factor 1 [KO:<a href="/entry/K05459">K05459</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3480">3480</a>&nbsp;&nbsp;</span></td><td>IGF1R; insulin like growth factor 1 receptor [KO:<a href="/entry/K05087">K05087</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3481">3481</a>&nbsp;&nbsp;</span></td><td>IGF2; insulin like growth factor 2 [KO:<a href="/entry/K13769">K13769</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3551">3551</a>&nbsp;&nbsp;</span></td><td>IKBKB; inhibitor of nuclear factor kappa B kinase subunit beta [KO:<a href="/entry/K07209">K07209</a>] [EC:<a href="/entry/2.7.11.10">2.7.11.10</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:356">356</a>&nbsp;&nbsp;</span></td><td>FASLG; Fas ligand [KO:<a href="/entry/K04389">K04389</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3630">3630</a>&nbsp;&nbsp;</span></td><td>INS; insulin [KO:<a href="/entry/K04526">K04526</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3643">3643</a>&nbsp;&nbsp;</span></td><td>INSR; insulin receptor [KO:<a href="/entry/K04527">K04527</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3791">3791</a>&nbsp;&nbsp;</span></td><td>KDR; kinase insert domain receptor [KO:<a href="/entry/K05098">K05098</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3815">3815</a>&nbsp;&nbsp;</span></td><td>KIT; KIT proto-oncogene, receptor tyrosine kinase [KO:<a href="/entry/K05091">K05091</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:382">382</a>&nbsp;&nbsp;</span></td><td>ARF6; ADP ribosylation factor 6 [KO:<a href="/entry/K07941">K07941</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:3845">3845</a>&nbsp;&nbsp;</span></td><td>KRAS; KRAS proto-oncogene, GTPase [KO:<a href="/entry/K07827">K07827</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:387">387</a>&nbsp;&nbsp;</span></td><td>RHOA; ras homolog family member A [KO:<a href="/entry/K04513">K04513</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:391013">391013</a>&nbsp;&nbsp;</span></td><td>PLA2G2C; phospholipase A2 group IIC [KO:<a href="/entry/K01047">K01047</a>] [EC:<a href="/entry/3.1.1.4">3.1.1.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:399694">399694</a>&nbsp;&nbsp;</span></td><td>SHC4; SHC adaptor protein 4 [KO:<a href="/entry/K17449">K17449</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4233">4233</a>&nbsp;&nbsp;</span></td><td>MET; MET proto-oncogene, receptor tyrosine kinase [KO:<a href="/entry/K05099">K05099</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4254">4254</a>&nbsp;&nbsp;</span></td><td>KITLG; KIT ligand [KO:<a href="/entry/K05461">K05461</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4301">4301</a>&nbsp;&nbsp;</span></td><td>AFDN; afadin, adherens junction formation factor [KO:<a href="/entry/K05702">K05702</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4303">4303</a>&nbsp;&nbsp;</span></td><td>FOXO4; forkhead box O4 [KO:<a href="/entry/K12358">K12358</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4763">4763</a>&nbsp;&nbsp;</span></td><td>NF1; neurofibromin 1 [KO:<a href="/entry/K08052">K08052</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4790">4790</a>&nbsp;&nbsp;</span></td><td>NFKB1; nuclear factor kappa B subunit 1 [KO:<a href="/entry/K02580">K02580</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4803">4803</a>&nbsp;&nbsp;</span></td><td>NGF; nerve growth factor [KO:<a href="/entry/K02582">K02582</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4804">4804</a>&nbsp;&nbsp;</span></td><td>NGFR; nerve growth factor receptor [KO:<a href="/entry/K02583">K02583</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4893">4893</a>&nbsp;&nbsp;</span></td><td>NRAS; NRAS proto-oncogene, GTPase [KO:<a href="/entry/K07828">K07828</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4908">4908</a>&nbsp;&nbsp;</span></td><td>NTF3; neurotrophin 3 [KO:<a href="/entry/K04356">K04356</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4909">4909</a>&nbsp;&nbsp;</span></td><td>NTF4; neurotrophin 4 [KO:<a href="/entry/K12457">K12457</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4914">4914</a>&nbsp;&nbsp;</span></td><td>NTRK1; neurotrophic receptor tyrosine kinase 1 [KO:<a href="/entry/K03176">K03176</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:4915">4915</a>&nbsp;&nbsp;</span></td><td>NTRK2; neurotrophic receptor tyrosine kinase 2 [KO:<a href="/entry/K04360">K04360</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:50487">50487</a>&nbsp;&nbsp;</span></td><td>PLA2G3; phospholipase A2 group III [KO:<a href="/entry/K01047">K01047</a>] [EC:<a href="/entry/3.1.1.4">3.1.1.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5058">5058</a>&nbsp;&nbsp;</span></td><td>PAK1; p21 (RAC1) activated kinase 1 [KO:<a href="/entry/K04409">K04409</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5062">5062</a>&nbsp;&nbsp;</span></td><td>PAK2; p21 (RAC1) activated kinase 2 [KO:<a href="/entry/K04410">K04410</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5063">5063</a>&nbsp;&nbsp;</span></td><td>PAK3; p21 (RAC1) activated kinase 3 [KO:<a href="/entry/K05733">K05733</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:51196">51196</a>&nbsp;&nbsp;</span></td><td>PLCE1; phospholipase C epsilon 1 [KO:<a href="/entry/K05860">K05860</a>] [EC:<a href="/entry/3.1.4.11">3.1.4.11</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:51365">51365</a>&nbsp;&nbsp;</span></td><td>PLA1A; phospholipase A1 member A [KO:<a href="/entry/K13618">K13618</a>] [EC:<a href="/entry/3.1.1.111">3.1.1.111</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:51378">51378</a>&nbsp;&nbsp;</span></td><td>ANGPT4; angiopoietin 4 [KO:<a href="/entry/K05467">K05467</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5154">5154</a>&nbsp;&nbsp;</span></td><td>PDGFA; platelet derived growth factor subunit A [KO:<a href="/entry/K04359">K04359</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5155">5155</a>&nbsp;&nbsp;</span></td><td>PDGFB; platelet derived growth factor subunit B [KO:<a href="/entry/K17386">K17386</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5156">5156</a>&nbsp;&nbsp;</span></td><td>PDGFRA; platelet derived growth factor receptor alpha [KO:<a href="/entry/K04363">K04363</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5159">5159</a>&nbsp;&nbsp;</span></td><td>PDGFRB; platelet derived growth factor receptor beta [KO:<a href="/entry/K05089">K05089</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:51764">51764</a>&nbsp;&nbsp;</span></td><td>GNG13; G protein subunit gamma 13 [KO:<a href="/entry/K04547">K04547</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:51806">51806</a>&nbsp;&nbsp;</span></td><td>CALML5; calmodulin like 5 [KO:<a href="/entry/K02183">K02183</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5228">5228</a>&nbsp;&nbsp;</span></td><td>PGF; placental growth factor [KO:<a href="/entry/K16859">K16859</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5290">5290</a>&nbsp;&nbsp;</span></td><td>PIK3CA; phosphatidylinositol-4,5-bisphosphate 3-kinase catalytic subunit alpha [KO:<a href="/entry/K00922">K00922</a>] [EC:<a href="/entry/2.7.1.153">2.7.1.153</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5291">5291</a>&nbsp;&nbsp;</span></td><td>PIK3CB; phosphatidylinositol-4,5-bisphosphate 3-kinase catalytic subunit beta [KO:<a href="/entry/K00922">K00922</a>] [EC:<a href="/entry/2.7.1.153">2.7.1.153</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5293">5293</a>&nbsp;&nbsp;</span></td><td>PIK3CD; phosphatidylinositol-4,5-bisphosphate 3-kinase catalytic subunit delta [KO:<a href="/entry/K00922">K00922</a>] [EC:<a href="/entry/2.7.1.153">2.7.1.153</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5295">5295</a>&nbsp;&nbsp;</span></td><td>PIK3R1; phosphoinositide-3-kinase regulatory subunit 1 [KO:<a href="/entry/K02649">K02649</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5296">5296</a>&nbsp;&nbsp;</span></td><td>PIK3R2; phosphoinositide-3-kinase regulatory subunit 2 [KO:<a href="/entry/K02649">K02649</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5319">5319</a>&nbsp;&nbsp;</span></td><td>PLA2G1B; phospholipase A2 group IB [KO:<a href="/entry/K01047">K01047</a>] [EC:<a href="/entry/3.1.1.4">3.1.1.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5320">5320</a>&nbsp;&nbsp;</span></td><td>PLA2G2A; phospholipase A2 group IIA [KO:<a href="/entry/K01047">K01047</a>] [EC:<a href="/entry/3.1.1.4">3.1.1.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5321">5321</a>&nbsp;&nbsp;</span></td><td>PLA2G4A; phospholipase A2 group IVA [KO:<a href="/entry/K16342">K16342</a>] [EC:<a href="/entry/3.1.1.4">3.1.1.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5322">5322</a>&nbsp;&nbsp;</span></td><td>PLA2G5; phospholipase A2 group V [KO:<a href="/entry/K01047">K01047</a>] [EC:<a href="/entry/3.1.1.4">3.1.1.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5335">5335</a>&nbsp;&nbsp;</span></td><td>PLCG1; phospholipase C gamma 1 [KO:<a href="/entry/K01116">K01116</a>] [EC:<a href="/entry/3.1.4.11">3.1.4.11</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:53358">53358</a>&nbsp;&nbsp;</span></td><td>SHC3; SHC adaptor protein 3 [KO:<a href="/entry/K17448">K17448</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5336">5336</a>&nbsp;&nbsp;</span></td><td>PLCG2; phospholipase C gamma 2 [KO:<a href="/entry/K05859">K05859</a>] [EC:<a href="/entry/3.1.4.11">3.1.4.11</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5337">5337</a>&nbsp;&nbsp;</span></td><td>PLD1; phospholipase D1 [KO:<a href="/entry/K01115">K01115</a>] [EC:<a href="/entry/3.1.4.4">3.1.4.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5338">5338</a>&nbsp;&nbsp;</span></td><td>PLD2; phospholipase D2 [KO:<a href="/entry/K01115">K01115</a>] [EC:<a href="/entry/3.1.4.4">3.1.4.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:54331">54331</a>&nbsp;&nbsp;</span></td><td>GNG2; G protein subunit gamma 2 [KO:<a href="/entry/K07826">K07826</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:54979">54979</a>&nbsp;&nbsp;</span></td><td>PLAAT2; phospholipase A and acyltransferase 2 [KO:<a href="/entry/K16817">K16817</a>] [EC:<a href="/entry/3.1.1.32">3.1.1.32</a> <a href="/entry/3.1.1.4">3.1.1.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5566">5566</a>&nbsp;&nbsp;</span></td><td>PRKACA; protein kinase cAMP-activated catalytic subunit alpha [KO:<a href="/entry/K04345">K04345</a>] [EC:<a href="/entry/2.7.11.11">2.7.11.11</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5567">5567</a>&nbsp;&nbsp;</span></td><td>PRKACB; protein kinase cAMP-activated catalytic subunit beta [KO:<a href="/entry/K04345">K04345</a>] [EC:<a href="/entry/2.7.11.11">2.7.11.11</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5568">5568</a>&nbsp;&nbsp;</span></td><td>PRKACG; protein kinase cAMP-activated catalytic subunit gamma [KO:<a href="/entry/K04345">K04345</a>] [EC:<a href="/entry/2.7.11.11">2.7.11.11</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:55770">55770</a>&nbsp;&nbsp;</span></td><td>EXOC2; exocyst complex component 2 [KO:<a href="/entry/K17637">K17637</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5578">5578</a>&nbsp;&nbsp;</span></td><td>PRKCA; protein kinase C alpha [KO:<a href="/entry/K02677">K02677</a>] [EC:<a href="/entry/2.7.11.13">2.7.11.13</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5579">5579</a>&nbsp;&nbsp;</span></td><td>PRKCB; protein kinase C beta [KO:<a href="/entry/K19662">K19662</a>] [EC:<a href="/entry/2.7.11.13">2.7.11.13</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5582">5582</a>&nbsp;&nbsp;</span></td><td>PRKCG; protein kinase C gamma [KO:<a href="/entry/K19663">K19663</a>] [EC:<a href="/entry/2.7.11.13">2.7.11.13</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5594">5594</a>&nbsp;&nbsp;</span></td><td>MAPK1; mitogen-activated protein kinase 1 [KO:<a href="/entry/K04371">K04371</a>] [EC:<a href="/entry/2.7.11.24">2.7.11.24</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5595">5595</a>&nbsp;&nbsp;</span></td><td>MAPK3; mitogen-activated protein kinase 3 [KO:<a href="/entry/K04371">K04371</a>] [EC:<a href="/entry/2.7.11.24">2.7.11.24</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:55970">55970</a>&nbsp;&nbsp;</span></td><td>GNG12; G protein subunit gamma 12 [KO:<a href="/entry/K04347">K04347</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5599">5599</a>&nbsp;&nbsp;</span></td><td>MAPK8; mitogen-activated protein kinase 8 [KO:<a href="/entry/K04440">K04440</a>] [EC:<a href="/entry/2.7.11.24">2.7.11.24</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5601">5601</a>&nbsp;&nbsp;</span></td><td>MAPK9; mitogen-activated protein kinase 9 [KO:<a href="/entry/K04440">K04440</a>] [EC:<a href="/entry/2.7.11.24">2.7.11.24</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5602">5602</a>&nbsp;&nbsp;</span></td><td>MAPK10; mitogen-activated protein kinase 10 [KO:<a href="/entry/K04440">K04440</a>] [EC:<a href="/entry/2.7.11.24">2.7.11.24</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:56034">56034</a>&nbsp;&nbsp;</span></td><td>PDGFC; platelet derived growth factor C [KO:<a href="/entry/K05450">K05450</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5604">5604</a>&nbsp;&nbsp;</span></td><td>MAP2K1; mitogen-activated protein kinase kinase 1 [KO:<a href="/entry/K04368">K04368</a>] [EC:<a href="/entry/2.7.12.2">2.7.12.2</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5605">5605</a>&nbsp;&nbsp;</span></td><td>MAP2K2; mitogen-activated protein kinase kinase 2 [KO:<a href="/entry/K04369">K04369</a>] [EC:<a href="/entry/2.7.12.2">2.7.12.2</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:56924">56924</a>&nbsp;&nbsp;</span></td><td>PAK6; p21 (RAC1) activated kinase 6 [KO:<a href="/entry/K05735">K05735</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:57144">57144</a>&nbsp;&nbsp;</span></td><td>PAK5; p21 (RAC1) activated kinase 5 [KO:<a href="/entry/K05736">K05736</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:57148">57148</a>&nbsp;&nbsp;</span></td><td>RALGAPB; Ral GTPase activating protein non-catalytic subunit beta [KO:<a href="/entry/K25769">K25769</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:57186">57186</a>&nbsp;&nbsp;</span></td><td>RALGAPA2; Ral GTPase activating protein catalytic subunit alpha 2 [KO:<a href="/entry/K25768">K25768</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:572">572</a>&nbsp;&nbsp;</span></td><td>BAD; BCL2 associated agonist of cell death [KO:<a href="/entry/K02158">K02158</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5781">5781</a>&nbsp;&nbsp;</span></td><td>PTPN11; protein tyrosine phosphatase non-receptor type 11 [KO:<a href="/entry/K07293">K07293</a>] [EC:<a href="/entry/3.1.3.48">3.1.3.48</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5863">5863</a>&nbsp;&nbsp;</span></td><td>RGL2; ral guanine nucleotide dissociation stimulator like 2 [KO:<a href="/entry/K17636">K17636</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5868">5868</a>&nbsp;&nbsp;</span></td><td>RAB5A; RAB5A, member RAS oncogene family [KO:<a href="/entry/K07887">K07887</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5869">5869</a>&nbsp;&nbsp;</span></td><td>RAB5B; RAB5B, member RAS oncogene family [KO:<a href="/entry/K07888">K07888</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5878">5878</a>&nbsp;&nbsp;</span></td><td>RAB5C; RAB5C, member RAS oncogene family [KO:<a href="/entry/K07889">K07889</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5879">5879</a>&nbsp;&nbsp;</span></td><td>RAC1; Rac family small GTPase 1 [KO:<a href="/entry/K04392">K04392</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5880">5880</a>&nbsp;&nbsp;</span></td><td>RAC2; Rac family small GTPase 2 [KO:<a href="/entry/K07860">K07860</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5881">5881</a>&nbsp;&nbsp;</span></td><td>RAC3; Rac family small GTPase 3 [KO:<a href="/entry/K07861">K07861</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5894">5894</a>&nbsp;&nbsp;</span></td><td>RAF1; Raf-1 proto-oncogene, serine/threonine kinase [KO:<a href="/entry/K04366">K04366</a>] [EC:<a href="/entry/2.7.11.1">2.7.11.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5898">5898</a>&nbsp;&nbsp;</span></td><td>RALA; RAS like proto-oncogene A [KO:<a href="/entry/K07834">K07834</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5899">5899</a>&nbsp;&nbsp;</span></td><td>RALB; RAS like proto-oncogene B [KO:<a href="/entry/K07835">K07835</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5900">5900</a>&nbsp;&nbsp;</span></td><td>RALGDS; ral guanine nucleotide dissociation stimulator [KO:<a href="/entry/K08732">K08732</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5906">5906</a>&nbsp;&nbsp;</span></td><td>RAP1A; RAP1A, member of RAS oncogene family [KO:<a href="/entry/K04353">K04353</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5908">5908</a>&nbsp;&nbsp;</span></td><td>RAP1B; RAP1B, member of RAS oncogene family [KO:<a href="/entry/K07836">K07836</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5921">5921</a>&nbsp;&nbsp;</span></td><td>RASA1; RAS p21 protein activator 1 [KO:<a href="/entry/K04352">K04352</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5922">5922</a>&nbsp;&nbsp;</span></td><td>RASA2; RAS p21 protein activator 2 [KO:<a href="/entry/K08053">K08053</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5923">5923</a>&nbsp;&nbsp;</span></td><td>RASGRF1; Ras protein specific guanine nucleotide releasing factor 1 [KO:<a href="/entry/K04349">K04349</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5924">5924</a>&nbsp;&nbsp;</span></td><td>RASGRF2; Ras protein specific guanine nucleotide releasing factor 2 [KO:<a href="/entry/K12326">K12326</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:59345">59345</a>&nbsp;&nbsp;</span></td><td>GNB4; G protein subunit beta 4 [KO:<a href="/entry/K04538">K04538</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5966">5966</a>&nbsp;&nbsp;</span></td><td>REL; REL proto-oncogene, NF-kB subunit [KO:<a href="/entry/K09254">K09254</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:5970">5970</a>&nbsp;&nbsp;</span></td><td>RELA; RELA proto-oncogene, NF-kB subunit [KO:<a href="/entry/K04735">K04735</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:598">598</a>&nbsp;&nbsp;</span></td><td>BCL2L1; BCL2 like 1 [KO:<a href="/entry/K04570">K04570</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6237">6237</a>&nbsp;&nbsp;</span></td><td>RRAS; RAS related [KO:<a href="/entry/K07829">K07829</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:627">627</a>&nbsp;&nbsp;</span></td><td>BDNF; brain derived neurotrophic factor [KO:<a href="/entry/K04355">K04355</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:64600">64600</a>&nbsp;&nbsp;</span></td><td>PLA2G2F; phospholipase A2 group IIF [KO:<a href="/entry/K01047">K01047</a>] [EC:<a href="/entry/3.1.1.4">3.1.1.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6464">6464</a>&nbsp;&nbsp;</span></td><td>SHC1; SHC adaptor protein 1 [KO:<a href="/entry/K06279">K06279</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:64926">64926</a>&nbsp;&nbsp;</span></td><td>RASAL3; RAS protein activator like 3 [KO:<a href="/entry/K17634">K17634</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6654">6654</a>&nbsp;&nbsp;</span></td><td>SOS1; SOS Ras/Rac guanine nucleotide exchange factor 1 [KO:<a href="/entry/K03099">K03099</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6655">6655</a>&nbsp;&nbsp;</span></td><td>SOS2; SOS Ras/Rho guanine nucleotide exchange factor 2 [KO:<a href="/entry/K03099">K03099</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:6789">6789</a>&nbsp;&nbsp;</span></td><td>STK4; serine/threonine kinase 4 [KO:<a href="/entry/K04411">K04411</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7010">7010</a>&nbsp;&nbsp;</span></td><td>TEK; TEK receptor tyrosine kinase [KO:<a href="/entry/K05121">K05121</a>] [EC:<a href="/entry/2.7.10.1">2.7.10.1</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7039">7039</a>&nbsp;&nbsp;</span></td><td>TGFA; transforming growth factor alpha [KO:<a href="/entry/K08774">K08774</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7074">7074</a>&nbsp;&nbsp;</span></td><td>TIAM1; TIAM Rac1 associated GEF 1 [KO:<a href="/entry/K05731">K05731</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7422">7422</a>&nbsp;&nbsp;</span></td><td>VEGFA; vascular endothelial growth factor A [KO:<a href="/entry/K05448">K05448</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7423">7423</a>&nbsp;&nbsp;</span></td><td>VEGFB; vascular endothelial growth factor B [KO:<a href="/entry/K16858">K16858</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7424">7424</a>&nbsp;&nbsp;</span></td><td>VEGFC; vascular endothelial growth factor C [KO:<a href="/entry/K05449">K05449</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:7535">7535</a>&nbsp;&nbsp;</span></td><td>ZAP70; zeta chain of T cell receptor associated protein kinase 70 [KO:<a href="/entry/K07360">K07360</a>] [EC:<a href="/entry/2.7.10.2">2.7.10.2</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:801">801</a>&nbsp;&nbsp;</span></td><td>CALM1; calmodulin 1 [KO:<a href="/entry/K02183">K02183</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:80310">80310</a>&nbsp;&nbsp;</span></td><td>PDGFD; platelet derived growth factor D [KO:<a href="/entry/K05450">K05450</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8036">8036</a>&nbsp;&nbsp;</span></td><td>SHOC2; SHOC2 leucine rich repeat scaffold protein [KO:<a href="/entry/K19613">K19613</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:805">805</a>&nbsp;&nbsp;</span></td><td>CALM2; calmodulin 2 [KO:<a href="/entry/K02183">K02183</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8074">8074</a>&nbsp;&nbsp;</span></td><td>FGF23; fibroblast growth factor 23 [KO:<a href="/entry/K22428">K22428</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:808">808</a>&nbsp;&nbsp;</span></td><td>CALM3; calmodulin 3 [KO:<a href="/entry/K02183">K02183</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:810">810</a>&nbsp;&nbsp;</span></td><td>CALML3; calmodulin like 3 [KO:<a href="/entry/K02183">K02183</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:81579">81579</a>&nbsp;&nbsp;</span></td><td>PLA2G12A; phospholipase A2 group XIIA [KO:<a href="/entry/K01047">K01047</a>] [EC:<a href="/entry/3.1.1.4">3.1.1.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8315">8315</a>&nbsp;&nbsp;</span></td><td>BRAP; BRCA1 associated protein [KO:<a href="/entry/K10632">K10632</a>] [EC:<a href="/entry/2.3.2.27">2.3.2.27</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:83593">83593</a>&nbsp;&nbsp;</span></td><td>RASSF5; Ras association domain family member 5 [KO:<a href="/entry/K08015">K08015</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8398">8398</a>&nbsp;&nbsp;</span></td><td>PLA2G6; phospholipase A2 group VI [KO:<a href="/entry/K16343">K16343</a>] [EC:<a href="/entry/3.1.1.4">3.1.1.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8399">8399</a>&nbsp;&nbsp;</span></td><td>PLA2G10; phospholipase A2 group X [KO:<a href="/entry/K01047">K01047</a>] [EC:<a href="/entry/3.1.1.4">3.1.1.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8437">8437</a>&nbsp;&nbsp;</span></td><td>RASAL1; RAS protein activator like 1 [KO:<a href="/entry/K17632">K17632</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:84647">84647</a>&nbsp;&nbsp;</span></td><td>PLA2G12B; phospholipase A2 group XIIB [KO:<a href="/entry/K01047">K01047</a>] [EC:<a href="/entry/3.1.1.4">3.1.1.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8503">8503</a>&nbsp;&nbsp;</span></td><td>PIK3R3; phosphoinositide-3-kinase regulatory subunit 3 [KO:<a href="/entry/K02649">K02649</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8517">8517</a>&nbsp;&nbsp;</span></td><td>IKBKG; inhibitor of nuclear factor kappa B kinase regulatory subunit gamma [KO:<a href="/entry/K07210">K07210</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8605">8605</a>&nbsp;&nbsp;</span></td><td>PLA2G4C; phospholipase A2 group IVC [KO:<a href="/entry/K16342">K16342</a>] [EC:<a href="/entry/3.1.1.4">3.1.1.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8681">8681</a>&nbsp;&nbsp;</span></td><td>JMJD7-PLA2G4B; JMJD7-PLA2G4B readthrough [KO:<a href="/entry/K16342">K16342</a>] [EC:<a href="/entry/3.1.1.4">3.1.1.4</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8817">8817</a>&nbsp;&nbsp;</span></td><td>FGF18; fibroblast growth factor 18 [KO:<a href="/entry/K04358">K04358</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8822">8822</a>&nbsp;&nbsp;</span></td><td>FGF17; fibroblast growth factor 17 [KO:<a href="/entry/K04358">K04358</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8823">8823</a>&nbsp;&nbsp;</span></td><td>FGF16; fibroblast growth factor 16 [KO:<a href="/entry/K04358">K04358</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8831">8831</a>&nbsp;&nbsp;</span></td><td>SYNGAP1; synaptic Ras GTPase activating protein 1 [KO:<a href="/entry/K17631">K17631</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:8844">8844</a>&nbsp;&nbsp;</span></td><td>KSR1; kinase suppressor of ras 1 [KO:<a href="/entry/K14958">K14958</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:91860">91860</a>&nbsp;&nbsp;</span></td><td>CALML4; calmodulin like 4 [KO:<a href="/entry/K02183">K02183</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:94235">94235</a>&nbsp;&nbsp;</span></td><td>GNG8; G protein subunit gamma 8 [KO:<a href="/entry/K04544">K04544</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9462">9462</a>&nbsp;&nbsp;</span></td><td>RASAL2; RAS protein activator like 2 [KO:<a href="/entry/K17633">K17633</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9610">9610</a>&nbsp;&nbsp;</span></td><td>RIN1; Ras and Rab interactor 1 [KO:<a href="/entry/K17638">K17638</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9771">9771</a>&nbsp;&nbsp;</span></td><td>RAPGEF5; Rap guanine nucleotide exchange factor 5 [KO:<a href="/entry/K08019">K08019</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9846">9846</a>&nbsp;&nbsp;</span></td><td>GAB2; GRB2 associated binding protein 2 [KO:<a href="/entry/K08091">K08091</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:9965">9965</a>&nbsp;&nbsp;</span></td><td>FGF19; fibroblast growth factor 19 [KO:<a href="/entry/K22603">K22603</a>]</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa:998">998</a>&nbsp;&nbsp;</span></td><td>CDC42; cell division cycle 42 [KO:<a href="/entry/K04393">K04393</a>]</td></tr></table></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">Compound</span></th>
+<td class="td31 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/C00035">C00035</a>&nbsp;&nbsp;</span></td><td>GDP</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/C00044">C00044</a>&nbsp;&nbsp;</span></td><td>GTP</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/C00076">C00076</a>&nbsp;&nbsp;</span></td><td>Calcium cation</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/C00165">C00165</a>&nbsp;&nbsp;</span></td><td>Diacylglycerol</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/C00575">C00575</a>&nbsp;&nbsp;</span></td><td>3',5'-Cyclic AMP</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/C01245">C01245</a>&nbsp;&nbsp;</span></td><td>D-myo-Inositol 1,4,5-trisphosphate</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/C05981">C05981</a>&nbsp;&nbsp;</span></td><td>Phosphatidylinositol-3,4,5-trisphosphate</td></tr></table></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/18568040">18568040</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Karnoub AE, Weinberg RA</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Ras oncogenes: split personalities.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Nat Rev Mol Cell Biol 9:517-31 (2008)<br>DOI:<a href="https://doi.org/10.1038/nrm2438">10.1038/nrm2438</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/12778136">12778136</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Malumbres M, Barbacid M</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">RAS oncogenes: the first 30 years.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Nat Rev Cancer 3:459-65 (2003)<br>DOI:<a href="https://doi.org/10.1038/nrc1097">10.1038/nrc1097</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/21686117">21686117</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Cox AD, Der CJ</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Ras history: The saga continues.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Small GTPases 1:2-27 (2010)<br>DOI:<a href="https://doi.org/10.4161/sgtp.1.1.12178">10.4161/sgtp.1.1.12178</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/12642680">12642680</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Cox AD, Der CJ</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Ras family signaling: therapeutic targeting.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Cancer Biol Ther 1:599-606 (2002)<br>DOI:<a href="https://doi.org/10.4161/cbt.306">10.4161/cbt.306</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/17428555">17428555</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Rajalingam K, Schreck R, Rapp UR, Albert S</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Ras oncogenes and their downstream targets.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Biochim Biophys Acta 1773:1177-95 (2007)<br>DOI:<a href="https://doi.org/10.1016/j.bbamcr.2007.01.012">10.1016/j.bbamcr.2007.01.012</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/17384584">17384584</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Schubbert S, Shannon K, Bollag G</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Hyperactive Ras in developmental disorders and cancer.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Nat Rev Cancer 7:295-308 (2007)<br>DOI:<a href="https://doi.org/10.1038/nrc2109">10.1038/nrc2109</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/22233291">22233291</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Poulogiannis G, Luo F, Arends MJ</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">RAS signalling in the colorectum in health and disease.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Cell Commun Adhes 19:1-9 (2012)<br>DOI:<a href="https://doi.org/10.3109/15419061.2011.649380">10.3109/15419061.2011.649380</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/22020205">22020205</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Berndt N, Hamilton AD, Sebti SM</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Targeting protein prenylation for cancer therapy.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Nat Rev Cancer 11:775-91 (2011)<br>DOI:<a href="https://doi.org/10.1038/nrc3151">10.1038/nrc3151</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/21196257">21196257</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Overmeyer JH, Maltese WA</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Death pathways triggered by activated Ras in cancer cells.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Front Biosci (Landmark Ed) 16:1693-713 (2011)<br>DOI:<a href="https://doi.org/10.2741/3814">10.2741/3814</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/16869784">16869784</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Rodriguez-Viciana P, Tetsu O, Oda K, Okada J, Rauen K, McCormick F</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Cancer targets in the Ras pathway.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Cold Spring Harb Symp Quant Biol 70:461-7 (2005)<br>DOI:<a href="https://doi.org/10.1101/sqb.2005.70.044">10.1101/sqb.2005.70.044</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/14663478">14663478</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Cox AD, Der CJ</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">The dark side of Ras: regulation of apoptosis.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Oncogene 22:8999-9006 (2003)<br>DOI:<a href="https://doi.org/10.1038/sj.onc.1207111">10.1038/sj.onc.1207111</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/18413813">18413813</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Braun BS, Shannon K</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Targeting Ras in myeloid leukemias.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Clin Cancer Res 14:2249-52 (2008)<br>DOI:<a href="https://doi.org/10.1158/1078-0432.CCR-07-1005">10.1158/1078-0432.CCR-07-1005</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/20420946">20420946</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Pino MS, Chung DC</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">The chromosomal instability pathway in colon cancer.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Gastroenterology 138:2059-72 (2010)<br>DOI:<a href="https://doi.org/10.1053/j.gastro.2009.12.065">10.1053/j.gastro.2009.12.065</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/12217381">12217381</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Schrader JW, Schallhorn A, Grill B, Guo X</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Activation of small GTPases of the Ras and Rho family by growth factors active on mast cells.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Mol Immunol 38:1181-6 (2002)<br>DOI:<a href="https://doi.org/10.1016/S0161-5890(02)00060-3">10.1016/S0161-5890(02)00060-3</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/22189424">22189424</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Ahearn IM, Haigis K, Bar-Sagi D, Philips MR</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Regulating the regulator: post-translational modification of RAS.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Nat Rev Mol Cell Biol 13:39-51 (2012)<br>DOI:<a href="https://doi.org/10.1038/nrm3255">10.1038/nrm3255</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/11313946">11313946</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Ehrhardt GR, Korherr C, Wieler JS, Knaus M, Schrader JW</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">A novel potential effector of M-Ras and p21 Ras negatively regulates p21 Ras-mediated gene induction and cell growth.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Oncogene 20:188-97 (2001)<br>DOI:<a href="https://doi.org/10.1038/sj.onc.1204053">10.1038/sj.onc.1204053</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/16966426">16966426</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Goldfinger LE, Ptak C, Jeffery ED, Shabanowitz J, Hunt DF, Ginsberg MH</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">RLIP76 (RalBP1) is an R-Ras effector that mediates adhesion-dependent Rac activation and cell migration.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">J Cell Biol 174:877-88 (2006)<br>DOI:<a href="https://doi.org/10.1083/jcb.200603111">10.1083/jcb.200603111</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/23506953">23506953</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Kortum RL, Rouquette-Jazdanian AK, Samelson LE</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Ras and extracellular signal-regulated kinase signaling in thymocytes and T cells.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Trends Immunol 34:259-68 (2013)<br>DOI:<a href="https://doi.org/10.1016/j.it.2013.02.004">10.1016/j.it.2013.02.004</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/15572660">15572660</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Roberts DM, Anderson AL, Hidaka M, Swetenburg RL, Patterson C, Stanford WL, Bautch VL</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">A vascular gene trap screen defines RasGRP3 as an angiogenesis-regulated gene required for the endothelial response to phorbol esters.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Mol Cell Biol 24:10515-28 (2004)<br>DOI:<a href="https://doi.org/10.1128/MCB.24.24.10515-10528.2004">10.1128/MCB.24.24.10515-10528.2004</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/10712923">10712923</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Reuther GW, Der CJ</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">The Ras branch of small GTPases: Ras family members don't fall far from the tree.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Curr Opin Cell Biol 12:157-65 (2000)<br>DOI:<a href="https://doi.org/10.1016/S0955-0674(99)00071-X">10.1016/S0955-0674(99)00071-X</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/21111786">21111786</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Fernandez-Medarde A, Santos E</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">The RasGrf family of mammalian guanine nucleotide exchange factors.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Biochim Biophys Acta 1815:170-88 (2011)<br>DOI:<a href="https://doi.org/10.1016/j.bbcan.2010.11.001">10.1016/j.bbcan.2010.11.001</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/18437264">18437264</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Iwashita S, Song SY</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">RasGAPs: a crucial regulator of extracellular stimuli for homeostasis of cellular functions.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Mol Biosyst 4:213-22 (2008)<br>DOI:<a href="https://doi.org/10.1039/b716357f">10.1039/b716357f</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/15062121">15062121</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Ory S, Morrison DK</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Signal transduction: implications for Ras-dependent ERK signaling.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Curr Biol 14:R277-8 (2004)<br>DOI:<a href="https://doi.org/10.1016/j.cub.2004.03.023">10.1016/j.cub.2004.03.023</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/19091743">19091743</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Matheny SA, White MA</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Signaling threshold regulation by the Ras effector IMP.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">J Biol Chem 284:11007-11 (2009)<br>DOI:<a href="https://doi.org/10.1074/jbc.R800082200">10.1074/jbc.R800082200</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/20602996">20602996</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Lemmon MA, Schlessinger J</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">Cell signaling by receptor tyrosine kinases.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Cell 141:1117-34 (2010)<br>DOI:<a href="https://doi.org/10.1016/j.cell.2010.06.011">10.1016/j.cell.2010.06.011</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/22367796">22367796</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Skaper SD</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">The neurotrophin family of neurotrophic factors: an overview.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Methods Mol Biol 846:1-12 (2012)<br>DOI:<a href="https://doi.org/10.1007/978-1-61779-536-7_1">10.1007/978-1-61779-536-7_1</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Reference</span></th>
+<td class="td30 defd"><div class="cel">PMID:<a href="https://www.ncbi.nlm.nih.gov/pubmed/34074494">34074494</a></div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Authors</span></th>
+<td class="td31 repd"><div class="cel">Apken LH, Oeckinghaus A</div></td></tr>
+
+
+<tr><th class="th30 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Title</span></th>
+<td class="td30 repd"><div class="cel">The RAL signaling network: Cancer and beyond.</div></td></tr>
+
+
+<tr><th class="th31 rept tal vtop"><span class="nowrap">&nbsp;&nbsp;Journal</span></th>
+<td class="td31 repd"><div class="cel">Int Rev Cell Mol Biol 361:21-105 (2021)<br>DOI:<a href="https://doi.org/10.1016/bs.ircmb.2020.10.005">10.1016/bs.ircmb.2020.10.005</a></div></td></tr>
+
+
+<tr><th class="th30 deft tal vtop"><span class="nowrap">Related<br>pathway</span></th>
+<td class="td30 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04010">hsa04010</a>&nbsp;&nbsp;</span></td><td>MAPK signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04015">hsa04015</a>&nbsp;&nbsp;</span></td><td>Rap1 signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04020">hsa04020</a>&nbsp;&nbsp;</span></td><td>Calcium signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04144">hsa04144</a>&nbsp;&nbsp;</span></td><td>Endocytosis</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04151">hsa04151</a>&nbsp;&nbsp;</span></td><td>PI3K-Akt signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04660">hsa04660</a>&nbsp;&nbsp;</span></td><td>T cell receptor signaling pathway</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04720">hsa04720</a>&nbsp;&nbsp;</span></td><td>Long-term potentiation</td></tr></table><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/hsa04810">hsa04810</a>&nbsp;&nbsp;</span></td><td>Regulation of actin cytoskeleton</td></tr></table></td></tr>
+
+
+<tr><th class="th31 deft tal vtop"><span class="nowrap">KO&nbsp;pathway</span></th>
+<td class="td31 defd"><table class="w1"><tr><td class="vtop pd0"><span class="nowrap"><a href="/entry/ko04014">ko04014</a>&nbsp;&nbsp;</span></td><td>&nbsp;</td></tr></table></td></tr>
+
+</table></td></tr></table>
+<br></td></tr></table>
+
+
+<a href="/dbget/">DBGET</a> integrated database retrieval system</div>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+id,source,target,type,subtypes,source_entry_id,target_entry_id
+relation_1,entry_32,entry_30,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",32,30
+relation_2,entry_32,entry_169,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",32,169
+relation_3,entry_32,entry_170,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",32,170
+relation_4,entry_20,entry_30,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",20,30
+relation_5,entry_20,entry_169,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",20,169
+relation_6,entry_20,entry_170,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",20,170
+relation_7,entry_153,entry_170,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",153,170
+relation_8,entry_153,entry_171,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",153,171
+relation_9,entry_75,entry_172,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",75,172
+relation_10,entry_75,entry_70,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",75,70
+relation_11,entry_70,entry_150,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",70,150
+relation_12,entry_104,entry_71,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",104,71
+relation_13,entry_148,entry_74,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",148,74
+relation_14,entry_105,entry_73,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",105,73
+relation_15,entry_106,entry_72,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",106,72
+relation_16,entry_107,entry_76,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",107,76
+relation_17,entry_120,entry_121,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",120,121
+relation_18,entry_122,entry_123,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",122,123
+relation_19,entry_93,entry_30,PCrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""missing interaction"", ""value"": ""-/-""}]",93,30
+relation_20,entry_93,entry_9,PCrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""missing interaction"", ""value"": ""-/-""}]",93,9
+relation_21,entry_93,entry_149,PCrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""missing interaction"", ""value"": ""-/-""}]",93,149
+relation_22,entry_92,entry_30,PCrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""missing interaction"", ""value"": ""-/-""}]",92,30
+relation_23,entry_92,entry_9,PCrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""missing interaction"", ""value"": ""-/-""}]",92,9
+relation_24,entry_92,entry_149,PCrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""missing interaction"", ""value"": ""-/-""}]",92,149
+relation_25,entry_30,entry_79,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",30,79
+relation_26,entry_30,entry_115,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",30,115
+relation_27,entry_30,entry_19,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",30,19
+relation_28,entry_30,entry_26,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",30,26
+relation_29,entry_30,entry_24,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",30,24
+relation_30,entry_169,entry_79,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",169,79
+relation_31,entry_169,entry_115,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",169,115
+relation_32,entry_169,entry_19,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",169,19
+relation_33,entry_169,entry_26,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",169,26
+relation_34,entry_169,entry_24,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",169,24
+relation_35,entry_170,entry_79,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",170,79
+relation_36,entry_170,entry_115,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",170,115
+relation_37,entry_170,entry_19,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",170,19
+relation_38,entry_170,entry_26,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",170,26
+relation_39,entry_170,entry_24,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",170,24
+relation_40,entry_171,entry_79,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",171,79
+relation_41,entry_171,entry_115,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",171,115
+relation_42,entry_171,entry_19,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",171,19
+relation_43,entry_171,entry_26,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",171,26
+relation_44,entry_171,entry_24,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",171,24
+relation_45,entry_172,entry_79,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",172,79
+relation_46,entry_172,entry_115,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",172,115
+relation_47,entry_172,entry_19,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",172,19
+relation_48,entry_172,entry_26,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",172,26
+relation_49,entry_172,entry_24,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",172,24
+relation_50,entry_70,entry_79,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",70,79
+relation_51,entry_70,entry_115,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",70,115
+relation_52,entry_70,entry_19,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",70,19
+relation_53,entry_70,entry_26,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",70,26
+relation_54,entry_70,entry_24,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",70,24
+relation_55,entry_71,entry_79,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",71,79
+relation_56,entry_71,entry_115,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",71,115
+relation_57,entry_71,entry_19,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",71,19
+relation_58,entry_71,entry_26,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",71,26
+relation_59,entry_71,entry_24,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",71,24
+relation_60,entry_74,entry_79,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",74,79
+relation_61,entry_74,entry_115,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",74,115
+relation_62,entry_74,entry_19,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",74,19
+relation_63,entry_74,entry_26,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",74,26
+relation_64,entry_74,entry_24,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",74,24
+relation_65,entry_73,entry_79,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",73,79
+relation_66,entry_73,entry_115,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",73,115
+relation_67,entry_73,entry_19,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",73,19
+relation_68,entry_73,entry_26,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",73,26
+relation_69,entry_73,entry_24,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",73,24
+relation_70,entry_72,entry_79,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",72,79
+relation_71,entry_72,entry_115,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",72,115
+relation_72,entry_72,entry_19,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",72,19
+relation_73,entry_72,entry_26,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",72,26
+relation_74,entry_72,entry_24,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",72,24
+relation_75,entry_76,entry_79,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",76,79
+relation_76,entry_76,entry_115,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",76,115
+relation_77,entry_76,entry_19,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",76,19
+relation_78,entry_76,entry_26,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",76,26
+relation_79,entry_76,entry_24,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",76,24
+relation_80,entry_121,entry_79,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",121,79
+relation_81,entry_121,entry_115,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",121,115
+relation_82,entry_121,entry_19,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",121,19
+relation_83,entry_121,entry_26,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",121,26
+relation_84,entry_121,entry_24,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",121,24
+relation_85,entry_123,entry_79,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",123,79
+relation_86,entry_123,entry_115,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",123,115
+relation_87,entry_123,entry_19,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",123,19
+relation_88,entry_123,entry_26,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",123,26
+relation_89,entry_123,entry_24,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",123,24
+relation_90,entry_79,entry_78,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",79,78
+relation_91,entry_115,entry_116,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",115,116
+relation_92,entry_19,entry_28,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",19,28
+relation_93,entry_28,entry_27,PCrel,"[{""name"": ""activation"", ""value"": ""-->""}]",28,27
+relation_94,entry_27,entry_29,PCrel,"[{""name"": ""activation"", ""value"": ""-->""}]",27,29
+relation_95,entry_64,entry_27,PCrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""missing interaction"", ""value"": ""-/-""}]",64,27
+relation_96,entry_29,entry_16,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",29,16
+relation_97,entry_16,entry_15,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",16,15
+relation_98,entry_15,entry_131,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",15,131
+relation_99,entry_16,entry_14,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",16,14
+relation_100,entry_14,entry_132,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",14,132
+relation_101,entry_29,entry_18,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",29,18
+relation_102,entry_29,entry_13,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",29,13
+relation_103,entry_29,entry_138,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",29,138
+relation_104,entry_138,entry_144,GErel,"[{""name"": ""expression"", ""value"": ""-->""}]",138,144
+relation_105,entry_26,entry_12,PCrel,"[{""name"": ""activation"", ""value"": ""-->""}]",26,12
+relation_106,entry_12,entry_25,PCrel,"[{""name"": ""activation"", ""value"": ""-->""}]",12,25
+relation_107,entry_25,entry_36,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""indirect effect"", ""value"": ""..>""}]",25,36
+relation_108,entry_24,entry_23,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",24,23
+relation_109,entry_23,entry_22,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",23,22
+relation_110,entry_22,entry_37,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",22,37
+relation_111,entry_37,entry_36,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",37,36
+relation_112,entry_36,entry_35,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",36,35
+relation_113,entry_35,entry_34,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",35,34
+relation_114,entry_69,entry_37,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""missing interaction"", ""value"": ""-/-""}]",69,37
+relation_115,entry_34,entry_87,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}, {""name"": ""phosphorylation"", ""value"": ""+p""}]",34,87
+relation_116,entry_87,entry_83,PPrel,"[{""name"": ""activation"", ""value"": ""-->""}]",87,83
+relation_117,entry_87,entry_84,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",87,84
+relation_118,entry_87,entry_82,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",87,82
+relation_119,entry_84,entry_83,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",84,83
+relation_120,entry_82,entry_83,PPrel,"[{""name"": ""inhibition"", ""value"": ""--|""}]",82,83
+relation_121,entry_78,entry_116,PPrel,"[{""name"": ""binding/association"", ""value"": ""---""}]",78,116
+component_1,entry_169,entry_17,component_of,[],169,17
+component_2,entry_169,entry_9,component_of,[],169,9
+component_3,entry_170,entry_149,component_of,[],170,149
+component_4,entry_170,entry_150,component_of,[],170,150
+component_5,entry_171,entry_7,component_of,[],171,7
+component_6,entry_171,entry_8,component_of,[],171,8
+component_7,entry_172,entry_168,component_of,[],172,168
+component_8,entry_172,entry_21,component_of,[],172,21
