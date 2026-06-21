@@ -14,8 +14,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from backend.agent import agent, cypher
+from backend.endpoints.profiles.stream import router as profiles_router
 
 app = FastAPI(title="LUAD Cell-State GraphRAG")
+
+app.include_router(profiles_router)
 
 # Open CORS for local frontend dev. Tighten allow_origins before any deployment.
 app.add_middleware(
@@ -43,3 +46,4 @@ def graph():
 @app.post("/query")
 def query(req: QueryRequest):
     return agent.run(req.question)
+
