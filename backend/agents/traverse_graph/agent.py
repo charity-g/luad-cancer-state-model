@@ -101,8 +101,8 @@ def run(question, mutations=None, context=None, history=None):
     # Drug-routing evidence (graph lookup + ML fallback) for the uploaded
     # profile. Best-effort: a failure here must never break the chat answer.
     try:
-        routing = drug_routing.route(mutations)
-        evidence = drug_routing.evidence_text(mutations)
+        routing = drug_routing.route(mutations, context)
+        evidence = drug_routing.evidence_text(mutations, context)
     except Exception:
         routing, evidence = [], ""
 

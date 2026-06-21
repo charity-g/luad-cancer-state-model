@@ -137,22 +137,54 @@ def _ml_predictions(graph, gene, pathway_ids, effect):
     return preds
 
 
-def route(mutations):
-    """Per-mutation drug routing: direct drugs + ML pathway-vulnerability.
-
-    Returns a list of dicts; mutations that map to no known gene are skipped.
-    """
-    if not mutations:
-        return []
+def _candidates(mutations, context):
+    """Genes to route, the selected context first (it's the question's subject),
+    then profile mutations. Deduped by gene, preferring whichever resolves to a
+    real graph variant key so we don't lose variant-specific drugs."""
     graph = _graph()
-    items = []
-    for m in mutations:
+    rows = []
+    for c in (context or []):
+        rows.append({"protein": c.get("protein"),
+                     "mutation_id": c.get("mutation_id"),
+                     "estimated_effect": c.get("effect") or c.get("estimated_effect")})
+    rows += list(mutations or [])
+
+    by_gene = {}
+    for m in rows:
         gene = m.get("protein")
         if not gene or gene not in graph["gene_index"]:
             continue
         effect = m.get("estimated_effect") or m.get("effect")
-        mutation_id = m.get("mutation_id")
-        key, kind = _resolve_key(graph, gene, mutation_id, effect, m.get("justification"))
+        key, kind = _resolve_key(graph, gene, m.get("mutation_id"), effect, m.get("justification"))
+        # The classifier is a fallback for REAL mutations. Only route entries
+        # with genuine mutation signal — a resolved graph variant key, or a
+        # gain/loss-of-function call. A bare gene selection (no variant, no
+        # effect) carries nothing for the model to classify, so we skip it
+        # rather than emit a meaningless gene-level guess.
+        if not key and effect not in ("gain_of_function", "loss_of_function"):
+            continue
+        prev = by_gene.get(gene)
+        # Keep the first (context-first order); upgrade only if a later row
+        # resolves a variant key where the kept one did not.
+        if prev is None or (key and not prev["key"]):
+            by_gene[gene] = {"gene": gene, "effect": effect,
+                             "mutation_id": m.get("mutation_id"), "key": key, "kind": kind}
+    return list(by_gene.values())
+
+
+def route(mutations, context=None):
+    """Per-gene drug routing: direct drugs + ML pathway-vulnerability.
+
+    Routes the selected context protein(s) and the uploaded profile mutations.
+    Returns a list of dicts; genes unknown to the drug graph are skipped.
+    """
+    graph = _graph()
+    items = []
+    for cand in _candidates(mutations, context):
+        gene = cand["gene"]
+        effect = cand["effect"]
+        mutation_id = cand["mutation_id"]
+        key, kind = cand["key"], cand["kind"]
 
         if key:
             cov = gap_detector.check_coverage(graph, key)
@@ -184,9 +216,9 @@ def route(mutations):
     return items
 
 
-def evidence_text(mutations):
+def evidence_text(mutations, context=None):
     """Compact text block for the reasoner prompt, or '' if nothing to add."""
-    items = route(mutations)
+    items = route(mutations, context)
     if not items:
         return ""
     lines = [

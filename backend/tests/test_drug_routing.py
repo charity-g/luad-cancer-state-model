@@ -51,6 +51,34 @@ def test_evidence_text_mentions_ml_for_kras_and_drug_for_egfr():
     assert "ML" in text  # ML fallback cited for the KRAS gap
 
 
-def test_empty_mutations_no_evidence_and_no_model_load():
+def test_bare_gene_selection_without_mutation_signal_is_not_routed():
+    # Clicking KRAS on the graph with no variant and no effect carries nothing
+    # for the classifier to do — it must NOT emit a gene-level guess.
+    ctx = [{"protein": "KRAS", "effect": "no_effect", "mutation_id": ""}]
+    assert drug_routing.route([], ctx) == []
+    assert drug_routing.evidence_text([], ctx) == ""
+
+
+def test_selected_context_with_real_effect_is_routed():
+    # A selected node that carries a real driver call (gain_of_function) is a
+    # legitimate mutation input even without a variant string.
+    ctx = [{"protein": "KRAS", "effect": "gain_of_function", "mutation_id": ""}]
+    items = drug_routing.route([], ctx)
+    assert len(items) == 1 and items[0]["gene"] == "KRAS"
+    assert items[0]["ml_predictions"], "a real driver call should produce ML predictions"
+
+
+def test_profile_variant_preferred_over_bare_context_for_same_gene():
+    # KRAS selected (no variant) AND KRAS G12D in the profile -> use the variant.
+    ctx = [{"protein": "KRAS", "effect": "no_effect", "mutation_id": ""}]
+    muts = _muts(("KRAS", "KRAS:p.G12D", "gain_of_function"))
+    items = drug_routing.route(muts, ctx)
+    kras = [i for i in items if i["gene"] == "KRAS"]
+    assert len(kras) == 1
+    assert kras[0]["mutation"] == "KRAS G12D"
+
+
+def test_empty_inputs_no_evidence():
     assert drug_routing.route([]) == []
-    assert drug_routing.evidence_text([]) == ""
+    assert drug_routing.route([], []) == []
+    assert drug_routing.evidence_text([], []) == ""
