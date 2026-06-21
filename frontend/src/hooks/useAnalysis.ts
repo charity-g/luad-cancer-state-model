@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react'
 import type { MutationEntry, HydratedMutation } from '../types'
+import { API_BASE } from '../lib/api'
 
 export type AnalysisPhase = 'idle' | 'streaming' | 'done' | 'error'
 
@@ -20,7 +21,7 @@ export function useAnalysis() {
 
     let resp: Response
     try {
-      resp = await fetch('/api/profiles/stream', { method: 'POST', body })
+      resp = await fetch(`${API_BASE}/api/profiles/stream`, { method: 'POST', body })
     } catch {
       setError('Cannot connect to the backend. Is the server running on port 8000?')
       setPhase('error')

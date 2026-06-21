@@ -616,7 +616,7 @@ export default function PathwayGraph({ profileId, highlights: propHighlights = [
             </div>
 
             {/* Effect badge for Mutation nodes */}
-            {dynNode.nodeLabel === 'Mutation' && dynNode.props.estimated_effect && (
+            {dynNode.nodeLabel === 'Mutation' && Boolean(dynNode.props.estimated_effect) && (
               <div className="mx-3 mb-2 rounded-lg px-3 py-1.5"
                 style={{
                   backgroundColor: (effectNodeColor[dynNode.props.estimated_effect as EffectType] ?? effectNodeColor.uncertain) + '18',
@@ -630,7 +630,7 @@ export default function PathwayGraph({ profileId, highlights: propHighlights = [
                     style={{ color: effectNodeColor[dynNode.props.estimated_effect as EffectType] ?? effectNodeColor.uncertain }}>
                     {effectLabel[dynNode.props.estimated_effect as EffectType] ?? String(dynNode.props.estimated_effect)}
                   </span>
-                  {dynNode.props.confidence && (
+                  {Boolean(dynNode.props.confidence) && (
                     <span className="ml-auto text-[10px] text-slate-400">{String(dynNode.props.confidence)} conf.</span>
                   )}
                 </div>
@@ -668,7 +668,7 @@ export default function PathwayGraph({ profileId, highlights: propHighlights = [
                 .filter(([, v]) => v)
                 .map(([label, val]) => (
                   <div key={String(label)} className="py-2">
-                    <p className="text-[10px] font-medium uppercase tracking-wider text-slate-500">{label}</p>
+                    <p className="text-[10px] font-medium uppercase tracking-wider text-slate-500">{String(label)}</p>
                     <p className="mt-0.5 text-xs text-slate-300">{String(val)}</p>
                   </div>
                 ))}
@@ -691,7 +691,7 @@ export default function PathwayGraph({ profileId, highlights: propHighlights = [
                       Dive deeper with agent
                     </button>
                   )}
-                  {onViewStructure && dynNode.props.uniprot_id && (
+                  {onViewStructure && Boolean(dynNode.props.uniprot_id) && (
                     <button
                       onClick={() => {
                         const uniprotAc = String(dynNode.props.uniprot_id)

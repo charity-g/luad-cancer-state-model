@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { API_BASE } from '../lib/api'
 
 export interface DomainRange {
   name: string
@@ -43,7 +44,7 @@ export function useProteinDomains(uniprotAc: string | null) {
     let cancelled = false
     setState({ data: null, loading: true, error: null })
 
-    fetch(`/api/proteins/${ac}/domains`)
+    fetch(`${API_BASE}/api/proteins/${ac}/domains`)
       .then(async (resp) => {
         if (!resp.ok) {
           const body = await resp.json().catch(() => ({})) as Record<string, unknown>
