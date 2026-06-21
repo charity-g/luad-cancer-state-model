@@ -1,20 +1,19 @@
 
 from __future__ import annotations
-import time
 import asyncio
-import csv
 import hashlib
-import io
 import json
+import logging
 from typing import Any
 
-from fastapi import APIRouter, File, UploadFile
+from fastapi import APIRouter, File, HTTPException, UploadFile
 from fastapi.responses import StreamingResponse
+from pydantic import BaseModel
 
 from backend.agents.create_graph.model import MutationProteinEffect, ProteinRecord
 from backend.agents.create_graph.extract_mutations_from_profile import extract_mutations_from_profile
 from backend.agents.create_graph.hydrate_mutation import hydrate_mutation
-from backend.agents.create_graph.extract_protein_for_mutation import extract_protein_for_mutation
+from backend.agents.create_graph.extract_protein_for_mutation import extract_protein_for_mutation, ProteinResolutionError
 from backend.agents.create_graph.extract_pathways_for_protein import extract_pathways_for_protein_async as extract_pathways_for_protein
 from backend.agents.create_graph.process_pathways import (
     fetch_pathway_information,
@@ -24,9 +23,9 @@ from backend.agents.create_graph.graph import (
     add_mutation_node,
     add_protein_node,
     link_mutation_to_protein,
-    update_pathway) 
+    update_pathway)
 
-
+log = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -50,6 +49,49 @@ def protein_graph_id(protein: ProteinRecord) -> str:
 @router.post("/profiles/test")
 def test_endpoint():
     return init_graph("test")
+
+
+class RetryRequest(BaseModel):
+    # The already-hydrated mutation payload from the frontend.
+    # Sent as-is so the retry skips re-hydration and goes straight to
+    # protein extraction.
+    mutation: dict[str, Any]
+
+
+@router.post("/profiles/{profile_id}/mutations/{mutation_id}/retry")
+async def retry_mutation(profile_id: str, mutation_id: str, body: RetryRequest):
+    """
+    Re-run protein extraction for a single failed mutation and write the
+    result into the graph.  Returns the updated hydrated mutation payload.
+    """
+    try:
+        hydrated = MutationProteinEffect.model_validate(body.mutation)
+    except Exception as exc:
+        raise HTTPException(status_code=422, detail=f"Invalid mutation payload: {exc}")
+
+    # Ensure the mutation node exists in the graph (idempotent upsert).
+    try:
+        await asyncio.to_thread(add_mutation_node, hydrated, profile_id)
+    except Exception as exc:
+        log.warning("retry: graph mutation upsert failed for %s: %s", mutation_id, exc)
+
+    try:
+        protein = await extract_protein_for_mutation(hydrated)
+    except ProteinResolutionError as exc:
+        raise HTTPException(status_code=422, detail=str(exc))
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"Protein extraction failed: {exc}")
+
+    try:
+        await asyncio.to_thread(add_protein_node, protein, profile_id)
+        await asyncio.to_thread(link_mutation_to_protein, hydrated, protein)
+    except Exception as exc:
+        log.warning("retry: graph write failed for protein %s: %s", protein.gene_symbol, exc)
+
+    return {
+        "hydrated": hydrated.model_dump(),
+        "protein":  protein.model_dump(),
+    }
 
 
 @router.post("/profiles/stream")

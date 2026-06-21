@@ -12,8 +12,6 @@ log = logging.getLogger(__name__)
 protein_router = APIRouter(prefix="/proteins", tags=["proteins"])
 
 UNIPROT_API_URL = "https://rest.uniprot.org/uniprotkb"
-RCSB_SEARCH_URL = "https://search.rcsb.org/rcsbsearch/v2/query"
-RCSB_ENTRY_URL  = "https://data.rcsb.org/rest/v1/core/entry"
 PDBE_SIFTS_URL  = "https://www.ebi.ac.uk/pdbe/api/mappings/uniprot"
 
 # Simple in-process cache — domain annotations don't change between requests.
@@ -108,60 +106,44 @@ def _extract_domains(uniprot_json: dict) -> list[dict]:
     return domains
 
 
-async def _best_pdb_for_uniprot(ac: str, client: httpx.AsyncClient) -> tuple[str, str] | tuple[None, None]:
+def _pdb_from_uniprot(uniprot_json: dict) -> tuple[str, str] | tuple[None, None]:
     """
-    Query RCSB to find the best PDB entry for a UniProt AC.
-    Returns (pdb_id, chain) or (None, None) when no structure exists.
-    Prefers human (taxonomy 9606) entries; falls back to any organism.
+    Extract the best PDB cross-reference directly from a UniProt entry.
+
+    UniProt curates these links under `uniProtKBCrossReferences` with
+    database='PDB'. Each entry carries a Chains property like "A/B=1-100"
+    from which we pull the first chain letter. X-ray entries are preferred
+    over NMR/EM; within each method the first (highest-quality) entry wins.
+    Returns (pdb_id, chain) or (None, None).
     """
-    query = {
-        "query": {
-            "type": "terminal",
-            "service": "text",
-            "parameters": {
-                "attribute": "rcsb_polymer_entity_container_identifiers.uniprot_ids",
-                "operator": "in",
-                "value": [ac],
-            },
-        },
-        "return_type": "polymer_entity",
-        "request_options": {
-            "paginate": {"start": 0, "rows": 20},
-            "sort": [{"sort_by": "score", "direction": "desc"}],
-        },
-    }
-    try:
-        resp = await client.post(RCSB_SEARCH_URL, json=query, timeout=10)
-        resp.raise_for_status()
-        hits = resp.json().get("result_set", [])
-    except Exception as exc:
-        log.warning("RCSB search failed for %s: %s", ac, exc)
+    refs = uniprot_json.get("uniProtKBCrossReferences", [])
+    pdb_refs = [r for r in refs if r.get("database") == "PDB"]
+    if not pdb_refs:
         return None, None
 
-    if not hits:
-        return None, None
+    def method_rank(ref: dict) -> int:
+        props = {p["key"]: p["value"] for p in ref.get("properties", [])}
+        m = props.get("Method", "").lower()
+        if "x-ray" in m:
+            return 0
+        if "em" in m:
+            return 1
+        return 2  # NMR / other
 
-    # hits are polymer entity IDs like "2ITX_1" — first part is PDB id
-    for hit in hits:
-        entity_id: str = hit.get("identifier", "")
-        if "_" in entity_id:
-            pdb_id = entity_id.split("_")[0].lower()
-            # Fetch chain info from RCSB entry
-            try:
-                r2 = await client.get(f"{RCSB_ENTRY_URL}/{pdb_id.upper()}", timeout=10)
-                r2.raise_for_status()
-                # Use the first polymer chain asym id
-                entry = r2.json()
-                chains = (
-                    entry.get("rcsb_entry_container_identifiers", {})
-                         .get("polymer_entity_ids", [])
-                )
-                # We just need a chain letter — fall through to SIFTS for real mapping
-                return pdb_id, "A"
-            except Exception:
-                return pdb_id, "A"
+    pdb_refs.sort(key=method_rank)
+    best = pdb_refs[0]
+    pdb_id = best["id"].lower()
 
-    return None, None
+    # Parse first chain letter from e.g. "A/B=1-100" or "A=5-300, B=5-300"
+    chain = "A"
+    props = {p["key"]: p["value"] for p in best.get("properties", [])}
+    chains_str = props.get("Chains", "")
+    if chains_str:
+        first_token = chains_str.split(",")[0].strip()          # "A/B=1-100"
+        chain_part  = first_token.split("=")[0].strip()         # "A/B"
+        chain       = chain_part.split("/")[0].strip() or "A"   # "A"
+
+    return pdb_id, chain
 
 
 async def _sifts_offset(pdb_id: str, ac: str, client: httpx.AsyncClient) -> dict[int, int] | None:
@@ -250,16 +232,16 @@ async def get_protein_domains(protein_id: str):
 
         raw_domains = _extract_domains(uniprot_data)
 
+        # 2. Best PDB structure — read directly from UniProt cross-references
+        #    (always check, even when there are no annotated domains)
+        pdb_id, chain = _pdb_from_uniprot(uniprot_data)
+
         if not raw_domains:
-            result = DomainsResponse(uniprot_ac=ac, domains=[])
+            result = DomainsResponse(uniprot_ac=ac, pdb_id=pdb_id, chain=chain, domains=[])
             _domains_cache[ac] = result
             return result
 
-        # 2. Best PDB structure
-        pdb_id, chain = await _best_pdb_for_uniprot(ac, client)
-
         if pdb_id is None:
-            # No structure — return UniProt ranges without PDB coords
             result = DomainsResponse(
                 uniprot_ac=ac,
                 domains=[DomainRange(**d) for d in raw_domains],
@@ -274,7 +256,6 @@ async def get_protein_domains(protein_id: str):
             domains = _apply_sifts(raw_domains, offset_map)
             sifts_available = True
         else:
-            # Fall back: use UniProt numbers as PDB numbers (often close for kinases)
             domains = [
                 DomainRange(**d, pdb_start=d["uniprot_start"], pdb_end=d["uniprot_end"])
                 for d in raw_domains

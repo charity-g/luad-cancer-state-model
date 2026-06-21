@@ -8,6 +8,7 @@ import AgentPanel from '../components/AgentPanel'
 import PathwayGraph from '../components/PathwayGraph'
 import SubgraphView from '../components/SubgraphView'
 import DrugPanel from '../components/DrugPanel'
+import StructureModal, { type StructureTarget } from '../components/StructureModal'
 import type { HydratedMutation, ContextCard, DrugHit } from '../types'
 
 type GraphTab = 'pathway' | 'agent' | 'drugs'
@@ -17,7 +18,7 @@ export default function Model() {
   // profileId from URL takes precedence (history load); analysis stream may also set one
   const urlProfileId = searchParams.get('profileId')
 
-  const { mutations: streamMutations, phase, error: analysisError, profileId: streamProfileId, analyze, reset } = useAnalysis()
+  const { mutations: streamMutations, phase, error: analysisError, profileId: streamProfileId, analyze, reset, patchMutation } = useAnalysis()
   const activeProfileId = streamProfileId ?? urlProfileId
 
   // When a profile is loaded from history (URL param, no active stream), pull
@@ -36,6 +37,11 @@ export default function Model() {
   const [pendingContext, setPendingContext] = useState<ContextCard | null>(null)
   const [dismissedError, setDismissedError] = useState(false)
   const [graphTab, setGraphTab] = useState<GraphTab>('pathway')
+  const [structureTarget, setStructureTarget] = useState<StructureTarget | null>(null)
+
+  function handleViewStructure(uniprotAc: string, proteinName: string, mutationResidue: number | null) {
+    setStructureTarget({ uniprotAc, proteinName, mutationResidue })
+  }
 
   const getHydrated = useCallback(
     (): HydratedMutation[] => mutations.filter((m) => m.hydrated).map((m) => m.hydrated!),
@@ -233,6 +239,7 @@ export default function Model() {
                     setPendingContext(card)
                     setPanelVisible(true)
                   }}
+                  onViewStructure={handleViewStructure}
                 />
               ) : (
                 <div className="flex flex-1 overflow-hidden bg-slate-900 p-3">
@@ -266,12 +273,21 @@ export default function Model() {
                 pendingContext={pendingContext}
                 onClearPendingContext={() => setPendingContext(null)}
                 onClearChat={clear}
+                profileId={activeProfileId}
+                onMutationPatched={patchMutation}
+                onViewStructure={handleViewStructure}
               />
             )}
           </div>
         )}
       </div>
 
+      {structureTarget && (
+        <StructureModal
+          target={structureTarget}
+          onClose={() => setStructureTarget(null)}
+        />
+      )}
     </div>
   )
 }

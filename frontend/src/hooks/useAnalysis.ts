@@ -177,6 +177,12 @@ export function useAnalysis() {
     setPhase('done')
   }, [])
 
+  const patchMutation = useCallback((mutation_id: string, patch: Partial<MutationEntry>) => {
+    setMutations((prev) =>
+      prev.map((m) => (m.mutation_id === mutation_id ? { ...m, ...patch } : m))
+    )
+  }, [])
+
   const reset = useCallback(() => {
     setMutations([])
     setPhase('idle')
@@ -184,5 +190,5 @@ export function useAnalysis() {
     setProfileId(null)
   }, [])
 
-  return { mutations, phase, error, profileId, analyze, reset }
+  return { mutations, phase, error, profileId, analyze, reset, patchMutation }
 }
