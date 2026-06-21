@@ -16,16 +16,10 @@ from __future__ import annotations
 
 import contextlib
 import io
-import sys
-from pathlib import Path
 
-_PIPELINE_DIR = Path(__file__).resolve().parents[2] / "agent_pipeline"
-if str(_PIPELINE_DIR) not in sys.path:
-    sys.path.insert(0, str(_PIPELINE_DIR))
-
-import graph_lookup  # noqa: E402  (agent_pipeline, via sys.path above)
-import gap_detector  # noqa: E402
-import ml_classifier  # noqa: E402
+import backend.agents.classifier.graph_lookup as graph_lookup
+import backend.agents.classifier.gap_detector as gap_detector
+import backend.agents.classifier.ml_classifier as ml_classifier
 
 # Lazily built and cached: loading the graph and training the (tiny) model is
 # done once per process, on first use, so server startup and mutation-free

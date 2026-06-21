@@ -142,23 +142,3 @@ def mutation_to_drugs(graph: dict, mutation: str) -> dict[str, Any]:
     drugs.sort(key=lambda d: (d["rank"], d["drug"]))
     return {**base, "drugs": drugs}
 
-
-def validate_graph(graph: dict) -> list[str]:
-    warnings: list[str] = []
-    for mutation, gene in graph["mutation_index"].items():
-        if gene not in graph["gene_index"]:
-            warnings.append(f"mutation {mutation!r} -> gene {gene!r} missing from gene_index")
-    return warnings
-
-
-if __name__ == "__main__":
-    g = load_graph()
-    for w in validate_graph(g):
-        print("WARN:", w)
-
-    for mut in ["EGFR L858R", "KRAS G12D", "KRAS G12C", "BRAF V600E", "ALK fusion", "TP53 loss"]:
-        result = mutation_to_drugs(g, mut)
-        print(f"\n=== {mut} (gene={result.get('gene')}) ===")
-        for d in result["drugs"][:6]:
-            tag = "direct" if d["match_type"] == "direct_target" else "pathway"
-            print(f"  [{tag}] {d['drug']}: {d['pathways_covered']}")
