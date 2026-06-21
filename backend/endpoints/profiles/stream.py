@@ -66,7 +66,7 @@ async def process_profile(file: UploadFile = File(...)):
 
         for mutation in mutations:
             time.sleep(1)
-            hydrated_mutation = hydrate_mutation(mutation)
+            hydrated_mutation = await hydrate_mutation(mutation)
 
             yield sse(
                 "mutation_hydrated",
