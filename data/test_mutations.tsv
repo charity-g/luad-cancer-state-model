@@ -1,0 +1,9 @@
+gene	chromosome	position	ref	alt	effect	protein_change
+EGFR	7	55259515	T	G	activating	p.L858R
+KRAS	12	25398284	C	A	activating	p.G12C
+TP53	17	7577121	G	A	inactivating	p.R248*
+BRAF	7	140453136	T	A	activating	p.V600E
+PIK3CA	3	178936091	G	A	activating	p.H1047R
+STK11	19	1223125	GG	-	inactivating	p.G45fs
+PTEN	10	89692905	C	T	inactivating	p.R130*
+RB1	13	48877887	G	A	inactivating	p.R455*

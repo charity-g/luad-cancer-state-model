@@ -1,8 +1,8 @@
-import { useState, useCallback, useMemo, useEffect, useRef } from 'react'
+import { useState, useCallback, useMemo, useEffect, useRef, type KeyboardEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useAnalysis } from '../hooks/useAnalysis'
 import { useProfileGraph } from '../hooks/useProfileGraph'
-import { useChat } from '../hooks/useChat'
+import { useChat, type ChatMessage } from '../hooks/useChat'
 import UploadBox from '../components/UploadBox'
 import AgentPanel from '../components/AgentPanel'
 import PathwayGraph from '../components/PathwayGraph'
@@ -12,6 +12,186 @@ import StructureModal, { type StructureTarget } from '../components/StructureMod
 import type { HydratedMutation, ContextCard, DrugHit } from '../types'
 
 type GraphTab = 'pathway' | 'agent' | 'drugs'
+
+const STARTER_PROMPTS = [
+  'What pathways are activated in lung adenocarcinoma?',
+  'How does EGFR mutation affect downstream signaling?',
+  'Which drugs target KRAS G12C?',
+  'Explain the role of P53 in tumor suppression.',
+]
+
+function IdleSplash({
+  onFile, messages, busy, onSend, onStop, onClear,
+}: {
+  onFile: (f: File) => void
+  messages: ChatMessage[]
+  busy: boolean
+  onSend: (text: string) => void
+  onStop: () => void
+  onClear: () => void
+}) {
+  const chatRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const [draft, setDraft] = useState('')
+
+  useEffect(() => {
+    if (chatRef.current) chatRef.current.scrollTop = chatRef.current.scrollHeight
+  }, [messages])
+
+  function handleSend() {
+    if (!draft.trim() || busy) return
+    onSend(draft.trim())
+    setDraft('')
+  }
+
+  function handleKey(e: KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend() }
+  }
+
+  return (
+    <div className="flex flex-1 flex-col overflow-hidden">
+      {/* Top splash */}
+      <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
+        <svg className="mb-4 h-12 w-12 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1}
+            d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" />
+        </svg>
+        <h2 className="text-lg font-semibold text-slate-700">Scientific Reasoning Workspace</h2>
+        <p className="mt-2 max-w-lg text-sm text-slate-400">
+          Upload a mutation profile to visualize affected pathways, or ask the agent
+          questions about lung cancer biology directly.
+        </p>
+      </div>
+
+      {/* Bottom half: Upload (left) + Chat (right) */}
+      <div className="flex h-1/2 flex-shrink-0 border-t border-slate-200">
+        {/* LEFT: Upload */}
+        <div className="flex w-1/2 flex-col border-r border-slate-200 bg-white">
+          <div className="flex items-center gap-2 border-b border-slate-100 px-4 py-2.5">
+            <svg className="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+            </svg>
+            <span className="text-xs font-semibold text-slate-700">Upload Mutation Profile</span>
+          </div>
+          <div className="flex flex-1 items-center justify-center p-4">
+            <UploadBox onFile={onFile} hasData={false} standalone />
+          </div>
+        </div>
+
+        {/* RIGHT: Chat */}
+        <div className="flex w-1/2 flex-col bg-white">
+          <div className="flex items-center gap-2 border-b border-slate-100 px-4 py-2.5">
+            <svg className="h-4 w-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            <span className="text-xs font-semibold text-slate-700">Ask the Agent</span>
+            {messages.length > 0 && (
+              <button
+                onClick={onClear}
+                className="ml-auto flex items-center gap-1 rounded-md px-2 py-1 text-[10px] text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors"
+                title="Clear chat"
+              >
+                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                Clear
+              </button>
+            )}
+          </div>
+
+          <div ref={chatRef} className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
+            {messages.length === 0 ? (
+              <div className="flex flex-col items-center justify-center h-full text-center">
+                <p className="text-xs text-slate-400 mb-3">Ask about LUAD pathways, mutations, or drug targets</p>
+                <div className="space-y-1.5 w-full max-w-sm">
+                  {STARTER_PROMPTS.map((prompt) => (
+                    <button
+                      key={prompt}
+                      onClick={() => { setDraft(prompt); inputRef.current?.focus() }}
+                      className="block w-full rounded-lg border border-slate-200 px-3 py-2 text-left text-xs text-slate-500 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-700 transition-colors"
+                    >
+                      {prompt}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              messages.map((msg) => (
+                <div key={msg.id} className={`flex gap-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  {msg.role === 'agent' && (
+                    <div className="mt-1 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-blue-50">
+                      <svg className="h-3 w-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                          d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                      </svg>
+                    </div>
+                  )}
+                  <div className={`max-w-[85%] rounded-2xl px-3.5 py-2 text-sm leading-relaxed ${
+                    msg.role === 'user'
+                      ? 'rounded-tr-sm bg-slate-900 text-white'
+                      : msg.isError
+                        ? 'rounded-tl-sm border border-red-100 bg-red-50 text-xs text-red-700'
+                        : 'rounded-tl-sm bg-slate-50 text-slate-700'
+                  }`}>
+                    {msg.content}
+                    {msg.streaming && msg.content !== '' && (
+                      <span className="ml-1 inline-block h-3.5 w-0.5 animate-pulse bg-slate-400 align-middle" />
+                    )}
+                    {msg.streaming && msg.content === '' && (
+                      <span className="flex gap-1">
+                        {[0, 1, 2].map((i) => (
+                          <span key={i} className="h-1.5 w-1.5 rounded-full bg-slate-300 animate-bounce"
+                            style={{ animationDelay: `${i * 0.15}s` }} />
+                        ))}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
+          <div className="flex-shrink-0 border-t border-slate-100 px-3 py-2.5">
+            <div className="flex items-center gap-2">
+              <input
+                ref={inputRef}
+                value={draft}
+                onChange={(e) => setDraft(e.target.value)}
+                onKeyDown={handleKey}
+                disabled={busy}
+                placeholder={busy ? 'Agent is thinking...' : 'Ask about lung cancer biology...'}
+                className="flex-1 rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 outline-none focus:border-slate-300 focus:bg-white disabled:opacity-50"
+              />
+              {busy ? (
+                <button
+                  onClick={onStop}
+                  className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl bg-rose-600 text-white transition-colors hover:bg-rose-500"
+                >
+                  <svg className="h-3 w-3" viewBox="0 0 24 24" fill="currentColor">
+                    <rect x="6" y="6" width="12" height="12" rx="2" />
+                  </svg>
+                </button>
+              ) : (
+                <button
+                  onClick={handleSend}
+                  disabled={!draft.trim()}
+                  className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl bg-slate-900 text-white transition-colors hover:bg-slate-700 disabled:opacity-30"
+                >
+                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export default function Model() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -131,22 +311,14 @@ export default function Model() {
       {/* ── Main workspace ──────────────────────────────────────── */}
       <div className="flex flex-1 overflow-hidden">
         {!hasData ? (
-          // idle splash
-          <div className="flex flex-1 flex-col items-center justify-center gap-6 px-6">
-            <div className="text-center">
-              <svg className="mx-auto mb-4 h-12 w-12 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1}
-                  d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" />
-              </svg>
-              <h2 className="text-lg font-semibold text-slate-700">Scientific Reasoning Workspace</h2>
-              <p className="mt-2 max-w-sm text-sm text-slate-700">
-                Upload a mutation profile CSV to identify variants, annotate protein effects, and visualize affected pathways.
-              </p>
-            </div>
-            <div className="w-full max-w-md">
-              <UploadBox onFile={handleFile} hasData={false} standalone />
-            </div>
-          </div>
+          <IdleSplash
+            onFile={handleFile}
+            messages={messages}
+            busy={busy}
+            onSend={(text: string) => send(text, [])}
+            onStop={stop}
+            onClear={clear}
+          />
         ) : graphLoading ? (
           <div className="flex flex-1 items-center justify-center gap-2 text-sm text-slate-400">
             <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
