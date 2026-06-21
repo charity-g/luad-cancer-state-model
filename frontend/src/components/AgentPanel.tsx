@@ -412,7 +412,7 @@ export default function AgentPanel({
                     }}
                     className="flex items-center gap-1 rounded-md border border-slate-200 px-2 py-1 text-[10px] font-medium text-slate-600 transition-colors hover:bg-slate-50"
                   >
-                    Dive deep with AI context
+                    Add all
                   </button>
                   {checkedIds.size > 0 && (
                     <button

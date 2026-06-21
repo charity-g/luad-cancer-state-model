@@ -3,8 +3,8 @@ export default function Acknowledgements() {
     <div className="mx-auto w-full max-w-3xl px-4 py-10 space-y-10">
 
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-white">Acknowledgements</h1>
-        <p className="mt-2 text-sm text-white/70">
+        <h1 className="text-2xl font-bold tracking-tight text-slate-900">Acknowledgements</h1>
+        <p className="mt-2 text-sm text-slate-700">
           This work draws on open databases, research resources, and tools made freely available
           by the scientific community.
         </p>
@@ -12,7 +12,7 @@ export default function Acknowledgements() {
 
       {/* Databases */}
       <section>
-        <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-white/50">
+        <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-slate-500">
           Databases &amp; Data Sources
         </h2>
         <div className="space-y-3">
@@ -54,19 +54,19 @@ export default function Acknowledgements() {
                 'Predicted 3-D protein structures rendered in the structure viewer for mutated proteins with known UniProt accessions.',
             },
           ].map((item) => (
-            <div key={item.name} className="rounded-lg border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-3">
+            <div key={item.name} className="rounded-lg border border-slate-200 bg-white/80 backdrop-blur-sm px-4 py-3">
               <div className="flex items-baseline gap-2 flex-wrap">
                 <a
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm font-semibold text-white hover:text-white/75 hover:underline"
+                  className="text-sm font-semibold text-slate-800 hover:text-blue-700 hover:underline"
                 >
                   {item.name}
                 </a>
-                <span className="font-mono text-[10px] text-white/40">{item.url}</span>
+                <span className="font-mono text-[10px] text-slate-400">{item.url}</span>
               </div>
-              <p className="mt-1 text-xs leading-relaxed text-white/65">{item.description}</p>
+              <p className="mt-1 text-xs leading-relaxed text-slate-600">{item.description}</p>
             </div>
           ))}
         </div>
@@ -74,7 +74,7 @@ export default function Acknowledgements() {
 
       {/* Tools & Libraries */}
       <section>
-        <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-white/50">
+        <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-slate-500">
           Tools &amp; Libraries
         </h2>
         <div className="space-y-3">
@@ -115,28 +115,28 @@ export default function Acknowledgements() {
                 'High-performance 3-D molecular visualisation library embedded in the structure viewer.',
             },
           ].map((item) => (
-            <div key={item.name} className="rounded-lg border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-3">
+            <div key={item.name} className="rounded-lg border border-slate-200 bg-white/80 backdrop-blur-sm px-4 py-3">
               <div className="flex items-baseline gap-2 flex-wrap">
                 <a
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm font-semibold text-white hover:text-white/75 hover:underline"
+                  className="text-sm font-semibold text-slate-800 hover:text-blue-700 hover:underline"
                 >
                   {item.name}
                 </a>
-                <span className="font-mono text-[10px] text-white/40">{item.url}</span>
+                <span className="font-mono text-[10px] text-slate-400">{item.url}</span>
               </div>
-              <p className="mt-1 text-xs leading-relaxed text-white/65">{item.description}</p>
+              <p className="mt-1 text-xs leading-relaxed text-slate-600">{item.description}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Disclaimer */}
-      <section className="rounded-xl border border-amber-300/40 bg-amber-400/15 backdrop-blur-sm px-4 py-4 text-xs leading-relaxed text-amber-100">
+      <section className="rounded-xl border border-amber-200 bg-amber-50/90 backdrop-blur-sm px-4 py-4 text-xs leading-relaxed text-amber-800">
         <p className="font-semibold">Research use only</p>
-        <p className="mt-1 text-amber-100/80">
+        <p className="mt-1 text-amber-700">
           This tool is intended for exploratory research and educational purposes. It does not
           constitute clinical advice and should not be used to guide patient care. Variant effect
           predictions are computational estimates and may be incorrect.
