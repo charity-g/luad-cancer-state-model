@@ -33,52 +33,30 @@ Upload a tumor mutation profile, see it mapped onto a biological pathway graph, 
 
 ## 2. Architecture
 
-```
-┌──────────────────────────────────────────────────────────────────────────┐
-│  BROWSER  —  React 19 + Vite + Tailwind  (deployed on Vercel)              │
-│                                                                            │
-│   Home → Model page                                                        │
-│   ├─ UploadBox ........ upload mutation CSV                                 │
-│   ├─ PathwayGraph ..... interactive gene/pathway network (custom SVG)      │
-│   ├─ AgentPanel ....... chat (useChat)                                      │
-│   │   ├─ SubgraphView . the agent's reasoning subgraph (custom SVG)        │
-│   │   └─ DrugPanel .... direct drugs + ML pathway-vulnerability            │
-│   └─ ProteinViewer / StructureModal ... 3D protein structure + domains     │
-└───────────────────────────────┬────────────────────────────────────────── ┘
-                                 │  fetch  ${VITE_API_BASE}/api/...
-                                 ▼
-┌──────────────────────────────────────────────────────────────────────────┐
-│  BACKEND  —  FastAPI + Uvicorn  (deployed on Render)                        │
-│  (_StripApiPrefix middleware maps /api/* → bare routes)                     │
-│                                                                            │
-│  POST /query  ──►  agents/traverse_graph/agent.run()                        │
-│     1. ground profile + history                                            │
-│     2. planner.plan ........ text2Cypher  ───────────────┐                 │
-│     3. cypher.run_read ..... read-only query  ──────────┐│                 │
-│     4. _enrich_edges ....... connect retrieved nodes    ││                 │
-│     5. drug_routing + ttd .. drug lookup + ML fallback  ││                 │
-│     6. reasoner.reason ..... mechanistic report + verdict│                 │
-│                                                          ││                 │
-│  POST /profiles/stream ──► create_graph ingestion (SSE)  ││                 │
-│  GET  /graph, /profiles, /profiles/{id}/graph|ppi        ││                 │
-│  GET  /proteins/{id}, /proteins/{id}/domains             ││                 │
-└──────────────────────────────────────────────┬──────────┘│                 │
-                                                │           │                 │
-                  ┌─────────────────────────────┘           └──────────────┐  │
-                  ▼                                                         ▼  │
-        ┌────────────────────┐                              ┌─────────────────┴─┐
-        │  Neo4j Aura         │                              │  Anthropic Claude  │
-        │  (HTTP Query API,   │                              │  (Opus 4.8):       │
-        │   port 443)         │                              │  planner, reasoner,│
-        │  Gene/Protein/      │                              │  mutation hydration│
-        │  Pathway/Mutation   │                              └────────────────────┘
-        └────────────────────┘
-                  ▲
-        ┌─────────┴───────────────────────────────────────┐
-        │  agent_pipeline/  (drug-routing, JSON-graph based)│
-        │   graph_lookup → gap_detector → ml_classifier      │
-        │   (scikit-learn LogisticRegression on DepMap LUAD) │
-        └───────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    subgraph BROWSER["Browser — React 19 / Vite / Tailwind (Vercel)"]
+        UI["Home -> Model page<br/>UploadBox · PathwayGraph (SVG)<br/>AgentPanel · SubgraphView · DrugPanel<br/>ProteinViewer / StructureModal (3Dmol.js)"]
+    end
+
+    subgraph BACKEND["Backend — FastAPI / Uvicorn + /api-strip middleware (Render)"]
+        QUERY["POST /query  ->  agent.run()<br/>1. ground profile + history<br/>2. planner.plan (text2Cypher)<br/>3. cypher.run_read (read-only)<br/>4. _enrich_edges<br/>5. drug_routing + ttd<br/>6. reasoner.reason -> report + verdict"]
+        STREAM["POST /profiles/stream<br/>create_graph ingestion (SSE)"]
+        REST["GET /graph · /profiles<br/>/profiles/:id/graph · /ppi<br/>/proteins/:id · /domains"]
+    end
+
+    PIPELINE["agent_pipeline — drug routing<br/>graph_lookup -> gap_detector -> ml_classifier<br/>scikit-learn · DepMap LUAD"]
+    NEO[("Neo4j Aura<br/>HTTP Query API · port 443<br/>Gene · Protein · Pathway · Mutation")]
+    LLM["Anthropic Claude Opus 4.8<br/>planner · reasoner · hydration"]
+
+    UI -- "HTTPS /api/... (VITE_API_BASE)" --> BACKEND
+
+    QUERY --> NEO
+    QUERY --> LLM
+    QUERY --> PIPELINE
+    STREAM --> NEO
+    STREAM --> LLM
+    REST --> NEO
 ```
 
 The graph is the source of truth; the LLM translates, reasons, and explains — it never invents entities outside the retrieved subgraph.
