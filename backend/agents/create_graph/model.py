@@ -53,6 +53,7 @@ class MutationProteinEffect(BaseModel):
 	mutation_id: str
 	protein: str
 	identifiers: dict[str, Any] = Field(default_factory=dict)
+	# one of  "estimated_effect": "<loss_of_function|gain_of_function|inactivating|activating|uncertain>"
 	estimated_effect: str
 	confidence: str
 	justification: dict[str, Any] = Field(default_factory=dict)
@@ -60,3 +61,9 @@ class MutationProteinEffect(BaseModel):
 	class Config:
 		extra = "allow"
 
+class GuessMutation(BaseModel):	
+	mutation_id: str
+	protein: str
+	
+	class Config:
+		extra = "allow"

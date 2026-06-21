@@ -49,7 +49,7 @@ def protein_graph_id(protein: ProteinRecord) -> str:
 
 @router.post("/profiles/test")
 def test_endpoint():
-    return init_graph()
+    return init_graph("test")
 
 
 @router.post("/profiles/stream")
@@ -73,11 +73,12 @@ async def process_profile(file: UploadFile = File(...)):
             {
                 "profile_id": profile_id,
                 "count": len(mutations),
+                "mutations": mutations,
                 "message": f"Extracted {len(mutations)} mutation profiles.",
             },
         )
 
-        profile_pathway: list[dict[str, Any]] = init_graph()
+        profile_pathway: list[dict[str, Any]] = init_graph(profile_id)
 
         for mutation in mutations:
             time.sleep(1)
@@ -92,11 +93,12 @@ async def process_profile(file: UploadFile = File(...)):
                     "message": f"Hydrated mutation {mutation.get('mutation_id', '')}.",
                 },
             )
-            add_mutation_node(hydrated_mutation)
+            print_debug(hydrated_mutation)
+            add_mutation_node(hydrated_mutation, profile_id)
 
             protein = None
             try:
-                protein = extract_protein_for_mutation(hydrated_mutation)
+                protein = await extract_protein_for_mutation(hydrated_mutation)
             except Exception as exc:
                 yield sse(
                     "error",
@@ -117,24 +119,27 @@ async def process_profile(file: UploadFile = File(...)):
                     "message": f"Mapped mutation {mutation.get('mutation_id', '')} to protein {protein_graph_id(protein)}.",
                 },
             )
-            add_protein_node(protein)
+            print_debug(protein)
+            add_protein_node(protein, profile_id)
             link_mutation_to_protein(hydrated_mutation, protein)
 
-            pathways = extract_pathways_for_protein(protein)
+            pathway_ids = await extract_pathways_for_protein(protein)
+            
 
             yield sse(
                 "pathways_extracted",
                 {
                     "profile_id": profile_id,
                     "protein": protein.model_dump(),
-                    "pathways": pathways,
-                    "message": f"Found {len(pathways)} pathways for {protein_graph_id(protein)}.",
+                    "pathways": pathway_id,
+                    "message": f"Found {len(pathway_id)} pathways for {protein_graph_id(protein)}.",
                 },
             )
 
-            for pathway in pathways:
-                pathway_information = fetch_pathway_information(pathway)
-                update_pathway(pathway_information)
+            for pathway_id in pathway_ids:
+                pathway_information = await fetch_pathway_information(pathway_id)
+                print_debug(pathway_information)
+                update_pathway(pathway_information, profile_id)
 
                 profile_pathway.append(pathway_information)
 

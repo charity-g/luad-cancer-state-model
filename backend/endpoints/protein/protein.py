@@ -5,6 +5,7 @@ import csv
 import hashlib
 import io
 import json
+import httpx
 from typing import Any, Dict, Optional
 
 from fastapi import APIRouter, File, UploadFile, HTTPException, Query
@@ -107,3 +108,4 @@ async def get_protein_from_graph(protein_id: str):
     Placeholder endpoint for fetching protein info from your internal Knowledge Graph.
     """
     #TODO run graph query on neo4j
+

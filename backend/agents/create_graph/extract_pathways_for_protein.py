@@ -15,10 +15,7 @@ Adjust the attribute name below if your model differs.
 
 import httpx
 import logging
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from backend.agents.create_graph.model import ProteinRecord
+from backend.agents.create_graph.model import ProteinRecord
 
 logger = logging.getLogger(__name__)
 
@@ -119,7 +116,7 @@ def extract_pathways_for_protein(protein: "ProteinRecord") -> list[dict[str, str
 # Async variant — drop-in for async callers
 # ---------------------------------------------------------------------------
 
-async def extract_pathways_for_protein_async(protein: "ProteinRecord") -> list[dict[str, str]]:
+async def extract_pathways_for_protein_async(protein: ProteinRecord) -> list[dict[str, str]]:
     """Async version of extract_pathways_for_protein."""
     kegg_id: str | None = getattr(protein, "kegg_gene_id", None)
 

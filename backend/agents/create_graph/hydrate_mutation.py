@@ -1,9 +1,10 @@
 import asyncio
 from typing import Any
 
+import httpx
 import anthropic
 
-from backend.agents.create_graph.model import MutationProteinEffect
+from backend.agents.create_graph.model import MutationProteinEffect, GuessMutation
 from backend.config import ANTHROPIC_API_KEY, REASONER_MODEL
 
 # "you may wish to plan extra steps to retreive following information",
@@ -70,12 +71,14 @@ If only a gene symbol is present with no transcript, assume canonical UniProt is
 **Step 5 — Produce output**
 Return exactly this JSON schema — all fields required:
 
+
 ```json
 {{
   "mutation_id": "<string: from input or generated as gene_hgvs>",
   "protein": "<string: UniProt AC if derivable, else gene symbol>",
 
   "identifiers": {{
+    "hugo_symbol": "<string | null>",
     "gene_symbol": "<string | null>",
     "hgnc_id": "<string | null>",
     "uniprot_ac": "<string | null>",
@@ -89,7 +92,7 @@ Return exactly this JSON schema — all fields required:
     "variant_type": "<SNV|indel|frameshift|splice|CNV|structural|unknown>",
   }},
 
-  "estimated_effect": "<loss_of_function|likely_damaging|likely_neutral|activating|uncertain>",
+  "estimated_effect": "<loss_of_function|gain_of_function|inactivating|activating|uncertain>",
 
   "confidence": "<high|medium|low>",
 
@@ -142,6 +145,7 @@ def _hydrate_stub(mutation: dict[str, Any]) -> MutationProteinEffect:
         "genome_assembly": mutation.get("genome_assembly"),
         "genomic_coordinate": mutation.get("genomic_coordinate"),
         "variant_type": mutation.get("variant_type") or "unknown",
+        **mutation.get("identifiers", {}),
     }
     return MutationProteinEffect(
         mutation_id=str(
@@ -184,8 +188,9 @@ def _call_anthropic(prompt: list[dict[str, str]]) -> MutationProteinEffect:
     text = "".join(block.text for block in response.content if block.type == "text").strip()
     return MutationProteinEffect.model_validate_json(text)
 
-#TODO
-async def hydrate_mutation(mutation: dict[str, Any]) -> MutationProteinEffect:
+
+async def hydrate_mutation(mutation: GuessMutation) -> MutationProteinEffect:
+    
     prompt = build_mutation_prompt(mutation)
 
     if not ANTHROPIC_API_KEY:
@@ -193,6 +198,7 @@ async def hydrate_mutation(mutation: dict[str, Any]) -> MutationProteinEffect:
 
     try:
         result = await asyncio.to_thread(_call_anthropic, prompt)
+        
         return MutationProteinEffect.model_validate(result)
     except Exception:
         return _hydrate_stub(mutation)

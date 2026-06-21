@@ -7,11 +7,13 @@ export function useAnalysis() {
   const [mutations, setMutations] = useState<MutationEntry[]>([])
   const [phase, setPhase] = useState<AnalysisPhase>('idle')
   const [error, setError] = useState<string | null>(null)
+  const [profileId, setProfileId] = useState<string | null>(null)
 
   const analyze = useCallback(async (file: File) => {
     setMutations([])
     setPhase('streaming')
     setError(null)
+    setProfileId(null)
 
     const body = new FormData()
     body.append('file', file)
