@@ -1,4 +1,4 @@
-import { MutationEntry } from '../types'
+import type { MutationEntry } from '../types'
 
 const effectColors = {
   activating: 'bg-amber-100 text-amber-800 border-amber-200',

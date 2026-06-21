@@ -1,4 +1,4 @@
-import { HydratedMutation, EffectType } from '../types'
+import type { HydratedMutation, EffectType } from '../types'
 
 interface PathwayNode {
   id: string

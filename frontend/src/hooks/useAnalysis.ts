@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { MutationEntry, HydratedMutation, EffectType } from '../types'
+import type { MutationEntry, HydratedMutation, EffectType } from '../types'
 
 // Mock LUAD protein database — stands in for backend enrichment
 const LUAD_PROTEINS: Array<{

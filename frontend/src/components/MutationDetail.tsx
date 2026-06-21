@@ -1,4 +1,4 @@
-import { MutationEntry } from '../types'
+import type { MutationEntry } from '../types'
 
 interface Props {
   entry: MutationEntry | undefined
