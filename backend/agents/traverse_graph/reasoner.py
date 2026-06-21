@@ -29,14 +29,14 @@ _SYSTEM = (
 )
 
 
-def reason(question, result, profile="", history=""):
+def reason(question, result, profile="", history="", evidence=""):
     intervention = bool(_INTERVENTION.search(question))
     if ANTHROPIC_API_KEY:
         try:
-            return _reason_llm(question, result, intervention, profile, history)
+            return _reason_llm(question, result, intervention, profile, history, evidence)
         except Exception:
             pass
-    return _reason_stub(question, result, intervention)
+    return _reason_stub(question, result, intervention, evidence)
 
 
 def _context(subgraph):
@@ -69,7 +69,7 @@ class _Report(BaseModel):
     report: str
 
 
-def _reason_llm(question, result, intervention, profile="", history=""):
+def _reason_llm(question, result, intervention, profile="", history="", evidence=""):
     client = anthropic.Anthropic()
     context = _context(result["subgraph"]) or f"(rows: {result['rows'][:20]})"
     # Ground the answer in the uploaded sample profile and the conversation so far.
@@ -78,6 +78,13 @@ def _reason_llm(question, result, intervention, profile="", history=""):
         preamble += profile + "\n\n"
     if history:
         preamble += f"Recent conversation:\n{history}\n\n"
+    if evidence:
+        preamble += evidence + "\n\n"
+    # The drug-routing block is an allowed source beyond the subgraph; flag it
+    # so the model uses it and attributes ML predictions honestly.
+    extra = (" You may also use the DRUG-ROUTING EVIDENCE above; when you rely on "
+             "it, cite ML pathway-vulnerability calls explicitly as ML-predicted "
+             "(state the probability and data support level)." if evidence else "")
     if intervention:
         resp = client.messages.parse(
             model=REASONER_MODEL,
@@ -87,7 +94,7 @@ def _reason_llm(question, result, intervention, profile="", history=""):
                 f"{preamble}Question: {question}\n\nSubgraph:\n{context}\n\n"
                 "Decide whether the intervention is beneficial, harmful, negligible, "
                 "or uncertain for the LUAD cell state, and write a markdown report "
-                "explaining the mechanism."
+                "explaining the mechanism." + extra
             )}],
             output_format=_Report,
         )
@@ -101,7 +108,7 @@ def _reason_llm(question, result, intervention, profile="", history=""):
         system=_SYSTEM,
         messages=[{"role": "user", "content":
                    f"{preamble}Question: {question}\n\nSubgraph:\n{context}\n\n"
-                   "Write a concise markdown cell-state report answering the question."}],
+                   "Write a concise markdown cell-state report answering the question." + extra}],
     )
     return {"report": "".join(b.text for b in resp.content if b.type == "text"),
             "verdict": None}
@@ -109,19 +116,20 @@ def _reason_llm(question, result, intervention, profile="", history=""):
 
 # --- deterministic fallback ----------------------------------------------
 
-def _reason_stub(question, result, intervention):
+def _reason_stub(question, result, intervention, evidence=""):
     note = "_(Generated without an LLM — set ANTHROPIC_API_KEY for full reasoning.)_"
+    ev = f"\n\n{evidence}" if evidence else ""
     sub = result["subgraph"]
     if not sub["nodes"]:
-        return {"report": f"No matching graph context found.\n\n{note}",
+        return {"report": f"No matching graph context found.{ev}\n\n{note}",
                 "verdict": "uncertain" if intervention else None}
     context = _context(sub)
     if not intervention:
-        return {"report": f"## LUAD cell-state report\n\n**Question:** {question}\n\n{context}\n\n{note}",
+        return {"report": f"## LUAD cell-state report\n\n**Question:** {question}\n\n{context}{ev}\n\n{note}",
                 "verdict": None}
     verdict, why = _heuristic_verdict(question, sub)
     return {"report": f"## Predicted effect\n\n**Verdict:** {verdict}\n\n{why}\n\n"
-                      f"### Supporting subgraph\n{context}\n\n{note}",
+                      f"### Supporting subgraph\n{context}{ev}\n\n{note}",
             "verdict": verdict}
 
 
