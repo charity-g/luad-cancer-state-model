@@ -1,5 +1,6 @@
 .venv
 venv/
+.env
 
 local_data/
 

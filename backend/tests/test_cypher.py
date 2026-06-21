@@ -1,6 +1,6 @@
 import pytest
 
-from backend.agent import cypher
+from backend.agnets.traverse_graphimport cypher
 
 
 def test_guard_allows_reads():

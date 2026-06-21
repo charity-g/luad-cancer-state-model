@@ -20,7 +20,7 @@ def test_graph_endpoint_returns_full_graph():
 
 
 def test_query_endpoint_contract(force_fallback):
-    from backend.agent import cypher
+    from backend.agnets.traverse_graphimport cypher
 
     r = client.post("/query", json={"question": "Will inhibiting KRAS help?"})
     assert r.status_code == 200

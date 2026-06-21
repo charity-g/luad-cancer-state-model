@@ -1,19 +1,9 @@
-from fastapi import APIRouter, UploadFile
-from fastapi.responses import StreamingResponse
+"""Compatibility wrapper for the profiles streaming endpoint.
 
-import asyncio
-import hashlib
+The real implementation lives in backend.endpoints.profiles.stream.
+This module exists so older imports keep working.
+"""
 
-router = APIRouter()
+from backend.endpoints.profiles.stream import router, process_profile as process_profile_endpoint
 
-
-@router.post("/profiles/stream")
-async def process_profile_endpoint(file: UploadFile):
-  
-
-POST /profiles
-  upload CSV
-  returns profile_id immediately
-
-GET /profiles/{profile_id}/events
-  streams backend progress with SSE
+__all__ = ["router", "process_profile_endpoint"]

@@ -1,6 +1,6 @@
 import pytest
 
-from backend.agent import cypher, planner
+from backend.agnets.traverse_graphimport cypher, planner
 
 
 def test_fallback_gene_intervention_targets_gene():

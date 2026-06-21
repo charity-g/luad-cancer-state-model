@@ -45,7 +45,7 @@ export default function Model() {
             </p>
           </div>
         ) : (
-          <>
+          <div className="relative flex flex-1 overflow-hidden">
             <MutationSidebar
               mutations={mutations}
               selected={selected}
@@ -54,13 +54,30 @@ export default function Model() {
               filename={filename}
               onReset={handleReset}
             />
-            <div className="flex flex-1 flex-col overflow-hidden border-r border-slate-200">
-              <MutationDetail entry={selectedEntry} />
-            </div>
-            <div className="w-96 flex-shrink-0">
+            <div className="flex flex-1 overflow-hidden">
               <PathwayGraph highlights={hydratedList} selectedProtein={selectedProtein} />
             </div>
-          </>
+
+            {/* Detail popover — only when a mutation is selected */}
+            {selectedEntry && (
+              <div className="absolute inset-y-4 right-4 w-80 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl flex flex-col">
+                <div className="flex items-center justify-between border-b border-slate-100 px-4 py-2.5">
+                  <span className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+                    Mutation Detail
+                  </span>
+                  <button
+                    onClick={() => setSelected(null)}
+                    className="rounded p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+                  >
+                    <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+                <MutationDetail entry={selectedEntry} />
+              </div>
+            )}
+          </div>
         )}
       </div>
 

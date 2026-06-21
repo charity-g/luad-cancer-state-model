@@ -10,7 +10,7 @@ If the generated Cypher errors, fall back to a deterministic query and retry onc
 
 from neo4j.exceptions import Neo4jError
 
-from backend.agent import cypher, planner, reasoner
+from backend.agents.traverse_graph import cypher, planner, reasoner
 
 
 def run(question):

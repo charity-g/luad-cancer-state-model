@@ -1,4 +1,4 @@
-from backend.agent import agent, cypher
+from backend.agnets.traverse_graphimport agent, cypher
 from backend.agent.reasoner import VERDICTS
 
 EXPECTED_KEYS = {
