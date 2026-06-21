@@ -9,7 +9,17 @@ export default function Layout() {
   const isModel = useMatch('/model')
 
   return (
-    <div className="flex h-screen flex-col bg-slate-50 text-slate-900">
+    <div
+      className="flex h-screen flex-col text-slate-900"
+      style={{
+        background: `
+          radial-gradient(circle at 38% 58%, rgba(255,45,45,0.95) 0%, rgba(255,45,45,0.55) 10%, rgba(255,45,45,0.0) 28%),
+          radial-gradient(circle at 48% 45%, rgba(210,120,255,0.45) 0%, rgba(210,120,255,0.12) 22%, rgba(210,120,255,0.0) 42%),
+          linear-gradient(90deg, #d8cfc8 0%, #cbb8c6 28%, #8d7bb6 52%, #245ea8 78%, #0057a8 100%)
+        `,
+        backgroundBlendMode: 'screen, screen, normal',
+      }}
+    >
       <header className="flex-shrink-0 border-b border-slate-200 bg-white">
         <div className="flex items-center justify-between px-5 py-3">
           <span className="text-sm font-semibold tracking-tight text-slate-800">

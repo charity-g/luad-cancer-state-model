@@ -31,7 +31,7 @@ export default function Home() {
         <h1 className="text-3xl font-bold tracking-tight text-slate-900">
           Cancer State Modelling
         </h1>
-        <p className="mt-2 max-w-2xl text-slate-500 text-sm">
+        <p className="mt-2 max-w-2xl text-slate-700 text-sm">
           Upload a mutation profile CSV to identify variants, annotate protein effects, and
           visualize affected KEGG pathways.
         </p>
@@ -48,7 +48,7 @@ export default function Home() {
 
       {/* History */}
       <div>
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-3">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-700 mb-3">
           Previous profiles
         </h2>
 

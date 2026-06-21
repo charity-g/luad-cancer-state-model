@@ -139,12 +139,12 @@ export default function Model() {
                   d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" />
               </svg>
               <h2 className="text-lg font-semibold text-slate-700">Scientific Reasoning Workspace</h2>
-              <p className="mt-2 max-w-sm text-sm text-slate-400">
+              <p className="mt-2 max-w-sm text-sm text-slate-700">
                 Upload a mutation profile CSV to identify variants, annotate protein effects, and visualize affected pathways.
               </p>
             </div>
             <div className="w-full max-w-md">
-              <UploadBox onFile={handleFile} hasData={false} />
+              <UploadBox onFile={handleFile} hasData={false} standalone />
             </div>
           </div>
         ) : graphLoading ? (
