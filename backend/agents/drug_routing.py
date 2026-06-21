@@ -33,6 +33,12 @@ import ml_classifier  # noqa: E402
 _graph_cache = None
 _model_cache = None  # (clf, encoders, pathway_support)
 
+# The hydrated profile uses 'activating'/'inactivating'; accept the
+# gain/loss-of-function synonyms too so either vocabulary routes.
+_DRIVER_EFFECTS = {"activating", "gain_of_function"}
+_LOF_EFFECTS = {"inactivating", "loss_of_function"}
+_REAL_EFFECTS = _DRIVER_EFFECTS | _LOF_EFFECTS
+
 
 def _graph():
     global _graph_cache
@@ -85,17 +91,17 @@ def _resolve_key(graph, gene, hgvs_protein, mutation_id, effect, justification):
     candidate = f"{gene} {variant}".strip()
     if variant and candidate in mi:
         return candidate, "exact"
-    if effect == "loss_of_function" and f"{gene} loss" in mi:
+    if effect in _LOF_EFFECTS and f"{gene} loss" in mi:
         return f"{gene} loss", "lof"
     return None, None
 
 
 def _features(effect):
     """Mutation-level ML features from the hydrated effect call. Conservative
-    heuristics: gain-of-function driver calls behave like activating hotspots,
-    which is the model's strongest signal."""
-    gof = effect == "gain_of_function"
-    lof = effect == "loss_of_function"
+    heuristics: activating driver calls behave like activating hotspots, which
+    is the model's strongest signal."""
+    gof = effect in _DRIVER_EFFECTS
+    lof = effect in _LOF_EFFECTS
     high_impact = gof or lof
     return {
         "is_hotspot": gof,
@@ -165,7 +171,7 @@ def _candidates(mutations, context):
         # gain/loss-of-function call. A bare gene selection (no variant, no
         # effect) carries nothing for the model to classify, so we skip it
         # rather than emit a meaningless gene-level guess.
-        if not key and effect not in ("gain_of_function", "loss_of_function"):
+        if not key and effect not in _REAL_EFFECTS:
             continue
         prev = by_gene.get(gene)
         # Keep the first (context-first order); upgrade only if a later row
