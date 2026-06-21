@@ -57,7 +57,7 @@ def _parse_link_response(text: str) -> list[str]:
     return pathway_ids
 
 
-def extract_pathways_for_protein(protein: "ProteinRecord") -> list[str]:
+def extract_pathways_for_protein(protein: "ProteinRecord") -> list[dict[str, str]]:
     """
     Return KEGG pathway IDs for a protein, given its KEGG gene ID.
 
@@ -71,12 +71,12 @@ def extract_pathways_for_protein(protein: "ProteinRecord") -> list[str]:
     Raises:
         KEGGError: On non-200 HTTP responses or malformed payloads.
     """
-    kegg_id: str | None = getattr(protein, "kegg_id", None)
+    kegg_id: str | None = getattr(protein, "kegg_gene_id", None)
 
     if not kegg_id:
         logger.warning(
             "ProteinRecord %r has no kegg_id — skipping pathway extraction",
-            getattr(protein, "uniprot_ac", repr(protein)),
+            getattr(protein, "uniprot_id", repr(protein)),
         )
         return []
 
@@ -105,21 +105,28 @@ def extract_pathways_for_protein(protein: "ProteinRecord") -> list[str]:
 
     pathway_ids = _parse_link_response(response.text)
     logger.debug("Found %d pathways for %s: %s", len(pathway_ids), kegg_id, pathway_ids)
-    return pathway_ids
+    return [
+        {
+            "kegg_id": pathway_id,
+            "name": pathway_id,
+            "evidence": protein.kegg_description or "KEGG pathway link",
+        }
+        for pathway_id in pathway_ids
+    ]
 
 
 # ---------------------------------------------------------------------------
 # Async variant — drop-in for async callers
 # ---------------------------------------------------------------------------
 
-async def extract_pathways_for_protein_async(protein: "ProteinRecord") -> list[str]:
+async def extract_pathways_for_protein_async(protein: "ProteinRecord") -> list[dict[str, str]]:
     """Async version of extract_pathways_for_protein."""
-    kegg_id: str | None = getattr(protein, "kegg_id", None)
+    kegg_id: str | None = getattr(protein, "kegg_gene_id", None)
 
     if not kegg_id:
         logger.warning(
             "ProteinRecord %r has no kegg_id — skipping pathway extraction",
-            getattr(protein, "uniprot_ac", repr(protein)),
+            getattr(protein, "uniprot_id", repr(protein)),
         )
         return []
 
@@ -147,4 +154,11 @@ async def extract_pathways_for_protein_async(protein: "ProteinRecord") -> list[s
 
     pathway_ids = _parse_link_response(response.text)
     logger.debug("Found %d pathways for %s: %s", len(pathway_ids), kegg_id, pathway_ids)
-    return pathway_ids
+    return [
+        {
+            "kegg_id": pathway_id,
+            "name": pathway_id,
+            "evidence": protein.kegg_description or "KEGG pathway link",
+        }
+        for pathway_id in pathway_ids
+    ]

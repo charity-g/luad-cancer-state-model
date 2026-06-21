@@ -37,6 +37,16 @@ def sse(event: str, payload: dict[str, Any]) -> str:
     return f"event: {event}\ndata: {json.dumps(payload, default=str)}\n\n"
 
 
+def protein_graph_id(protein: ProteinRecord) -> str:
+    return (
+        protein.kegg_gene_id
+        or protein.kegg_ko_id
+        or protein.uniprot_id
+        or protein.gene_symbol
+        or protein.query
+    )
+
+
 @router.post("/profiles/test")
 def test_endpoint():
     return init_graph()
@@ -104,7 +114,7 @@ async def process_profile(file: UploadFile = File(...)):
                     "profile_id": profile_id,
                     "mutation": mutation,
                     "protein": protein.model_dump(),
-                    "message": f"Mapped mutation {mutation.get('mutation_id', '')} to protein {protein.kegg_id}.",
+                    "message": f"Mapped mutation {mutation.get('mutation_id', '')} to protein {protein_graph_id(protein)}.",
                 },
             )
             add_protein_node(protein)
@@ -118,7 +128,7 @@ async def process_profile(file: UploadFile = File(...)):
                     "profile_id": profile_id,
                     "protein": protein.model_dump(),
                     "pathways": pathways,
-                    "message": f"Found {len(pathways)} pathways for {protein.kegg_id}.",
+                    "message": f"Found {len(pathways)} pathways for {protein_graph_id(protein)}.",
                 },
             )
 

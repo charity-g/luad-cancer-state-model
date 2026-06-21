@@ -15,10 +15,12 @@ from pydantic import BaseModel
 
 from backend.agents.traverse_graph import agent, cypher
 from backend.endpoints.profiles.stream import router as profiles_router
+from backend.endpoints.protein.protein import protein_router
 
 app = FastAPI(title="LUAD Cell-State GraphRAG")
 
 app.include_router(profiles_router)
+app.include_router(proteins)
 
 # Open CORS for local frontend dev. Tighten allow_origins before any deployment.
 app.add_middleware(

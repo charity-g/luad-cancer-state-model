@@ -118,7 +118,7 @@ def extract_protein_for_mutation(
     return ProteinRecord(
         query=symbol,
         gene_symbol=symbol,
-        uniprot_id=mutation.identifiers.get("uniprot_id"),
+        uniprot_id=mutation.identifiers.get("uniprot_ac") or mutation.identifiers.get("uniprot_id"),
         entrez_gene_id=mutation.identifiers.get("entrez_gene_id"),
         kegg_gene_id=kegg_gene_id,
         kegg_ko_id=ko_id,
