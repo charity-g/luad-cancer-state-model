@@ -14,7 +14,7 @@ from functools import lru_cache
 
 import anthropic
 
-from backend.agnets.traverse_graphimport cypher
+from backend.agents.traverse_graph import cypher
 from backend.config import ANTHROPIC_API_KEY, PLANNER_MODEL
 
 _INTERVENTION = re.compile(
