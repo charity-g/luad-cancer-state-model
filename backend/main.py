@@ -38,12 +38,16 @@ def health():
     return {"status": "ok"}
 
 
-@app.get("/graph")
-def graph():
-    return cypher.full_graph()
+# @app.get("/graph")
+# def graph():
+#     return cypher.full_graph()
 
 
 @app.post("/query")
 def query(req: QueryRequest):
-    return agent.run(req.question)
+    return {
+        "test info": "charity temp"
+        #TODO
+    }
+    # return agent.run(req.question)
 
