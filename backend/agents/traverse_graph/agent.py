@@ -171,6 +171,7 @@ def run(question, profile_id=None, mutations=None, context=None, history=None):
     # (idempotent) and injected into the reasoner as grounded evidence.
     ttd_drug_hits: list = []
     if ttd.is_drug_question(question):
+        print("ttd is drug question")
         context_proteins = [c["protein"] for c in (context or []) if c.get("protein")]
         # Also include proteins from the profile when no explicit context card
         # is selected (user asked a general drug question about the profile).

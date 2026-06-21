@@ -45,7 +45,7 @@ def classify(question: str) -> str:
     return "reason"
 
 _PLANNER_SYSTEM = (
-    "You translate questions about a LUAD (lung adenocarcinoma) causal biology "
+    "You translate questions about a cancer causal biology "
     "Neo4j graph into a SINGLE read-only Cypher query. Use ONLY the labels, "
     "properties, and relationship types defined in the schema below. The query "
     "must be read-only: no CREATE, MERGE, SET, DELETE, REMOVE. Return graph "
