@@ -106,7 +106,8 @@ export default function MutationDetail({ entry }: Props) {
   }
 
   const h = entry.hydrated!
-  const cfg = effectConfig[h.estimated_effect as EffectType] ?? effectConfig.no_effect
+  const effect = h.estimated_effect as EffectType
+  const cfg = effectConfig[effect] ?? effectConfig.no_effect
   const confidenceCls = confidenceColors[h.confidence?.toLowerCase()] ?? 'bg-slate-100 text-slate-600'
 
   return (

@@ -7,17 +7,28 @@ import MutationDetail from './MutationDetail'
 // ── helpers ──────────────────────────────────────────────────────────────────
 
 const effectColors: Record<EffectType, string> = {
-  activating:   'bg-amber-100 text-amber-800 border-amber-200',
-  inactivating: 'bg-red-100 text-red-800 border-red-200',
-  no_effect:    'bg-slate-100 text-slate-600 border-slate-200',
+  activating:       'bg-amber-100 text-amber-800 border-amber-200',
+  gain_of_function: 'bg-amber-100 text-amber-800 border-amber-200',
+  inactivating:     'bg-red-100 text-red-800 border-red-200',
+  loss_of_function: 'bg-red-100 text-red-800 border-red-200',
+  uncertain:        'bg-purple-100 text-purple-700 border-purple-200',
+  no_effect:        'bg-slate-100 text-slate-600 border-slate-200',
 }
 const effectDot: Record<EffectType, string> = {
-  activating:   'bg-amber-400',
-  inactivating: 'bg-red-400',
-  no_effect:    'bg-slate-400',
+  activating:       'bg-amber-400',
+  gain_of_function: 'bg-amber-500',
+  inactivating:     'bg-red-400',
+  loss_of_function: 'bg-red-500',
+  uncertain:        'bg-purple-400',
+  no_effect:        'bg-slate-400',
 }
 const effectShort: Record<EffectType, string> = {
-  activating: 'ACT', inactivating: 'INACT', no_effect: 'NONE',
+  activating:       'ACT',
+  gain_of_function: 'GOF',
+  inactivating:     'INACT',
+  loss_of_function: 'LOF',
+  uncertain:        'UNC',
+  no_effect:        'NONE',
 }
 
 function renderContent(text: string) {
@@ -91,7 +102,7 @@ function ThreadGroup({
                   {msg.context.length > 0 && (
                     <div className="mb-1 flex flex-wrap justify-end gap-1">
                       {msg.context.map((c) => (
-                        <span key={c.id} className={`rounded-full border px-2 py-0.5 text-[10px] font-medium ${effectColors[c.effect]}`}>
+                        <span key={c.id} className={`rounded-full border px-2 py-0.5 text-[10px] font-medium ${effectColors[c.effect] ?? 'bg-slate-100 text-slate-600 border-slate-200'}`}>
                           {c.protein}
                         </span>
                       ))}
@@ -328,8 +339,8 @@ export default function AgentPanel({
                         {m.mutation_id}
                       </span>
                       {m.status === 'done' && m.hydrated && (
-                        <span className={`flex-shrink-0 rounded border px-1.5 py-0.5 text-[10px] font-semibold ${effectColors[m.hydrated.estimated_effect as EffectType]}`}>
-                          {effectShort[m.hydrated.estimated_effect as EffectType]}
+                        <span className={`flex-shrink-0 rounded border px-1.5 py-0.5 text-[10px] font-semibold ${effectColors[m.hydrated.estimated_effect as EffectType] ?? 'bg-slate-100 text-slate-600 border-slate-200'}`}>
+                          {effectShort[m.hydrated.estimated_effect as EffectType] ?? m.hydrated.estimated_effect.slice(0, 4).toUpperCase()}
                         </span>
                       )}
                       {m.status === 'hydrating' && (

@@ -49,7 +49,7 @@ From the mutation record, identify whichever of the following are present. Note 
 - Variant type (SNV / indel / frameshift / splice / CNV / structural)
 
 **Step 2 — Consequence classification**
-Based on the variant type and HGVS protein notation (or inferred consequence), classify the mutation:
+Based on the variant type, if there is rsid, and HGVS protein notation (or inferred consequence), classify the mutation using the relevant information about the rsid:
 - loss_of_function: nonsense, frameshift, canonical splice site (±1/±2), large deletion
 - likely_damaging: missense at conserved site, in-frame indel at functional domain
 - likely_neutral: synonymous, intronic (>10bp from splice), common population variant (gnomAD AF > 1%)
@@ -198,7 +198,8 @@ async def hydrate_mutation(mutation: GuessMutation) -> MutationProteinEffect:
 
     try:
         result = await asyncio.to_thread(_call_anthropic, prompt)
-        
+        if mutation["uniprot_ac"]:
+            result['identifiers']['uniprot_ac'] = mutation["uniprot_ac"]
         return MutationProteinEffect.model_validate(result)
     except Exception:
         return _hydrate_stub(mutation)

@@ -70,6 +70,24 @@ export function useAnalysis() {
             continue // skip malformed frames
           }
 
+          if (event === 'started') {
+            const pid = payload['profile_id']
+            if (typeof pid === 'string') setProfileId(pid)
+          }
+
+          if (event === 'mutations_extracted') {
+            const raw = payload['mutations'] as Record<string, unknown>[] | undefined
+            if (Array.isArray(raw)) {
+              setMutations(
+                raw.map((m, i) => ({
+                  mutation_id: String(m['mutation_id'] ?? ''),
+                  // Mark the first one as hydrating immediately so the sidebar shows activity
+                  status: i === 0 ? ('hydrating' as const) : ('identified' as const),
+                }))
+              )
+            }
+          }
+
           if (event === 'error') {
             const mutationPayload = payload['mutation'] as Record<string, unknown> | undefined
             const message = String(payload['message'] ?? 'An error occurred during analysis.')
@@ -108,13 +126,19 @@ export function useAnalysis() {
             }
 
             setMutations((prev) => {
-              const exists = prev.find((m) => m.mutation_id === mutation_id)
-              if (exists) {
-                return prev.map((m) =>
-                  m.mutation_id === mutation_id ? { ...m, status: 'done', hydrated: hydratedMutation } : m,
-                )
+              const updated = prev.map((m) =>
+                m.mutation_id === mutation_id
+                  ? { ...m, status: 'done' as const, hydrated: hydratedMutation }
+                  : m
+              )
+              // If the mutation wasn't in the bulk list, append it
+              if (!prev.find((m) => m.mutation_id === mutation_id)) {
+                updated.push({ mutation_id, status: 'done', hydrated: hydratedMutation })
               }
-              return [...prev, { mutation_id, status: 'done', hydrated: hydratedMutation }]
+              // Mark the next identified mutation as hydrating so the sidebar shows a spinner
+              const nextIdx = updated.findIndex((m) => m.status === 'identified')
+              if (nextIdx !== -1) updated[nextIdx] = { ...updated[nextIdx], status: 'hydrating' }
+              return updated
             })
           }
 
@@ -137,7 +161,8 @@ export function useAnalysis() {
     setMutations([])
     setPhase('idle')
     setError(null)
+    setProfileId(null)
   }, [])
 
-  return { mutations, phase, error, analyze, reset }
+  return { mutations, phase, error, profileId, analyze, reset }
 }

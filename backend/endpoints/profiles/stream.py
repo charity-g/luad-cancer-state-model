@@ -15,7 +15,7 @@ from backend.agents.create_graph.model import MutationProteinEffect, ProteinReco
 from backend.agents.create_graph.extract_mutations_from_profile import extract_mutations_from_profile
 from backend.agents.create_graph.hydrate_mutation import hydrate_mutation
 from backend.agents.create_graph.extract_protein_for_mutation import extract_protein_for_mutation
-from backend.agents.create_graph.extract_pathways_for_protein import extract_pathways_for_protein
+from backend.agents.create_graph.extract_pathways_for_protein import extract_pathways_for_protein_async as extract_pathways_for_protein
 from backend.agents.create_graph.process_pathways import (
     fetch_pathway_information,
 )
@@ -78,10 +78,14 @@ async def process_profile(file: UploadFile = File(...)):
             },
         )
 
-        profile_pathway: list[dict[str, Any]] = init_graph(profile_id)
+        try:
+            profile_pathway: list[dict[str, Any]] = await asyncio.to_thread(init_graph, profile_id)
+        except Exception as exc:
+            yield sse("graph_warning", {"profile_id": profile_id, "message": f"Graph init failed (Neo4j unreachable?): {exc}"})
+            profile_pathway = []
 
         for mutation in mutations:
-            time.sleep(1)
+            await asyncio.sleep(1)
             hydrated_mutation = await hydrate_mutation(mutation)
 
             yield sse(
@@ -94,7 +98,10 @@ async def process_profile(file: UploadFile = File(...)):
                 },
             )
             print_debug(hydrated_mutation)
-            add_mutation_node(hydrated_mutation, profile_id)
+            try:
+                await asyncio.to_thread(add_mutation_node, hydrated_mutation, profile_id)
+            except Exception as exc:
+                print_debug(f"Graph write failed for mutation {mutation.get('mutation_id', '')}: {exc}")
 
             protein = None
             try:
@@ -120,26 +127,31 @@ async def process_profile(file: UploadFile = File(...)):
                 },
             )
             print_debug(protein)
-            add_protein_node(protein, profile_id)
-            link_mutation_to_protein(hydrated_mutation, protein)
+            try:
+                await asyncio.to_thread(add_protein_node, protein, profile_id)
+                await asyncio.to_thread(link_mutation_to_protein, hydrated_mutation, protein)
+            except Exception as exc:
+                print_debug(f"Graph write failed for protein {protein_graph_id(protein)}: {exc}")
 
             pathway_ids = await extract_pathways_for_protein(protein)
-            
 
             yield sse(
                 "pathways_extracted",
                 {
                     "profile_id": profile_id,
                     "protein": protein.model_dump(),
-                    "pathways": pathway_id,
-                    "message": f"Found {len(pathway_id)} pathways for {protein_graph_id(protein)}.",
+                    "pathways": pathway_ids,
+                    "message": f"Found {len(pathway_ids)} pathways for {protein_graph_id(protein)}.",
                 },
             )
 
-            for pathway_id in pathway_ids:
-                pathway_information = await fetch_pathway_information(pathway_id)
+            for pw_id in pathway_ids:
+                pathway_information = await fetch_pathway_information(pw_id)
                 print_debug(pathway_information)
-                update_pathway(pathway_information, profile_id)
+                try:
+                    await asyncio.to_thread(update_pathway, pathway_information, profile_id)
+                except Exception as exc:
+                    print_debug(f"Graph write failed for pathway {pw_id}: {exc}")
 
                 profile_pathway.append(pathway_information)
 
@@ -147,8 +159,8 @@ async def process_profile(file: UploadFile = File(...)):
                     "pathway_updated",
                     {
                         "profile_id": profile_id,
-                        "pathway": pathway,
-                        "message": f"Updated pathway {pathway.get('kegg_id', '')}.",
+                        "pathway": pathway_information,
+                        "message": f"Updated pathway {pathway_information.get('pathway_id', pw_id)}.",
                     },
                 )
 

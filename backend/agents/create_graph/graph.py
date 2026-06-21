@@ -25,6 +25,7 @@ def init_graph(profile_id: str) -> list:
         "CREATE CONSTRAINT protein_kegg_id IF NOT EXISTS FOR (p:Protein) REQUIRE p.kegg_id IS UNIQUE",
         "CREATE CONSTRAINT mutation_id IF NOT EXISTS FOR (m:Mutation) REQUIRE m.mutation_id IS UNIQUE",
         "CREATE CONSTRAINT pathway_kegg_id IF NOT EXISTS FOR (pw:Pathway) REQUIRE pw.kegg_id IS UNIQUE",
+        "CREATE CONSTRAINT pathway_entry_kegg_id IF NOT EXISTS FOR (pe:PathwayEntry) REQUIRE pe.kegg_id IS UNIQUE",
     ]
     results = []
     for stmt in statements:
@@ -150,47 +151,113 @@ def link_mutation_to_protein(mutation: MutationProteinEffect, protein: ProteinRe
 
 
 def add_pathway_information(pathway: dict[str, Any], profile_id: str) -> dict[str, Any]:
-    """Upsert a Pathway node, link it to its Protein via INVOLVED_IN, and link it to the Profile subgraph."""
-    api = _get_api()
-
-    params = {
-        "kegg_id": pathway.get("kegg_id", ""),
-        "name": pathway.get("name", pathway.get("kegg_id", "")),
-        "profile_id": profile_id,
-    }
-
-    upsert_cypher = """
-    MERGE (pw:Pathway {kegg_id: $kegg_id})
-    ON CREATE SET pw.name = $name, pw.created_at = timestamp()
-    ON MATCH  SET pw.name = $name
-    WITH pw
-    MATCH (prof:Profile {profile_id: $profile_id})
-    MERGE (prof)-[:HAS_PATHWAY]->(pw)
-    RETURN pw
     """
-    api.execute(upsert_cypher, params)
+    Persist a KEGG pathway (from fetch_pathway_information) into the graph.
 
-    protein_kegg_id = pathway.get("protein_kegg_id", pathway.get("kegg_id", ""))
-    pathway_kegg_id = pathway.get("kegg_id", "")
-    evidence = pathway.get("evidence", "no_effect")
-    if protein_kegg_id and pathway_kegg_id:
-        link_cypher = """
-        MATCH (p:Protein {kegg_id: $protein_kegg_id})
-        MATCH (pw:Pathway {kegg_id: $pathway_kegg_id})
-        MERGE (p)-[r:INVOLVED_IN]->(pw)
-        ON CREATE SET r.evidence = $evidence, r.created_at = timestamp()
-        ON MATCH  SET r.evidence = $evidence
+    Creates:
+      - One Pathway node linked to the Profile
+      - One PathwayEntry node per KGML entry (gene, compound, map, group)
+      - One PATHWAY_RELATION edge per KGML relation, carrying mechanism subtypes
+      - PATHWAY_ENTRY edges from Pathway → PathwayEntry
+      - INVOLVED_IN edges from any Protein node whose kegg_id matches an entry identifier
+    """
+    api = _get_api()
+    pathway_id = pathway.get("pathway_id", "")
+    title = pathway.get("pathway_title", pathway_id)
+
+    # 1. Upsert the top-level Pathway node and link to Profile
+    api.execute(
         """
+        MERGE (pw:Pathway {kegg_id: $kegg_id})
+        ON CREATE SET pw.name = $name, pw.created_at = timestamp()
+        ON MATCH  SET pw.name = $name
+        WITH pw
+        MATCH (prof:Profile {profile_id: $profile_id})
+        MERGE (prof)-[:HAS_PATHWAY]->(pw)
+        """,
+        {"kegg_id": pathway_id, "name": title, "profile_id": profile_id},
+    )
+
+    # 2. Upsert each KGML entry as a PathwayEntry node
+    for entry in pathway.get("nodes", {}).values():
+        entry_id = entry.get("entry_id", "")
+        if not entry_id:
+            continue
+        node_kegg_id = f"{pathway_id}:{entry_id}"
+        api.execute(
+            """
+            MERGE (pe:PathwayEntry {kegg_id: $kegg_id})
+            ON CREATE SET
+                pe.entry_id    = $entry_id,
+                pe.type        = $type,
+                pe.display_name = $display_name,
+                pe.identifiers = $identifiers,
+                pe.created_at  = timestamp()
+            ON MATCH SET
+                pe.type        = $type,
+                pe.display_name = $display_name,
+                pe.identifiers = $identifiers
+            WITH pe
+            MATCH (pw:Pathway {kegg_id: $pathway_kegg_id})
+            MERGE (pw)-[:PATHWAY_ENTRY]->(pe)
+            """,
+            {
+                "kegg_id": node_kegg_id,
+                "entry_id": entry_id,
+                "type": entry.get("type", ""),
+                "display_name": entry.get("display_name", ""),
+                "identifiers": json.dumps(entry.get("kegg_identifiers", [])),
+                "pathway_kegg_id": pathway_id,
+            },
+        )
+
+        # Link to any matching Protein nodes via INVOLVED_IN
+        for kegg_name in entry.get("kegg_identifiers", []):
+            try:
+                api.execute(
+                    """
+                    MATCH (p:Protein)
+                    WHERE p.kegg_gene_id = $kegg_name OR p.kegg_ko_id = $kegg_name
+                    MATCH (pw:Pathway {kegg_id: $pathway_kegg_id})
+                    MERGE (p)-[:INVOLVED_IN]->(pw)
+                    """,
+                    {"kegg_name": kegg_name, "pathway_kegg_id": pathway_id},
+                )
+            except RuntimeError:
+                pass
+
+    # 3. Upsert each KGML relation as a PATHWAY_RELATION edge between PathwayEntry nodes
+    for edge in pathway.get("edges", []):
+        src_kegg_id = f"{pathway_id}:{edge.get('source_id', '')}"
+        tgt_kegg_id = f"{pathway_id}:{edge.get('target_id', '')}"
+        if not edge.get("source_id") or not edge.get("target_id"):
+            continue
         try:
-            api.execute(link_cypher, {
-                "protein_kegg_id": protein_kegg_id,
-                "pathway_kegg_id": pathway_kegg_id,
-                "evidence": evidence,
-            })
+            api.execute(
+                """
+                MATCH (src:PathwayEntry {kegg_id: $src})
+                MATCH (tgt:PathwayEntry {kegg_id: $tgt})
+                MERGE (src)-[r:PATHWAY_RELATION {relation_type: $rel_type}]->(tgt)
+                ON CREATE SET r.mechanisms = $mechanisms, r.created_at = timestamp()
+                ON MATCH  SET r.mechanisms = $mechanisms
+                """,
+                {
+                    "src": src_kegg_id,
+                    "tgt": tgt_kegg_id,
+                    "rel_type": edge.get("relation_type", ""),
+                    "mechanisms": json.dumps(edge.get("mechanisms", [])),
+                },
+            )
         except RuntimeError:
             pass
 
-    return {"kegg_id": params["kegg_id"], "name": params["name"], "status": "upserted"}
+    return {
+        "pathway_id": pathway_id,
+        "name": title,
+        "total_nodes": pathway.get("total_nodes", 0),
+        "total_edges": pathway.get("total_edges", 0),
+        "status": "upserted",
+    }
 
 
 def update_pathway(pathway_information: dict[str, Any], profile_id: str) -> dict[str, Any]:

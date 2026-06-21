@@ -7,7 +7,7 @@ import PathwayGraph from '../components/PathwayGraph'
 import type { HydratedMutation, ContextCard } from '../types'
 
 export default function Model() {
-  const { mutations, phase, error: analysisError, analyze, reset } = useAnalysis()
+  const { mutations, phase, error: analysisError, profileId, analyze, reset } = useAnalysis()
   const [selected, setSelected] = useState<string | null>(null)
   const [filename, setFilename] = useState('')
   const [panelVisible, setPanelVisible] = useState(true)
@@ -100,7 +100,7 @@ export default function Model() {
               </div>
 
               <PathwayGraph
-                highlights={highlightsOn ? hydratedList : []}
+                profileId={highlightsOn ? profileId : null}
                 selectedProtein={selected ? mutations.find((m) => m.mutation_id === selected)?.hydrated?.protein : undefined}
                 onDiveDeeper={(card) => {
                   setPendingContext(card)

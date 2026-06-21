@@ -93,8 +93,8 @@ export default function MutationSidebar({ mutations, selected, onSelect, phase, 
                   <span className="h-3.5 w-3.5 flex-shrink-0 animate-spin rounded-full border-2 border-slate-200 border-t-blue-500" />
                 )}
                 {m.status === 'done' && m.hydrated && (
-                  <span className={`flex-shrink-0 rounded border px-1.5 py-0.5 text-[10px] font-semibold ${effectColors[m.hydrated.estimated_effect as EffectType]}`}>
-                    {effectShort[m.hydrated.estimated_effect as EffectType]}
+                  <span className={`flex-shrink-0 rounded border px-1.5 py-0.5 text-[10px] font-semibold ${effectColors[m.hydrated.estimated_effect as EffectType] ?? 'bg-slate-100 text-slate-600 border-slate-200'}`}>
+                    {effectShort[m.hydrated.estimated_effect as EffectType] ?? m.hydrated.estimated_effect.slice(0, 4).toUpperCase()}
                   </span>
                 )}
                 {m.status === 'failed' && (

@@ -102,21 +102,14 @@ def extract_pathways_for_protein(protein: "ProteinRecord") -> list[dict[str, str
 
     pathway_ids = _parse_link_response(response.text)
     logger.debug("Found %d pathways for %s: %s", len(pathway_ids), kegg_id, pathway_ids)
-    return [
-        {
-            "kegg_id": pathway_id,
-            "name": pathway_id,
-            "evidence": protein.kegg_description or "KEGG pathway link",
-        }
-        for pathway_id in pathway_ids
-    ]
+    return pathway_ids
 
 
 # ---------------------------------------------------------------------------
 # Async variant — drop-in for async callers
 # ---------------------------------------------------------------------------
 
-async def extract_pathways_for_protein_async(protein: ProteinRecord) -> list[dict[str, str]]:
+async def extract_pathways_for_protein_async(protein: ProteinRecord) -> list[str]:
     """Async version of extract_pathways_for_protein."""
     kegg_id: str | None = getattr(protein, "kegg_gene_id", None)
 
@@ -151,11 +144,5 @@ async def extract_pathways_for_protein_async(protein: ProteinRecord) -> list[dic
 
     pathway_ids = _parse_link_response(response.text)
     logger.debug("Found %d pathways for %s: %s", len(pathway_ids), kegg_id, pathway_ids)
-    return [
-        {
-            "kegg_id": pathway_id,
-            "name": pathway_id,
-            "evidence": protein.kegg_description or "KEGG pathway link",
-        }
-        for pathway_id in pathway_ids
-    ]
+    return pathway_ids
+        
