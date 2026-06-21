@@ -19,6 +19,7 @@ Upload a tumor mutation profile, see it mapped onto a biological pathway graph, 
 8. [Tests](#8-tests)
 9. [Deployment](#9-deployment)
 10. [Design north-star / roadmap](#10-design-north-star--roadmap)
+11. [Acknowledgements & Data Attribution](#acknowledgements--data-attribution)
 
 ---
 
@@ -262,4 +263,148 @@ The implemented system above is a **retrieval + LLM-reasoning pipeline over a cu
 - **Multi-omics & temporal graphs**, and a possible GNN layer for embeddings/pattern discovery.
 
 These are aspirational direction, not current capabilities — today's reasoning is LLM-over-retrieved-subgraph plus the DepMap-trained drug-routing classifier.
-```
+
+
+## Acknowledgements & Data Attribution
+
+Workbench was built using publicly available biomedical datasets, pathway resources, and scientific infrastructure from the following organizations and projects. We gratefully acknowledge their contributions to open scientific research and computational biology.
+
+---
+
+### DepMap (Cancer Dependency Map)
+
+Broad Institute
+
+The drug-routing and pathway vulnerability components of Workbench were informed by LUAD mutation and dependency data from the Cancer Dependency Map (DepMap) project.
+
+**Citation:**
+Tsherniak A, Vazquez F, Montgomery PG, et al. *Defining a Cancer Dependency Map.* Cell. 2017;170(3):564–576.e16.
+
+**Resource:**
+[DepMap Portal](https://depmap.org?utm_source=chatgpt.com)
+
+---
+
+### TCGA (The Cancer Genome Atlas)
+
+National Cancer Institute
+
+TCGA provided foundational cancer genomics datasets and molecular characterization resources relevant to LUAD biology and pathway interpretation.
+
+**Citation:**
+The Cancer Genome Atlas Research Network. *Comprehensive molecular profiling of lung adenocarcinoma.* Nature. 2014;511:543–550.
+
+**Resource:**
+[TCGA Program](https://www.cancer.gov/tcga?utm_source=chatgpt.com)
+
+---
+
+### COSMIC (Catalogue Of Somatic Mutations In Cancer)
+
+Wellcome Sanger Institute
+
+COSMIC mutation annotations informed cancer variant interpretation and oncogenic context.
+
+**Citation:**
+Tate JG, Bamford S, Jubb HC, et al. *COSMIC: the Catalogue Of Somatic Mutations In Cancer.* Nucleic Acids Research. 2019.
+
+**Resource:**
+[COSMIC Database](https://cancer.sanger.ac.uk/cosmic?utm_source=chatgpt.com)
+
+---
+
+### RCSB Protein Data Bank (PDB)
+
+RCSB Protein Data Bank
+
+Protein structures displayed in Workbench are derived from the Protein Data Bank.
+
+**Citation:**
+Berman HM, Westbrook J, Feng Z, et al. *The Protein Data Bank.* Nucleic Acids Research. 2000.
+
+**Resource:**
+[RCSB PDB](https://www.rcsb.org?utm_source=chatgpt.com)
+
+---
+
+### UniProt
+
+UniProt Consortium
+
+UniProt protein identifiers and annotations were used for biological entity normalization and protein metadata.
+
+**Citation:**
+The UniProt Consortium. *UniProt: the Universal Protein Knowledgebase.* Nucleic Acids Research. 2025.
+
+**Resource:**
+[UniProt](https://www.uniprot.org?utm_source=chatgpt.com)
+
+---
+
+### CPTAC (Clinical Proteomic Tumor Analysis Consortium)
+
+National Cancer Institute
+
+CPTAC proteomic resources informed pathway-level and protein-level cancer context.
+
+**Citation:**
+Edwards NJ, Oberti M, Thangudu RR, et al. *The CPTAC Data Portal: A Resource for Cancer Proteomics Research.* Journal of Proteome Research. 2015.
+
+**Resource:**
+[CPTAC Program](https://proteomics.cancer.gov/programs/cptac?utm_source=chatgpt.com)
+
+---
+
+### DrugBank
+
+DrugBank
+
+Drug-target relationships and therapeutic context were informed by DrugBank and related pharmacological resources.
+
+**Citation:**
+Wishart DS, Feunang YD, Guo AC, et al. *DrugBank 5.0: a major update to the DrugBank database.* Nucleic Acids Research. 2018.
+
+**Resource:**
+[DrugBank](https://go.drugbank.com?utm_source=chatgpt.com)
+
+---
+
+### KEGG (Kyoto Encyclopedia of Genes and Genomes)
+
+Kyoto Encyclopedia of Genes and Genomes
+
+KEGG pathway relationships and biological pathway mappings were used in graph construction and pathway visualization.
+
+**Citation:**
+Kanehisa M, Goto S. *KEGG: Kyoto Encyclopedia of Genes and Genomes.* Nucleic Acids Research. 2000.
+
+**Resource:**
+[KEGG](https://www.kegg.jp?utm_source=chatgpt.com)
+
+---
+
+### Neo4j
+
+Neo4j
+
+Workbench uses Neo4j Aura as the graph database and knowledge graph infrastructure layer.
+
+**Resource:**
+[Neo4j](https://neo4j.com?utm_source=chatgpt.com)
+
+---
+
+### Anthropic Claude
+
+Anthropic
+
+Claude models were used for mutation hydration, text-to-Cypher planning, and graph-grounded mechanistic reasoning.
+
+**Resource:**
+[Anthropic](https://www.anthropic.com?utm_source=chatgpt.com)
+
+---
+
+## Special Thanks
+
+We thank the researchers, engineers, clinicians, and open-science communities behind these resources for making large-scale biomedical data and computational tools accessible to the broader research ecosystem. Their work made Workbench possible.
