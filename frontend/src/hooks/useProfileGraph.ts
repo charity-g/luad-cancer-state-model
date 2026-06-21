@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import type { HydratedMutation } from '../types'
+import type { HydratedMutation, MutationEntry } from '../types'
 
 interface GraphNode {
   id: string
@@ -49,6 +49,31 @@ export function extractHighlights(graph: ProfileGraph): HydratedMutation[] {
   return highlights
 }
 
+function tryParseJson(v: unknown): Record<string, unknown> {
+  if (v && typeof v === 'object') return v as Record<string, unknown>
+  if (typeof v === 'string') {
+    try { return JSON.parse(v) as Record<string, unknown> } catch { /* ignore */ }
+  }
+  return {}
+}
+
+// Build MutationEntry list from Mutation nodes in the subgraph.
+export function extractMutations(graph: ProfileGraph): MutationEntry[] {
+  return graph.nodes
+    .filter((n) => n.labels?.includes('Mutation'))
+    .map((n) => {
+      const hydrated: HydratedMutation = {
+        mutation_id:      String(n.mutation_id ?? n.id),
+        protein:          String(n.protein ?? ''),
+        identifiers:      tryParseJson(n.identifiers),
+        estimated_effect: (n.estimated_effect as HydratedMutation['estimated_effect']) ?? 'uncertain',
+        confidence:       String(n.confidence ?? ''),
+        justification:    tryParseJson(n.justification),
+      }
+      return { mutation_id: hydrated.mutation_id, status: 'done' as const, hydrated }
+    })
+}
+
 export function useProfileGraph(profileId: string | null) {
   const [graph, setGraph] = useState<ProfileGraph | null>(null)
   const [loading, setLoading] = useState(false)
@@ -85,5 +110,11 @@ export function useProfileGraph(profileId: string | null) {
     return () => { cancelled = true }
   }, [profileId])
 
-  return { graph, highlights: graph ? extractHighlights(graph) : [], loading, error }
+  return {
+    graph,
+    highlights: graph ? extractHighlights(graph) : [],
+    mutations:  graph ? extractMutations(graph) : [],
+    loading,
+    error,
+  }
 }

@@ -155,7 +155,6 @@ async def process_profile(file: UploadFile = File(...)):
                 
         for pw_id in list(pathway_ids_set):
             pathway_information = await fetch_pathway_information(pw_id)
-            print_debug(pathway_information)
             try:
                 await asyncio.to_thread(update_pathway, pathway_information, profile_id)
             except Exception as exc:

@@ -20,6 +20,8 @@ def extract_mutations_from_profile(profile_bytes: bytes) -> List[GuessMutation]:
             additional = {}
             if row.get('UniprotID'):
                 additional["uniprot_ac"] = row.get('UniprotID')
+            if row.get("effect"):
+                additional["estimated_effect"] = row.get('effect')
             rows.append(
                 {
                     "mutation_id": mutation_id or f"mutation_{index}",
