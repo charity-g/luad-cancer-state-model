@@ -210,7 +210,9 @@ export default function AgentPanel({
 
   useEffect(() => {
     if (!pendingContext) return
-    setContextCards((prev) => prev.find((c) => c.id === pendingContext.id) ? prev : [...prev, pendingContext])
+    // Single active selection: picking a new node replaces the context so the
+    // agent answers about the currently selected node, not previous ones.
+    setContextCards([pendingContext])
     onClearPendingContext()
     inputRef.current?.focus()
   }, [pendingContext, onClearPendingContext])

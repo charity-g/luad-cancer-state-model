@@ -17,15 +17,29 @@ from backend.agents.traverse_graph import cypher, planner, reasoner
 
 
 def _profile_text(mutations, context):
+    # The user's current selection (context) is the PRIMARY subject; the uploaded
+    # sample mutations are only background. Otherwise a vague question ("can I
+    # inhibit this?") latches onto the profile (e.g. KRAS) instead of the
+    # selected node (e.g. mTOR).
     parts = []
+    proteins = [c["protein"] for c in (context or []) if c.get("protein")]
+    if proteins:
+        parts.append(
+            f"PRIMARY SUBJECT: {', '.join(proteins)} (the user's current selection). "
+            f"Interpret 'this'/'it' as {proteins[0]} unless the question names "
+            f"something else. Answer about the PRIMARY SUBJECT."
+        )
+    muts = []
     for m in mutations or []:
         name = m.get("protein") or m.get("mutation_id") or "?"
         eff = m.get("estimated_effect") or m.get("effect") or "?"
-        parts.append(f"{name} ({eff})")
-    for c in context or []:
-        if c.get("protein"):
-            parts.append(f"{c['protein']} ({c.get('effect', '?')})")
-    return "Sample mutation profile: " + "; ".join(parts) if parts else ""
+        muts.append(f"{name} ({eff})")
+    if muts:
+        parts.append(
+            "Background sample mutations (context only, not the subject unless asked): "
+            + "; ".join(muts)
+        )
+    return "\n".join(parts)
 
 
 def _history_text(history):

@@ -80,9 +80,10 @@ export function useChat(getMutations: () => HydratedMutation[]) {
       abortRef.current = ac
 
       const thread = deriveThread(context)
-      // Prior turns become the agent's memory.
+      // Memory is scoped to the current selection's thread, so switching nodes
+      // (e.g. KRAS -> mTOR) doesn't drag the previous topic into the answer.
       const history = messagesRef.current
-        .filter((m) => !m.isError && m.content)
+        .filter((m) => !m.isError && m.content && m.thread === thread)
         .map((m) => ({ role: m.role, content: m.content }))
 
       const userMsg: ChatMessage = { id: uid(), role: 'user', content: text.trim(), context, thread }
