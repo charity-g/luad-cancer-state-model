@@ -132,21 +132,31 @@ def build_mutation_prompt(mutation: dict) -> list[dict]:
 
 
 def _hydrate_stub(mutation: dict[str, Any]) -> MutationProteinEffect:
-    gene_symbol = str(mutation.get("gene_symbol") or mutation.get("gene") or mutation.get("symbol") or "")
+    raw = mutation.get("raw") or {}
+    if not isinstance(raw, dict):
+        raw = {}
+    gene_symbol = str(
+        mutation.get("gene_symbol") or mutation.get("gene") or mutation.get("symbol")
+        or raw.get("Hugo_Symbol") or raw.get("HugoSymbol") or ""
+    )
     protein = str(mutation.get("protein") or mutation.get("uniprot_ac") or gene_symbol)
     effect = str(mutation.get("estimated_effect") or "uncertain")
+    hgvs_protein = (
+        mutation.get("hgvs_protein") or raw.get("ProteinChange")
+        or raw.get("HGVSp_Short") or raw.get("HGVSp")
+    )
     identifiers = {
-        "gene_symbol": mutation.get("gene_symbol") or mutation.get("gene") or mutation.get("symbol"),
+        "gene_symbol": gene_symbol or None,
         "hgnc_id": mutation.get("hgnc_id"),
         "uniprot_ac": mutation.get("uniprot_ac"),
         "transcript_id": mutation.get("transcript_id"),
         "refseq_protein": mutation.get("refseq_protein"),
-        "rsid": mutation.get("rsid"),
+        "rsid": mutation.get("rsid") or raw.get("dbSNP_RS"),
         "hgvs_cdna": mutation.get("hgvs_cdna"),
-        "hgvs_protein": mutation.get("hgvs_protein"),
+        "hgvs_protein": hgvs_protein,
         "genome_assembly": mutation.get("genome_assembly"),
         "genomic_coordinate": mutation.get("genomic_coordinate"),
-        "variant_type": mutation.get("variant_type") or "unknown",
+        "variant_type": mutation.get("variant_type") or raw.get("Variant_Type") or "unknown",
         **mutation.get("identifiers", {}),
     }
     return MutationProteinEffect(

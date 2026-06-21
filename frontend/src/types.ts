@@ -12,6 +12,7 @@ export interface ContextCard {
   effect: EffectType
   mutation_id: string
   pathway?: string
+  hgvs_protein?: string
 }
 
 export interface MutationFeatures {

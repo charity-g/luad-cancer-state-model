@@ -241,6 +241,7 @@ export default function PathwayGraph({ profileId, highlights: propHighlights = [
       effect: (effect?.estimated_effect ?? 'no_effect') as EffectType,
       mutation_id: effect?.mutation_id ?? '',
       pathway,
+      ...(effect?.hgvs_protein ? { hgvs_protein: effect.hgvs_protein } : {}),
     }
   }
 

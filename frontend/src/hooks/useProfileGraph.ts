@@ -41,10 +41,12 @@ export function extractHighlights(graph: ProfileGraph): HydratedMutation[] {
     highlights.push({
       mutation_id: (mutation.mutation_id as string) ?? (mutation.id as string),
       protein: geneSymbol,
-      identifiers: (mutation.identifiers as Record<string, unknown>) ?? {},
+      identifiers: tryParseJson(mutation.identifiers),
       estimated_effect: (mutation.estimated_effect as string) as HydratedMutation['estimated_effect'],
       confidence: (mutation.confidence as string) ?? '',
-      justification: (mutation.justification as Record<string, unknown>) ?? {},
+      justification: tryParseJson(mutation.justification),
+      gene: geneSymbol,
+      hgvs_protein: (tryParseJson(mutation.identifiers).hgvs_protein as string) || undefined,
     })
   }
   return highlights
@@ -63,13 +65,36 @@ export function extractMutations(graph: ProfileGraph): MutationEntry[] {
   return graph.nodes
     .filter((n) => n.labels?.includes('Mutation'))
     .map((n) => {
+      const identifiers = tryParseJson(n.identifiers)
+      const justification = tryParseJson(n.justification)
+      const gene =
+        (identifiers.gene_symbol as string) ||
+        (n.protein as string) ||
+        ''
+      const hgvs =
+        (identifiers.hgvs_protein as string) ||
+        (justification.hgvs_protein as string) ||
+        undefined
+      const effect = (n.estimated_effect as HydratedMutation['estimated_effect']) ?? 'uncertain'
+      const gof = effect === 'activating' || effect === 'gain_of_function'
+      const lof = effect === 'inactivating' || effect === 'loss_of_function'
+      const depmap = identifiers.depmap_features as HydratedMutation['features'] | undefined
       const hydrated: HydratedMutation = {
         mutation_id:      String(n.mutation_id ?? n.id),
-        protein:          String(n.protein ?? ''),
-        identifiers:      tryParseJson(n.identifiers),
-        estimated_effect: (n.estimated_effect as HydratedMutation['estimated_effect']) ?? 'uncertain',
+        protein:          gene || String(n.protein ?? ''),
+        identifiers,
+        estimated_effect: effect,
         confidence:       String(n.confidence ?? ''),
-        justification:    tryParseJson(n.justification),
+        justification,
+        gene:             gene || undefined,
+        hgvs_protein:     hgvs,
+        features: depmap ?? {
+          is_hotspot: gof,
+          is_lof: lof,
+          is_high_impact: gof || lof,
+          oncogene_high_impact: gof,
+          tsg_high_impact: lof,
+        },
       }
       return { mutation_id: hydrated.mutation_id, status: 'done' as const, hydrated }
     })

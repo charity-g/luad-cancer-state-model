@@ -27,6 +27,36 @@ from backend.agents.create_graph.graph import (
 
 log = logging.getLogger(__name__)
 
+
+def _depmap_features(raw: dict) -> dict:
+    return {
+        "is_hotspot": str(raw.get("Hotspot", "")).upper() == "TRUE",
+        "is_lof": str(raw.get("LikelyLoF", "")).upper() == "TRUE"
+        or str(raw.get("TranscriptLikelyLof", "")).upper() == "TRUE",
+        "is_high_impact": str(raw.get("VepImpact", "")).upper() == "HIGH",
+        "oncogene_high_impact": str(raw.get("OncogeneHighImpact", "")).upper() == "TRUE",
+        "tsg_high_impact": str(raw.get("TumorSuppressorHighImpact", "")).upper() == "TRUE",
+    }
+
+
+def _enrich_hydrated_from_raw(hydrated: MutationProteinEffect, mutation: dict) -> MutationProteinEffect:
+    """Persist DepMap CSV fields into identifiers so profile reload keeps classifier inputs."""
+    raw = mutation.get("raw") or {}
+    if not isinstance(raw, dict) or not raw:
+        return hydrated
+    ids = dict(hydrated.identifiers or {})
+    ids.setdefault("gene_symbol", raw.get("Hugo_Symbol") or raw.get("HugoSymbol"))
+    ids.setdefault(
+        "hgvs_protein",
+        raw.get("ProteinChange") or raw.get("HGVSp_Short") or raw.get("HGVSp"),
+    )
+    ids["depmap_features"] = _depmap_features(raw)
+    data = hydrated.model_dump()
+    data["identifiers"] = ids
+    if ids.get("gene_symbol") and not data.get("protein"):
+        data["protein"] = ids["gene_symbol"]
+    return MutationProteinEffect.model_validate(data)
+
 router = APIRouter()
 
 def print_debug(s):
@@ -134,6 +164,7 @@ async def process_profile(file: UploadFile = File(...)):
         for mutation in mutations:
             await asyncio.sleep(1)
             hydrated_mutation = await hydrate_mutation(mutation)
+            hydrated_mutation = _enrich_hydrated_from_raw(hydrated_mutation, mutation)
 
             yield sse(
                 "mutation_hydrated",

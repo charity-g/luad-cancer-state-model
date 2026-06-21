@@ -20,9 +20,13 @@ injected as grounded memory into both the planner and the reasoner.
 If no profile_id is given we fall back to the in-memory SSE mutations list.
 """
 
+import logging
+
 import backend.neo4j_http as neo4j_http
 from backend.agents import drug_routing, ttd, ttd_writer
 from backend.agents.traverse_graph import cypher, planner, reasoner
+
+log = logging.getLogger(__name__)
 
 
 def _fetch_profile_memory(profile_id: str) -> str:
@@ -216,21 +220,23 @@ def run(question, profile_id=None, mutations=None, context=None, history=None):
     # is fully wired regardless of what the query happened to SELECT.
     result["subgraph"] = _enrich_edges(result["subgraph"])
 
+    # Drug routing + ML classifier run on every turn when mutation/context data
+    # is present — not only in "reason" mode.
+    try:
+        routing = drug_routing.route(mutations, context)
+        evidence = drug_routing.evidence_text(mutations, context)
+    except Exception as exc:
+        log.warning("drug_routing failed: %s", exc, exc_info=True)
+        routing, evidence = [], ""
+
+    ttd_block = _ttd_evidence_text(ttd_drug_hits)
+    if ttd_block:
+        evidence = f"{evidence}\n\n{ttd_block}".strip() if evidence else ttd_block
+
     # ── Report: summarize (lookup) or full mechanistic reasoning (reason) ─────
     if mode == "lookup":
-        report = reasoner.summarize(result, profile=profile)
-        routing, evidence = [], ""
+        report = reasoner.summarize(result, profile=profile, evidence=evidence)
     else:
-        try:
-            routing = drug_routing.route(mutations, context)
-            evidence = drug_routing.evidence_text(mutations, context)
-        except Exception:
-            routing, evidence = [], ""
-
-        ttd_block = _ttd_evidence_text(ttd_drug_hits)
-        if ttd_block:
-            evidence = f"{evidence}\n\n{ttd_block}".strip() if evidence else ttd_block
-
         report = reasoner.reason(question, result, profile=profile, history=convo, evidence=evidence)
 
     pathway_ids = [

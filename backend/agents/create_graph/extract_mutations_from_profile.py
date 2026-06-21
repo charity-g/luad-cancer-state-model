@@ -21,15 +21,27 @@ def extract_mutations_from_profile(profile_bytes: bytes) -> List[GuessMutation]:
             mutation_id = row.get("mutation_id") or hashlib.md5(
                 json.dumps(row, sort_keys=True, default=str).encode()
             ).hexdigest()[:12]
+            gene = (
+                row.get("protein") or row.get("gene") or row.get("Gene")
+                or row.get("Hugo_Symbol") or row.get("HugoSymbol")
+            )
+            hgvs = (
+                row.get("hgvs_protein") or row.get("ProteinChange")
+                or row.get("HGVSp_Short") or row.get("HGVSp")
+            )
             additional = {}
             if row.get('UniprotID'):
                 additional["uniprot_ac"] = row.get('UniprotID')
             if row.get("effect"):
                 additional["estimated_effect"] = row.get('effect')
+            if gene:
+                additional["gene"] = gene
+            if hgvs:
+                additional["hgvs_protein"] = hgvs
             rows.append(
                 {
                     "mutation_id": mutation_id,
-                    "protein": row.get("protein") or row.get("gene") or row.get("Gene"),
+                    "protein": gene,
                     "raw": row,
                     **additional
                 }
