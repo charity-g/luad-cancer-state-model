@@ -35,8 +35,11 @@ def extract_proteins_for_mutation(mutation):
 def extract_pathways_for_protein(protein):
     # api call based - will need browser info maybe
     # https://www.kegg.jp/dbget-bin/www_bget?hsa:2065
-    
+
     returns list of kegg pathways 
+
+def update_pathway():
+    generate code to update pathway
 
 def run(profile):
     profile_id = some hash
@@ -45,7 +48,7 @@ def run(profile):
     profile_pathway = [] # graph database
  
     for mutation in mutations:
-        mutation = hydrate_mutation(mutation)
+        hydrated_mutation = hydrate_mutation(mutation)
         # // update mutation in graph database for this profile_id
         # stream some user feedback ie update frontend
 
