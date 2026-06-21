@@ -46,6 +46,7 @@ def health():
 @app.post("/query")
 def query(req: QueryRequest):
     return {
+        "test info": "charity temp"
         #TODO
     }
     # return agent.run(req.question)

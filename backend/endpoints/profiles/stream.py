@@ -1,6 +1,6 @@
 
 from __future__ import annotations
-
+import time
 import asyncio
 import csv
 import hashlib
@@ -15,6 +15,8 @@ from backend.agents.create_graph.model import MutationProteinEffect, ProteinReco
 
 router = APIRouter()
 
+def print_debug(s):
+    print(s)
 
 def sse(event: str, payload: dict[str, Any]) -> str:
     return f"event: {event}\ndata: {json.dumps(payload, default=str)}\n\n"
@@ -134,8 +136,9 @@ async def process_profile(file: UploadFile = File(...)):
         profile_pathway: list[dict[str, Any]] = []
 
         for mutation in mutations:
+            time.sleep(1)
             hydrated_mutation = hydrate_mutation(mutation)
-
+            
             yield sse(
                 "mutation_hydrated",
                 {

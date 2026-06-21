@@ -61,7 +61,7 @@ If you are already inside the `backend` folder, use:
 uvicorn main:app --reload
 ```
 
-The server typically runs at `http://127.0.0.1:8000`.
+Locally, the server typically runs at `http://127.0.0.1:8000`.
 
 ## API
 
