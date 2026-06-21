@@ -1,6 +1,42 @@
 """Drug-routing wiring: graph lookup + ML fallback, independent of Neo4j/LLM."""
 
+import pytest
+
 from backend.agents import drug_routing
+
+
+def _driver(gene, variant, effect="activating", lof=False):
+    return {
+        "gene": gene, "protein": gene, "hgvs_protein": variant,
+        "estimated_effect": effect, "mutation_id": "x",
+        "features": {"is_hotspot": not lof, "is_lof": lof, "is_high_impact": True,
+                     "oncogene_high_impact": not lof, "tsg_high_impact": lof},
+    }
+
+
+# Across the mutations the graph knows: variant-matched drivers resolve to their
+# direct-target drugs (no ML), while gap variants (e.g. G12C-only drugs excluded
+# for G12D/G12V) fall through to the ML classifier.
+@pytest.mark.parametrize("gene,variant,direct_drug", [
+    ("EGFR", "L858R", "osimertinib"),
+    ("EGFR", "exon19del", "osimertinib"),
+    ("KRAS", "G12C", "sotorasib"),
+    ("BRAF", "V600E", "dabrafenib"),
+    ("ALK", "fusion", "crizotinib"),
+])
+def test_direct_drug_cases_skip_ml(gene, variant, direct_drug):
+    r = drug_routing.route([_driver(gene, variant)])[0]
+    assert direct_drug in r["direct_drugs"]
+    assert r["ml_predictions"] == [], "direct-drug cases must not invoke the ML fallback"
+
+
+@pytest.mark.parametrize("variant", ["G12D", "G12V"])
+def test_kras_non_g12c_falls_back_to_ml(variant):
+    r = drug_routing.route([_driver("KRAS", variant)])[0]
+    assert r["mutation"] == f"KRAS {variant}"
+    assert "sotorasib" not in r["direct_drugs"] and "adagrasib" not in r["direct_drugs"]
+    vuln = [p for p in r["ml_predictions"] if p["predicted_vulnerable"]]
+    assert any(p["pathway_id"] in {"RAS_RAF_MEK_ERK", "MAPK_signaling"} for p in vuln)
 
 
 def _muts(*specs):
