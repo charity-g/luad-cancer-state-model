@@ -1,7 +1,6 @@
 import { useRef, useEffect, useState, useCallback, KeyboardEvent } from 'react'
 import type { MutationEntry, ContextCard, EffectType } from '../types'
 import type { ChatMessage } from '../hooks/useChat'
-import SubgraphView from './SubgraphView'
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 
@@ -137,9 +136,6 @@ function ThreadGroup({
                       <span className="ml-1 inline-block h-3.5 w-0.5 animate-pulse bg-slate-400 align-middle" />
                     )}
                   </div>
-                  {!msg.streaming && msg.subgraph && msg.subgraph.nodes.length > 0 && (
-                    <SubgraphView subgraph={msg.subgraph} />
-                  )}
                   {!msg.streaming && msg.followUps && msg.followUps.length > 0 && (
                     <div className="mt-2 space-y-1">
                       {msg.followUps.map((f) => (
