@@ -38,6 +38,29 @@ def _history_text(history):
     return "\n".join(lines)
 
 
+def _enrich_edges(subgraph):
+    """Add every relationship that exists among the subgraph's nodes."""
+    ids = [n["id"] for n in subgraph["nodes"] if n.get("id")]  # ids are elementIds
+    if len(ids) < 2:
+        return subgraph
+    extra = cypher.run_read(
+        "MATCH (a)-[r]->(b) WHERE elementId(a) IN $ids AND elementId(b) IN $ids "
+        "RETURN a, r, b",
+        {"ids": ids},
+    )["subgraph"]
+    nodes_by = {n["id"]: n for n in subgraph["nodes"]}
+    for n in extra["nodes"]:
+        nodes_by.setdefault(n["id"], n)
+    seen = {(e["source"], e["target"], e["type"]) for e in subgraph["edges"]}
+    edges = list(subgraph["edges"])
+    for e in extra["edges"]:
+        key = (e["source"], e["target"], e["type"])
+        if key not in seen:
+            seen.add(key)
+            edges.append(e)
+    return {"nodes": list(nodes_by.values()), "edges": edges}
+
+
 def run(question, mutations=None, context=None, history=None):
     profile = _profile_text(mutations, context)
     convo = _history_text(history)
@@ -55,9 +78,16 @@ def run(question, mutations=None, context=None, history=None):
         plan = {"cypher": cy, "params": params, "source": "fallback"}
         result = cypher.run_read(cy, params)
 
+    # Connect the dots: pull every relationship that exists among the retrieved
+    # nodes, so the visualized subgraph is fully wired, not just the edges the
+    # query happened to return.
+    result["subgraph"] = _enrich_edges(result["subgraph"])
+
     report = reasoner.reason(question, result, profile=profile, history=convo)
     pathway_ids = [
-        n["id"] for n in result["subgraph"]["nodes"] if "Pathway" in n.get("labels", [])
+        n.get("key") or n.get("label") or n["id"]
+        for n in result["subgraph"]["nodes"]
+        if "Pathway" in n.get("labels", [])
     ]
     return {
         "question": question,

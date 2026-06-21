@@ -83,9 +83,16 @@ def _is_rel(v):
 
 def _convert(v):
     if _is_node(v):
-        return {"id": v["properties"].get("id"), "labels": v["labels"], **v["properties"]}
+        # elementId is the universal wiring key (every node has one; the `id`
+        # property is missing on Gene nodes, which are keyed by `symbol`).
+        return {
+            **v["properties"],
+            "labels": v["labels"],
+            "key": v["properties"].get("id") or v["properties"].get("symbol"),
+            "id": v["elementId"],
+        }
     if _is_rel(v):
-        return {"type": v["type"], **v.get("properties", {})}
+        return {**v.get("properties", {}), "type": v["type"]}
     if isinstance(v, list):
         return [_convert(x) for x in v]
     return v
@@ -99,10 +106,13 @@ def _subgraph(values):
             for x in v:
                 visit(x)
         elif _is_node(v):
+            # Use elementId as the node id so edges always wire up (the `id`
+            # property is absent on Gene nodes). Keep the readable name in `key`.
             nodes[v["elementId"]] = {
-                "id": v["properties"].get("id", v["elementId"]),
-                "labels": v["labels"],
                 **v["properties"],
+                "labels": v["labels"],
+                "key": v["properties"].get("id") or v["properties"].get("symbol"),
+                "id": v["elementId"],
             }
         elif _is_rel(v):
             rels.append(v)
@@ -123,7 +133,9 @@ def _subgraph(values):
         if key in seen:
             continue
         seen.add(key)
-        edges.append({"type": r["type"], "source": src, "target": tgt, **r.get("properties", {})})
+        # Props first so a relationship's own `source`/`type` property can't
+        # clobber the structural endpoint keys.
+        edges.append({**r.get("properties", {}), "type": r["type"], "source": src, "target": tgt})
     return {"nodes": list(nodes.values()), "edges": edges}
 
 
