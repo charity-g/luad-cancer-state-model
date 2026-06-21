@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
-import type { HydratedMutation, ContextCard } from '../types'
+import type { HydratedMutation, ContextCard, Subgraph } from '../types'
 
 export interface ChatMessage {
   id: string
@@ -11,6 +11,7 @@ export interface ChatMessage {
   context: ContextCard[]
   thread: string
   followUps?: string[]
+  subgraph?: Subgraph
 }
 
 const STORAGE_KEY = 'luad_chat_history'
@@ -109,6 +110,7 @@ export function useChat(getMutations: () => HydratedMutation[]) {
       }
 
       let responseText = ''
+      let subgraph: Subgraph | undefined
       try {
         const mutations = getMutations()
         let resp: Response
@@ -153,6 +155,8 @@ export function useChat(getMutations: () => HydratedMutation[]) {
           return
         }
         responseText = String(data['report'] ?? data['message'] ?? JSON.stringify(data))
+        const sg = data['subgraph'] as Subgraph | undefined
+        if (sg && Array.isArray(sg.nodes) && sg.nodes.length) subgraph = sg
       } catch (err) {
         if (ac.signal.aborted) return markStopped('')
         const msg = err instanceof Error ? err.message : String(err)
@@ -173,7 +177,7 @@ export function useChat(getMutations: () => HydratedMutation[]) {
 
       const followUps = deriveFollowUps(context)
       setMessages((prev) =>
-        prev.map((m) => (m.id === agentId ? { ...m, streaming: false, followUps } : m)),
+        prev.map((m) => (m.id === agentId ? { ...m, streaming: false, followUps, subgraph } : m)),
       )
       setBusy(false)
       abortRef.current = null
