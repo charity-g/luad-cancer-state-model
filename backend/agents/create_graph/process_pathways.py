@@ -39,6 +39,3 @@ def fetch_pathway_information(pathway: dict[str, Any]) -> dict[str, Any]:
         "source": "upload-profile-stream",
     }
 
-
-def update_pathway(pathway_information: dict[str, Any]) -> dict[str, Any]:
-    return pathway_information

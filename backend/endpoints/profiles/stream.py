@@ -12,13 +12,14 @@ from fastapi import APIRouter, File, UploadFile
 from fastapi.responses import StreamingResponse
 
 from backend.agents.create_graph.model import MutationProteinEffect, ProteinRecord
-from backend.agents.create_graph.model import extract_mutations_from_profile
+from backend.agents.create_graph.extract_mutations_from_profile import extract_mutations_from_profile
+from backend.agents.create_graph.hydrate_mutation import hydrate_mutation
 from backend.agents.create_graph.process_pathways import (
     extract_protein_for_mutation,
     extract_pathways_for_protein,
     fetch_pathway_information,
-    update_pathway,
 )
+from backend.agents.create_graph.graph import (init_graph, update_pathway) 
 
 
 
