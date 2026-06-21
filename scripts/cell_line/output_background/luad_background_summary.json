@@ -1,0 +1,438 @@
+{
+  "source": "DepMap 26Q1",
+  "cancer_type": "Lung Adenocarcinoma (LUAD)",
+  "n_luad_cell_lines": 91,
+  "driver_gene_stats": [
+    {
+      "gene": "KRAS",
+      "hotspot_freq_luad": 0.374,
+      "mean_expr_logTPM": 4.4971,
+      "mean_copy_number": 1.3028,
+      "mean_crispr_dependency": 0.7521,
+      "mean_crispr_effect": -1.1395
+    },
+    {
+      "gene": "EGFR",
+      "hotspot_freq_luad": 0.084,
+      "mean_expr_logTPM": 5.2771,
+      "mean_copy_number": 2.4142,
+      "mean_crispr_dependency": 0.2331,
+      "mean_crispr_effect": -0.2882
+    },
+    {
+      "gene": "TP53",
+      "hotspot_freq_luad": 0.6794,
+      "mean_expr_logTPM": 4.7772,
+      "mean_copy_number": 0.9251,
+      "mean_crispr_dependency": 0.0124,
+      "mean_crispr_effect": 0.3459
+    },
+    {
+      "gene": "STK11",
+      "hotspot_freq_luad": 0.0763,
+      "mean_expr_logTPM": 4.2704,
+      "mean_copy_number": 0.8085,
+      "mean_crispr_dependency": 0.1538,
+      "mean_crispr_effect": -0.1005
+    },
+    {
+      "gene": "KEAP1",
+      "hotspot_freq_luad": 0.0687,
+      "mean_expr_logTPM": 5.5772,
+      "mean_copy_number": 0.8371,
+      "mean_crispr_dependency": 0.2594,
+      "mean_crispr_effect": -0.238
+    },
+    {
+      "gene": "SMAD4",
+      "hotspot_freq_luad": 0.0,
+      "mean_expr_logTPM": 4.8449,
+      "mean_copy_number": 0.7943,
+      "mean_crispr_dependency": 0.0544,
+      "mean_crispr_effect": -0.0383
+    },
+    {
+      "gene": "ALK",
+      "hotspot_freq_luad": 0.0,
+      "mean_expr_logTPM": 0.4351,
+      "mean_copy_number": 1.1831,
+      "mean_crispr_dependency": 0.0588,
+      "mean_crispr_effect": -0.0626
+    },
+    {
+      "gene": "ROS1",
+      "mean_expr_logTPM": 0.7236,
+      "mean_copy_number": 0.9393,
+      "mean_crispr_dependency": 0.0125,
+      "mean_crispr_effect": 0.0988
+    },
+    {
+      "gene": "MET",
+      "hotspot_freq_luad": 0.0,
+      "mean_expr_logTPM": 6.3068,
+      "mean_copy_number": 1.5409,
+      "mean_crispr_dependency": 0.0931,
+      "mean_crispr_effect": -0.0725
+    },
+    {
+      "gene": "BRAF",
+      "hotspot_freq_luad": 0.0458,
+      "mean_expr_logTPM": 3.1849,
+      "mean_copy_number": 1.1237,
+      "mean_crispr_dependency": 0.0783,
+      "mean_crispr_effect": -0.0573
+    },
+    {
+      "gene": "NRAS",
+      "hotspot_freq_luad": 0.0305,
+      "mean_expr_logTPM": 5.2299,
+      "mean_copy_number": 1.0717,
+      "mean_crispr_dependency": 0.1053,
+      "mean_crispr_effect": -0.1504
+    },
+    {
+      "gene": "RB1",
+      "hotspot_freq_luad": 0.0076,
+      "mean_expr_logTPM": 3.8854,
+      "mean_copy_number": 0.8263,
+      "mean_crispr_dependency": 0.0234,
+      "mean_crispr_effect": 0.1888
+    },
+    {
+      "gene": "CDKN2A",
+      "hotspot_freq_luad": 0.0916,
+      "mean_expr_logTPM": 4.1789,
+      "mean_copy_number": 0.3953,
+      "mean_crispr_dependency": 0.0113,
+      "mean_crispr_effect": 0.1798
+    },
+    {
+      "gene": "NKX2-1",
+      "mean_expr_logTPM": 2.3194,
+      "mean_copy_number": 1.3905,
+      "mean_crispr_dependency": 0.2199,
+      "mean_crispr_effect": -0.2157
+    },
+    {
+      "gene": "ERBB2",
+      "hotspot_freq_luad": 0.0076,
+      "mean_expr_logTPM": 5.3373,
+      "mean_copy_number": 1.1996,
+      "mean_crispr_dependency": 0.3001,
+      "mean_crispr_effect": -0.321
+    },
+    {
+      "gene": "PIK3CA",
+      "hotspot_freq_luad": 0.0382,
+      "mean_expr_logTPM": 3.4573,
+      "mean_copy_number": 1.1003,
+      "mean_crispr_dependency": 0.5063,
+      "mean_crispr_effect": -0.4798
+    },
+    {
+      "gene": "PTEN",
+      "hotspot_freq_luad": 0.0,
+      "mean_expr_logTPM": 5.0658,
+      "mean_copy_number": 1.0267,
+      "mean_crispr_dependency": 0.0094,
+      "mean_crispr_effect": 0.4328
+    },
+    {
+      "gene": "MDM2",
+      "mean_expr_logTPM": 4.9163,
+      "mean_copy_number": 1.1357,
+      "mean_crispr_dependency": 0.4488,
+      "mean_crispr_effect": -0.5402
+    },
+    {
+      "gene": "FGFR1",
+      "hotspot_freq_luad": 0.0,
+      "mean_expr_logTPM": 4.0929,
+      "mean_copy_number": 0.9354,
+      "mean_crispr_dependency": 0.1194,
+      "mean_crispr_effect": -0.0928
+    },
+    {
+      "gene": "MAP2K1",
+      "hotspot_freq_luad": 0.0153,
+      "mean_expr_logTPM": 5.8437,
+      "mean_copy_number": 1.0755,
+      "mean_crispr_dependency": 0.0945,
+      "mean_crispr_effect": -0.1303
+    },
+    {
+      "gene": "ARID1A",
+      "hotspot_freq_luad": 0.0,
+      "mean_expr_logTPM": 4.9994,
+      "mean_copy_number": 0.971,
+      "mean_crispr_dependency": 0.1874,
+      "mean_crispr_effect": -0.1548
+    }
+  ],
+  "top_mutated_genes": [
+    {
+      "gene": "TP53",
+      "hotspot_freq_luad": 0.6794
+    },
+    {
+      "gene": "KRAS",
+      "hotspot_freq_luad": 0.374
+    },
+    {
+      "gene": "CDKN2A",
+      "hotspot_freq_luad": 0.0916
+    },
+    {
+      "gene": "EGFR",
+      "hotspot_freq_luad": 0.084
+    },
+    {
+      "gene": "STK11",
+      "hotspot_freq_luad": 0.0763
+    },
+    {
+      "gene": "KEAP1",
+      "hotspot_freq_luad": 0.0687
+    },
+    {
+      "gene": "BRAF",
+      "hotspot_freq_luad": 0.0458
+    },
+    {
+      "gene": "CTNNB1",
+      "hotspot_freq_luad": 0.0458
+    },
+    {
+      "gene": "TERT",
+      "hotspot_freq_luad": 0.0458
+    },
+    {
+      "gene": "PIK3CA",
+      "hotspot_freq_luad": 0.0382
+    },
+    {
+      "gene": "NFE2L2",
+      "hotspot_freq_luad": 0.0305
+    },
+    {
+      "gene": "NRAS",
+      "hotspot_freq_luad": 0.0305
+    },
+    {
+      "gene": "MB21D2",
+      "hotspot_freq_luad": 0.0229
+    },
+    {
+      "gene": "VHL",
+      "hotspot_freq_luad": 0.0229
+    },
+    {
+      "gene": "APC",
+      "hotspot_freq_luad": 0.0153
+    },
+    {
+      "gene": "BARD1",
+      "hotspot_freq_luad": 0.0153
+    },
+    {
+      "gene": "BRCA2",
+      "hotspot_freq_luad": 0.0153
+    },
+    {
+      "gene": "C2orf81",
+      "hotspot_freq_luad": 0.0153
+    },
+    {
+      "gene": "CARNS1",
+      "hotspot_freq_luad": 0.0153
+    },
+    {
+      "gene": "CNBD1",
+      "hotspot_freq_luad": 0.0153
+    }
+  ],
+  "top_crispr_dependencies": [
+    {
+      "gene": "CCT3",
+      "mean_crispr_dependency": 1.0
+    },
+    {
+      "gene": "CDC27",
+      "mean_crispr_dependency": 1.0
+    },
+    {
+      "gene": "CDC45",
+      "mean_crispr_dependency": 1.0
+    },
+    {
+      "gene": "CDK1",
+      "mean_crispr_dependency": 1.0
+    },
+    {
+      "gene": "DCAF1",
+      "mean_crispr_dependency": 1.0
+    },
+    {
+      "gene": "DCAF13",
+      "mean_crispr_dependency": 1.0
+    },
+    {
+      "gene": "DNA2",
+      "mean_crispr_dependency": 1.0
+    },
+    {
+      "gene": "EEF1A1",
+      "mean_crispr_dependency": 1.0
+    },
+    {
+      "gene": "ESPL1",
+      "mean_crispr_dependency": 1.0
+    },
+    {
+      "gene": "FAU",
+      "mean_crispr_dependency": 1.0
+    },
+    {
+      "gene": "HSPE1",
+      "mean_crispr_dependency": 1.0
+    },
+    {
+      "gene": "KPNB1",
+      "mean_crispr_dependency": 1.0
+    },
+    {
+      "gene": "LRR1",
+      "mean_crispr_dependency": 1.0
+    },
+    {
+      "gene": "LSM2",
+      "mean_crispr_dependency": 1.0
+    },
+    {
+      "gene": "PCNA",
+      "mean_crispr_dependency": 1.0
+    },
+    {
+      "gene": "PHF5A",
+      "mean_crispr_dependency": 1.0
+    },
+    {
+      "gene": "POLR2B",
+      "mean_crispr_dependency": 1.0
+    },
+    {
+      "gene": "POLR2L",
+      "mean_crispr_dependency": 1.0
+    },
+    {
+      "gene": "PRELID1",
+      "mean_crispr_dependency": 1.0
+    },
+    {
+      "gene": "PRIM2",
+      "mean_crispr_dependency": 1.0
+    }
+  ],
+  "molecular_subtype_prevalence": [
+    {
+      "subtype": "TP53_LoF",
+      "n_luad_lines_positive": 68,
+      "prevalence_overall": 0.7473
+    },
+    {
+      "subtype": "CDKN2A_LoF",
+      "n_luad_lines_positive": 30,
+      "prevalence_overall": 0.3297
+    },
+    {
+      "subtype": "KRAS p.G12",
+      "n_luad_lines_positive": 21,
+      "prevalence_overall": 0.2308
+    },
+    {
+      "subtype": "MTAP_LoF",
+      "n_luad_lines_positive": 16,
+      "prevalence_overall": 0.1758
+    },
+    {
+      "subtype": "KRAS p.G12C",
+      "n_luad_lines_positive": 9,
+      "prevalence_overall": 0.0989
+    },
+    {
+      "subtype": "KRAS p.G13",
+      "n_luad_lines_positive": 6,
+      "prevalence_overall": 0.0659
+    },
+    {
+      "subtype": "EGFR exon 19 del",
+      "n_luad_lines_positive": 5,
+      "prevalence_overall": 0.0549
+    },
+    {
+      "subtype": "RB1_LoF",
+      "n_luad_lines_positive": 5,
+      "prevalence_overall": 0.0549
+    },
+    {
+      "subtype": "KRAS p.Q61",
+      "n_luad_lines_positive": 3,
+      "prevalence_overall": 0.033
+    },
+    {
+      "subtype": "NF1_LoF",
+      "n_luad_lines_positive": 3,
+      "prevalence_overall": 0.033
+    },
+    {
+      "subtype": "KRAS p.G12D",
+      "n_luad_lines_positive": 3,
+      "prevalence_overall": 0.033
+    },
+    {
+      "subtype": "PTEN_LoF",
+      "n_luad_lines_positive": 3,
+      "prevalence_overall": 0.033
+    },
+    {
+      "subtype": "NRAS p.Q61",
+      "n_luad_lines_positive": 2,
+      "prevalence_overall": 0.022
+    },
+    {
+      "subtype": "EGFR p.L858R",
+      "n_luad_lines_positive": 2,
+      "prevalence_overall": 0.022
+    },
+    {
+      "subtype": "APC_LoF",
+      "n_luad_lines_positive": 2,
+      "prevalence_overall": 0.022
+    },
+    {
+      "subtype": "MSI",
+      "n_luad_lines_positive": 1,
+      "prevalence_overall": 0.011
+    },
+    {
+      "subtype": "VHL_LoF",
+      "n_luad_lines_positive": 1,
+      "prevalence_overall": 0.011
+    },
+    {
+      "subtype": "KMT2A Fusions",
+      "n_luad_lines_positive": 1,
+      "prevalence_overall": 0.011
+    },
+    {
+      "subtype": "PIK3CA p.E542",
+      "n_luad_lines_positive": 1,
+      "prevalence_overall": 0.011
+    },
+    {
+      "subtype": "JAK2 p.V617F",
+      "n_luad_lines_positive": 0,
+      "prevalence_overall": 0.0
+    }
+  ]
+}
