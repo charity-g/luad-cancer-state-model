@@ -411,6 +411,7 @@ export default function PathwayGraph({
       effect: (effect?.estimated_effect ?? 'no_effect') as EffectType,
       mutation_id: effect?.mutation_id ?? '',
       pathway,
+      ...(effect?.hgvs_protein ? { hgvs_protein: effect.hgvs_protein } : {}),
     }
   }
 
@@ -815,7 +816,7 @@ export default function PathwayGraph({
                 .filter(([, v]) => v !== undefined && v !== null && v !== '')
                 .map(([label, val]) => (
                   <div key={String(label)} className="py-2">
-                    <p className="text-[10px] font-medium uppercase tracking-wider text-slate-500">{label}</p>
+                    <p className="text-[10px] font-medium uppercase tracking-wider text-slate-500">{String(label)}</p>
                     <p className="mt-0.5 text-xs text-slate-300">{String(val)}</p>
                   </div>
                 ))}

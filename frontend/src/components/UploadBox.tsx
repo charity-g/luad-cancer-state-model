@@ -1,4 +1,5 @@
-import { useRef, useState, DragEvent, ChangeEvent } from 'react'
+import { useRef, useState } from 'react'
+import type { DragEvent, ChangeEvent } from 'react'
 
 interface Props {
   onFile: (file: File) => void
@@ -11,8 +12,12 @@ export default function UploadBox({ onFile, hasData, filename, standalone }: Pro
   const inputRef = useRef<HTMLInputElement>(null)
   const [dragging, setDragging] = useState(false)
 
+  const ACCEPTED_EXT = ['.csv', '.tsv', '.maf', '.json', '.txt']
+  const ACCEPTED_MIME = ['text/csv', 'text/tab-separated-values', 'application/json', 'text/plain']
+
   function handleFile(file: File) {
-    if (file.name.endsWith('.csv') || file.type === 'text/csv') {
+    const ext = file.name.slice(file.name.lastIndexOf('.')).toLowerCase()
+    if (ACCEPTED_EXT.includes(ext) || ACCEPTED_MIME.includes(file.type)) {
       onFile(file)
     }
   }
@@ -64,8 +69,8 @@ export default function UploadBox({ onFile, hasData, filename, standalone }: Pro
             {dragging
               ? 'Drop to analyze…'
               : filename
-              ? `Loaded: ${filename} — drop a new CSV to re-run`
-              : 'Drop a CSV file here, or click to browse'}
+              ? `Loaded: ${filename} — drop a new file to re-run`
+              : 'Drop a mutation file here, or click to browse'}
           </span>
         </div>
 
@@ -78,13 +83,13 @@ export default function UploadBox({ onFile, hasData, filename, standalone }: Pro
               d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
             />
           </svg>
-          {hasData ? 'New file' : 'Upload CSV'}
+          {hasData ? 'New file' : 'Upload'}
         </button>
 
         <input
           ref={inputRef}
           type="file"
-          accept=".csv,text/csv"
+          accept=".csv,.tsv,.maf,.json,.txt,text/csv,text/tab-separated-values,application/json"
           className="hidden"
           onChange={onChange}
         />
@@ -92,13 +97,9 @@ export default function UploadBox({ onFile, hasData, filename, standalone }: Pro
 
       {!hasData && (
         <p className="mx-auto mt-2 max-w-3xl text-center text-[11px] text-slate-400">
-          Expected columns:{' '}
-          {['mutation_id', 'gene', 'position', 'ref', 'alt'].map((c, i) => (
-            <span key={c}>
-              <code className="font-mono">{c}</code>
-              {i < 4 ? ', ' : ''}
-            </span>
-          ))}
+          Supports <code className="font-mono">.csv</code>, <code className="font-mono">.tsv</code>,{' '}
+          <code className="font-mono">.maf</code>, <code className="font-mono">.json</code>{' '}
+          &mdash; columns auto-detected
         </p>
       )}
     </div>

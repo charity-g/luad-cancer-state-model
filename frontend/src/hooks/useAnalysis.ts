@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react'
 import type { MutationEntry, HydratedMutation } from '../types'
+import { API_BASE } from '../lib/api'
 
 export type AnalysisPhase = 'idle' | 'streaming' | 'done' | 'error'
 
@@ -20,7 +21,7 @@ export function useAnalysis() {
 
     let resp: Response
     try {
-      resp = await fetch('/api/profiles/stream', { method: 'POST', body })
+      resp = await fetch(`${API_BASE}/api/profiles/stream`, { method: 'POST', body })
     } catch {
       setError('Cannot connect to the backend. Is the server running on port 8000?')
       setPhase('error')
@@ -126,7 +127,12 @@ export function useAnalysis() {
             const csvBool = (k: string) => String(rawCsv[k] ?? '').toUpperCase() === 'TRUE'
 
             const identifiers = (hydrated['identifiers'] as Record<string, unknown>) ?? {}
-            const hgvs = csvStr('ProteinChange') ?? (identifiers['hgvs_protein'] ? String(identifiers['hgvs_protein']) : undefined)
+            const hgvs =
+              csvStr('ProteinChange') ?? csvStr('HGVSp_Short') ?? csvStr('HGVSp')
+              ?? (identifiers['hgvs_protein'] ? String(identifiers['hgvs_protein']) : undefined)
+            const gene =
+              csvStr('HugoSymbol') ?? csvStr('Hugo_Symbol')
+              ?? (identifiers['gene_symbol'] ? String(identifiers['gene_symbol']) : undefined)
             const hydratedMutation: HydratedMutation = {
               mutation_id,
               protein:          String(hydrated['protein'] ?? ''),
@@ -136,7 +142,7 @@ export function useAnalysis() {
               justification:    (hydrated['justification'] as Record<string, unknown>) ?? {},
               raw:              (hydrated['raw'] as Record<string, unknown>) ?? rawCsv,
               hgvs_protein:     hgvs,
-              gene:             csvStr('HugoSymbol'),
+              gene:             gene ?? csvStr('HugoSymbol'),
               features: {
                 is_hotspot:           csvBool('Hotspot'),
                 is_lof:               csvBool('LikelyLoF') || csvBool('TranscriptLikelyLof'),

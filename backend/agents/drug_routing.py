@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import contextlib
 import io
+import json
 
 import backend.agents.classifier.graph_lookup as graph_lookup
 import backend.agents.classifier.gap_detector as gap_detector
@@ -54,13 +55,72 @@ def _model():
     return _model_cache
 
 
+def _parse_json_field(value):
+    if isinstance(value, dict):
+        return value
+    if isinstance(value, str) and value.strip():
+        try:
+            return json.loads(value)
+        except json.JSONDecodeError:
+            pass
+    return {}
+
+
+def _normalize_mutation(m: dict) -> dict:
+    """Fill gene / variant / features from identifiers and justification when absent."""
+    out = dict(m)
+    ids = _parse_json_field(out.get("identifiers"))
+    just = _parse_json_field(out.get("justification"))
+    raw = _parse_json_field(out.get("raw"))
+
+    gene = out.get("gene") or ids.get("gene_symbol") or raw.get("Hugo_Symbol") or raw.get("HugoSymbol")
+    if gene:
+        out["gene"] = str(gene).strip()
+
+    protein = out.get("protein") or out.get("gene") or ids.get("gene_symbol")
+    if protein and (not out.get("protein") or out["protein"] not in _graph().get("gene_index", {})):
+        # Prefer the gene symbol for routing when protein is a UniProt AC etc.
+        if out.get("gene"):
+            out["protein"] = out["gene"]
+        elif protein:
+            out["protein"] = str(protein).strip()
+
+    if not out.get("hgvs_protein"):
+        hgvs = (
+            ids.get("hgvs_protein")
+            or just.get("hgvs_protein")
+            or raw.get("ProteinChange")
+            or raw.get("HGVSp_Short")
+            or raw.get("HGVSp")
+        )
+        if hgvs:
+            out["hgvs_protein"] = str(hgvs).strip()
+
+    if not out.get("features"):
+        stored = ids.get("depmap_features")
+        if isinstance(stored, dict):
+            out["features"] = stored
+        elif raw:
+            out["features"] = {
+                "is_hotspot": str(raw.get("Hotspot", "")).upper() == "TRUE",
+                "is_lof": str(raw.get("LikelyLoF", "")).upper() == "TRUE"
+                or str(raw.get("TranscriptLikelyLof", "")).upper() == "TRUE",
+                "is_high_impact": str(raw.get("VepImpact", "")).upper() == "HIGH",
+                "oncogene_high_impact": str(raw.get("OncogeneHighImpact", "")).upper() == "TRUE",
+                "tsg_high_impact": str(raw.get("TumorSuppressorHighImpact", "")).upper() == "TRUE",
+            }
+
+    return out
+
+
 def _variant_token(hgvs_protein, mutation_id, justification, gene="") -> str:
     """Extract the protein-level variant (e.g. ``L858R``) used in the graph's
     mutation keys, preferring the explicit hgvs_protein, then the annotation,
     then the mutation id. Tolerates ``p.L858R``, ``EGFR:p.L858R``, ``EGFR L858R``."""
+    just = _parse_json_field(justification)
     raw = hgvs_protein or ""
-    if not raw and isinstance(justification, dict):
-        raw = justification.get("hgvs_protein") or ""
+    if not raw:
+        raw = just.get("hgvs_protein") or ""
     if not raw:
         raw = mutation_id or ""
     raw = str(raw).strip()
@@ -150,19 +210,18 @@ def _candidates(mutations, context):
     then profile mutations. Deduped by gene, preferring whichever resolves to a
     real graph variant key so we don't lose variant-specific drugs."""
     graph = _graph()
-    rows = list(context or []) + list(mutations or [])
+    rows = [_normalize_mutation(m) for m in list(context or []) + list(mutations or [])]
 
     by_gene = {}
     for m in rows:
-        # Prefer the gene symbol (HugoSymbol) forwarded from the profile; fall
-        # back to the display protein / context selection.
         gene = m.get("gene") or m.get("protein")
         if not gene or gene not in graph["gene_index"]:
             continue
         effect = m.get("estimated_effect") or m.get("effect")
         features = m.get("features")
+        just = _parse_json_field(m.get("justification"))
         key, kind = _resolve_key(graph, gene, m.get("hgvs_protein"),
-                                 m.get("mutation_id"), effect, m.get("justification"))
+                                 m.get("mutation_id"), effect, just)
         # The classifier is a fallback for REAL mutations. Route only entries with
         # genuine signal — a resolved graph variant key, a driver effect call, or
         # a real impact flag (hotspot / oncogene- or TSG-high-impact). A bare gene
@@ -208,7 +267,7 @@ def route(mutations, context=None):
                 "gene": gene,
                 "match": kind,
                 "direct_drugs": direct,
-                "ml_predictions": _ml_predictions(graph, gene, ml_ids, feats) if not direct else [],
+                "ml_predictions": _ml_predictions(graph, gene, ml_ids, feats) if ml_ids else [],
             })
         else:
             # Variant not in the drug graph — still offer gene-level pathway ML,
@@ -242,8 +301,20 @@ def evidence_text(mutations, context=None):
                 f"- {it['mutation']}: direct-target drug(s) in graph: "
                 f"{', '.join(it['direct_drugs'])}."
             )
-            continue
         vuln = [p for p in it["ml_predictions"] if p["predicted_vulnerable"]]
+        if it["direct_drugs"]:
+            if vuln:
+                preds = "; ".join(
+                    f"{p['pathway']} (ML p={p['probability']}, support={p['data_support_level']})"
+                    for p in vuln[:4]
+                )
+                lines.append(f"  ML pathway-vulnerability predictions: {preds}.")
+            elif it["ml_predictions"]:
+                best = it["ml_predictions"][0]
+                lines.append(
+                    f"  ML pathway-vulnerability (top: {best['pathway']} p={best['probability']})."
+                )
+            continue
         head = f"- {it['mutation']}: no direct-target drug in the graph for this variant."
         if vuln:
             preds = "; ".join(

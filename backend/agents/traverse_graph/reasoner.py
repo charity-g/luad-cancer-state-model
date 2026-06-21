@@ -29,18 +29,21 @@ _SYSTEM = (
 )
 
 
-def summarize(result: dict, profile: str = "") -> dict:
+def summarize(result: dict, profile: str = "", evidence: str = "") -> dict:
     """Lightweight summary for lookup queries — describes the returned graph in
     1-3 sentences without mechanistic inference.  Much cheaper than reason().
     Falls back to a deterministic node-count description if no API key.
     """
     sub = result["subgraph"]
     if not sub["nodes"]:
-        return {"report": "No matching nodes found in the graph.", "verdict": None}
+        base = "No matching nodes found in the graph."
+        if evidence:
+            base += f"\n\n{evidence}"
+        return {"report": base, "verdict": None}
 
     if ANTHROPIC_API_KEY:
         try:
-            return _summarize_llm(sub, profile)
+            return _summarize_llm(sub, profile, evidence)
         except Exception:
             pass
 
@@ -54,16 +57,18 @@ def summarize(result: dict, profile: str = "") -> dict:
         f"**{lbl}** ({len(names)}): {', '.join(names[:5])}{'…' if len(names) > 5 else ''}"
         for lbl, names in by_label.items()
     ]
-    return {
-        "report": "Graph contains " + "; ".join(parts) + f". ({len(sub['edges'])} edges total)",
-        "verdict": None,
-    }
+    report = "Graph contains " + "; ".join(parts) + f". ({len(sub['edges'])} edges total)"
+    if evidence:
+        report += f"\n\n{evidence}"
+    return {"report": report, "verdict": None}
 
 
-def _summarize_llm(subgraph: dict, profile: str) -> dict:
+def _summarize_llm(subgraph: dict, profile: str, evidence: str = "") -> dict:
     client = anthropic.Anthropic()
     ctx = _context(subgraph)
     preamble = f"{profile}\n\n" if profile else ""
+    if evidence:
+        preamble += evidence + "\n\n"
     resp = client.messages.create(
         model=REASONER_MODEL,
         max_tokens=300,
@@ -72,6 +77,8 @@ def _summarize_llm(subgraph: dict, profile: str) -> dict:
             f"{preamble}Neo4j subgraph:\n{ctx}\n\n"
             "Write 1-3 sentences describing what this graph contains. "
             "Name the key entities. Do not infer mechanisms — only describe what was returned."
+            + (" Include any drug-routing / ML pathway findings from the evidence above."
+               if evidence else "")
         )}],
     )
     text = "".join(b.text for b in resp.content if b.type == "text")

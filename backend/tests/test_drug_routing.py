@@ -24,10 +24,10 @@ def _driver(gene, variant, effect="activating", lof=False):
     ("BRAF", "V600E", "dabrafenib"),
     ("ALK", "fusion", "crizotinib"),
 ])
-def test_direct_drug_cases_skip_ml(gene, variant, direct_drug):
+def test_direct_drug_cases_also_run_ml(gene, variant, direct_drug):
     r = drug_routing.route([_driver(gene, variant)])[0]
     assert direct_drug in r["direct_drugs"]
-    assert r["ml_predictions"] == [], "direct-drug cases must not invoke the ML fallback"
+    assert r["ml_predictions"], "classifier should run alongside direct-target drugs"
 
 
 @pytest.mark.parametrize("variant", ["G12D", "G12V"])
@@ -109,7 +109,7 @@ def test_unknown_gene_is_skipped():
     assert items == []
 
 
-def test_evidence_text_mentions_ml_for_kras_and_drug_for_egfr():
+def test_evidence_text_mentions_ml_for_direct_and_gap_cases():
     text = drug_routing.evidence_text(
         _muts(
             ("EGFR", "EGFR:p.L858R", "gain_of_function"),
@@ -119,7 +119,7 @@ def test_evidence_text_mentions_ml_for_kras_and_drug_for_egfr():
     assert "DRUG-ROUTING EVIDENCE" in text
     assert "osimertinib" in text
     assert "KRAS G12D" in text
-    assert "ML" in text  # ML fallback cited for the KRAS gap
+    assert "ML" in text
 
 
 def test_bare_gene_selection_without_mutation_signal_is_not_routed():

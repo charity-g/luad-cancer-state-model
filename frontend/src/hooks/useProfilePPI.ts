@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import type { ProfileGraph } from './useProfileGraph'
+import { API_BASE } from '../lib/api'
 
 export function useProfilePPI(profileId: string | null) {
   const [graph, setGraph]     = useState<ProfileGraph | null>(null)
@@ -13,9 +14,7 @@ export function useProfilePPI(profileId: string | null) {
     setLoading(true)
     setError(null)
 
-    // Use the cascade endpoint: traverses outward from seed proteins through
-    // signaling edges and tags outcome genes (growth / proliferation / apoptosis)
-    fetch(`/api/profiles/${profileId}/ppi/cascade`)
+    fetch(`${API_BASE}/api/profiles/${profileId}/ppi`)
       .then((r) => {
         if (r.status === 404) return null
         if (!r.ok) throw new Error(`${r.status} ${r.statusText}`)

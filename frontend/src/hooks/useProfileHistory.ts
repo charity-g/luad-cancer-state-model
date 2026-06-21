@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { API_BASE } from '../lib/api'
 
 export interface ProfileSummary {
   profile_id: string
@@ -14,7 +15,7 @@ export function useProfileHistory() {
   useEffect(() => {
     let cancelled = false
     setLoading(true)
-    fetch('/api/profiles')
+    fetch(`${API_BASE}/api/profiles`)
       .then((r) => {
         if (!r.ok) throw new Error(`${r.status} ${r.statusText}`)
         return r.json() as Promise<ProfileSummary[]>

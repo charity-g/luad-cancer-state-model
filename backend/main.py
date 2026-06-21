@@ -35,6 +35,30 @@ app.add_middleware(
 )
 
 
+# In production the frontend (a different origin) calls "<backend>/api/...".
+# Strip the /api prefix here so every existing route keeps its bare path
+# ("/query"), which also leaves the local dev proxy (it already strips /api)
+# untouched. Pure ASGI (not BaseHTTPMiddleware) so it never buffers the SSE
+# /profiles/stream response.
+class _StripApiPrefix:
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope.get("type") == "http":
+            path = scope.get("path", "")
+            if path == "/api" or path.startswith("/api/"):
+                scope = dict(scope)
+                scope["path"] = path[4:] or "/"
+                raw = scope.get("raw_path")
+                if raw:
+                    scope["raw_path"] = raw.replace(b"/api", b"", 1)
+        await self.app(scope, receive, send)
+
+
+app.add_middleware(_StripApiPrefix)
+
+
 class QueryRequest(BaseModel):
     question: str
     profile_id: str | None = None  # active profile — used to load graph memory from Neo4j
