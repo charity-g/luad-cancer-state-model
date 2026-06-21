@@ -14,6 +14,7 @@ export interface ChatMessage {
   subgraph?: Subgraph
   drugs?: DrugHit[]   // TTD drug hits returned by this agent turn
   mode?: 'lookup' | 'reason'  // which pipeline path ran
+  verdict?: string    // short clinical verdict from the reasoning agent
 }
 
 function storageKey(profileId: string | null | undefined) {
@@ -128,6 +129,7 @@ export function useChat(getMutations: () => HydratedMutation[], profileId?: stri
       let subgraph: Subgraph | undefined
       let drugs: DrugHit[] = []
       let mode: 'lookup' | 'reason' | undefined
+      let verdict: string | undefined
       try {
         const mutations = getMutations()
         let resp: Response
@@ -181,6 +183,7 @@ export function useChat(getMutations: () => HydratedMutation[], profileId?: stri
         const rawDrugs = data['ttd_drugs']
         drugs = Array.isArray(rawDrugs) && rawDrugs.length ? rawDrugs as DrugHit[] : []
         mode = (data['mode'] === 'lookup' || data['mode'] === 'reason') ? data['mode'] : undefined
+        verdict = data['verdict'] ? String(data['verdict']) : undefined
       } catch (err) {
         if (ac.signal.aborted) return markStopped('')
         const msg = err instanceof Error ? err.message : String(err)
@@ -201,7 +204,7 @@ export function useChat(getMutations: () => HydratedMutation[], profileId?: stri
 
       const followUps = deriveFollowUps(context)
       setMessages((prev) =>
-        prev.map((m) => (m.id === agentId ? { ...m, streaming: false, followUps, subgraph, drugs: drugs.length ? drugs : undefined, mode } : m)),
+        prev.map((m) => (m.id === agentId ? { ...m, streaming: false, followUps, subgraph, drugs: drugs.length ? drugs : undefined, mode, verdict } : m)),
       )
       setBusy(false)
       abortRef.current = null

@@ -96,7 +96,7 @@ async def _query_kegg_gene(mutation: MutationProteinEffect) -> tuple[str, str]:
             return first_line.split("\t")[0], first_line
 
         # 2. Fallback: UniProt → KEGG conv
-        uniprot_id = mutation.identifiers.get("uniprot_ac") or mutation.identifiers.get("uniprot_id")
+        uniprot_id = mutation.identifiers.get("uniprot_ac") or mutation.identifiers.get("uniprot_id") or mutation.protein
         if uniprot_id:
             r = await client.get(f"https://rest.kegg.jp/conv/genes/uniprot:{uniprot_id}")
             if r.status_code == 200 and r.text.strip():

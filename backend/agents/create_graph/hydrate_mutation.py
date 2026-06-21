@@ -1,11 +1,13 @@
 import asyncio
+import logging
 from typing import Any
 
-import httpx
 import anthropic
 
 from backend.agents.create_graph.model import MutationProteinEffect, GuessMutation
 from backend.config import ANTHROPIC_API_KEY, REASONER_MODEL
+
+log = logging.getLogger(__name__)
 
 # "you may wish to plan extra steps to retreive following information",
 #         """
@@ -172,7 +174,7 @@ def _hydrate_stub(mutation: dict[str, Any]) -> MutationProteinEffect:
 
 
 def _call_anthropic(prompt: list[dict[str, str]]) -> MutationProteinEffect:
-    client = anthropic.Anthropic()
+    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
     response = client.messages.parse(
         model=REASONER_MODEL,
         max_tokens=1200,
@@ -191,15 +193,16 @@ def _call_anthropic(prompt: list[dict[str, str]]) -> MutationProteinEffect:
 
 async def hydrate_mutation(mutation: GuessMutation) -> MutationProteinEffect:
     
-    prompt = build_mutation_prompt(mutation)
-
     if not ANTHROPIC_API_KEY:
         return _hydrate_stub(mutation)
 
+    prompt = build_mutation_prompt(mutation)
+
     try:
         result = await asyncio.to_thread(_call_anthropic, prompt)
-        if mutation["uniprot_ac"]:
+        if 'uniprot_ac' in mutation:
             result['identifiers']['uniprot_ac'] = mutation["uniprot_ac"]
         return MutationProteinEffect.model_validate(result)
-    except Exception:
+    except Exception as exc:
+        log.warning("hydrate_mutation LLM call failed, falling back to stub: %s", exc, exc_info=True)
         return _hydrate_stub(mutation)

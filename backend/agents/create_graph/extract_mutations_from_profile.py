@@ -19,7 +19,7 @@ def extract_mutations_from_profile(profile_bytes: bytes) -> List[GuessMutation]:
         reader = csv.DictReader(io.StringIO(text))
         for index, row in enumerate(reader, start=1):
             mutation_id = row.get("mutation_id") or hashlib.md5(
-                json.dumps(row.to_dict(), sort_keys=True, default=str).encode()
+                json.dumps(row, sort_keys=True, default=str).encode()
             ).hexdigest()[:12]
             additional = {}
             if row.get('UniprotID'):
@@ -42,7 +42,7 @@ def extract_mutations_from_profile(profile_bytes: bytes) -> List[GuessMutation]:
                 {
                     "mutation_id":  "mutation_"
                     + hashlib.sha256(
-                        row.encode("utf-8")
+                        line.encode('utf-8')
                     ).hexdigest()[:16],
                     "protein": "",
                     "estimated_effect": "no_effect",

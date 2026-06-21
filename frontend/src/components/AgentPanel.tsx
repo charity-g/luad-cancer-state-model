@@ -165,6 +165,30 @@ function ThreadGroup({
                       <span className="ml-1 inline-block h-3.5 w-0.5 animate-pulse bg-slate-400 align-middle" />
                     )}
                   </div>
+                  {!msg.streaming && msg.verdict && (
+                    <div className="mt-2 rounded-lg border border-violet-100 bg-violet-50 px-3 py-2 text-xs text-violet-800">
+                      <span className="mr-1.5 font-semibold text-violet-600">Verdict</span>
+                      {msg.verdict}
+                    </div>
+                  )}
+                  {!msg.streaming && msg.drugs && msg.drugs.length > 1 && (
+                    <div className="mt-2 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2">
+                      <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wider text-emerald-600">Drug Hits</p>
+                      <div className="space-y-1.5">
+                        {msg.drugs.map((d) => (
+                          <div key={d.drugbank_id} className="flex items-start gap-2">
+                            <span className="mt-0.5 flex-shrink-0 rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-700">
+                              {d.gene_symbol}
+                            </span>
+                            <div className="min-w-0">
+                              <p className="truncate text-xs font-medium text-slate-700">{d.drug_name}</p>
+                              <p className="text-[10px] text-slate-400">{d.approval_status} · {d.mechanism}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   {!msg.streaming && msg.followUps && msg.followUps.length > 0 && (
                     <div className="mt-2 space-y-1">
                       {msg.followUps.map((f) => (
