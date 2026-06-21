@@ -29,5 +29,10 @@ def test_describe_question_has_no_verdict(force_fallback):
 
 def test_cited_pathways_are_pathway_nodes(force_fallback):
     r = agent.run("Describe the MAPK signaling pathway")
-    pathway_ids = {n["id"] for n in r["subgraph"]["nodes"] if "Pathway" in n["labels"]}
-    assert set(r["cited_pathways"]) == pathway_ids
+    # cited_pathways are the readable names of the Pathway nodes (key/label).
+    names = {
+        n.get("key") or n.get("label") or n["id"]
+        for n in r["subgraph"]["nodes"]
+        if "Pathway" in n["labels"]
+    }
+    assert set(r["cited_pathways"]) == names
