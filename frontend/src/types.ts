@@ -15,6 +15,26 @@ export interface HydratedMutation {
   justification: Record<string, unknown>
 }
 
+export interface SubgraphNode {
+  id: string
+  labels?: string[]
+  label?: string
+  symbol?: string
+  [k: string]: unknown
+}
+
+export interface SubgraphEdge {
+  source: string
+  target: string
+  type: string
+  [k: string]: unknown
+}
+
+export interface Subgraph {
+  nodes: SubgraphNode[]
+  edges: SubgraphEdge[]
+}
+
 export type MutationStatus = 'identified' | 'hydrating' | 'done'
 
 export interface MutationEntry {
