@@ -3,3 +3,4 @@ uvicorn[standard]
 neo4j
 anthropic
 pydantic
+python-dotenv

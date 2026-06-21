@@ -1,6 +1,6 @@
 import pytest
 
-from backend.agent import cypher
+from agents.traverse_graph import cypher
 
 
 def test_guard_allows_reads():
@@ -34,8 +34,18 @@ def test_run_read_returns_rows_and_subgraph():
 
 def test_full_graph_has_complete_counts():
     g = cypher.full_graph()
-    assert len(g["nodes"]) == 157
-    assert len(g["edges"]) == 298
+    assert len(g["nodes"]) == 545
+    assert len(g["edges"]) == 1663
+
+
+def test_full_graph_includes_all_layers():
+    """The multi-source graph: every node label and the protein-protein layer."""
+    g = cypher.full_graph()
+    labels = {l for n in g["nodes"] for l in n["labels"]}
+    assert {"Gene", "Pathway", "Mutation", "Compound"} <= labels
+    summary = cypher.graph_summary()
+    for rel in ("PERTURBS", "MEMBER_OF", "ACTIVATES", "PHOSPHORYLATES"):
+        assert rel in summary
 
 
 def test_schema_text_is_the_team_doc():

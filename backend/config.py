@@ -6,10 +6,21 @@ any of this; it only talks to the FastAPI endpoints in main.py.
 
 import os
 
-# Neo4j (same connection the loader uses)
+# Load a local .env if present (team drops shared Aura creds there). Soft dep.
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()
+except ImportError:
+    pass
+
+# Neo4j connection. The URI scheme selects transport:
+#   https://...            -> HTTP Query API (port 443, works on campus Wi-Fi)
+#   bolt://, neo4j+s://...  -> Bolt driver (port 7687, blocked on campus)
 NEO4J_URI = os.environ.get("NEO4J_URI", "bolt://localhost:7687")
-NEO4J_USER = os.environ.get("NEO4J_USER", "neo4j")
-NEO4J_PASSWORD = os.environ.get("NEO4J_PASSWORD", "password")
+# Accept both the Aura convention (USERNAME/PASSWORD) and the older USER/PASS.
+NEO4J_USERNAME = os.environ.get("NEO4J_USERNAME") or os.environ.get("NEO4J_USER", "neo4j")
+NEO4J_PASSWORD = os.environ.get("NEO4J_PASSWORD") or os.environ.get("NEO4J_PASS", "password")
 
 # Anthropic — if unset, the classifier and reasoner fall back to deterministic
 # stubs so the whole pipeline still runs locally without a key.
