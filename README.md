@@ -1,4 +1,4 @@
-# LUAD Cell-State GraphRAG
+# WORKBENCH
 
 **A graph-grounded LLM reasoning system for lung adenocarcinoma (LUAD).**
 Upload a tumor mutation profile, see it mapped onto a biological pathway graph, and ask an agent intervention questions ("can I inhibit this?") — it answers by traversing a Neo4j knowledge graph, citing the exact subgraph, and routing drugs through a deterministic lookup plus an ML fallback classifier.
