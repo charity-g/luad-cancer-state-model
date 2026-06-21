@@ -24,13 +24,19 @@ def list_profiles():
 
 @router.get("/profiles/{profile_id}/graph")
 def get_profile_graph(profile_id: str):
-    """Return all Mutation → Protein → Pathway nodes and edges for a profile."""
+    """Return the full profile subgraph:
+    Profile → Mutation → Protein → Pathway ← Protein (other pathway members).
+    The second protein hop (p2) gives pathway context proteins beyond the
+    directly-mutated ones, so the frontend can show what else each pathway
+    contains up to terminal result nodes.
+    """
     cypher = """
     MATCH (prof:Profile {profile_id: $profile_id})
     OPTIONAL MATCH (prof)-[:HAS_MUTATION]->(m:Mutation)
     OPTIONAL MATCH (m)-[a:AFFECTS]->(p:Protein)
     OPTIONAL MATCH (p)-[i:INVOLVED_IN]->(pw:Pathway)
-    RETURN prof, m, a, p, i, pw
+    OPTIONAL MATCH (pw)<-[i2:INVOLVED_IN]-(p2:Protein)
+    RETURN prof, m, a, p, i, pw, p2, i2
     """
     try:
         result = run_read(cypher, {"profile_id": profile_id})

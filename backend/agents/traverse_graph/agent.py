@@ -11,8 +11,6 @@ follow-ups build on prior turns. If the generated Cypher errors or returns
 nothing, fall back to a deterministic query.
 """
 
-from neo4j.exceptions import Neo4jError
-
 from backend.agents import drug_routing
 from backend.agents.traverse_graph import cypher, planner, reasoner
 
@@ -83,7 +81,7 @@ def run(question, mutations=None, context=None, history=None):
     plan = planner.plan(question, profile=profile, history=convo)
     try:
         result = cypher.run_read(plan["cypher"], plan["params"])
-    except (Neo4jError, ValueError):
+    except (RuntimeError, ValueError):
         result = None  # invalid or non-read-only Cypher
 
     # Fall back deterministically if the generated query errored or returned

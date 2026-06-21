@@ -12,13 +12,7 @@ import re
 from functools import lru_cache
 from pathlib import Path
 
-from neo4j import GraphDatabase
-from neo4j.graph import Node, Relationship
-
-from backend.config import NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD
-
-# Transport: HTTP Query API for https:// URIs (campus-friendly), else Bolt.
-_USE_HTTP = NEO4J_URI.startswith("http")
+import backend.neo4j_http as neo4j_http
 
 ROOT = Path(__file__).resolve().parents[3]
 SCHEMA_DOC = ROOT / "scripts" / "init_neo4j" / "NEO4J_SCHEMA.md"
@@ -27,15 +21,6 @@ SCHEMA_DOC = ROOT / "scripts" / "init_neo4j" / "NEO4J_SCHEMA.md"
 _FORBIDDEN = re.compile(
     r"\b(CREATE|MERGE|DELETE|REMOVE|SET|DROP|DETACH|FOREACH|LOAD\s+CSV)\b", re.I
 )
-
-_driver = None
-
-
-def driver():
-    global _driver
-    if _driver is None:
-        _driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USERNAME, NEO4J_PASSWORD))
-    return _driver
 
 
 @lru_cache(maxsize=1)
@@ -47,46 +32,14 @@ def is_read_only(cypher):
     return _FORBIDDEN.search(cypher) is None
 
 
-def _scalar(v):
-    if isinstance(v, Node):
-        return {"id": v.get("id"), "labels": list(v.labels), **dict(v)}
-    if isinstance(v, Relationship):
-        return {"type": v.type, **dict(v)}
-    return v
-
-
-def _subgraph(graph):
-    nodes = [
-        {"id": n.get("id"), "labels": list(n.labels), **dict(n)} for n in graph.nodes
-    ]
-    edges = [
-        {
-            "type": r.type,
-            "source": r.start_node.get("id") if r.start_node else None,
-            "target": r.end_node.get("id") if r.end_node else None,
-            **dict(r),
-        }
-        for r in graph.relationships
-    ]
-    return {"nodes": nodes, "edges": edges}
-
-
 def run_read(cypher, params=None):
-    """Execute a read-only query. Raises ValueError if it isn't read-only.
+    """Execute a read-only query via the HTTP Query API.
 
-    Returns {rows, subgraph} — rows are the raw result (nodes/rels flattened to
-    dicts); subgraph is built from any graph entities the query returned.
+    Returns {rows, subgraph}.
     """
     if not is_read_only(cypher):
         raise ValueError("Refusing to run non-read-only Cypher")
-    if _USE_HTTP:
-        import backend.neo4j_http as neo4j_http
-        return neo4j_http.run_read(cypher, params)
-    with driver().session() as session:
-        result = session.run(cypher, **(params or {}))
-        rows = [{k: _scalar(v) for k, v in rec.items()} for rec in result]
-        subgraph = _subgraph(result.graph())
-    return {"rows": rows, "subgraph": subgraph}
+    return neo4j_http.run_read(cypher, params)
 
 
 def full_graph():

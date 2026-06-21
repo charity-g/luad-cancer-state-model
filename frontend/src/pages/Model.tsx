@@ -199,7 +199,7 @@ export default function Model() {
               {graphTab === 'pathway' ? (
                 <PathwayGraph
                   profileId={highlightsOn ? activeProfileId : null}
-                  highlights={highlightsOn ? hydratedList : []}
+                  highlights={hydratedList}
                   selectedProtein={selected ? mutations.find((m) => m.mutation_id === selected)?.hydrated?.protein : undefined}
                   onDiveDeeper={(card) => {
                     setPendingContext(card)
