@@ -14,9 +14,17 @@ interface PathwayEdge {
   inhibitory?: boolean
 }
 
-const VIEWBOX_W = 640
+const VIEWBOX_W = 780
 const VIEWBOX_H = 390
 const NODE_R = 22
+
+// Terminal outcome nodes (rendered as rounded rects, not circles)
+const OUTCOME_W = 78
+const OUTCOME_H = 30
+const OUTCOMES = [
+  { id: 'Proliferation', x: 700, y: 140, label: 'Cell Proliferation', color: '#a78bfa' },
+  { id: 'Apoptosis',     x: 700, y: 310, label: 'Apoptosis',          color: '#34d399' },
+]
 
 const NODES: PathwayNode[] = [
   { id: 'EGFR',   x: 72,  y: 55,  pathway: 'RTK' },
@@ -52,13 +60,19 @@ const EDGES: PathwayEdge[] = [
   { from: 'PTEN',   to: 'PIK3CA', inhibitory: true },
   { from: 'STK11',  to: 'mTOR',   inhibitory: true },
   { from: 'TP53',   to: 'RB1' },
+  // Outcome edges
+  { from: 'ERK',   to: 'Proliferation' },
+  { from: 'mTOR',  to: 'Proliferation' },
+  { from: 'RB1',   to: 'Proliferation', inhibitory: true },
+  { from: 'TP53',  to: 'Apoptosis' },
 ]
 
 const PATHWAY_LABELS = [
-  { label: 'RTK receptors', x: 72,  y: 20 },
-  { label: 'MAPK cascade',  x: 450, y: 58 },
-  { label: 'PI3K / AKT',   x: 450, y: 195 },
+  { label: 'RTK receptors',    x: 72,  y: 20 },
+  { label: 'MAPK cascade',     x: 450, y: 58 },
+  { label: 'PI3K / AKT',      x: 450, y: 195 },
   { label: 'Tumor suppressors', x: 450, y: 298 },
+  { label: 'Outcomes',         x: 700, y: 20 },
 ]
 
 interface ProteinMeta {
@@ -85,8 +99,10 @@ const PROTEIN_META: Record<string, ProteinMeta> = {
   AKT:    { fullName: 'AKT Serine/Threonine Kinase', pathway: 'PI3K/AKT/mTOR', role: 'Serine/threonine kinase', mechanism: 'Central node promoting survival, growth, and mTOR activation', frequency: 'Rare direct mutation' },
   mTOR:   { fullName: 'Mechanistic Target of Rapamycin', pathway: 'PI3K/AKT/mTOR', role: 'Serine/threonine kinase complex', mechanism: 'Integrates nutrient and growth signals to control protein synthesis', frequency: 'Rare direct mutation', drugs: ['Everolimus', 'Temsirolimus'] },
   STK11:  { fullName: 'Serine/Threonine Kinase 11 (LKB1)', pathway: 'AMPK/mTOR', role: 'Master kinase tumor suppressor', mechanism: 'LOF impairs AMPK activation, removing mTOR brake; linked to immunotherapy resistance', frequency: '~20% LUAD' },
-  TP53:   { fullName: 'Tumor Protein P53', pathway: 'Cell Cycle / Apoptosis', role: 'Transcription factor tumor suppressor', mechanism: 'LOF abrogates G1/S checkpoint, DNA repair signaling, and apoptosis', frequency: '~50% LUAD' },
-  RB1:    { fullName: 'Retinoblastoma Protein 1', pathway: 'Cell Cycle', role: 'Tumor suppressor / E2F repressor', mechanism: 'LOF releases E2F transcription factors, driving S-phase entry', frequency: '~4% LUAD' },
+  TP53:          { fullName: 'Tumor Protein P53', pathway: 'Cell Cycle / Apoptosis', role: 'Transcription factor tumor suppressor', mechanism: 'LOF abrogates G1/S checkpoint, DNA repair signaling, and apoptosis', frequency: '~50% LUAD' },
+  RB1:           { fullName: 'Retinoblastoma Protein 1', pathway: 'Cell Cycle', role: 'Tumor suppressor / E2F repressor', mechanism: 'LOF releases E2F transcription factors, driving S-phase entry', frequency: '~4% LUAD' },
+  Proliferation: { fullName: 'Cell Proliferation', pathway: 'Outcome', role: 'Cellular outcome', mechanism: 'Driven by ERK and mTOR activation; counteracted by RB1-mediated G1/S arrest. Hyperactivation leads to unchecked tumor growth.', frequency: 'Hallmark of cancer' },
+  Apoptosis:     { fullName: 'Apoptosis (Programmed Cell Death)', pathway: 'Outcome', role: 'Cellular outcome', mechanism: 'Promoted by TP53-driven transcription of pro-apoptotic genes (BAX, PUMA). TP53 loss is the primary escape mechanism in LUAD.', frequency: 'Hallmark of cancer' },
 }
 
 const effectNodeColor: Record<EffectType, string> = {
@@ -120,14 +136,14 @@ export default function PathwayGraph({ highlights, selectedProtein }: Props) {
   const [clickedNode, setClickedNode] = useState<string | null>(null)
   const svgRef = useRef<SVGSVGElement>(null)
 
-  const nodeById = Object.fromEntries(NODES.map((n) => [n.id, n]))
+  const nodeById    = Object.fromEntries(NODES.map((n) => [n.id, n]))
+  const outcomeById = Object.fromEntries(OUTCOMES.map((o) => [o.id, o]))
   const highlightMap = Object.fromEntries(highlights.map((h) => [h.protein, h]))
 
   function handleNodeClick(id: string) {
     setClickedNode((prev) => (prev === id ? null : id))
   }
 
-  // Convert SVG viewBox coords → CSS % for popover positioning
   function svgToPercent(x: number, y: number) {
     return {
       left: `${(x / VIEWBOX_W) * 100}%`,
@@ -135,13 +151,38 @@ export default function PathwayGraph({ highlights, selectedProtein }: Props) {
     }
   }
 
-  const popoverNode = clickedNode ? nodeById[clickedNode] : null
-  const popoverMeta = clickedNode ? PROTEIN_META[clickedNode] : null
-  const popoverEffect = clickedNode ? highlightMap[clickedNode] : null
+  // Resolve click target — may be a protein node or an outcome node
+  const popoverProteinNode = clickedNode ? nodeById[clickedNode] : null
+  const popoverOutcomeNode = clickedNode ? outcomeById[clickedNode] : null
+  const popoverAnchorX = popoverProteinNode?.x ?? popoverOutcomeNode?.x ?? 0
+  const popoverAnchorY = popoverProteinNode?.y ?? popoverOutcomeNode?.y ?? 0
+  const popoverMeta    = clickedNode ? PROTEIN_META[clickedNode] : null
+  const popoverEffect  = clickedNode ? highlightMap[clickedNode] : null
 
-  // Flip popover to left if node is in right half
-  const flipLeft = popoverNode ? popoverNode.x > VIEWBOX_W / 2 : false
-  const flipUp   = popoverNode ? popoverNode.y > VIEWBOX_H * 0.6 : false
+  const flipLeft = popoverAnchorX > VIEWBOX_W / 2
+  const flipUp   = popoverAnchorY > VIEWBOX_H * 0.6
+
+  // Edge endpoint helpers
+  function edgeStart(id: string, tx: number, ty: number) {
+    const n = nodeById[id]
+    if (!n) return { x: 0, y: 0 }
+    const dx = tx - n.x, dy = ty - n.y
+    const len = Math.sqrt(dx * dx + dy * dy) || 1
+    return { x: n.x + (dx / len) * NODE_R, y: n.y + (dy / len) * NODE_R }
+  }
+
+  function edgeEnd(id: string, fx: number, fy: number) {
+    const o = outcomeById[id]
+    if (o) {
+      // Hit the left edge of the outcome rect
+      return { x: o.x - OUTCOME_W / 2, y: o.y, isOutcome: true }
+    }
+    const n = nodeById[id]
+    if (!n) return { x: 0, y: 0, isOutcome: false }
+    const dx = n.x - fx, dy = n.y - fy
+    const len = Math.sqrt(dx * dx + dy * dy) || 1
+    return { x: n.x - (dx / len) * (NODE_R + 6), y: n.y - (dy / len) * (NODE_R + 6), isOutcome: false }
+  }
 
   return (
     <div className="relative flex h-full w-full flex-col bg-slate-900">
@@ -178,6 +219,8 @@ export default function PathwayGraph({ highlights, selectedProtein }: Props) {
           <rect x="280" y="68"  width="345" height="55"  rx="6" fill="#1e293b" opacity="0.4" />
           <rect x="280" y="205" width="345" height="55"  rx="6" fill="#1e293b" opacity="0.4" />
           <rect x="280" y="300" width="345" height="58"  rx="6" fill="#1e293b" opacity="0.4" />
+          {/* Outcomes column background */}
+          <rect x="655" y="32"  width="110" height="340" rx="8" fill="#1e293b" opacity="0.35" />
 
           {PATHWAY_LABELS.map(({ label, x, y }) => (
             <text key={label} x={x} y={y} fontSize={9} fill="#475569" textAnchor="middle">{label}</text>
@@ -185,29 +228,40 @@ export default function PathwayGraph({ highlights, selectedProtein }: Props) {
 
           {/* Edges */}
           {EDGES.map((edge, i) => {
-            const from = nodeById[edge.from]
-            const to   = nodeById[edge.to]
-            if (!from || !to) return null
-            const dx = to.x - from.x, dy = to.y - from.y
-            const len = Math.sqrt(dx * dx + dy * dy)
+            const toOutcome = !!outcomeById[edge.to]
+            const toNode    = nodeById[edge.to]
+            const tx = toOutcome ? outcomeById[edge.to].x : toNode?.x ?? 0
+            const ty = toOutcome ? outcomeById[edge.to].y : toNode?.y ?? 0
+
+            const s = edgeStart(edge.from, tx, ty)
+            const e2 = edgeEnd(edge.to, s.x, s.y)
+            if (!s || !e2) return null
+
+            const dx = e2.x - s.x, dy = e2.y - s.y
+            const len = Math.sqrt(dx * dx + dy * dy) || 1
             const ux = dx / len, uy = dy / len
-            const x1 = from.x + ux * NODE_R, y1 = from.y + uy * NODE_R
-            const x2 = to.x - ux * (NODE_R + 6), y2 = to.y - uy * (NODE_R + 6)
+
             const lit = highlightMap[edge.from] || highlightMap[edge.to]
               || hoveredNode === edge.from || hoveredNode === edge.to
+              || clickedNode === edge.from || clickedNode === edge.to
+
+            const stroke    = lit ? '#64748b' : '#1e293b'
+            const arrowEnd  = { x: e2.x - ux * 6, y: e2.y - uy * 6 }
+
             return (
               <g key={i}>
-                <line x1={x1} y1={y1} x2={x2} y2={y2}
-                  stroke={lit ? '#64748b' : '#1e293b'} strokeWidth={lit ? 1.5 : 1}
+                <line x1={s.x} y1={s.y} x2={arrowEnd.x} y2={arrowEnd.y}
+                  stroke={stroke} strokeWidth={lit ? 1.5 : 1}
                   strokeDasharray={edge.inhibitory ? '4 3' : undefined}
                 />
                 {edge.inhibitory ? (
-                  <line x1={x2 - uy * 5} y1={y2 + ux * 5} x2={x2 + uy * 5} y2={y2 - ux * 5}
-                    stroke={lit ? '#64748b' : '#1e293b'} strokeWidth={2} />
+                  <line x1={arrowEnd.x - uy * 5} y1={arrowEnd.y + ux * 5}
+                        x2={arrowEnd.x + uy * 5} y2={arrowEnd.y - ux * 5}
+                    stroke={stroke} strokeWidth={2} />
                 ) : (
                   <polygon
-                    points={`${x2},${y2} ${x2 - ux * 7 - uy * 4},${y2 - uy * 7 + ux * 4} ${x2 - ux * 7 + uy * 4},${y2 - uy * 7 - ux * 4}`}
-                    fill={lit ? '#64748b' : '#1e293b'} />
+                    points={`${e2.x},${e2.y} ${e2.x - ux * 7 - uy * 4},${e2.y - uy * 7 + ux * 4} ${e2.x - ux * 7 + uy * 4},${e2.y - uy * 7 - ux * 4}`}
+                    fill={stroke} />
                 )}
               </g>
             )
@@ -258,14 +312,54 @@ export default function PathwayGraph({ highlights, selectedProtein }: Props) {
               </g>
             )
           })}
+
+          {/* Outcome nodes (rounded rects) */}
+          {OUTCOMES.map((outcome) => {
+            const isHover = hoveredNode === outcome.id
+            const isClick = clickedNode === outcome.id
+            const w = isHover || isClick ? OUTCOME_W + 6 : OUTCOME_W
+            const h = isHover || isClick ? OUTCOME_H + 4 : OUTCOME_H
+            return (
+              <g
+                key={outcome.id}
+                style={{ cursor: 'pointer' }}
+                onClick={(e) => { e.stopPropagation(); handleNodeClick(outcome.id) }}
+                onMouseEnter={() => setHoveredNode(outcome.id)}
+                onMouseLeave={() => setHoveredNode(null)}
+              >
+                {/* glow */}
+                {(isHover || isClick) && (
+                  <rect x={outcome.x - w / 2 - 6} y={outcome.y - h / 2 - 6}
+                    width={w + 12} height={h + 12} rx="10"
+                    fill="none" stroke={outcome.color} strokeWidth={1.5}
+                    opacity={isClick ? 0.5 : 0.2} />
+                )}
+                <rect
+                  x={outcome.x - w / 2} y={outcome.y - h / 2}
+                  width={w} height={h} rx="6"
+                  fill={isHover || isClick ? outcome.color + '22' : outcome.color + '12'}
+                  stroke={outcome.color}
+                  strokeWidth={isClick ? 2 : 1.5}
+                />
+                <text x={outcome.x} y={outcome.y + 1}
+                  textAnchor="middle" dominantBaseline="middle"
+                  fontSize={8} fontWeight={isHover || isClick ? '700' : '600'}
+                  fill={outcome.color}
+                  style={{ pointerEvents: 'none', userSelect: 'none' }}
+                >
+                  {outcome.label}
+                </text>
+              </g>
+            )
+          })}
         </svg>
 
         {/* Popover card */}
-        {popoverNode && popoverMeta && (
+        {(popoverProteinNode || popoverOutcomeNode) && popoverMeta && (
           <div
             className="pointer-events-auto absolute z-20 w-64 rounded-xl border border-slate-700 bg-slate-800 shadow-2xl"
             style={{
-              ...svgToPercent(popoverNode.x, popoverNode.y),
+              ...svgToPercent(popoverAnchorX, popoverAnchorY),
               transform: `translate(${flipLeft ? 'calc(-100% - 12px)' : '12px'}, ${flipUp ? 'calc(-100% + 12px)' : '-50%'})`,
             }}
             onClick={(e) => e.stopPropagation()}
