@@ -13,7 +13,7 @@ export default function Layout() {
       <header className="flex-shrink-0 border-b border-slate-200 bg-white">
         <div className="flex items-center justify-between px-5 py-3">
           <span className="text-sm font-semibold tracking-tight text-slate-800">
-            LUAD Cancer State Model
+            Cancer State Model
           </span>
           <nav className="flex gap-1">
             <NavLink to="/" end className={linkClass}>

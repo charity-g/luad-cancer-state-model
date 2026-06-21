@@ -12,7 +12,10 @@ try:
     from pathlib import Path
     from dotenv import load_dotenv
 
-    load_dotenv(Path(__file__).resolve().parent / ".env")
+    _here = Path(__file__).resolve().parent  # backend/
+    # Try backend/.env first, then fall back to project root .env
+    if not load_dotenv(_here / ".env"):
+        load_dotenv(_here.parent / ".env")
 except ImportError:
     pass
 

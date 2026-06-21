@@ -14,6 +14,7 @@ thousands of statements stays reasonably fast.
 import base64
 import http.client
 import json
+import threading
 import time
 from urllib.parse import urlparse
 
@@ -25,12 +26,22 @@ class QueryAPI:
         parsed = urlparse(uri)
         self.host = parsed.netloc or parsed.path
         self._auth = base64.b64encode(f"{user}:{password}".encode()).decode()
-        self._conn = None
+        # Each thread gets its own connection so concurrent FastAPI threadpool
+        # workers never share a connection mid-request (CannotSendRequest).
+        self._local = threading.local()
 
     def _connection(self):
-        if self._conn is None:
-            self._conn = http.client.HTTPSConnection(self.host, timeout=60)
-        return self._conn
+        if getattr(self._local, "conn", None) is None:
+            self._local.conn = http.client.HTTPSConnection(self.host, timeout=60)
+        return self._local.conn
+
+    def _reset(self):
+        if getattr(self._local, "conn", None) is not None:
+            try:
+                self._local.conn.close()
+            except Exception:
+                pass
+        self._local.conn = None
 
     def execute(self, cypher, params=None):
         body = json.dumps({"statement": cypher, "parameters": params or {}})
@@ -47,7 +58,7 @@ class QueryAPI:
                 resp = conn.getresponse()
                 raw = resp.read()
                 if resp.status in (429, 502, 503, 504):  # transient — back off
-                    self._conn = None
+                    self._reset()
                     time.sleep(1 + attempt)
                     last_err = RuntimeError(f"{resp.status}: {raw[:200]!r}")
                     continue
@@ -58,15 +69,13 @@ class QueryAPI:
                     raise RuntimeError(f"Cypher error: {payload['errors']}")
                 return payload
             except (http.client.HTTPException, ConnectionError, OSError) as e:
-                self._conn = None  # connection dropped — reopen and retry
+                self._reset()  # drop broken connection; next iteration opens fresh
                 last_err = e
                 time.sleep(0.5 * (attempt + 1))
         raise last_err
 
     def close(self):
-        if self._conn is not None:
-            self._conn.close()
-            self._conn = None
+        self._reset()
 
 
 # ---------------------------------------------------------------------------

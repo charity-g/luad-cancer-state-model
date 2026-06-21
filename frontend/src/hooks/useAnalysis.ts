@@ -7,11 +7,13 @@ export function useAnalysis() {
   const [mutations, setMutations] = useState<MutationEntry[]>([])
   const [phase, setPhase] = useState<AnalysisPhase>('idle')
   const [error, setError] = useState<string | null>(null)
+  const [profileId, setProfileId] = useState<string | null>(null)
 
   const analyze = useCallback(async (file: File) => {
     setMutations([])
     setPhase('streaming')
     setError(null)
+    setProfileId(null)
 
     const body = new FormData()
     body.append('file', file)
@@ -68,10 +70,45 @@ export function useAnalysis() {
             continue // skip malformed frames
           }
 
+          if (event === 'started') {
+            const pid = payload['profile_id']
+            if (typeof pid === 'string') setProfileId(pid)
+          }
+
+          if (event === 'mutations_extracted') {
+            const raw = payload['mutations'] as Record<string, unknown>[] | undefined
+            if (Array.isArray(raw)) {
+              setMutations(
+                raw.map((m, i) => ({
+                  mutation_id: String(m['mutation_id'] ?? ''),
+                  // Mark the first one as hydrating immediately so the sidebar shows activity
+                  status: i === 0 ? ('hydrating' as const) : ('identified' as const),
+                }))
+              )
+            }
+          }
+
           if (event === 'error') {
-            setError(String(payload['message'] ?? 'An error occurred during analysis.'))
-            setPhase('error')
-            return
+            const mutationPayload = payload['mutation'] as Record<string, unknown> | undefined
+            const message = String(payload['message'] ?? 'An error occurred during analysis.')
+            if (mutationPayload) {
+              // Per-mutation error — stream continues, mark just this mutation failed
+              const mutation_id = String(mutationPayload['mutation_id'] ?? '')
+              setMutations((prev) => {
+                const exists = prev.find((m) => m.mutation_id === mutation_id)
+                if (exists) {
+                  return prev.map((m) =>
+                    m.mutation_id === mutation_id ? { ...m, status: 'failed', error: message } : m,
+                  )
+                }
+                return [...prev, { mutation_id, status: 'failed', error: message }]
+              })
+            } else {
+              // Fatal stream error
+              setError(message)
+              setPhase('error')
+              return
+            }
           }
 
           if (event === 'mutation_hydrated') {
@@ -93,7 +130,9 @@ export function useAnalysis() {
             const hydratedMutation: HydratedMutation = {
               mutation_id,
               protein:          String(hydrated['protein'] ?? ''),
+              identifiers:      (hydrated['identifiers'] as Record<string, unknown>) ?? {},
               estimated_effect: (hydrated['estimated_effect'] as HydratedMutation['estimated_effect']) ?? 'no_effect',
+              confidence:       String(hydrated['confidence'] ?? ''),
               justification:    (hydrated['justification'] as Record<string, unknown>) ?? {},
               hgvs_protein:     hgvs,
               gene:             csvStr('HugoSymbol'),
@@ -107,13 +146,19 @@ export function useAnalysis() {
             }
 
             setMutations((prev) => {
-              const exists = prev.find((m) => m.mutation_id === mutation_id)
-              if (exists) {
-                return prev.map((m) =>
-                  m.mutation_id === mutation_id ? { ...m, status: 'done', hydrated: hydratedMutation } : m,
-                )
+              const updated = prev.map((m) =>
+                m.mutation_id === mutation_id
+                  ? { ...m, status: 'done' as const, hydrated: hydratedMutation }
+                  : m
+              )
+              // If the mutation wasn't in the bulk list, append it
+              if (!prev.find((m) => m.mutation_id === mutation_id)) {
+                updated.push({ mutation_id, status: 'done', hydrated: hydratedMutation })
               }
-              return [...prev, { mutation_id, status: 'done', hydrated: hydratedMutation }]
+              // Mark the next identified mutation as hydrating so the sidebar shows a spinner
+              const nextIdx = updated.findIndex((m) => m.status === 'identified')
+              if (nextIdx !== -1) updated[nextIdx] = { ...updated[nextIdx], status: 'hydrating' }
+              return updated
             })
           }
 
@@ -136,7 +181,8 @@ export function useAnalysis() {
     setMutations([])
     setPhase('idle')
     setError(null)
+    setProfileId(null)
   }, [])
 
-  return { mutations, phase, error, analyze, reset }
+  return { mutations, phase, error, profileId, analyze, reset }
 }

@@ -1,9 +1,10 @@
 import asyncio
 from typing import Any
 
+import httpx
 import anthropic
 
-from backend.agents.create_graph.model import MutationProteinEffect
+from backend.agents.create_graph.model import MutationProteinEffect, GuessMutation
 from backend.config import ANTHROPIC_API_KEY, REASONER_MODEL
 
 # "you may wish to plan extra steps to retreive following information",
@@ -48,7 +49,7 @@ From the mutation record, identify whichever of the following are present. Note 
 - Variant type (SNV / indel / frameshift / splice / CNV / structural)
 
 **Step 2 — Consequence classification**
-Based on the variant type and HGVS protein notation (or inferred consequence), classify the mutation:
+Based on the variant type, if there is rsid, and HGVS protein notation (or inferred consequence), classify the mutation using the relevant information about the rsid:
 - loss_of_function: nonsense, frameshift, canonical splice site (±1/±2), large deletion
 - likely_damaging: missense at conserved site, in-frame indel at functional domain
 - likely_neutral: synonymous, intronic (>10bp from splice), common population variant (gnomAD AF > 1%)
@@ -70,12 +71,14 @@ If only a gene symbol is present with no transcript, assume canonical UniProt is
 **Step 5 — Produce output**
 Return exactly this JSON schema — all fields required:
 
+
 ```json
 {{
   "mutation_id": "<string: from input or generated as gene_hgvs>",
   "protein": "<string: UniProt AC if derivable, else gene symbol>",
 
   "identifiers": {{
+    "hugo_symbol": "<string | null>",
     "gene_symbol": "<string | null>",
     "hgnc_id": "<string | null>",
     "uniprot_ac": "<string | null>",
@@ -86,10 +89,10 @@ Return exactly this JSON schema — all fields required:
     "hgvs_protein": "<string | null>",
     "genome_assembly": "<string | null>",
     "genomic_coordinate": "<string | null>",
-    "variant_type": "<SNV|indel|frameshift|splice|CNV|structural|unknown>"
+    "variant_type": "<SNV|indel|frameshift|splice|CNV|structural|unknown>",
   }},
 
-  "estimated_effect": "<loss_of_function|likely_damaging|likely_neutral|activating|uncertain>",
+  "estimated_effect": "<loss_of_function|gain_of_function|inactivating|activating|uncertain>",
 
   "confidence": "<high|medium|low>",
 
@@ -142,6 +145,7 @@ def _hydrate_stub(mutation: dict[str, Any]) -> MutationProteinEffect:
         "genome_assembly": mutation.get("genome_assembly"),
         "genomic_coordinate": mutation.get("genomic_coordinate"),
         "variant_type": mutation.get("variant_type") or "unknown",
+        **mutation.get("identifiers", {}),
     }
     return MutationProteinEffect(
         mutation_id=str(
@@ -184,8 +188,9 @@ def _call_anthropic(prompt: list[dict[str, str]]) -> MutationProteinEffect:
     text = "".join(block.text for block in response.content if block.type == "text").strip()
     return MutationProteinEffect.model_validate_json(text)
 
-#TODO
-async def hydrate_mutation(mutation: dict[str, Any]) -> MutationProteinEffect:
+
+async def hydrate_mutation(mutation: GuessMutation) -> MutationProteinEffect:
+    
     prompt = build_mutation_prompt(mutation)
 
     if not ANTHROPIC_API_KEY:
@@ -193,6 +198,8 @@ async def hydrate_mutation(mutation: dict[str, Any]) -> MutationProteinEffect:
 
     try:
         result = await asyncio.to_thread(_call_anthropic, prompt)
+        if mutation["uniprot_ac"]:
+            result['identifiers']['uniprot_ac'] = mutation["uniprot_ac"]
         return MutationProteinEffect.model_validate(result)
     except Exception:
         return _hydrate_stub(mutation)

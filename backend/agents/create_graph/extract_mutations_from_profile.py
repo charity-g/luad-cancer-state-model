@@ -2,10 +2,11 @@
 from __future__ import annotations
 import csv
 import io
-from typing import Any
+from typing import Any, List
+from backend.agents.create_graph.model import GuessMutation
 
 
-def extract_mutations_from_profile(profile_bytes: bytes) -> list[dict[str, Any]]:
+def extract_mutations_from_profile(profile_bytes: bytes) -> List[GuessMutation]:
     """Best-effort CSV/line parser for uploaded mutation profiles."""
     text = profile_bytes.decode("utf-8", errors="ignore").strip()
     if not text:
@@ -16,12 +17,17 @@ def extract_mutations_from_profile(profile_bytes: bytes) -> list[dict[str, Any]]
         reader = csv.DictReader(io.StringIO(text))
         for index, row in enumerate(reader, start=1):
             mutation_id = row.get("mutation_id") or row.get("id") or row.get("MutationID")
+            additional = {}
+            if row.get('UniprotID'):
+                additional["uniprot_ac"] = row.get('UniprotID')
+            if row.get("effect"):
+                additional["estimated_effect"] = row.get('effect')
             rows.append(
                 {
                     "mutation_id": mutation_id or f"mutation_{index}",
-                    "protein": row.get("protein") or row.get("gene") or row.get("Gene") or "",
-                    "estimated_effect": row.get("estimated_effect") or row.get("effect") or "no_effect",
+                    "protein": row.get("protein") or row.get("gene") or row.get("Gene"),
                     "raw": row,
+                    **additional
                 }
             )
     except Exception:

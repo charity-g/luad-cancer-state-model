@@ -1,4 +1,10 @@
-export type EffectType = 'no_effect' | 'activating' | 'inactivating'
+export type EffectType =
+  | 'activating'
+  | 'gain_of_function'
+  | 'inactivating'
+  | 'loss_of_function'
+  | 'uncertain'
+  | 'no_effect'
 
 export interface ContextCard {
   id: string
@@ -19,8 +25,11 @@ export interface MutationFeatures {
 export interface HydratedMutation {
   mutation_id: string
   protein: string
+  identifiers: Record<string, unknown>
   estimated_effect: EffectType
+  confidence: string
   justification: Record<string, unknown>
+  [key: string]: unknown
   // Drug-routing inputs sourced from the raw DepMap annotation (HugoSymbol /
   // ProteinChange / impact flags), which the LLM hydration can drop.
   hgvs_protein?: string   // protein-level variant (e.g. "p.L858R")
@@ -48,10 +57,11 @@ export interface Subgraph {
   edges: SubgraphEdge[]
 }
 
-export type MutationStatus = 'identified' | 'hydrating' | 'done'
+export type MutationStatus = 'identified' | 'hydrating' | 'done' | 'failed'
 
 export interface MutationEntry {
   mutation_id: string
   status: MutationStatus
   hydrated?: HydratedMutation
+  error?: string
 }

@@ -1,5 +1,5 @@
 
-from typing import Any
+from typing import Any, Optional
 
 from pydantic import BaseModel, Field
 
@@ -11,20 +11,28 @@ from pydantic import BaseModel, Field
 
 
 class ProteinRecord(BaseModel):
-	"""Flexible protein payload for graph creation.
+    """Resolved protein/gene annotation record."""
 
-	The only required identifier is ``kegg_id``. Any additional identifiers can
-	be stored in ``ids``, and free-form semantic facts can be stored in
-	``semantic``. Extra fields are also allowed so the model can absorb new
-	annotations without schema churn.
-	"""
+    query: str
 
-	kegg_id: str
-	ids: dict[str, str] = Field(default_factory=dict)
-	semantic: dict[str, Any] = Field(default_factory=dict)
+    # normalized identifiers
+    gene_symbol: Optional[str] = None
+    uniprot_id: Optional[str] = None
+    entrez_gene_id: Optional[str] = None
 
-	class Config:
-		extra = "allow"
+    # KEGG annotations
+    kegg_gene_id: Optional[str] = None
+    kegg_ko_id: Optional[str] = None
+    kegg_description: Optional[str] = None
+
+    # provenance/debugging
+    source: str = "KEGG REST API"
+    raw_response: Optional[str] = None
+
+
+class ProteinResolutionError(Exception):
+    """Raised when a mutation cannot be mapped to a protein."""
+
 
 
 class MutationProteinEffect(BaseModel):
@@ -45,6 +53,7 @@ class MutationProteinEffect(BaseModel):
 	mutation_id: str
 	protein: str
 	identifiers: dict[str, Any] = Field(default_factory=dict)
+	# one of  "estimated_effect": "<loss_of_function|gain_of_function|inactivating|activating|uncertain>"
 	estimated_effect: str
 	confidence: str
 	justification: dict[str, Any] = Field(default_factory=dict)
@@ -52,3 +61,9 @@ class MutationProteinEffect(BaseModel):
 	class Config:
 		extra = "allow"
 
+class GuessMutation(BaseModel):	
+	mutation_id: str
+	protein: str
+	
+	class Config:
+		extra = "allow"

@@ -1,5 +1,7 @@
 import { useState, useCallback, useMemo, useEffect, useRef } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { useAnalysis } from '../hooks/useAnalysis'
+import { useProfileGraph } from '../hooks/useProfileGraph'
 import { useChat } from '../hooks/useChat'
 import UploadBox from '../components/UploadBox'
 import AgentPanel from '../components/AgentPanel'
@@ -10,11 +12,26 @@ import type { HydratedMutation, ContextCard } from '../types'
 type GraphTab = 'pathway' | 'agent'
 
 export default function Model() {
-  const { mutations, phase, error: analysisError, analyze, reset } = useAnalysis()
+  const [searchParams, setSearchParams] = useSearchParams()
+  // profileId from URL takes precedence (history load); analysis stream may also set one
+  const urlProfileId = searchParams.get('profileId')
+
+  const { mutations: streamMutations, phase, error: analysisError, profileId: streamProfileId, analyze, reset } = useAnalysis()
+  const activeProfileId = streamProfileId ?? urlProfileId
+
+  // When a profile is loaded from history (URL param, no active stream), pull
+  // mutation nodes from the stored graph so the sidebar is populated.
+  const isHistoryLoad = !!urlProfileId && phase === 'idle'
+  const { mutations: graphMutations, loading: graphLoading } = useProfileGraph(isHistoryLoad ? urlProfileId : null)
+
+  // Active mutation list: stream takes precedence when running, graph fills in on history load
+  const mutations = phase !== 'idle' ? streamMutations : graphMutations
+
   const [selected, setSelected] = useState<string | null>(null)
   const [filename, setFilename] = useState('')
   const [panelVisible, setPanelVisible] = useState(true)
-  const [highlightsOn, setHighlightsOn] = useState(true)
+  // Highlights off by default — user must opt in so the graph starts blank
+  const [highlightsOn, setHighlightsOn] = useState(false)
   const [pendingContext, setPendingContext] = useState<ContextCard | null>(null)
   const [dismissedError, setDismissedError] = useState(false)
   const [graphTab, setGraphTab] = useState<GraphTab>('pathway')
@@ -55,6 +72,9 @@ export default function Model() {
     setFilename(file.name)
     setSelected(null)
     setDismissedError(false)
+    setHighlightsOn(false)
+    // Clear URL profileId so the new stream's profileId takes over
+    setSearchParams({})
     analyze(file)
     setPanelVisible(true)
   }
@@ -65,13 +85,16 @@ export default function Model() {
     setFilename('')
     setPendingContext(null)
     setDismissedError(false)
+    setHighlightsOn(false)
     setGraphTab('pathway')
+    setSearchParams({})
     seenSubgraphId.current = null
     clear()
   }
 
   const hydratedList = mutations.filter((m) => m.hydrated).map((m) => m.hydrated!)
-  const hasData = phase !== 'idle'
+  // Show the workspace if there's an active analysis OR a URL-loaded profileId
+  const hasData = phase !== 'idle' || !!urlProfileId
   const visibleError = dismissedError ? null : analysisError
 
   return (
@@ -80,16 +103,28 @@ export default function Model() {
       <div className="flex flex-1 overflow-hidden">
         {!hasData ? (
           // idle splash
-          <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
-            <svg className="mb-4 h-12 w-12 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1}
-                d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" />
+          <div className="flex flex-1 flex-col items-center justify-center gap-6 px-6">
+            <div className="text-center">
+              <svg className="mx-auto mb-4 h-12 w-12 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1}
+                  d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" />
+              </svg>
+              <h2 className="text-lg font-semibold text-slate-700">Scientific Reasoning Workspace</h2>
+              <p className="mt-2 max-w-sm text-sm text-slate-400">
+                Upload a mutation profile CSV to identify variants, annotate protein effects, and visualize affected pathways.
+              </p>
+            </div>
+            <div className="w-full max-w-md">
+              <UploadBox onFile={handleFile} hasData={false} />
+            </div>
+          </div>
+        ) : graphLoading ? (
+          <div className="flex flex-1 items-center justify-center gap-2 text-sm text-slate-400">
+            <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
             </svg>
-            <h2 className="text-lg font-semibold text-slate-700">Scientific Reasoning Workspace</h2>
-            <p className="mt-2 max-w-sm text-sm text-slate-400">
-              Upload a mutation CSV below. The agent will identify variants, annotate each with protein
-              effects, and visualize affected pathways.
-            </p>
+            Loading profile…
           </div>
         ) : (
           // active workspace: graph (center) + agent panel (right)
@@ -136,11 +171,16 @@ export default function Model() {
                 )}
 
                 <div className="ml-auto flex items-center gap-2">
+                  {urlProfileId && !streamProfileId && (
+                    <span className="rounded bg-slate-800 px-2 py-0.5 font-mono text-xs text-slate-400">
+                      {urlProfileId}
+                    </span>
+                  )}
                   <button
                     onClick={handleReset}
                     className="text-xs text-slate-500 hover:text-slate-300 transition-colors"
                   >
-                    New file
+                    {urlProfileId && !streamProfileId ? 'Close' : 'New file'}
                   </button>
                   <button
                     onClick={() => setPanelVisible((v) => !v)}
@@ -158,7 +198,8 @@ export default function Model() {
 
               {graphTab === 'pathway' ? (
                 <PathwayGraph
-                  highlights={highlightsOn ? hydratedList : []}
+                  profileId={highlightsOn ? activeProfileId : null}
+                  highlights={hydratedList}
                   selectedProtein={selected ? mutations.find((m) => m.mutation_id === selected)?.hydrated?.protein : undefined}
                   onDiveDeeper={(card) => {
                     setPendingContext(card)
@@ -183,8 +224,8 @@ export default function Model() {
               <AgentPanel
                 mutations={mutations}
                 selected={selected}
-                onSelect={setSelected}
-                phase={phase}
+                onSelect={(id) => setSelected(id || null)}
+                phase={isHistoryLoad ? 'done' : phase}
                 analysisError={visibleError}
                 onDismissError={() => setDismissedError(true)}
                 filename={filename}
@@ -202,8 +243,6 @@ export default function Model() {
         )}
       </div>
 
-      {/* ── Upload bar (idle only) ───────────────────────────────── */}
-      {!hasData && <UploadBox onFile={handleFile} hasData={false} />}
     </div>
   )
 }

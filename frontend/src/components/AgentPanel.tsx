@@ -1,21 +1,32 @@
-import { useRef, useEffect, useState, useCallback, KeyboardEvent } from 'react'
+import { useRef, useEffect, useState, useCallback, type KeyboardEvent } from 'react'
 import type { MutationEntry, ContextCard, EffectType } from '../types'
 import type { ChatMessage } from '../hooks/useChat'
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 
 const effectColors: Record<EffectType, string> = {
-  activating:   'bg-amber-100 text-amber-800 border-amber-200',
-  inactivating: 'bg-red-100 text-red-800 border-red-200',
-  no_effect:    'bg-slate-100 text-slate-600 border-slate-200',
+  activating:       'bg-amber-100 text-amber-800 border-amber-200',
+  gain_of_function: 'bg-amber-100 text-amber-800 border-amber-200',
+  inactivating:     'bg-red-100 text-red-800 border-red-200',
+  loss_of_function: 'bg-red-100 text-red-800 border-red-200',
+  uncertain:        'bg-purple-100 text-purple-700 border-purple-200',
+  no_effect:        'bg-slate-100 text-slate-600 border-slate-200',
 }
 const effectDot: Record<EffectType, string> = {
-  activating:   'bg-amber-400',
-  inactivating: 'bg-red-400',
-  no_effect:    'bg-slate-400',
+  activating:       'bg-amber-400',
+  gain_of_function: 'bg-amber-500',
+  inactivating:     'bg-red-400',
+  loss_of_function: 'bg-red-500',
+  uncertain:        'bg-purple-400',
+  no_effect:        'bg-slate-400',
 }
 const effectShort: Record<EffectType, string> = {
-  activating: 'ACT', inactivating: 'INACT', no_effect: 'NONE',
+  activating:       'ACT',
+  gain_of_function: 'GOF',
+  inactivating:     'INACT',
+  loss_of_function: 'LOF',
+  uncertain:        'UNC',
+  no_effect:        'NONE',
 }
 
 function renderContent(text: string) {
@@ -89,7 +100,7 @@ function ThreadGroup({
                   {msg.context.length > 0 && (
                     <div className="mb-1 flex flex-wrap justify-end gap-1">
                       {msg.context.map((c) => (
-                        <span key={c.id} className={`rounded-full border px-2 py-0.5 text-[10px] font-medium ${effectColors[c.effect]}`}>
+                        <span key={c.id} className={`rounded-full border px-2 py-0.5 text-[10px] font-medium ${effectColors[c.effect] ?? 'bg-slate-100 text-slate-600 border-slate-200'}`}>
                           {c.protein}
                         </span>
                       ))}
@@ -245,86 +256,113 @@ export default function AgentPanel({
   return (
     <div ref={panelRef} className="flex h-full w-80 flex-shrink-0 flex-col border-l border-slate-200 bg-white">
 
-      {/* ── TOP: Mutation list ────────────────────────────────── */}
+      {/* ── TOP: Mutation list / detail ───────────────────────── */}
       <div className="flex flex-col overflow-hidden" style={{ height: `${splitPct}%` }}>
-        <div className="flex flex-shrink-0 items-center justify-between border-b border-slate-100 px-4 py-2.5">
-          <div>
-            <p className="text-xs font-semibold text-slate-700">Mutations</p>
-            <p className="text-[11px] text-slate-400">
-              {phase === 'error' ? (
-                <span className="text-red-500">Analysis failed</span>
-              ) : (
-                <>
-                  {mutations.length} variant{mutations.length !== 1 ? 's' : ''}
-                  {phase === 'streaming' && ' · analyzing…'}
-                  {phase === 'done' && ` · ${done} annotated`}
-                </>
-              )}
-            </p>
-          </div>
-          {phase === 'streaming' && (
-            <div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-200 border-t-blue-500" />
-          )}
-          {phase === 'error' && (
-            <svg className="h-4 w-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
-            </svg>
-          )}
-        </div>
-
-        {phase === 'streaming' && mutations.length > 0 && (
-          <div className="h-0.5 w-full bg-slate-100">
-            <div className="h-full bg-blue-500 transition-all duration-300"
-              style={{ width: `${(done / mutations.length) * 100}%` }} />
-          </div>
-        )}
-
-        {/* analysis error banner */}
-        {phase === 'error' && analysisError && (
-          <ErrorBanner message={analysisError} onDismiss={onDismissError} />
-        )}
-
-        <ul className="flex-1 divide-y divide-slate-100 overflow-y-auto">
-          {mutations.length === 0 && phase === 'streaming' && (
-            <li className="flex flex-col items-center justify-center py-8 text-slate-400">
-              <div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-200 border-t-blue-500" />
-              <p className="mt-2 text-xs">Identifying variants…</p>
-            </li>
-          )}
-          {mutations.length === 0 && phase === 'error' && !analysisError && (
-            <li className="flex flex-col items-center justify-center py-8 text-slate-400">
-              <p className="text-xs">No variants were loaded.</p>
-            </li>
-          )}
-          {mutations.map((m) => (
-            <li key={m.mutation_id}>
+        {selected ? (
+          /* ── Detail view ── */
+          <>
+            <div className="flex flex-shrink-0 items-center gap-2 border-b border-slate-100 px-3 py-2">
               <button
-                onClick={() => onSelect(m.mutation_id)}
-                className={`w-full px-4 py-2 text-left transition-colors hover:bg-slate-50 ${
-                  selected === m.mutation_id ? 'border-l-2 border-blue-500 bg-blue-50' : ''
-                }`}
+                onClick={() => onSelect('')}
+                className="flex items-center gap-1 rounded p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+                title="Back to list"
               >
-                <div className="flex items-center justify-between gap-2">
-                  <span className="min-w-0 truncate font-mono text-xs font-medium text-slate-700">
-                    {m.mutation_id}
-                  </span>
-                  {m.status === 'done' && m.hydrated && (
-                    <span className={`flex-shrink-0 rounded border px-1.5 py-0.5 text-[10px] font-semibold ${effectColors[m.hydrated.estimated_effect as EffectType]}`}>
-                      {effectShort[m.hydrated.estimated_effect as EffectType]}
-                    </span>
-                  )}
-                  {m.status === 'hydrating' && (
-                    <span className="h-3 w-3 flex-shrink-0 animate-spin rounded-full border-2 border-slate-200 border-t-blue-400" />
-                  )}
-                </div>
-                {m.hydrated && (
-                  <p className="mt-0.5 text-[11px] text-slate-400">{m.hydrated.protein}</p>
-                )}
+                <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
               </button>
-            </li>
-          ))}
-        </ul>
+              <p className="text-xs font-semibold text-slate-700">Mutation detail</p>
+            </div>
+            <MutationDetail entry={mutations.find((m) => m.mutation_id === selected)} />
+          </>
+        ) : (
+          /* ── List view ── */
+          <>
+            <div className="flex flex-shrink-0 items-center justify-between border-b border-slate-100 px-4 py-2.5">
+              <div>
+                <p className="text-xs font-semibold text-slate-700">Mutations</p>
+                <p className="text-[11px] text-slate-400">
+                  {phase === 'error' ? (
+                    <span className="text-red-500">Analysis failed</span>
+                  ) : (
+                    <>
+                      {mutations.length} variant{mutations.length !== 1 ? 's' : ''}
+                      {phase === 'streaming' && ' · analyzing…'}
+                      {phase === 'done' && ` · ${done} annotated`}
+                    </>
+                  )}
+                </p>
+              </div>
+              {phase === 'streaming' && (
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-200 border-t-blue-500" />
+              )}
+              {phase === 'error' && (
+                <svg className="h-4 w-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                    d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                </svg>
+              )}
+            </div>
+
+            {phase === 'streaming' && mutations.length > 0 && (
+              <div className="h-0.5 w-full bg-slate-100">
+                <div className="h-full bg-blue-500 transition-all duration-300"
+                  style={{ width: `${(done / mutations.length) * 100}%` }} />
+              </div>
+            )}
+
+            {phase === 'error' && analysisError && (
+              <ErrorBanner message={analysisError} onDismiss={onDismissError} />
+            )}
+
+            <ul className="flex-1 divide-y divide-slate-100 overflow-y-auto">
+              {mutations.length === 0 && phase === 'streaming' && (
+                <li className="flex flex-col items-center justify-center py-8 text-slate-400">
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-200 border-t-blue-500" />
+                  <p className="mt-2 text-xs">Identifying variants…</p>
+                </li>
+              )}
+              {mutations.length === 0 && phase === 'error' && !analysisError && (
+                <li className="flex flex-col items-center justify-center py-8 text-slate-400">
+                  <p className="text-xs">No variants were loaded.</p>
+                </li>
+              )}
+              {mutations.map((m) => (
+                <li key={m.mutation_id}>
+                  <button
+                    onClick={() => onSelect(m.mutation_id)}
+                    className="w-full px-4 py-2 text-left transition-colors hover:bg-slate-50"
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="min-w-0 truncate font-mono text-xs font-medium text-slate-700">
+                        {m.mutation_id}
+                      </span>
+                      {m.status === 'done' && m.hydrated && (
+                        <span className={`flex-shrink-0 rounded border px-1.5 py-0.5 text-[10px] font-semibold ${effectColors[m.hydrated.estimated_effect as EffectType] ?? 'bg-slate-100 text-slate-600 border-slate-200'}`}>
+                          {effectShort[m.hydrated.estimated_effect as EffectType] ?? m.hydrated.estimated_effect.slice(0, 4).toUpperCase()}
+                        </span>
+                      )}
+                      {m.status === 'hydrating' && (
+                        <span className="h-3 w-3 flex-shrink-0 animate-spin rounded-full border-2 border-slate-200 border-t-blue-400" />
+                      )}
+                      {m.status === 'failed' && (
+                        <span className="flex-shrink-0 rounded border border-red-200 bg-red-50 px-1.5 py-0.5 text-[10px] font-semibold text-red-500">
+                          ERR
+                        </span>
+                      )}
+                    </div>
+                    {m.hydrated && (
+                      <p className="mt-0.5 text-[11px] text-slate-400">{m.hydrated.protein}</p>
+                    )}
+                    {m.status === 'failed' && m.error && (
+                      <p className="mt-0.5 line-clamp-1 text-[11px] text-red-400">{m.error}</p>
+                    )}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </div>
 
       {/* ── DRAG HANDLE ─────────────────────────────────────────── */}
