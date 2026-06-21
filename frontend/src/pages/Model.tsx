@@ -26,6 +26,7 @@ export default function Model() {
   const hydratedList = mutations.filter((m) => m.hydrated).map((m) => m.hydrated!)
   const selectedProtein = selectedEntry?.hydrated?.protein
   const hasData = phase !== 'idle'
+  const [sidebarVisible, setSidebarVisible] = useState(true)
 
   return (
     <div className="flex h-full flex-col">
