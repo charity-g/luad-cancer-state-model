@@ -14,14 +14,16 @@ from fastapi.responses import StreamingResponse
 from backend.agents.create_graph.model import MutationProteinEffect, ProteinRecord
 from backend.agents.create_graph.extract_mutations_from_profile import extract_mutations_from_profile
 from backend.agents.create_graph.hydrate_mutation import hydrate_mutation
+from backend.agents.create_graph.extract_protein_for_mutation import extract_protein_for_mutation
+from backend.agents.create_graph.extract_pathways_for_protein import extract_pathways_for_protein
 from backend.agents.create_graph.process_pathways import (
-    extract_protein_for_mutation,
-    extract_pathways_for_protein,
     fetch_pathway_information,
 )
 from backend.agents.create_graph.graph import (
     init_graph,
-    add_mutation_to_graph,
+    add_mutation_node,
+    add_protein_node,
+    link_mutation_to_protein,
     update_pathway) 
 
 
@@ -80,8 +82,9 @@ async def process_profile(file: UploadFile = File(...)):
                     "message": f"Hydrated mutation {mutation.get('mutation_id', '')}.",
                 },
             )
-            add_mutation_to_graph(hydrated_mutation)
+            add_mutation_node(hydrated_mutation)
 
+            protein = None
             try:
                 protein = extract_protein_for_mutation(hydrated_mutation)
             except Exception as exc:
@@ -104,6 +107,8 @@ async def process_profile(file: UploadFile = File(...)):
                     "message": f"Mapped mutation {mutation.get('mutation_id', '')} to protein {protein.kegg_id}.",
                 },
             )
+            add_protein_node(protein)
+            link_mutation_to_protein(hydrated_mutation, protein)
 
             pathways = extract_pathways_for_protein(protein)
 

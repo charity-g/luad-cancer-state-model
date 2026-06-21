@@ -1,9 +1,20 @@
 from __future__ import annotations
 
+import json
 from typing import Any
 
 from backend.agents.create_graph.model import ProteinRecord, MutationProteinEffect
 from backend.neo4j_http import _get_api
+
+
+def _protein_graph_id(protein: ProteinRecord) -> str:
+    return (
+        protein.kegg_gene_id
+        or protein.kegg_ko_id
+        or protein.uniprot_id
+        or protein.gene_symbol
+        or protein.query
+    )
 
 
 def init_graph() -> list:
@@ -31,18 +42,27 @@ def add_mutation_node(mutation: MutationProteinEffect) -> dict[str, Any]:
     MERGE (m:Mutation {mutation_id: $mutation_id})
     ON CREATE SET
         m.protein          = $protein,
+        m.identifiers      = $identifiers,
         m.estimated_effect = $estimated_effect,
+        m.confidence       = $confidence,
+        m.justification    = $justification,
         m.created_at       = timestamp()
     ON MATCH SET
         m.protein          = $protein,
+        m.identifiers      = $identifiers,
         m.estimated_effect = $estimated_effect,
+        m.confidence       = $confidence,
+        m.justification    = $justification,
         m.updated_at       = timestamp()
     RETURN m
     """
     params = {
-        "mutation_id": mutation.get("mutation_id", ""),
-        "protein": mutation.get("protein", ""),
-        "estimated_effect": mutation.get("estimated_effect", "Unknown effect"),
+        "mutation_id": mutation.mutation_id,
+        "protein": mutation.protein,
+        "identifiers": json.dumps(mutation.identifiers),
+        "estimated_effect": mutation.estimated_effect,
+        "confidence": mutation.confidence,
+        "justification": json.dumps(mutation.justification),
     }
     payload = api.execute(cypher, params)
     data = payload.get("data", {})
@@ -53,23 +73,44 @@ def add_mutation_node(mutation: MutationProteinEffect) -> dict[str, Any]:
 def add_protein_node(protein: ProteinRecord) -> dict[str, Any]:
     """Upsert a Protein node (wild-type when no mutation is associated)."""
     api = _get_api()
+    kegg_id = _protein_graph_id(protein)
     cypher = """
     MERGE (p:Protein {kegg_id: $kegg_id})
     ON CREATE SET
-        p.ids        = $ids,
-        p.semantic   = $semantic,
-        p.created_at = timestamp()
+        p.query            = $query,
+        p.gene_symbol      = $gene_symbol,
+        p.uniprot_id       = $uniprot_id,
+        p.entrez_gene_id   = $entrez_gene_id,
+        p.kegg_gene_id     = $kegg_gene_id,
+        p.kegg_ko_id       = $kegg_ko_id,
+        p.kegg_description = $kegg_description,
+        p.source           = $source,
+        p.raw_response     = $raw_response,
+        p.created_at       = timestamp()
     ON MATCH SET
-        p.ids        = $ids,
-        p.semantic   = $semantic,
-        p.updated_at = timestamp()
+        p.query            = $query,
+        p.gene_symbol      = $gene_symbol,
+        p.uniprot_id       = $uniprot_id,
+        p.entrez_gene_id   = $entrez_gene_id,
+        p.kegg_gene_id     = $kegg_gene_id,
+        p.kegg_ko_id       = $kegg_ko_id,
+        p.kegg_description = $kegg_description,
+        p.source           = $source,
+        p.raw_response     = $raw_response,
+        p.updated_at       = timestamp()
     RETURN p
     """
-    import json
     params = {
-        "kegg_id": protein.kegg_id,
-        "ids": json.dumps(protein.ids),
-        "semantic": json.dumps(protein.semantic),
+        "kegg_id": kegg_id,
+        "query": protein.query,
+        "gene_symbol": protein.gene_symbol,
+        "uniprot_id": protein.uniprot_id,
+        "entrez_gene_id": protein.entrez_gene_id,
+        "kegg_gene_id": protein.kegg_gene_id,
+        "kegg_ko_id": protein.kegg_ko_id,
+        "kegg_description": protein.kegg_description,
+        "source": protein.source,
+        "raw_response": protein.raw_response,
     }
     payload = api.execute(cypher, params)
     data = payload.get("data", {})
@@ -77,7 +118,7 @@ def add_protein_node(protein: ProteinRecord) -> dict[str, Any]:
     return values[0][0].get("properties", {}) if values else params
 
 
-def _link_mutation_to_protein(mutation_id: str, kegg_id: str, estimated_effect: str) -> None:
+def link_mutation_to_protein(mutation: MutationProteinEffect, protein: ProteinRecord) -> None:
     """Create a AFFECTS edge between a Mutation and a Protein."""
     api = _get_api()
     cypher = """
@@ -88,9 +129,9 @@ def _link_mutation_to_protein(mutation_id: str, kegg_id: str, estimated_effect: 
     ON MATCH  SET r.estimated_effect = $estimated_effect
     """
     api.execute(cypher, {
-        "mutation_id": mutation_id,
-        "kegg_id": kegg_id,
-        "estimated_effect": estimated_effect,
+        "mutation_id": mutation.mutation_id,
+        "kegg_id": _protein_graph_id(protein),
+        "estimated_effect": mutation.estimated_effect,
     })
 
 
