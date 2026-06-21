@@ -1,1 +1,25 @@
 @import 'tailwindcss';
+
+/* Animatable CSS custom properties for radial-gradient centers */
+@property --rx { syntax: '<percentage>'; initial-value: 38%; inherits: false; }
+@property --ry { syntax: '<percentage>'; initial-value: 58%; inherits: false; }
+@property --px { syntax: '<percentage>'; initial-value: 48%; inherits: false; }
+@property --py { syntax: '<percentage>'; initial-value: 45%; inherits: false; }
+
+@keyframes gradient-drift {
+  0%   { --rx: 38%; --ry: 58%; --px: 48%; --py: 45%; }
+  20%  { --rx: 65%; --ry: 30%; --px: 20%; --py: 70%; }
+  40%  { --rx: 15%; --ry: 75%; --px: 75%; --py: 20%; }
+  60%  { --rx: 70%; --ry: 65%; --px: 25%; --py: 35%; }
+  80%  { --rx: 25%; --ry: 20%; --px: 65%; --py: 75%; }
+  100% { --rx: 38%; --ry: 58%; --px: 48%; --py: 45%; }
+}
+
+.app-bg {
+  animation: gradient-drift 14s ease-in-out infinite;
+  background:
+    radial-gradient(circle at var(--rx) var(--ry), rgba(255,45,45,0.95) 0%, rgba(255,45,45,0.55) 10%, rgba(255,45,45,0.0) 28%),
+    radial-gradient(circle at var(--px) var(--py), rgba(210,120,255,0.45) 0%, rgba(210,120,255,0.12) 22%, rgba(210,120,255,0.0) 42%),
+    linear-gradient(90deg, #d8cfc8 0%, #cbb8c6 28%, #8d7bb6 52%, #245ea8 78%, #0057a8 100%);
+  background-blend-mode: screen, screen, normal;
+}
