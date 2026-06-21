@@ -8,3 +8,7 @@ local_data/
 __pycache__/
 *.pyc
 .pytest_cache/
+
+# Secrets — never commit
+.env
+Neo4j-*.txt
