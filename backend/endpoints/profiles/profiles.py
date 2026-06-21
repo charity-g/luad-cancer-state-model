@@ -4,6 +4,7 @@ The real implementation lives in backend.endpoints.profiles.stream.
 This module exists so older imports keep working.
 """
 
-from backend.endpoints.profiles.stream import router, process_profile as process_profile_endpoint
+from backend.endpoints.profiles.stream import router, process_profile as process_profile_endpoint, test_endpoint
 
-__all__ = ["router", "process_profile_endpoint"]
+__all__ = ["router", "process_profile_endpoint", test_endpoint]
+
