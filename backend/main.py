@@ -1,4 +1,6 @@
 """FastAPI backend — the only surface the frontend talks to.
+from backend.observability import init_tracing
+init_tracing()
 
   POST /query  {question}  -> agent report + subgraph
   GET  /graph              -> full pathway graph (for the static viz)
