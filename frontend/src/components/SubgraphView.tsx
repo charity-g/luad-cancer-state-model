@@ -39,6 +39,32 @@ function pillWidth(text: string, fs: number): number {
   return text.length * fs * CHAR_W + 8
 }
 
+// Wrap a (possibly long) pathway name to lines of at most `maxChars`, breaking
+// on spaces/underscores and hard-breaking any single token that is still too
+// long, so the full name is shown inside its box instead of being clipped.
+function wrapLabel(text: string, maxChars: number, maxLines: number): string[] {
+  const lines: string[] = []
+  let cur = ''
+  const flush = () => { if (cur) { lines.push(cur); cur = '' } }
+  for (let word of text.split(/[\s_]+/).filter(Boolean)) {
+    while (word.length > maxChars) {
+      flush()
+      lines.push(word.slice(0, maxChars))
+      word = word.slice(maxChars)
+    }
+    if (!cur) cur = word
+    else if ((cur + ' ' + word).length <= maxChars) cur += ' ' + word
+    else { flush(); cur = word }
+  }
+  flush()
+  if (lines.length > maxLines) {
+    const kept = lines.slice(0, maxLines)
+    kept[maxLines - 1] = clip(kept[maxLines - 1], maxChars)
+    return kept
+  }
+  return lines.length ? lines : [text]
+}
+
 // Dark rounded background so a label stays readable even when it lands near a
 // line or another label.
 function Pill({ x, y, text, fs, fill }: { x: number; y: number; text: string; fs: number; fill: string }) {
@@ -51,7 +77,10 @@ function Pill({ x, y, text, fs, fill }: { x: number; y: number; text: string; fs
   )
 }
 
-export default function SubgraphView({ subgraph }: { subgraph: Subgraph }) {
+export default function SubgraphView(
+  { subgraph, maxHeight = 460, fill = false }:
+  { subgraph: Subgraph; maxHeight?: number; fill?: boolean },
+) {
   // Bucket nodes into their type-columns, then keep only the non-empty ones so
   // they spread evenly across the available width.
   const buckets: SubgraphNode[][] = [[], [], [], []]
@@ -82,8 +111,8 @@ export default function SubgraphView({ subgraph }: { subgraph: Subgraph }) {
   )
 
   return (
-    <div className="mt-2 overflow-hidden rounded-xl border border-slate-700 bg-slate-900">
-      <div className="flex items-center justify-between border-b border-slate-700/60 px-3 py-1.5">
+    <div className={`overflow-hidden rounded-xl border border-slate-700 bg-slate-900 ${fill ? 'flex h-full w-full flex-col' : 'mt-2'}`}>
+      <div className="flex flex-shrink-0 items-center justify-between border-b border-slate-700/60 px-3 py-1.5">
         <span className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
           Agent reasoning path
         </span>
@@ -100,8 +129,9 @@ export default function SubgraphView({ subgraph }: { subgraph: Subgraph }) {
 
       <svg
         viewBox={`0 0 ${W} ${H}`}
-        className="w-full"
-        style={{ maxHeight: 460, fontFamily: 'ui-monospace, monospace' }}
+        preserveAspectRatio="xMidYMid meet"
+        className={fill ? 'min-h-0 w-full flex-1' : 'w-full'}
+        style={fill ? { fontFamily: 'ui-monospace, monospace' } : { maxHeight, fontFamily: 'ui-monospace, monospace' }}
       >
         <defs>
           <marker id="sg-arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
@@ -161,13 +191,21 @@ export default function SubgraphView({ subgraph }: { subgraph: Subgraph }) {
           const color = KIND_COLOR[k] || '#94a3b8'
           const name = nodeLabel(n)
           if (k === 'Pathway') {
-            const label = clip(name, 22)
-            const w = Math.min(190, Math.max(80, pillWidth(label, FS_PATH) + 12))
+            const lines = wrapLabel(name, 18, 3)
+            const longest = Math.max(...lines.map((l) => l.length))
+            const lineH = FS_PATH + 3
+            // Fit the box to the text, but never let it run past the viewBox edge.
+            const maxW = 2 * Math.min(p.x, W - p.x) - 8
+            const w = Math.min(maxW, Math.max(80, longest * FS_PATH * CHAR_W + 16))
+            const h = lines.length * lineH + 12
+            const y0 = p.y - ((lines.length - 1) * lineH) / 2
             return (
               <g key={n.id}>
-                <rect x={p.x - w / 2} y={p.y - 16} width={w} height={32} rx={7} fill={color + '22'} stroke={color} strokeWidth={1.4} />
-                <text x={p.x} y={p.y + 1} fontSize={FS_PATH} fill={color} textAnchor="middle" dominantBaseline="middle">
-                  {label}
+                <rect x={p.x - w / 2} y={p.y - h / 2} width={w} height={h} rx={7} fill={color + '22'} stroke={color} strokeWidth={1.4} />
+                <text x={p.x} y={y0} fontSize={FS_PATH} fill={color} textAnchor="middle" dominantBaseline="middle">
+                  {lines.map((ln, li) => (
+                    <tspan key={li} x={p.x} dy={li === 0 ? 0 : lineH}>{ln}</tspan>
+                  ))}
                 </text>
               </g>
             )
