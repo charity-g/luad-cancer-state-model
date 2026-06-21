@@ -79,11 +79,14 @@ export function useAnalysis() {
             const hydrated = payload['hydrated'] as Record<string, unknown>
             const mutation_id = String(raw['mutation_id'] ?? '')
 
+            const identifiers = (hydrated['identifiers'] as Record<string, unknown>) ?? {}
+            const hgvs = identifiers['hgvs_protein']
             const hydratedMutation: HydratedMutation = {
               mutation_id,
               protein:          String(hydrated['protein'] ?? ''),
               estimated_effect: (hydrated['estimated_effect'] as HydratedMutation['estimated_effect']) ?? 'no_effect',
               justification:    (hydrated['justification'] as Record<string, unknown>) ?? {},
+              hgvs_protein:     hgvs ? String(hgvs) : undefined,
             }
 
             setMutations((prev) => {

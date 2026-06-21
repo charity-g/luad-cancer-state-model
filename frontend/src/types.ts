@@ -13,6 +13,7 @@ export interface HydratedMutation {
   protein: string
   estimated_effect: EffectType
   justification: Record<string, unknown>
+  hgvs_protein?: string   // protein-level variant (e.g. "p.L858R"), for drug routing
 }
 
 export interface SubgraphNode {

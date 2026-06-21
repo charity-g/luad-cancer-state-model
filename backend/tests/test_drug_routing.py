@@ -33,6 +33,24 @@ def test_kras_g12d_has_no_variant_drug_but_gets_ml_fallback():
     assert p["pathway_id"] in {"MAPK_signaling", "RAS_RAF_MEK_ERK", "pathways_in_cancer"}
 
 
+def test_hgvs_protein_field_resolves_variant_when_id_is_generic():
+    # Realistic upload: mutation_id is generic ("mutation_1"); the variant comes
+    # from the hgvs_protein field threaded through from the hydrated profile.
+    muts = [{"protein": "EGFR", "mutation_id": "mutation_1",
+             "hgvs_protein": "p.L858R", "estimated_effect": "gain_of_function"}]
+    items = drug_routing.route(muts)
+    assert items[0]["mutation"] == "EGFR L858R"
+    assert "osimertinib" in items[0]["direct_drugs"]
+
+
+def test_kras_g12c_hgvs_gets_variant_specific_drug():
+    muts = [{"protein": "KRAS", "mutation_id": "mutation_2",
+             "hgvs_protein": "p.G12C", "estimated_effect": "gain_of_function"}]
+    items = drug_routing.route(muts)
+    assert items[0]["mutation"] == "KRAS G12C"
+    assert "sotorasib" in items[0]["direct_drugs"]
+
+
 def test_unknown_gene_is_skipped():
     items = drug_routing.route(_muts(("ZZZ9", "ZZZ9:p.A1B", "gain_of_function")))
     assert items == []

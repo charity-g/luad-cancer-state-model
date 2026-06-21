@@ -54,24 +54,26 @@ def _model():
     return _model_cache
 
 
-def _variant_token(mutation_id, justification) -> str:
-    """Best-effort extract the protein-level variant (e.g. ``L858R``) used in
-    the graph's mutation keys, from the hydrated annotation or mutation id."""
-    raw = ""
-    if isinstance(justification, dict):
+def _variant_token(hgvs_protein, mutation_id, justification, gene="") -> str:
+    """Extract the protein-level variant (e.g. ``L858R``) used in the graph's
+    mutation keys, preferring the explicit hgvs_protein, then the annotation,
+    then the mutation id. Tolerates ``p.L858R``, ``EGFR:p.L858R``, ``EGFR L858R``."""
+    raw = hgvs_protein or ""
+    if not raw and isinstance(justification, dict):
         raw = justification.get("hgvs_protein") or ""
     if not raw:
         raw = mutation_id or ""
-    raw = str(raw)
-    if ":" in raw:           # "EGFR:p.L858R" -> "p.L858R"
-        raw = raw.split(":", 1)[1]
-    raw = raw.strip()
+    raw = str(raw).strip()
+    # Drop a leading gene prefix ("EGFR:p.L858R" / "EGFR L858R" -> "p.L858R" / "L858R").
+    if gene and raw.upper().startswith(gene.upper()):
+        raw = raw[len(gene):]
+    raw = raw.lstrip(" :_-")
     if raw[:2].lower() == "p.":   # "p.L858R" -> "L858R"
         raw = raw[2:]
     return raw.strip()
 
 
-def _resolve_key(graph, gene, mutation_id, effect, justification):
+def _resolve_key(graph, gene, hgvs_protein, mutation_id, effect, justification):
     """Map an uploaded mutation to a graph mutation_index key.
 
     Returns (key, kind) where kind is 'exact', 'lof', or None when unmatched.
@@ -79,7 +81,7 @@ def _resolve_key(graph, gene, mutation_id, effect, justification):
     specific drugs (e.g. sotorasib is KRAS G12C-only) would then be misapplied.
     """
     mi = graph["mutation_index"]
-    variant = _variant_token(mutation_id, justification)
+    variant = _variant_token(hgvs_protein, mutation_id, justification, gene)
     candidate = f"{gene} {variant}".strip()
     if variant and candidate in mi:
         return candidate, "exact"
@@ -146,6 +148,7 @@ def _candidates(mutations, context):
     for c in (context or []):
         rows.append({"protein": c.get("protein"),
                      "mutation_id": c.get("mutation_id"),
+                     "hgvs_protein": c.get("hgvs_protein"),
                      "estimated_effect": c.get("effect") or c.get("estimated_effect")})
     rows += list(mutations or [])
 
@@ -155,7 +158,8 @@ def _candidates(mutations, context):
         if not gene or gene not in graph["gene_index"]:
             continue
         effect = m.get("estimated_effect") or m.get("effect")
-        key, kind = _resolve_key(graph, gene, m.get("mutation_id"), effect, m.get("justification"))
+        key, kind = _resolve_key(graph, gene, m.get("hgvs_protein"),
+                                 m.get("mutation_id"), effect, m.get("justification"))
         # The classifier is a fallback for REAL mutations. Only route entries
         # with genuine mutation signal — a resolved graph variant key, or a
         # gain/loss-of-function call. A bare gene selection (no variant, no
