@@ -192,9 +192,24 @@ def _call_anthropic(prompt: list[dict[str, str]]) -> MutationProteinEffect:
 
 
 async def hydrate_mutation(mutation: GuessMutation) -> MutationProteinEffect:
-    
+    # Run synchronous variant normalization via the harmonizer before LLM call.
+    # This fills in fields the LLM prompt benefits from (hgvs, rsid, etc.) and
+    # may make the LLM call unnecessary when confidence is already high.
+    try:
+        from backend.harmonizer import harmonizer as _harmonizer
+        hv = _harmonizer.normalize_variant(dict(mutation))
+        # Merge harmonizer findings back into the mutation dict for the prompt
+        mutation = dict(mutation)  # type: ignore[assignment]
+        for field in ("hgvs_cdna", "hgvs_protein", "rsid", "variant_type", "genomic_coordinate"):
+            val = getattr(hv, field, None)
+            if val and not mutation.get(field):
+                mutation[field] = val  # type: ignore[index]
+    except Exception:
+        pass
+
     if not ANTHROPIC_API_KEY:
-        return _hydrate_stub(mutation)
+        result = _hydrate_stub(mutation)
+        return await _enrich_with_gene(result)
 
     prompt = build_mutation_prompt(mutation)
 
@@ -202,7 +217,30 @@ async def hydrate_mutation(mutation: GuessMutation) -> MutationProteinEffect:
         result = await asyncio.to_thread(_call_anthropic, prompt)
         if 'uniprot_ac' in mutation:
             result['identifiers']['uniprot_ac'] = mutation["uniprot_ac"]
-        return MutationProteinEffect.model_validate(result)
+        hydrated = MutationProteinEffect.model_validate(result)
+        return await _enrich_with_gene(hydrated)
     except Exception as exc:
         log.warning("hydrate_mutation LLM call failed, falling back to stub: %s", exc, exc_info=True)
-        return _hydrate_stub(mutation)
+        result = _hydrate_stub(mutation)
+        return await _enrich_with_gene(result)
+
+
+async def _enrich_with_gene(effect: MutationProteinEffect) -> MutationProteinEffect:
+    """Backfill gene cross-references (UniProt AC, KEGG IDs) via the harmonizer."""
+    try:
+        from backend.harmonizer import harmonizer as _harmonizer
+        hg = await _harmonizer.resolve_gene(effect.protein)
+        ids = dict(effect.identifiers)
+        if hg.uniprot_ac and not ids.get("uniprot_ac"):
+            ids["uniprot_ac"] = hg.uniprot_ac
+        if hg.kegg_gene_id and not ids.get("kegg_gene_id"):
+            ids["kegg_gene_id"] = hg.kegg_gene_id
+        if hg.kegg_ko_id and not ids.get("kegg_ko_id"):
+            ids["kegg_ko_id"] = hg.kegg_ko_id
+        if hg.hgnc_id and not ids.get("hgnc_id"):
+            ids["hgnc_id"] = hg.hgnc_id
+        if hg.gene_symbol and not ids.get("gene_symbol"):
+            ids["gene_symbol"] = hg.gene_symbol
+        return effect.model_copy(update={"identifiers": ids})
+    except Exception:
+        return effect

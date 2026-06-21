@@ -17,12 +17,14 @@ from backend.agents.traverse_graph import agent, cypher
 from backend.endpoints.profiles.stream import router as profiles_router
 from backend.endpoints.profiles.profile_graph import router as profile_graph_router
 from backend.endpoints.protein.protein import protein_router
+from backend.endpoints.harmonize import router as harmonize_router
 
 app = FastAPI(title="LUAD Cell-State GraphRAG")
 
 app.include_router(profiles_router)
 app.include_router(profile_graph_router)
 app.include_router(protein_router)
+app.include_router(harmonize_router)
 
 # Open CORS for local frontend dev. Tighten allow_origins before any deployment.
 app.add_middleware(

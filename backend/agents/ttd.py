@@ -114,6 +114,22 @@ def _post(path: str, body: dict) -> dict:
 # Public fetch
 # ---------------------------------------------------------------------------
 
+def _harmonize_drug_hits(hits: list[DrugHit]) -> list[DrugHit]:
+    """Enrich DrugHit records with canonical names and DrugBank IDs from the harmonizer."""
+    from backend.harmonizer.resolvers.drug import lookup_drug
+    enriched = []
+    for hit in hits:
+        hd = lookup_drug(hit["drug_name"])
+        enriched.append(DrugHit(
+            drug_name=hd.drug_name if hd.confidence >= 0.8 else hit["drug_name"],
+            drugbank_id=hd.drugbank_id or hit["drugbank_id"],
+            approval_status=hit["approval_status"],
+            mechanism=hit["mechanism"],
+            gene_symbol=hit["gene_symbol"],
+        ))
+    return enriched
+
+
 def fetch_target_drugs(gene_symbol: str, protein_change: str | None = None) -> list[DrugHit]:
     """Return drugs for a protein target (or specific variant).
 
@@ -126,7 +142,7 @@ def fetch_target_drugs(gene_symbol: str, protein_change: str | None = None) -> l
     """
     cached = _cached_drugs(gene_symbol)
     if cached:
-        return cached
+        return _harmonize_drug_hits(cached)
 
     if not TTD_API_KEY:
         return []
@@ -138,8 +154,7 @@ def fetch_target_drugs(gene_symbol: str, protein_change: str | None = None) -> l
                 "protein_change": protein_change,
             })
             raw_drugs = payload.get("drugs") or []
-            # Variant endpoint returns minimal drug objects; normalise them.
-            return [
+            hits = [
                 DrugHit(
                     drug_name=d.get("drug_name") or "",
                     drugbank_id=d.get("drugbank_id") or "",
@@ -153,7 +168,7 @@ def fetch_target_drugs(gene_symbol: str, protein_change: str | None = None) -> l
             payload = _get(f"/targets/{urllib.parse.quote(gene_symbol)}/drugs",
                            {"approved_only": False, "include_trials": True})
             raw_drugs = payload.get("drugs") or []
-            return [
+            hits = [
                 DrugHit(
                     drug_name=d.get("drug_name") or "",
                     drugbank_id=d.get("drugbank_id") or "",
@@ -163,6 +178,7 @@ def fetch_target_drugs(gene_symbol: str, protein_change: str | None = None) -> l
                 )
                 for d in raw_drugs
             ]
+        return _harmonize_drug_hits(hits)
     except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, Exception):
         # TTD unavailable or bad response — degrade gracefully, never crash the agent.
         return []
