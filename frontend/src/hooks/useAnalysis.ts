@@ -1,131 +1,5 @@
 import { useState, useCallback } from 'react'
-import type { MutationEntry, HydratedMutation, EffectType } from '../types'
-
-// Mock LUAD protein database — stands in for backend enrichment
-const LUAD_PROTEINS: Array<{
-  protein: string
-  estimated_effect: EffectType
-  pathway: string
-  mechanism: string
-  frequency: string
-}> = [
-  {
-    protein: 'EGFR',
-    estimated_effect: 'activating',
-    pathway: 'RTK/MAPK',
-    mechanism: 'Kinase domain gain-of-function',
-    frequency: '~15% LUAD',
-  },
-  {
-    protein: 'KRAS',
-    estimated_effect: 'activating',
-    pathway: 'RAS/MAPK',
-    mechanism: 'GTPase activity loss, constitutive RAS-GTP',
-    frequency: '~30% LUAD',
-  },
-  {
-    protein: 'TP53',
-    estimated_effect: 'inactivating',
-    pathway: 'Cell Cycle / Apoptosis',
-    mechanism: 'Loss of transcriptional tumor suppressor activity',
-    frequency: '~50% LUAD',
-  },
-  {
-    protein: 'BRAF',
-    estimated_effect: 'activating',
-    pathway: 'MAPK',
-    mechanism: 'Serine/threonine kinase hyperactivation',
-    frequency: '~5–7% LUAD',
-  },
-  {
-    protein: 'ALK',
-    estimated_effect: 'activating',
-    pathway: 'RTK/MAPK',
-    mechanism: 'Fusion-driven kinase activation',
-    frequency: '~5% LUAD',
-  },
-  {
-    protein: 'MET',
-    estimated_effect: 'activating',
-    pathway: 'RTK/MAPK',
-    mechanism: 'Exon 14 skipping or amplification',
-    frequency: '~3–5% LUAD',
-  },
-  {
-    protein: 'STK11',
-    estimated_effect: 'inactivating',
-    pathway: 'AMPK/mTOR',
-    mechanism: 'Loss of AMPK activation, unrestrained mTOR',
-    frequency: '~20% LUAD',
-  },
-  {
-    protein: 'KEAP1',
-    estimated_effect: 'inactivating',
-    pathway: 'NRF2/Oxidative stress',
-    mechanism: 'Loss of NRF2 ubiquitination, constitutive NRF2',
-    frequency: '~20% LUAD',
-  },
-  {
-    protein: 'PIK3CA',
-    estimated_effect: 'activating',
-    pathway: 'PI3K/AKT/mTOR',
-    mechanism: 'Catalytic subunit gain-of-function',
-    frequency: '~7% LUAD',
-  },
-  {
-    protein: 'PTEN',
-    estimated_effect: 'inactivating',
-    pathway: 'PI3K/AKT/mTOR',
-    mechanism: 'Loss of PIP3 phosphatase activity',
-    frequency: '~5% LUAD',
-  },
-  {
-    protein: 'RB1',
-    estimated_effect: 'inactivating',
-    pathway: 'Cell Cycle',
-    mechanism: 'Loss of G1/S checkpoint control',
-    frequency: '~4% LUAD',
-  },
-  {
-    protein: 'ERBB2',
-    estimated_effect: 'activating',
-    pathway: 'RTK/MAPK',
-    mechanism: 'Exon 20 insertion or amplification',
-    frequency: '~3% LUAD',
-  },
-]
-
-function hashString(s: string): number {
-  let h = 0
-  for (let i = 0; i < s.length; i++) {
-    h = (Math.imul(31, h) + s.charCodeAt(i)) | 0
-  }
-  return Math.abs(h)
-}
-
-function pickProtein(mutation_id: string) {
-  return LUAD_PROTEINS[hashString(mutation_id) % LUAD_PROTEINS.length]
-}
-
-function sleep(ms: number) {
-  return new Promise((r) => setTimeout(r, ms))
-}
-
-function parseCSVMutationIds(text: string): string[] {
-  const lines = text.trim().split(/\r?\n/)
-  if (lines.length === 0) return []
-
-  const header = lines[0].toLowerCase().split(',')
-  const colIndex = header.findIndex((h) =>
-    ['mutation_id', 'mutation', 'variant_id', 'variant', 'id'].includes(h.trim()),
-  )
-  const idx = colIndex >= 0 ? colIndex : 0
-
-  return lines
-    .slice(1)
-    .map((l) => l.split(',')[idx]?.trim())
-    .filter(Boolean) as string[]
-}
+import type { MutationEntry, HydratedMutation } from '../types'
 
 export function useAnalysis() {
   const [mutations, setMutations] = useState<MutationEntry[]>([])
@@ -135,39 +9,79 @@ export function useAnalysis() {
     setMutations([])
     setPhase('streaming')
 
-    const text = await file.text()
-    const ids = parseCSVMutationIds(text)
+    const body = new FormData()
+    body.append('file', file)
 
-    // Stream 1: emit identified mutation IDs
-    for (const mutation_id of ids) {
-      await sleep(200)
-      setMutations((prev) => [...prev, { mutation_id, status: 'identified' }])
+    let resp: Response
+    try {
+      resp = await fetch('/api/profiles/stream', { method: 'POST', body })
+    } catch {
+      setPhase('done')
+      return
     }
 
-    // Stream 2: hydrate each mutation sequentially
-    for (const mutation_id of ids) {
-      await sleep(120)
-      setMutations((prev) =>
-        prev.map((m) => (m.mutation_id === mutation_id ? { ...m, status: 'hydrating' } : m)),
-      )
+    if (!resp.ok || !resp.body) {
+      setPhase('done')
+      return
+    }
 
-      await sleep(480)
-      const meta = pickProtein(mutation_id)
-      const hydrated: HydratedMutation = {
-        mutation_id,
-        protein: meta.protein,
-        estimated_effect: meta.estimated_effect,
-        justification: {
-          pathway: meta.pathway,
-          mechanism: meta.mechanism,
-          frequency_in_luad: meta.frequency,
-          evidence_source: 'COSMIC v98 / ClinVar 2024',
-          confidence: hashString(mutation_id) % 3 === 0 ? 'high' : 'medium',
-        },
+    const reader = resp.body.getReader()
+    const decoder = new TextDecoder()
+    let buf = ''
+
+    while (true) {
+      const { done, value } = await reader.read()
+      if (done) break
+      buf += decoder.decode(value, { stream: true })
+
+      // Parse SSE frames from buffer
+      const frames = buf.split('\n\n')
+      buf = frames.pop() ?? ''
+
+      for (const frame of frames) {
+        const eventLine = frame.split('\n').find((l) => l.startsWith('event:'))
+        const dataLine  = frame.split('\n').find((l) => l.startsWith('data:'))
+        if (!eventLine || !dataLine) continue
+
+        const event = eventLine.replace('event:', '').trim()
+        let payload: Record<string, unknown>
+        try {
+          payload = JSON.parse(dataLine.replace('data:', '').trim())
+        } catch {
+          continue
+        }
+
+        if (event === 'mutations_extracted') {
+          // Backend gives us the count but not the IDs yet — wait for hydration events
+        }
+
+        if (event === 'mutation_hydrated') {
+          const raw      = payload['mutation'] as Record<string, unknown>
+          const hydrated = payload['hydrated'] as Record<string, unknown>
+          const mutation_id = String(raw['mutation_id'] ?? '')
+
+          const hydratedMutation: HydratedMutation = {
+            mutation_id,
+            protein:          String(hydrated['protein'] ?? ''),
+            estimated_effect: (hydrated['estimated_effect'] as HydratedMutation['estimated_effect']) ?? 'no_effect',
+            justification:    (hydrated['justification'] as Record<string, unknown>) ?? {},
+          }
+
+          setMutations((prev) => {
+            const exists = prev.find((m) => m.mutation_id === mutation_id)
+            if (exists) {
+              return prev.map((m) =>
+                m.mutation_id === mutation_id ? { ...m, status: 'done', hydrated: hydratedMutation } : m,
+              )
+            }
+            return [...prev, { mutation_id, status: 'done', hydrated: hydratedMutation }]
+          })
+        }
+
+        if (event === 'complete') {
+          setPhase('done')
+        }
       }
-      setMutations((prev) =>
-        prev.map((m) => (m.mutation_id === mutation_id ? { ...m, status: 'done', hydrated } : m)),
-      )
     }
 
     setPhase('done')
