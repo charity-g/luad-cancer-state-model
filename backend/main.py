@@ -13,7 +13,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from backend.agents.traverse_graph import agent, cypher
+# from backend.agents.traverse_graph import agent, cypher
 from backend.endpoints.profiles.stream import router as profiles_router
 
 app = FastAPI(title="LUAD Cell-State GraphRAG")
@@ -38,12 +38,15 @@ def health():
     return {"status": "ok"}
 
 
-@app.get("/graph")
-def graph():
-    return cypher.full_graph()
+# @app.get("/graph")
+# def graph():
+#     return cypher.full_graph()
 
 
 @app.post("/query")
 def query(req: QueryRequest):
-    return agent.run(req.question)
+    return {
+        #TODO
+    }
+    # return agent.run(req.question)
 
