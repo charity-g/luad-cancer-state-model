@@ -115,15 +115,15 @@ def _subgraph(values):
         n = nodes.get(eid)
         return n["id"] if n else eid
 
-    edges = [
-        {
-            "type": r["type"],
-            "source": nid(r["startNodeElementId"]),
-            "target": nid(r["endNodeElementId"]),
-            **r.get("properties", {}),
-        }
-        for r in rels
-    ]
+    # Dedupe edges — path-style queries return the same relationship many times.
+    edges, seen = [], set()
+    for r in rels:
+        src, tgt = nid(r["startNodeElementId"]), nid(r["endNodeElementId"])
+        key = (src, tgt, r["type"])
+        if key in seen:
+            continue
+        seen.add(key)
+        edges.append({"type": r["type"], "source": src, "target": tgt, **r.get("properties", {})})
     return {"nodes": list(nodes.values()), "edges": edges}
 
 

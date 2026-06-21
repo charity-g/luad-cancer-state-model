@@ -32,6 +32,11 @@ def sse(event: str, payload: dict[str, Any]) -> str:
     return f"event: {event}\ndata: {json.dumps(payload, default=str)}\n\n"
 
 
+@router.post("/profiles/test")
+def test_endpoint():
+    return init_graph()
+
+
 @router.post("/profiles/stream")
 async def process_profile(file: UploadFile = File(...)):
     profile_bytes = await file.read()
@@ -61,7 +66,7 @@ async def process_profile(file: UploadFile = File(...)):
 
         for mutation in mutations:
             time.sleep(1)
-            hydrated_mutation = hydrate_mutation(mutation)
+            hydrated_mutation = await hydrate_mutation(mutation)
 
             yield sse(
                 "mutation_hydrated",
