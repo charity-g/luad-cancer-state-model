@@ -1,12 +1,18 @@
 import { useRef, useEffect, useState, KeyboardEvent } from 'react'
 import type { ChatMessage } from '../hooks/useChat'
 
+export interface PromptSeed {
+  id: number
+  text: string
+}
+
 interface Props {
   messages: ChatMessage[]
   busy: boolean
   onSend: (text: string) => void
   onNewFile: () => void
   filename: string
+  promptSeed?: PromptSeed | null
 }
 
 function renderContent(text: string) {
@@ -21,7 +27,7 @@ function renderContent(text: string) {
   })
 }
 
-export default function ChatBox({ messages, busy, onSend, onNewFile, filename }: Props) {
+export default function ChatBox({ messages, busy, onSend, onNewFile, filename, promptSeed }: Props) {
   const [draft, setDraft] = useState('')
   const [expanded, setExpanded] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -31,6 +37,17 @@ export default function ChatBox({ messages, busy, onSend, onNewFile, filename }:
   useEffect(() => {
     if (messages.length > 0) setExpanded(true)
   }, [messages.length])
+
+  useEffect(() => {
+    if (!promptSeed) return
+
+    setDraft(promptSeed.text)
+    setExpanded(true)
+    requestAnimationFrame(() => {
+      inputRef.current?.focus()
+      inputRef.current?.setSelectionRange(promptSeed.text.length, promptSeed.text.length)
+    })
+  }, [promptSeed])
 
   // Scroll to bottom on new messages
   useEffect(() => {

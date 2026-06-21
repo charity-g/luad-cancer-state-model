@@ -129,9 +129,10 @@ const effectBadge: Record<EffectType, string> = {
 interface Props {
   highlights: HydratedMutation[]
   selectedProtein?: string
+  onDiveDeeper?: (context: string) => void
 }
 
-export default function PathwayGraph({ highlights, selectedProtein }: Props) {
+export default function PathwayGraph({ highlights, selectedProtein, onDiveDeeper }: Props) {
   const [hoveredNode, setHoveredNode] = useState<string | null>(null)
   const [clickedNode, setClickedNode] = useState<string | null>(null)
   const svgRef = useRef<SVGSVGElement>(null)
@@ -161,6 +162,31 @@ export default function PathwayGraph({ highlights, selectedProtein }: Props) {
 
   const flipLeft = popoverAnchorX > VIEWBOX_W / 2
   const flipUp   = popoverAnchorY > VIEWBOX_H * 0.6
+
+  function buildDiveDeeperContext(protein: string, meta: ProteinMeta, effect?: HydratedMutation) {
+    const lines = [
+      `Dive deeper on ${protein} in this LUAD pathway model.`,
+      `Protein context: ${meta.fullName}; pathway: ${meta.pathway}; role: ${meta.role}; mechanism: ${meta.mechanism}; LUAD frequency: ${meta.frequency}.`,
+    ]
+
+    if (meta.drugs?.length) {
+      lines.push(`Targeted agents shown: ${meta.drugs.join(', ')}.`)
+    }
+
+    if (effect) {
+      lines.push(`Current sample mutation: ${effect.mutation_id}; estimated effect: ${effectLabel[effect.estimated_effect]}.`)
+      const justification = Object.entries(effect.justification)
+        .map(([key, val]) => `${key.replace(/_/g, ' ')}: ${String(val)}`)
+        .join('; ')
+
+      if (justification) {
+        lines.push(`Annotation justification: ${justification}.`)
+      }
+    }
+
+    lines.push('Explain the likely pathway-level impact and what follow-up evidence would be most useful.')
+    return lines.join(' ')
+  }
 
   // Edge endpoint helpers
   function edgeStart(id: string, tx: number, ty: number) {
@@ -420,6 +446,20 @@ export default function PathwayGraph({ highlights, selectedProtein }: Props) {
                       <span key={d} className="rounded bg-slate-700 px-1.5 py-0.5 text-[10px] text-slate-300">{d}</span>
                     ))}
                   </div>
+                </div>
+              )}
+              {popoverProteinNode && onDiveDeeper && clickedNode && (
+                <div className="pt-3">
+                  <button
+                    onClick={() => onDiveDeeper(buildDiveDeeperContext(clickedNode, popoverMeta, popoverEffect))}
+                    className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-600 bg-slate-700 px-3 py-2 text-xs font-semibold text-slate-100 transition-colors hover:border-slate-500 hover:bg-slate-600"
+                  >
+                    <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                        d="M13 7h6m0 0v6m0-6l-8 8-4-4-5 5" />
+                    </svg>
+                    Dive deeper with agent
+                  </button>
                 </div>
               )}
             </div>

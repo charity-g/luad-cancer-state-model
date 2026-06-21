@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react'
 import { useAnalysis } from '../hooks/useAnalysis'
 import { useChat } from '../hooks/useChat'
 import UploadBox from '../components/UploadBox'
-import ChatBox from '../components/ChatBox'
+import ChatBox, { type PromptSeed } from '../components/ChatBox'
 import MutationSidebar from '../components/MutationSidebar'
 import MutationDetail from '../components/MutationDetail'
 import PathwayGraph from '../components/PathwayGraph'
@@ -14,6 +14,7 @@ export default function Model() {
   const [filename, setFilename] = useState('')
   const [sidebarVisible, setSidebarVisible] = useState(true)
   const [highlightsOn, setHighlightsOn] = useState(true)
+  const [promptSeed, setPromptSeed] = useState<PromptSeed | null>(null)
 
   const getHydrated = useCallback(
     (): HydratedMutation[] => mutations.filter((m) => m.hydrated).map((m) => m.hydrated!),
@@ -31,7 +32,15 @@ export default function Model() {
     reset()
     setSelected(null)
     setFilename('')
+    setPromptSeed(null)
     clear()
+  }
+
+  function handleDiveDeeper(context: string) {
+    setPromptSeed({
+      id: Date.now(),
+      text: context,
+    })
   }
 
   const selectedEntry = mutations.find((m) => m.mutation_id === selected)
@@ -100,6 +109,7 @@ export default function Model() {
               <PathwayGraph
                 highlights={highlightsOn ? hydratedList : []}
                 selectedProtein={selectedProtein}
+                onDiveDeeper={handleDiveDeeper}
               />
             </div>
 
@@ -134,6 +144,7 @@ export default function Model() {
           onSend={send}
           onNewFile={handleReset}
           filename={filename}
+          promptSeed={promptSeed}
         />
       ) : (
         <UploadBox onFile={handleFile} hasData={false} />
