@@ -1,4 +1,10 @@
-export type EffectType = 'no_effect' | 'activating' | 'inactivating'
+export type EffectType =
+  | 'activating'
+  | 'gain_of_function'
+  | 'inactivating'
+  | 'loss_of_function'
+  | 'uncertain'
+  | 'no_effect'
 
 export interface ContextCard {
   id: string

@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
 import type { HydratedMutation, EffectType, ContextCard } from '../types'
+import { useProfileGraph } from '../hooks/useProfileGraph'
 
 interface PathwayNode {
   id: string
@@ -106,36 +107,53 @@ const PROTEIN_META: Record<string, ProteinMeta> = {
 }
 
 const effectNodeColor: Record<EffectType, string> = {
-  activating:   '#f59e0b',
-  inactivating: '#ef4444',
-  no_effect:    '#06b6d4',
+  activating:       '#f59e0b',
+  gain_of_function: '#f59e0b',
+  inactivating:     '#ef4444',
+  loss_of_function: '#ef4444',
+  uncertain:        '#a78bfa',
+  no_effect:        '#06b6d4',
 }
 const effectGlow: Record<EffectType, string> = {
-  activating:   '#fbbf24',
-  inactivating: '#f87171',
-  no_effect:    '#67e8f9',
+  activating:       '#fbbf24',
+  gain_of_function: '#fbbf24',
+  inactivating:     '#f87171',
+  loss_of_function: '#f87171',
+  uncertain:        '#c4b5fd',
+  no_effect:        '#67e8f9',
 }
 const effectLabel: Record<EffectType, string> = {
-  activating:   'Activating',
-  inactivating: 'Inactivating',
-  no_effect:    'No Effect',
+  activating:       'Activating',
+  gain_of_function: 'Gain of Function',
+  inactivating:     'Inactivating',
+  loss_of_function: 'Loss of Function',
+  uncertain:        'Uncertain',
+  no_effect:        'No Effect',
 }
 const effectBadge: Record<EffectType, string> = {
-  activating:   'bg-amber-100 text-amber-800',
-  inactivating: 'bg-red-100 text-red-800',
-  no_effect:    'bg-cyan-100 text-cyan-800',
+  activating:       'bg-amber-100 text-amber-800',
+  gain_of_function: 'bg-amber-100 text-amber-800',
+  inactivating:     'bg-red-100 text-red-800',
+  loss_of_function: 'bg-red-100 text-red-800',
+  uncertain:        'bg-purple-100 text-purple-700',
+  no_effect:        'bg-cyan-100 text-cyan-800',
 }
 
 interface Props {
-  highlights: HydratedMutation[]
+  profileId?: string | null
+  highlights?: HydratedMutation[]
   selectedProtein?: string
   onDiveDeeper?: (card: ContextCard) => void
 }
 
-export default function PathwayGraph({ highlights, selectedProtein, onDiveDeeper }: Props) {
+export default function PathwayGraph({ profileId, highlights: propHighlights = [], selectedProtein, onDiveDeeper }: Props) {
   const [hoveredNode, setHoveredNode] = useState<string | null>(null)
   const [clickedNode, setClickedNode] = useState<string | null>(null)
   const svgRef = useRef<SVGSVGElement>(null)
+
+  const { highlights: fetchedHighlights, loading: graphLoading } = useProfileGraph(profileId ?? null)
+  // Fetched data takes precedence when a profileId is provided
+  const highlights = profileId ? fetchedHighlights : propHighlights
 
   const nodeById    = Object.fromEntries(NODES.map((n) => [n.id, n]))
   const outcomeById = Object.fromEntries(OUTCOMES.map((o) => [o.id, o]))
@@ -224,9 +242,14 @@ export default function PathwayGraph({ highlights, selectedProtein, onDiveDeeper
     <div className="relative flex h-full w-full flex-col bg-slate-900">
       {/* Legend */}
       <div className="flex flex-shrink-0 items-center justify-between border-b border-slate-700/60 px-4 py-2">
-        <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
-          Protein Pathway Network
-        </p>
+        <div className="flex items-center gap-2">
+          <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">
+            Protein Pathway Network
+          </p>
+          {graphLoading && (
+            <span className="h-3 w-3 animate-spin rounded-full border-2 border-slate-600 border-t-blue-400" />
+          )}
+        </div>
         <div className="flex gap-4">
           {([['activating', '#f59e0b'], ['inactivating', '#ef4444'], ['no effect', '#06b6d4']] as const).map(
             ([label, color]) => (

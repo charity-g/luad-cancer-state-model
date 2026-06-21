@@ -114,7 +114,7 @@ export default function Model() {
               <AgentPanel
                 mutations={mutations}
                 selected={selected}
-                onSelect={setSelected}
+                onSelect={(id) => setSelected(id || null)}
                 phase={phase}
                 analysisError={visibleError}
                 onDismissError={() => setDismissedError(true)}
