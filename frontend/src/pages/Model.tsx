@@ -126,6 +126,7 @@ export default function Model() {
                 onRetry={retry}
                 pendingContext={pendingContext}
                 onClearPendingContext={() => setPendingContext(null)}
+                onClearChat={clear}
               />
             )}
           </div>

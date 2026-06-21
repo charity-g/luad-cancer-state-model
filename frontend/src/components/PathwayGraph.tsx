@@ -142,7 +142,16 @@ export default function PathwayGraph({ highlights, selectedProtein, onDiveDeeper
   const highlightMap = Object.fromEntries(highlights.map((h) => [h.protein, h]))
 
   function handleNodeClick(id: string) {
+    const opening = clickedNode !== id
     setClickedNode((prev) => (prev === id ? null : id))
+    // A plain node click also sets the chat context (single active selection),
+    // alongside the "Dive deeper with agent" button. Only protein nodes carry
+    // metadata; outcome nodes just toggle the popover. Skip when toggling a node
+    // closed so re-clicking to dismiss doesn't re-add context.
+    const meta = PROTEIN_META[id]
+    if (opening && meta && onDiveDeeper) {
+      onDiveDeeper(buildContextCard(id, meta, highlightMap[id]))
+    }
   }
 
   function svgToPercent(x: number, y: number) {

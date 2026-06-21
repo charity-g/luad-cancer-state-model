@@ -1,19 +1,27 @@
 import type { Subgraph, SubgraphNode } from '../types'
 
 // Renders the exact subgraph the agent traversed, in the dark SVG style of
-// PathwayGraph. Auto-layout: columns by node type (mutation -> gene -> pathway),
-// so the picture reads left-to-right as the path the agent took.
+// PathwayGraph. Auto-layout: ordered columns by node type
+// (mutation -> gene -> pathway -> other). Only non-empty columns get space, so
+// the picture spreads to fill the (narrow) chat panel and stays legible.
 
+const KIND_ORDER = ['Mutation', 'Gene', 'Pathway', 'Compound', 'Disease']
 const KIND_COL: Record<string, number> = { Mutation: 0, Gene: 1, Pathway: 2, Compound: 3, Disease: 3 }
 const KIND_COLOR: Record<string, string> = {
   Mutation: '#ef4444', Gene: '#3b82f6', Pathway: '#22c55e', Compound: '#a855f7', Disease: '#64748b',
 }
-const COL_X = [120, 360, 610, 800]
 const COL_LABELS = ['Mutations', 'Genes', 'Pathways', 'Other']
-const W = 920
-const R = 20
-const ROW = 72
-const TOP = 52
+
+const W = 560
+const MARGIN_X = 80
+const R = 22
+const ROW = 84
+const TOP = 64
+const FS_NODE = 13   // node labels
+const FS_PATH = 12   // pathway box text
+const FS_EDGE = 11   // edge type labels
+const FS_HEAD = 12   // column headers
+const CHAR_W = 0.62  // monospace char width as fraction of font size
 
 function kind(n: SubgraphNode): string {
   return (n.labels && n.labels[0]) || 'Other'
@@ -27,18 +35,45 @@ function colOf(n: SubgraphNode): number {
 function clip(s: string, n: number): string {
   return s.length > n ? s.slice(0, n - 1) + '…' : s
 }
+function pillWidth(text: string, fs: number): number {
+  return text.length * fs * CHAR_W + 8
+}
+
+// Dark rounded background so a label stays readable even when it lands near a
+// line or another label.
+function Pill({ x, y, text, fs, fill }: { x: number; y: number; text: string; fs: number; fill: string }) {
+  const w = pillWidth(text, fs)
+  return (
+    <g>
+      <rect x={x - w / 2} y={y - fs / 2 - 2} width={w} height={fs + 4} rx={3} fill="#0f172a" opacity={0.82} />
+      <text x={x} y={y} fontSize={fs} fill={fill} textAnchor="middle" dominantBaseline="middle">{text}</text>
+    </g>
+  )
+}
 
 export default function SubgraphView({ subgraph }: { subgraph: Subgraph }) {
-  const cols: SubgraphNode[][] = [[], [], [], []]
-  for (const n of subgraph.nodes) cols[colOf(n)].push(n)
-  const maxRows = Math.max(1, ...cols.map((c) => c.length))
+  // Bucket nodes into their type-columns, then keep only the non-empty ones so
+  // they spread evenly across the available width.
+  const buckets: SubgraphNode[][] = [[], [], [], []]
+  for (const n of subgraph.nodes) buckets[colOf(n)].push(n)
+  const used = buckets
+    .map((arr, ci) => ({ arr, ci }))
+    .filter((c) => c.arr.length > 0)
+
+  const maxRows = Math.max(1, ...used.map((c) => c.arr.length))
   const H = TOP + maxRows * ROW
+  const span = W - 2 * MARGIN_X
+  const colX = (slot: number) =>
+    used.length <= 1 ? W / 2 : MARGIN_X + (span * slot) / (used.length - 1)
 
   const pos: Record<string, { x: number; y: number }> = {}
-  cols.forEach((arr, ci) => {
-    const colTop = TOP + ((maxRows - arr.length) * ROW) / 2
-    arr.forEach((n, i) => {
-      pos[n.id] = { x: COL_X[ci], y: colTop + i * ROW + ROW / 2 }
+  const headers: Array<{ x: number; label: string }> = []
+  used.forEach((c, slot) => {
+    const x = colX(slot)
+    headers.push({ x, label: COL_LABELS[c.ci] })
+    const colTop = TOP + ((maxRows - c.arr.length) * ROW) / 2
+    c.arr.forEach((n, i) => {
+      pos[n.id] = { x, y: colTop + i * ROW + ROW / 2 }
     })
   })
 
@@ -53,7 +88,7 @@ export default function SubgraphView({ subgraph }: { subgraph: Subgraph }) {
           Agent reasoning path
         </span>
         <div className="flex gap-3 text-[10px] text-slate-400">
-          {(['Mutation', 'Gene', 'Pathway'] as const).map((k) => (
+          {KIND_ORDER.slice(0, 3).map((k) => (
             <span key={k} className="flex items-center gap-1">
               <span className="h-2 w-2 rounded-full" style={{ background: KIND_COLOR[k] }} />
               {k.toLowerCase()}
@@ -66,33 +101,55 @@ export default function SubgraphView({ subgraph }: { subgraph: Subgraph }) {
       <svg
         viewBox={`0 0 ${W} ${H}`}
         className="w-full"
-        style={{ maxHeight: 380, fontFamily: 'ui-monospace, monospace' }}
+        style={{ maxHeight: 460, fontFamily: 'ui-monospace, monospace' }}
       >
         <defs>
           <marker id="sg-arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
-            <path d="M0,0 L7,3 L0,6 Z" fill="#64748b" />
+            <path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8" />
           </marker>
         </defs>
 
-        {COL_LABELS.map((l, ci) =>
-          cols[ci].length ? (
-            <text key={l} x={COL_X[ci]} y={26} fontSize={10} fill="#475569" textAnchor="middle">{l}</text>
-          ) : null,
-        )}
+        {headers.map((h) => (
+          <text key={h.label} x={h.x} y={30} fontSize={FS_HEAD} fill="#64748b" textAnchor="middle">{h.label}</text>
+        ))}
 
         {edges.map((e, i) => {
           const s = pos[e.source], t = pos[e.target]
+          const sameCol = Math.abs(s.x - t.x) < 1
+
+          if (sameCol) {
+            // Bow the edge out to the side so it doesn't run straight through the
+            // stacked nodes in this column. Bow away from the nearer wall.
+            const bow = (s.x > W / 2 ? -1 : 1) * 52
+            const cx = s.x + bow, cy = (s.y + t.y) / 2
+            const sd = Math.hypot(cx - s.x, cy - s.y) || 1
+            const ed = Math.hypot(t.x - cx, t.y - cy) || 1
+            const sx = s.x + ((cx - s.x) / sd) * R, sy = s.y + ((cy - s.y) / sd) * R
+            const ex = t.x - ((t.x - cx) / ed) * (R + 9), ey = t.y - ((t.y - cy) / ed) * (R + 9)
+            // Quadratic midpoint (t=0.5): 0.25*P0 + 0.5*C + 0.25*P2
+            const lx = 0.25 * sx + 0.5 * cx + 0.25 * ex
+            const ly = 0.25 * sy + 0.5 * cy + 0.25 * ey
+            return (
+              <g key={i}>
+                <path d={`M${sx},${sy} Q${cx},${cy} ${ex},${ey}`} fill="none" stroke="#475569" strokeWidth={1.3} markerEnd="url(#sg-arrow)" />
+                <Pill x={lx} y={ly} text={e.type} fs={FS_EDGE} fill="#94a3b8" />
+              </g>
+            )
+          }
+
           const dx = t.x - s.x, dy = t.y - s.y
           const len = Math.hypot(dx, dy) || 1
           const ux = dx / len, uy = dy / len
           const x1 = s.x + ux * R, y1 = s.y + uy * R
           const x2 = t.x - ux * (R + 9), y2 = t.y - uy * (R + 9)
+          // Stagger labels of near-parallel edges so they don't pile up.
+          const f = i % 2 ? 0.40 : 0.60
+          const lx = x1 + (x2 - x1) * f
+          const ly = y1 + (y2 - y1) * f
           return (
             <g key={i}>
-              <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#475569" strokeWidth={1.2} markerEnd="url(#sg-arrow)" />
-              <text x={(x1 + x2) / 2} y={(y1 + y2) / 2 - 3} fontSize={7.5} fill="#64748b" textAnchor="middle">
-                {e.type}
-              </text>
+              <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#475569" strokeWidth={1.3} markerEnd="url(#sg-arrow)" />
+              <Pill x={lx} y={ly} text={e.type} fs={FS_EDGE} fill="#94a3b8" />
             </g>
           )
         })}
@@ -104,20 +161,21 @@ export default function SubgraphView({ subgraph }: { subgraph: Subgraph }) {
           const color = KIND_COLOR[k] || '#94a3b8'
           const name = nodeLabel(n)
           if (k === 'Pathway') {
-            const w = Math.min(160, Math.max(72, name.length * 6.2))
+            const label = clip(name, 22)
+            const w = Math.min(190, Math.max(80, pillWidth(label, FS_PATH) + 12))
             return (
               <g key={n.id}>
-                <rect x={p.x - w / 2} y={p.y - 14} width={w} height={28} rx={6} fill={color + '22'} stroke={color} strokeWidth={1.3} />
-                <text x={p.x} y={p.y + 1} fontSize={8.5} fill={color} textAnchor="middle" dominantBaseline="middle">
-                  {clip(name, 24)}
+                <rect x={p.x - w / 2} y={p.y - 16} width={w} height={32} rx={7} fill={color + '22'} stroke={color} strokeWidth={1.4} />
+                <text x={p.x} y={p.y + 1} fontSize={FS_PATH} fill={color} textAnchor="middle" dominantBaseline="middle">
+                  {label}
                 </text>
               </g>
             )
           }
           return (
             <g key={n.id}>
-              <circle cx={p.x} cy={p.y} r={R} fill={color + '22'} stroke={color} strokeWidth={1.6} />
-              <text x={p.x} y={p.y + R + 11} fontSize={8.5} fill="#cbd5e1" textAnchor="middle">{clip(name, 18)}</text>
+              <circle cx={p.x} cy={p.y} r={R} fill={color + '22'} stroke={color} strokeWidth={1.7} />
+              <Pill x={p.x} y={p.y + R + 12} text={clip(name, 16)} fs={FS_NODE} fill="#e2e8f0" />
             </g>
           )
         })}
