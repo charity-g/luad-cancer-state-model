@@ -19,7 +19,7 @@ export default function Model() {
     (): HydratedMutation[] => mutations.filter((m) => m.hydrated).map((m) => m.hydrated!),
     [mutations],
   )
-  const { messages, busy, send, clear } = useChat(getHydrated)
+  const { messages, busy, send, stop, retry, clear } = useChat(getHydrated)
 
   function handleFile(file: File) {
     setFilename(file.name)
@@ -122,6 +122,8 @@ export default function Model() {
                 messages={messages}
                 busy={busy}
                 onSend={send}
+                onStop={stop}
+                onRetry={retry}
                 pendingContext={pendingContext}
                 onClearPendingContext={() => setPendingContext(null)}
               />

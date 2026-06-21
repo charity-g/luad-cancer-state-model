@@ -1,11 +1,14 @@
 """Agent orchestration — the single seam the backend wraps.
 
-run(question) -> {
+run(question, mutations, context, history) -> {
     question, cypher, plan_source, report, verdict, subgraph, rows, cited_pathways
 }
 
 Flow:  plan (text2Cypher)  ->  execute (read-only)  ->  reason
-If the generated Cypher errors, fall back to a deterministic query and retry once.
+The uploaded sample profile (mutations/context) and recent chat history are
+woven into the planner and reasoner so answers are grounded in the profile and
+follow-ups build on prior turns. If the generated Cypher errors or returns
+nothing, fall back to a deterministic query.
 """
 
 from neo4j.exceptions import Neo4jError
@@ -13,8 +16,33 @@ from neo4j.exceptions import Neo4jError
 from backend.agents.traverse_graph import cypher, planner, reasoner
 
 
-def run(question):
-    plan = planner.plan(question)
+def _profile_text(mutations, context):
+    parts = []
+    for m in mutations or []:
+        name = m.get("protein") or m.get("mutation_id") or "?"
+        eff = m.get("estimated_effect") or m.get("effect") or "?"
+        parts.append(f"{name} ({eff})")
+    for c in context or []:
+        if c.get("protein"):
+            parts.append(f"{c['protein']} ({c.get('effect', '?')})")
+    return "Sample mutation profile: " + "; ".join(parts) if parts else ""
+
+
+def _history_text(history):
+    lines = []
+    for turn in (history or [])[-6:]:  # last few turns is enough context
+        role = turn.get("role", "?")
+        content = (turn.get("content") or "").strip()[:500]
+        if content:
+            lines.append(f"{role}: {content}")
+    return "\n".join(lines)
+
+
+def run(question, mutations=None, context=None, history=None):
+    profile = _profile_text(mutations, context)
+    convo = _history_text(history)
+
+    plan = planner.plan(question, profile=profile, history=convo)
     try:
         result = cypher.run_read(plan["cypher"], plan["params"])
     except (Neo4jError, ValueError):
@@ -27,7 +55,7 @@ def run(question):
         plan = {"cypher": cy, "params": params, "source": "fallback"}
         result = cypher.run_read(cy, params)
 
-    report = reasoner.reason(question, result)
+    report = reasoner.reason(question, result, profile=profile, history=convo)
     pathway_ids = [
         n["id"] for n in result["subgraph"]["nodes"] if "Pathway" in n.get("labels", [])
     ]

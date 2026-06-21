@@ -31,6 +31,9 @@ app.add_middleware(
 
 class QueryRequest(BaseModel):
     question: str
+    mutations: list[dict] = []   # uploaded sample profile (gene/effect)
+    context: list[dict] = []     # selected pathway/protein context cards
+    history: list[dict] = []     # prior chat turns: [{role, content}]
 
 
 @app.get("/health")
@@ -38,16 +41,17 @@ def health():
     return {"status": "ok"}
 
 
-# @app.get("/graph")
-# def graph():
-#     return cypher.full_graph()
+@app.get("/graph")
+def graph():
+    return cypher.full_graph()
 
 
 @app.post("/query")
 def query(req: QueryRequest):
-    return {
-        "test info": "charity temp"
-        #TODO
-    }
-    # return agent.run(req.question)
+    return agent.run(
+        req.question,
+        mutations=req.mutations,
+        context=req.context,
+        history=req.history,
+    )
 

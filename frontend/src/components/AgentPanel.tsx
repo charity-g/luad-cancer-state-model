@@ -169,13 +169,15 @@ interface Props {
   messages: ChatMessage[]
   busy: boolean
   onSend: (text: string, context: ContextCard[]) => void
+  onStop: () => void
+  onRetry: () => void
   pendingContext: ContextCard | null
   onClearPendingContext: () => void
 }
 
 export default function AgentPanel({
   mutations, selected, onSelect, phase, analysisError, onDismissError, filename,
-  messages, busy, onSend, pendingContext, onClearPendingContext,
+  messages, busy, onSend, onStop, onRetry, pendingContext, onClearPendingContext,
 }: Props) {
   const panelRef  = useRef<HTMLDivElement>(null)
   const dragging  = useRef(false)
@@ -219,6 +221,10 @@ export default function AgentPanel({
     setDraft('')
     setContextCards([])
   }
+
+  const lastMsg = messages[messages.length - 1]
+  const canRetry = !busy && !!lastMsg && lastMsg.role === 'agent' && (!!lastMsg.isError || !!lastMsg.stopped)
+
   function handleKey(e: KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend() }
   }
@@ -386,19 +392,36 @@ export default function AgentPanel({
               placeholder={contextCards.length > 0 ? 'Ask follow-up…' : busy ? 'Agent is thinking…' : 'Ask about this dataset…'}
               className="flex-1 rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs text-slate-800 placeholder-slate-400 outline-none focus:border-slate-300 focus:bg-white disabled:opacity-50"
             />
-            <button
-              onClick={handleSend}
-              disabled={!draft.trim() || busy}
-              className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl bg-slate-900 text-white transition-colors hover:bg-slate-700 disabled:opacity-30"
-            >
-              {busy ? (
-                <span className="h-3 w-3 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-              ) : (
+            {canRetry && (
+              <button
+                onClick={onRetry}
+                title="Retry last question"
+                className="flex h-8 flex-shrink-0 items-center rounded-xl border border-slate-200 px-2.5 text-xs text-slate-500 hover:bg-slate-50 hover:text-slate-700"
+              >
+                ↻ Retry
+              </button>
+            )}
+            {busy ? (
+              <button
+                onClick={onStop}
+                title="Stop generating"
+                className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl bg-rose-600 text-white transition-colors hover:bg-rose-500"
+              >
+                <svg className="h-3 w-3" viewBox="0 0 24 24" fill="currentColor">
+                  <rect x="6" y="6" width="12" height="12" rx="2" />
+                </svg>
+              </button>
+            ) : (
+              <button
+                onClick={handleSend}
+                disabled={!draft.trim()}
+                className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl bg-slate-900 text-white transition-colors hover:bg-slate-700 disabled:opacity-30"
+              >
                 <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
-              )}
-            </button>
+              </button>
+            )}
           </div>
         </div>
       </div>

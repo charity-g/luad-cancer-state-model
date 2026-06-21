@@ -33,10 +33,10 @@ _PLANNER_SYSTEM = (
 )
 
 
-def plan(question):
+def plan(question, profile="", history=""):
     if ANTHROPIC_API_KEY:
         try:
-            cy = _plan_llm(question)
+            cy = _plan_llm(question, profile, history)
             if cy and cypher.is_read_only(cy):
                 return {"cypher": cy, "params": {}, "source": "llm"}
         except Exception:
@@ -47,7 +47,7 @@ def plan(question):
 
 # --- text2Cypher ----------------------------------------------------------
 
-def _plan_llm(question):
+def _plan_llm(question, profile="", history=""):
     client = anthropic.Anthropic()
     # Ground the planner in what's actually loaded — the schema doc describes the
     # full target schema, but only a subset may be populated.
@@ -56,11 +56,18 @@ def _plan_llm(question):
         + "\n\n=== CURRENTLY LOADED (query only these) ===\n"
         + cypher.graph_summary()
     )
+    # Profile (sample mutations) helps target the right genes; history lets the
+    # query resolve follow-ups like "what about its downstream targets?".
+    user = question
+    if profile:
+        user = f"{profile}\n\nQuestion: {question}"
+    if history:
+        user = f"Recent conversation:\n{history}\n\n{user}"
     resp = client.messages.create(
         model=PLANNER_MODEL,
         max_tokens=600,
         system=system,
-        messages=[{"role": "user", "content": question}],
+        messages=[{"role": "user", "content": user}],
     )
     text = "".join(b.text for b in resp.content if b.type == "text").strip()
     return _strip_fences(text)

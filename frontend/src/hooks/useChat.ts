@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import type { HydratedMutation, ContextCard } from '../types'
 
 export interface ChatMessage {
@@ -7,10 +7,13 @@ export interface ChatMessage {
   content: string
   streaming?: boolean
   isError?: boolean
+  stopped?: boolean
   context: ContextCard[]
   thread: string
   followUps?: string[]
 }
+
+const STORAGE_KEY = 'luad_chat_history'
 
 function uid() {
   return Math.random().toString(36).slice(2)
@@ -40,15 +43,47 @@ function errorMessage(agentId: string, text: string, context: ContextCard[], thr
   return { id: agentId, role: 'agent', content: text, isError: true, context, thread }
 }
 
+function loadHistory(): ChatMessage[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    return raw ? (JSON.parse(raw) as ChatMessage[]) : []
+  } catch {
+    return []
+  }
+}
+
 export function useChat(getMutations: () => HydratedMutation[]) {
-  const [messages, setMessages] = useState<ChatMessage[]>([])
+  const [messages, setMessages] = useState<ChatMessage[]>(loadHistory)
   const [busy, setBusy] = useState(false)
+  const abortRef = useRef<AbortController | null>(null)
+  const lastRef = useRef<{ text: string; context: ContextCard[] } | null>(null)
+  const messagesRef = useRef<ChatMessage[]>(messages)
+
+  // Persist history across reloads; keep a ref so send() can read prior turns
+  // without being recreated on every message.
+  useEffect(() => {
+    messagesRef.current = messages
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages))
+    } catch {
+      /* storage full / unavailable — non-fatal */
+    }
+  }, [messages])
 
   const send = useCallback(
     async (text: string, context: ContextCard[]) => {
       if (!text.trim() || busy) return
+      lastRef.current = { text: text.trim(), context }
+
+      const ac = new AbortController()
+      abortRef.current = ac
 
       const thread = deriveThread(context)
+      // Prior turns become the agent's memory.
+      const history = messagesRef.current
+        .filter((m) => !m.isError && m.content)
+        .map((m) => ({ role: m.role, content: m.content }))
+
       const userMsg: ChatMessage = { id: uid(), role: 'user', content: text.trim(), context, thread }
       const agentId = uid()
       const agentMsg: ChatMessage = { id: agentId, role: 'agent', content: '', streaming: true, context, thread }
@@ -56,9 +91,24 @@ export function useChat(getMutations: () => HydratedMutation[]) {
       setMessages((prev) => [...prev, userMsg, agentMsg])
       setBusy(true)
 
-      let responseText = ''
-      let isError = false
+      const fail = (msg: string) => {
+        setMessages((prev) => prev.map((m) => (m.id === agentId ? errorMessage(agentId, msg, context, thread) : m)))
+        setBusy(false)
+        abortRef.current = null
+      }
+      const markStopped = (partial: string) => {
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === agentId
+              ? { ...m, content: partial || '_(stopped)_', streaming: false, stopped: true }
+              : m,
+          ),
+        )
+        setBusy(false)
+        abortRef.current = null
+      }
 
+      let responseText = ''
       try {
         const mutations = getMutations()
         let resp: Response
@@ -66,9 +116,11 @@ export function useChat(getMutations: () => HydratedMutation[]) {
           resp = await fetch('/api/query', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
+            signal: ac.signal,
             body: JSON.stringify({
               question: text.trim(),
               context: context.map((c) => ({ ...c })),
+              history,
               mutations: mutations.map((m) => ({
                 mutation_id: m.mutation_id,
                 protein: m.protein,
@@ -77,15 +129,9 @@ export function useChat(getMutations: () => HydratedMutation[]) {
               })),
             }),
           })
-        } catch {
-          setMessages((prev) =>
-            prev.map((m) =>
-              m.id === agentId
-                ? errorMessage(agentId, 'Cannot reach the backend — is the server running on port 8000?', context, thread)
-                : m,
-            ),
-          )
-          setBusy(false)
+        } catch (e) {
+          if (ac.signal.aborted) return markStopped('')
+          fail('Cannot reach the backend — is the server running on port 8000?')
           return
         }
 
@@ -95,14 +141,7 @@ export function useChat(getMutations: () => HydratedMutation[]) {
             const errBody = (await resp.json()) as Record<string, unknown>
             detail = String(errBody['detail'] ?? errBody['message'] ?? detail)
           } catch { /* use status text */ }
-          setMessages((prev) =>
-            prev.map((m) =>
-              m.id === agentId
-                ? errorMessage(agentId, `Query failed (${detail})`, context, thread)
-                : m,
-            ),
-          )
-          setBusy(false)
+          fail(`Query failed (${detail})`)
           return
         }
 
@@ -110,49 +149,52 @@ export function useChat(getMutations: () => HydratedMutation[]) {
         try {
           data = (await resp.json()) as Record<string, unknown>
         } catch {
-          setMessages((prev) =>
-            prev.map((m) =>
-              m.id === agentId
-                ? errorMessage(agentId, 'Server returned an unexpected response format.', context, thread)
-                : m,
-            ),
-          )
-          setBusy(false)
+          fail('Server returned an unexpected response format.')
           return
         }
-
         responseText = String(data['report'] ?? data['message'] ?? JSON.stringify(data))
       } catch (err) {
+        if (ac.signal.aborted) return markStopped('')
         const msg = err instanceof Error ? err.message : String(err)
-        setMessages((prev) =>
-          prev.map((m) =>
-            m.id === agentId ? errorMessage(agentId, `Unexpected error: ${msg}`, context, thread) : m,
-          ),
-        )
-        setBusy(false)
+        fail(`Unexpected error: ${msg}`)
         return
       }
 
-      // stream words into the bubble
+      // Stream words into the bubble; stop() interrupts this too.
       const words = responseText.split(' ')
       let accumulated = ''
       for (const word of words) {
+        if (ac.signal.aborted) return markStopped(accumulated)
         accumulated += (accumulated ? ' ' : '') + word
         const snap = accumulated
         setMessages((prev) => prev.map((m) => (m.id === agentId ? { ...m, content: snap } : m)))
         await sleep(15)
       }
 
-      const followUps = isError ? [] : deriveFollowUps(context)
+      const followUps = deriveFollowUps(context)
       setMessages((prev) =>
-        prev.map((m) => (m.id === agentId ? { ...m, streaming: false, isError, followUps } : m)),
+        prev.map((m) => (m.id === agentId ? { ...m, streaming: false, followUps } : m)),
       )
       setBusy(false)
+      abortRef.current = null
     },
     [busy, getMutations],
   )
 
-  const clear = useCallback(() => setMessages([]), [])
+  const stop = useCallback(() => {
+    abortRef.current?.abort()
+  }, [])
 
-  return { messages, busy, send, clear }
+  const retry = useCallback(() => {
+    if (lastRef.current && !busy) send(lastRef.current.text, lastRef.current.context)
+  }, [busy, send])
+
+  const clear = useCallback(() => {
+    setMessages([])
+    try {
+      localStorage.removeItem(STORAGE_KEY)
+    } catch { /* non-fatal */ }
+  }, [])
+
+  return { messages, busy, send, stop, retry, clear }
 }

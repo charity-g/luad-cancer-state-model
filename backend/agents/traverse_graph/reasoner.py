@@ -29,11 +29,11 @@ _SYSTEM = (
 )
 
 
-def reason(question, result):
+def reason(question, result, profile="", history=""):
     intervention = bool(_INTERVENTION.search(question))
     if ANTHROPIC_API_KEY:
         try:
-            return _reason_llm(question, result, intervention)
+            return _reason_llm(question, result, intervention, profile, history)
         except Exception:
             pass
     return _reason_stub(question, result, intervention)
@@ -69,16 +69,22 @@ class _Report(BaseModel):
     report: str
 
 
-def _reason_llm(question, result, intervention):
+def _reason_llm(question, result, intervention, profile="", history=""):
     client = anthropic.Anthropic()
     context = _context(result["subgraph"]) or f"(rows: {result['rows'][:20]})"
+    # Ground the answer in the uploaded sample profile and the conversation so far.
+    preamble = ""
+    if profile:
+        preamble += profile + "\n\n"
+    if history:
+        preamble += f"Recent conversation:\n{history}\n\n"
     if intervention:
         resp = client.messages.parse(
             model=REASONER_MODEL,
             max_tokens=2000,
             system=_SYSTEM,
             messages=[{"role": "user", "content": (
-                f"Question: {question}\n\nSubgraph:\n{context}\n\n"
+                f"{preamble}Question: {question}\n\nSubgraph:\n{context}\n\n"
                 "Decide whether the intervention is beneficial, harmful, negligible, "
                 "or uncertain for the LUAD cell state, and write a markdown report "
                 "explaining the mechanism."
@@ -94,7 +100,7 @@ def _reason_llm(question, result, intervention):
         max_tokens=2000,
         system=_SYSTEM,
         messages=[{"role": "user", "content":
-                   f"Question: {question}\n\nSubgraph:\n{context}\n\n"
+                   f"{preamble}Question: {question}\n\nSubgraph:\n{context}\n\n"
                    "Write a concise markdown cell-state report answering the question."}],
     )
     return {"report": "".join(b.text for b in resp.content if b.type == "text"),
