@@ -5,12 +5,24 @@ import type { Subgraph, SubgraphNode } from '../types'
 // (mutation -> gene -> pathway -> other). Only non-empty columns get space, so
 // the picture spreads to fill the (narrow) chat panel and stays legible.
 
-const KIND_ORDER = ['Mutation', 'Gene', 'Pathway', 'Compound', 'Disease']
-const KIND_COL: Record<string, number> = { Mutation: 0, Gene: 1, Pathway: 2, Compound: 3, Disease: 3 }
-const KIND_COLOR: Record<string, string> = {
-  Mutation: '#ef4444', Gene: '#3b82f6', Pathway: '#22c55e', Compound: '#a855f7', Disease: '#64748b',
+// Column layout: Mutation(0) → Gene/ProteinTarget(1) → Pathway(2) → Drug/Compound/Other(3)
+const KIND_ORDER = ['Mutation', 'Gene', 'ProteinTarget', 'Pathway', 'Drug', 'Compound', 'Disease']
+const KIND_COL: Record<string, number> = {
+  Mutation: 0,
+  Gene: 1, ProteinTarget: 1,
+  Pathway: 2,
+  Drug: 3, Compound: 3, Disease: 3,
 }
-const COL_LABELS = ['Mutations', 'Genes', 'Pathways', 'Other']
+const KIND_COLOR: Record<string, string> = {
+  Mutation:      '#ef4444',
+  Gene:          '#3b82f6',
+  ProteinTarget: '#06b6d4',  // cyan — therapeutic target
+  Pathway:       '#22c55e',
+  Drug:          '#f59e0b',  // amber — drug
+  Compound:      '#a855f7',
+  Disease:       '#64748b',
+}
+const COL_LABELS = ['Mutations', 'Genes / Targets', 'Pathways', 'Drugs / Other']
 
 const W = 560
 const MARGIN_X = 80

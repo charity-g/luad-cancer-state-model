@@ -150,22 +150,85 @@ def link_mutation_to_protein(mutation: MutationProteinEffect, protein: ProteinRe
     })
 
 
+_PROMOTES = {"activation", "expression", "phosphorylation", "indirect effect", "glycosylation"}
+_INHIBITS  = {"inhibition", "repression", "dephosphorylation", "ubiquitination", "methylation"}
+
+
+def _link_profile_and_mutations(api, pathway_id: str, profile_id: str) -> None:
+    """Link an already-existing Pathway to the Profile, and wire any profile
+    Protein nodes that match pathway entries to the pathway via INVOLVED_IN."""
+    api.execute(
+        """
+        MATCH (pw:Pathway {kegg_id: $kegg_id})
+        MATCH (prof:Profile {profile_id: $profile_id})
+        MERGE (prof)-[:HAS_PATHWAY]->(pw)
+        """,
+        {"kegg_id": pathway_id, "profile_id": profile_id},
+    )
+    # For each Protein in this profile that matches a PathwayEntry in this pathway,
+    # ensure INVOLVED_IN exists (idempotent — safe to re-run).
+    try:
+        api.execute(
+            """
+            MATCH (prof:Profile {profile_id: $profile_id})-[:HAS_PROTEIN]->(p:Protein)
+            MATCH (pw:Pathway {kegg_id: $kegg_id})
+            WHERE (p.kegg_gene_id IS NOT NULL OR p.kegg_ko_id IS NOT NULL)
+            AND EXISTS {
+                MATCH (pw)-[:PATHWAY_ENTRY]->(pe:PathwayEntry)
+                WHERE pe.identifiers CONTAINS p.kegg_gene_id
+                   OR pe.identifiers CONTAINS p.kegg_ko_id
+            }
+            MERGE (p)-[:INVOLVED_IN]->(pw)
+            """,
+            {"profile_id": profile_id, "kegg_id": pathway_id},
+        )
+    except RuntimeError:
+        pass
+
+
 def add_pathway_information(pathway: dict[str, Any], profile_id: str) -> dict[str, Any]:
     """
-    Persist a KEGG pathway (from fetch_pathway_information) into the graph.
+    Persist a KEGG pathway into the graph, or reuse it if already present.
 
-    Creates:
-      - One Pathway node linked to the Profile
-      - One PathwayEntry node per KGML entry (gene, compound, map, group)
-      - One PATHWAY_RELATION edge per KGML relation, carrying mechanism subtypes
-      - PATHWAY_ENTRY edges from Pathway → PathwayEntry
-      - INVOLVED_IN edges from any Protein node whose kegg_id matches an entry identifier
+    If the Pathway node (kegg_id) already exists:
+      - Link it to the Profile via HAS_PATHWAY
+      - Link profile Protein nodes to it via INVOLVED_IN (where kegg_id matches)
+      - Skip all KGML parsing/entry/edge writes (pathway structure is shared)
+
+    If the Pathway node does not yet exist, do a full build:
+      - Pathway node + HAS_PATHWAY to Profile
+      - PathwayEntry nodes + PATHWAY_ENTRY edges
+      - INVOLVED_IN edges for matching profile Proteins
+      - PATHWAY_RELATION edges between PathwayEntry nodes
+      - PROMOTES / INHIBITS edges between matched Protein nodes
+      - ACTIVATES_PATHWAY / INHIBITS_PATHWAY from Protein → cross-referenced Pathway
     """
     api = _get_api()
     pathway_id = pathway.get("pathway_id", "")
     title = pathway.get("pathway_title", pathway_id)
 
-    # 1. Upsert the top-level Pathway node and link to Profile
+    # Check whether this pathway is already fully built in the graph.
+    existing = api.execute(
+        "MATCH (pw:Pathway {kegg_id: $kegg_id}) RETURN count(pw) AS n",
+        {"kegg_id": pathway_id},
+    )
+    already_exists = (
+        existing.get("data", {}).get("values", [[0]])[0][0] or 0
+    ) > 0
+
+    if already_exists:
+        _link_profile_and_mutations(api, pathway_id, profile_id)
+        return {
+            "pathway_id": pathway_id,
+            "name": title,
+            "total_nodes": pathway.get("total_nodes", 0),
+            "total_edges": pathway.get("total_edges", 0),
+            "status": "linked",
+        }
+
+    # ── Full build ────────────────────────────────────────────────────────────
+
+    # 1. Create Pathway node and link to Profile
     api.execute(
         """
         MERGE (pw:Pathway {kegg_id: $kegg_id})
@@ -178,7 +241,7 @@ def add_pathway_information(pathway: dict[str, Any], profile_id: str) -> dict[st
         {"kegg_id": pathway_id, "name": title, "profile_id": profile_id},
     )
 
-    # 2. Upsert each KGML entry as a PathwayEntry node
+    # 2. PathwayEntry nodes + INVOLVED_IN for matching Proteins
     for entry in pathway.get("nodes", {}).values():
         entry_id = entry.get("entry_id", "")
         if not entry_id:
@@ -188,30 +251,28 @@ def add_pathway_information(pathway: dict[str, Any], profile_id: str) -> dict[st
             """
             MERGE (pe:PathwayEntry {kegg_id: $kegg_id})
             ON CREATE SET
-                pe.entry_id    = $entry_id,
-                pe.type        = $type,
+                pe.entry_id     = $entry_id,
+                pe.type         = $type,
                 pe.display_name = $display_name,
-                pe.identifiers = $identifiers,
-                pe.created_at  = timestamp()
+                pe.identifiers  = $identifiers,
+                pe.created_at   = timestamp()
             ON MATCH SET
-                pe.type        = $type,
+                pe.type         = $type,
                 pe.display_name = $display_name,
-                pe.identifiers = $identifiers
+                pe.identifiers  = $identifiers
             WITH pe
             MATCH (pw:Pathway {kegg_id: $pathway_kegg_id})
             MERGE (pw)-[:PATHWAY_ENTRY]->(pe)
             """,
             {
-                "kegg_id": node_kegg_id,
-                "entry_id": entry_id,
-                "type": entry.get("type", ""),
-                "display_name": entry.get("display_name", ""),
-                "identifiers": json.dumps(entry.get("kegg_identifiers", [])),
-                "pathway_kegg_id": pathway_id,
+                "kegg_id":          node_kegg_id,
+                "entry_id":         entry_id,
+                "type":             entry.get("type", ""),
+                "display_name":     entry.get("display_name", ""),
+                "identifiers":      json.dumps(entry.get("kegg_identifiers", [])),
+                "pathway_kegg_id":  pathway_id,
             },
         )
-
-        # Link to any matching Protein nodes via INVOLVED_IN
         for kegg_name in entry.get("kegg_identifiers", []):
             try:
                 api.execute(
@@ -226,7 +287,13 @@ def add_pathway_information(pathway: dict[str, Any], profile_id: str) -> dict[st
             except RuntimeError:
                 pass
 
-    # 3. Upsert each KGML relation as a PATHWAY_RELATION edge between PathwayEntry nodes
+    nodes_by_entry: dict[str, dict] = {
+        str(e.get("entry_id", "")): e
+        for e in pathway.get("nodes", {}).values()
+        if e.get("entry_id")
+    }
+
+    # 3. PATHWAY_RELATION edges between PathwayEntry nodes
     for edge in pathway.get("edges", []):
         src_kegg_id = f"{pathway_id}:{edge.get('source_id', '')}"
         tgt_kegg_id = f"{pathway_id}:{edge.get('target_id', '')}"
@@ -242,14 +309,87 @@ def add_pathway_information(pathway: dict[str, Any], profile_id: str) -> dict[st
                 ON MATCH  SET r.mechanisms = $mechanisms
                 """,
                 {
-                    "src": src_kegg_id,
-                    "tgt": tgt_kegg_id,
-                    "rel_type": edge.get("relation_type", ""),
+                    "src":       src_kegg_id,
+                    "tgt":       tgt_kegg_id,
+                    "rel_type":  edge.get("relation_type", ""),
                     "mechanisms": json.dumps(edge.get("mechanisms", [])),
                 },
             )
         except RuntimeError:
             pass
+
+    # 4. Protein→Protein (PROMOTES/INHIBITS) and Protein→Pathway (ACTIVATES/INHIBITS_PATHWAY)
+    for edge in pathway.get("edges", []):
+        src_id = str(edge.get("source_id", ""))
+        tgt_id = str(edge.get("target_id", ""))
+        if not src_id or not tgt_id:
+            continue
+
+        raw_mechs: list[dict] = edge.get("mechanisms", [])
+        mech_names: set[str] = {m.get("mechanism", "") for m in raw_mechs if isinstance(m, dict)}
+        mechs_json = json.dumps([m.get("mechanism", "") for m in raw_mechs if isinstance(m, dict)])
+
+        promotes = bool(mech_names & _PROMOTES)
+        inhibits = bool(mech_names & _INHIBITS)
+        rel_type = "INHIBITS" if inhibits and not promotes else "PROMOTES"
+
+        src_node = nodes_by_entry.get(src_id, {})
+        tgt_node = nodes_by_entry.get(tgt_id, {})
+        src_ids  = src_node.get("kegg_identifiers", [])
+        tgt_ids  = tgt_node.get("kegg_identifiers", [])
+        tgt_type = tgt_node.get("type", "")
+
+        if not src_ids:
+            continue
+
+        # 4a. Protein → Protein
+        if tgt_ids and tgt_type != "map":
+            try:
+                api.execute(
+                    f"""
+                    MATCH (src:Protein)
+                    WHERE any(id IN $src_ids WHERE src.kegg_gene_id = id OR src.kegg_ko_id = id)
+                    MATCH (tgt:Protein)
+                    WHERE any(id IN $tgt_ids WHERE tgt.kegg_gene_id = id OR tgt.kegg_ko_id = id)
+                      AND src <> tgt
+                    MERGE (src)-[r:{rel_type} {{pathway_id: $pathway_id}}]->(tgt)
+                    ON CREATE SET r.mechanisms = $mechanisms, r.created_at = timestamp()
+                    ON MATCH  SET r.mechanisms = $mechanisms
+                    """,
+                    {
+                        "src_ids":    src_ids,
+                        "tgt_ids":    tgt_ids,
+                        "pathway_id": pathway_id,
+                        "mechanisms": mechs_json,
+                    },
+                )
+            except RuntimeError:
+                pass
+
+        # 4b. Protein → Pathway (map cross-reference entries)
+        if tgt_type == "map":
+            pw_rel = "INHIBITS_PATHWAY" if rel_type == "INHIBITS" else "ACTIVATES_PATHWAY"
+            for kegg_ref in tgt_ids:
+                ref_id = kegg_ref.replace("path:", "")
+                try:
+                    api.execute(
+                        f"""
+                        MATCH (src:Protein)
+                        WHERE any(id IN $src_ids WHERE src.kegg_gene_id = id OR src.kegg_ko_id = id)
+                        MATCH (pw:Pathway {{kegg_id: $ref_id}})
+                        MERGE (src)-[r:{pw_rel} {{pathway_id: $pathway_id}}]->(pw)
+                        ON CREATE SET r.mechanisms = $mechanisms, r.created_at = timestamp()
+                        ON MATCH  SET r.mechanisms = $mechanisms
+                        """,
+                        {
+                            "src_ids":    src_ids,
+                            "ref_id":     ref_id,
+                            "pathway_id": pathway_id,
+                            "mechanisms": mechs_json,
+                        },
+                    )
+                except RuntimeError:
+                    pass
 
     return {
         "pathway_id": pathway_id,

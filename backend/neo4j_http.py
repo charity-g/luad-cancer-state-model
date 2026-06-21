@@ -90,14 +90,32 @@ def _is_rel(v):
     return isinstance(v, dict) and "type" in v and "startNodeElementId" in v
 
 
+def _node_label(props: dict, labels: list) -> str:
+    """Pick the best human-readable display label for a node."""
+    label_set = set(labels)
+    if "ProteinTarget" in label_set:
+        return props.get("gene_symbol") or props.get("protein_name") or props.get("id") or ""
+    if "Drug" in label_set:
+        return props.get("drug_name") or props.get("name") or props.get("id") or ""
+    if "Gene" in label_set:
+        return props.get("symbol") or props.get("id") or ""
+    if "Pathway" in label_set:
+        return props.get("label") or props.get("title") or props.get("kegg_id") or ""
+    if "Mutation" in label_set:
+        return props.get("label") or props.get("id") or ""
+    return props.get("label") or props.get("name") or props.get("symbol") or props.get("id") or ""
+
+
 def _convert(v):
     if _is_node(v):
         # elementId is the universal wiring key (every node has one; the `id`
         # property is missing on Gene nodes, which are keyed by `symbol`).
+        display = _node_label(v["properties"], v["labels"])
         return {
             **v["properties"],
             "labels": v["labels"],
             "key": v["properties"].get("id") or v["properties"].get("symbol"),
+            "label": display,
             "id": v["elementId"],
         }
     if _is_rel(v):
@@ -117,10 +135,12 @@ def _subgraph(values):
         elif _is_node(v):
             # Use elementId as the node id so edges always wire up (the `id`
             # property is absent on Gene nodes). Keep the readable name in `key`.
+            display = _node_label(v["properties"], v["labels"])
             nodes[v["elementId"]] = {
                 **v["properties"],
                 "labels": v["labels"],
                 "key": v["properties"].get("id") or v["properties"].get("symbol"),
+                "label": display,
                 "id": v["elementId"],
             }
         elif _is_rel(v):

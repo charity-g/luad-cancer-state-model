@@ -126,6 +126,8 @@ export function useChat(getMutations: () => HydratedMutation[], profileId?: stri
 
       let responseText = ''
       let subgraph: Subgraph | undefined
+      let drugs: DrugHit[] = []
+      let mode: 'lookup' | 'reason' | undefined
       try {
         const mutations = getMutations()
         let resp: Response
@@ -177,8 +179,8 @@ export function useChat(getMutations: () => HydratedMutation[], profileId?: stri
         const sg = data['subgraph'] as Subgraph | undefined
         if (sg && Array.isArray(sg.nodes) && sg.nodes.length) subgraph = sg
         const rawDrugs = data['ttd_drugs']
-        const drugs: DrugHit[] = Array.isArray(rawDrugs) && rawDrugs.length ? rawDrugs as DrugHit[] : []
-        const mode = (data['mode'] === 'lookup' || data['mode'] === 'reason') ? data['mode'] : undefined
+        drugs = Array.isArray(rawDrugs) && rawDrugs.length ? rawDrugs as DrugHit[] : []
+        mode = (data['mode'] === 'lookup' || data['mode'] === 'reason') ? data['mode'] : undefined
       } catch (err) {
         if (ac.signal.aborted) return markStopped('')
         const msg = err instanceof Error ? err.message : String(err)
