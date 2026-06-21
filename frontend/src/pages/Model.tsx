@@ -1,14 +1,25 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useAnalysis } from '../hooks/useAnalysis'
+import { useChat } from '../hooks/useChat'
 import UploadBox from '../components/UploadBox'
+import ChatBox from '../components/ChatBox'
 import MutationSidebar from '../components/MutationSidebar'
 import MutationDetail from '../components/MutationDetail'
 import PathwayGraph from '../components/PathwayGraph'
+import type { HydratedMutation } from '../types'
 
 export default function Model() {
   const { mutations, phase, analyze, reset } = useAnalysis()
   const [selected, setSelected] = useState<string | null>(null)
   const [filename, setFilename] = useState('')
+  const [sidebarVisible, setSidebarVisible] = useState(true)
+  const [highlightsOn, setHighlightsOn] = useState(true)
+
+  const getHydrated = useCallback(
+    (): HydratedMutation[] => mutations.filter((m) => m.hydrated).map((m) => m.hydrated!),
+    [mutations],
+  )
+  const { messages, busy, send, clear } = useChat(getHydrated)
 
   function handleFile(file: File) {
     setFilename(file.name)
@@ -20,21 +31,20 @@ export default function Model() {
     reset()
     setSelected(null)
     setFilename('')
+    clear()
   }
 
   const selectedEntry = mutations.find((m) => m.mutation_id === selected)
   const hydratedList = mutations.filter((m) => m.hydrated).map((m) => m.hydrated!)
   const selectedProtein = selectedEntry?.hydrated?.protein
   const hasData = phase !== 'idle'
-  const [sidebarVisible, setSidebarVisible] = useState(true)
-  const [highlightsOn, setHighlightsOn] = useState(true)
 
   return (
     <div className="flex h-full flex-col">
       {/* Main workspace */}
       <div className="flex flex-1 overflow-hidden">
         {!hasData ? (
-          <div className="flex flex-1 flex-col items-center justify-center text-center px-6">
+          <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
             <svg className="mb-4 h-12 w-12 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1}
                 d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"
@@ -62,7 +72,7 @@ export default function Model() {
             {/* Toggle sidebar button */}
             <button
               onClick={() => setSidebarVisible((v) => !v)}
-              className="absolute left-0 top-1/2 z-10 -translate-y-1/2 flex h-8 w-5 items-center justify-center rounded-r-md border border-l-0 border-slate-200 bg-white text-slate-400 shadow-sm hover:bg-slate-50 hover:text-slate-600 transition-all"
+              className="absolute top-1/2 z-10 -translate-y-1/2 flex h-8 w-5 items-center justify-center rounded-r-md border border-l-0 border-slate-200 bg-white text-slate-400 shadow-sm transition-all hover:bg-slate-50 hover:text-slate-600"
               style={{ left: sidebarVisible ? '288px' : '0px' }}
               title={sidebarVisible ? 'Hide mutations' : 'Show mutations'}
             >
@@ -93,9 +103,9 @@ export default function Model() {
               />
             </div>
 
-            {/* Detail popover — only when a mutation is selected */}
+            {/* Detail popover */}
             {selectedEntry && (
-              <div className="absolute inset-y-4 right-4 w-80 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl flex flex-col">
+              <div className="absolute inset-y-4 right-4 z-20 flex w-80 flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl">
                 <div className="flex items-center justify-between border-b border-slate-100 px-4 py-2.5">
                   <span className="text-xs font-semibold uppercase tracking-widest text-slate-400">
                     Mutation Detail
@@ -116,8 +126,18 @@ export default function Model() {
         )}
       </div>
 
-      {/* Upload bar — always pinned to bottom */}
-      <UploadBox onFile={handleFile} hasData={hasData} filename={filename} />
+      {/* Bottom bar: upload before data, chat after */}
+      {hasData ? (
+        <ChatBox
+          messages={messages}
+          busy={busy}
+          onSend={send}
+          onNewFile={handleReset}
+          filename={filename}
+        />
+      ) : (
+        <UploadBox onFile={handleFile} hasData={false} />
+      )}
     </div>
   )
 }
