@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from backend.agents.create_graph.model import ProteinRecord
+from backend.agents.create_graph.model import ProteinRecord, MutationProteinEffect
 from backend.neo4j_http import _get_api
 
 
@@ -24,7 +24,7 @@ def init_graph() -> list:
     return results
 
 
-def add_mutation_node(mutation: dict[str, Any]) -> dict[str, Any]:
+def add_mutation_node(mutation: MutationProteinEffect) -> dict[str, Any]:
     """Upsert a Mutation node. Returns the stored properties."""
     api = _get_api()
     cypher = """

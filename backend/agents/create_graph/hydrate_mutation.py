@@ -86,7 +86,7 @@ Return exactly this JSON schema — all fields required:
     "hgvs_protein": "<string | null>",
     "genome_assembly": "<string | null>",
     "genomic_coordinate": "<string | null>",
-    "variant_type": "<SNV|indel|frameshift|splice|CNV|structural|unknown>"
+    "variant_type": "<SNV|indel|frameshift|splice|CNV|structural|unknown>",
   }},
 
   "estimated_effect": "<loss_of_function|likely_damaging|likely_neutral|activating|uncertain>",

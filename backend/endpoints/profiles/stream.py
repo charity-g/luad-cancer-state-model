@@ -19,7 +19,10 @@ from backend.agents.create_graph.process_pathways import (
     extract_pathways_for_protein,
     fetch_pathway_information,
 )
-from backend.agents.create_graph.graph import (init_graph, update_pathway) 
+from backend.agents.create_graph.graph import (
+    init_graph,
+    add_mutation_to_graph,
+    update_pathway) 
 
 
 
@@ -77,8 +80,20 @@ async def process_profile(file: UploadFile = File(...)):
                     "message": f"Hydrated mutation {mutation.get('mutation_id', '')}.",
                 },
             )
+            add_mutation_to_graph(hydrated_mutation)
 
-            protein = extract_protein_for_mutation(mutation)
+            try:
+                protein = extract_protein_for_mutation(hydrated_mutation)
+            except Exception as exc:
+                yield sse(
+                    "error",
+                    {
+                        "profile_id": profile_id,
+                        "mutation": mutation,
+                        "message": f"Unable to map mutation {mutation.get('mutation_id', '')} to a protein: {exc}",
+                    },
+                )
+                continue
 
             yield sse(
                 "protein_extracted",
