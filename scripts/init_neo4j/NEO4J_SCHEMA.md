@@ -100,6 +100,43 @@ A KEGG chemical compound (metabolite, second messenger). Primary key: `id`.
 
 ---
 
+### `Profile`
+A patient mutation profile created during an analysis session. Primary key: `profile_id`.
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `profile_id` | string | UUID assigned at stream start — **primary key** |
+| `created_at` | integer | Unix timestamp (ms) of profile creation |
+
+**Reasoning use:** Scope any query to a specific patient by starting from `(:Profile {profile_id: $pid})`.
+
+---
+
+### `Protein`
+A protein target identified by the LLM hydration step for a specific mutation in a patient profile. Created during SSE stream; linked to the static `Gene` node via `gene_symbol`. Primary key: `kegg_gene_id` (or assigned element ID).
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `gene_symbol` | string | HGNC gene symbol — bridges to `Gene.symbol` |
+| `kegg_gene_id` | string | KEGG gene ID (e.g. `"hsa:1956"`) |
+| `kegg_ko_id` | string | KEGG ortholog ID (e.g. `"K04361"`) |
+| `query` | string | Original query term used to look up the protein |
+| `kegg_description` | string | Full protein name from KEGG |
+
+**Reasoning use:** Patient-specific proteins are the bridge between a mutation profile and the static KEGG gene network. Use `gene_symbol` to join to `Gene` for CRISPR/expression data and Gene→Gene interaction edges.
+
+**PPI bridge pattern:**
+```cypher
+// Get protein-protein interactions for a profile by bridging Protein → Gene
+MATCH (prof:Profile {profile_id: $pid})-[:HAS_MUTATION]->(:Mutation)-[:AFFECTS]->(p:Protein)
+WITH collect(DISTINCT p.gene_symbol) AS syms
+MATCH (g1:Gene)-[r:ACTIVATES|INHIBITS|PHOSPHORYLATES|BINDS]->(g2:Gene)
+WHERE g1.symbol IN syms AND g2.symbol IN syms
+RETURN g1, r, g2
+```
+
+---
+
 ### `Drug`
 A therapeutic agent. Scaffold for DrugBank / OpenTargets integration. Primary key: `id`.
 
@@ -201,6 +238,16 @@ From `luad_perturbation_layer.json`. Encode the mutation → gene → pathway ca
 
 ---
 
+### Profile / Patient Analysis Relationships
+Created during patient profile analysis (SSE stream). These nodes and edges are patient-specific and are NOT part of the static KEGG/DepMap graph.
+
+| Relationship | From → To | Key Properties | Meaning |
+|---|---|---|---|
+| `HAS_MUTATION` | Profile → Mutation | — | Profile contains this patient mutation |
+| `AFFECTS` | Mutation → Protein | `estimated_effect`, `confidence`, `justification` | Mutation alters this protein's function |
+| `INVOLVED_IN` | Protein → Pathway | — | Protein participates in this pathway |
+| `TARGETS` | Drug → Protein | `mechanism`, `approval_status` | Drug targets this protein (from TTD) |
+
 ### Cell Line / Disease Relationships
 
 | Relationship | From → To | Meaning |
@@ -262,6 +309,20 @@ RETURN m.label, p1.label,
        [n IN nodes(path) | n.label] AS causal_chain,
        suppressed.label AS suppressed_pathway
 ORDER BY length(path)
+```
+
+### P7 — Protein-protein interaction network for a patient profile
+```cypher
+// Bridge patient Protein nodes to static Gene-Gene KEGG interactions.
+// Returns only interactions where BOTH endpoints are mutated proteins in the profile.
+MATCH (prof:Profile {profile_id: $profile_id})
+      -[:HAS_MUTATION]->(m:Mutation)-[:AFFECTS]->(p:Protein)
+WITH collect(DISTINCT p.gene_symbol) AS gene_syms,
+     collect({gene: p.gene_symbol, effect: m.estimated_effect}) AS effects
+MATCH (g1:Gene)-[r:ACTIVATES|INHIBITS|PHOSPHORYLATES|DEPHOSPHORYLATES
+                   |BINDS|REGULATES_EXPRESSION_OF|COMPONENT_OF]->(g2:Gene)
+WHERE g1.symbol IN gene_syms AND g2.symbol IN gene_syms
+RETURN g1, r, g2, effects
 ```
 
 ### P6 — Context window: full subgraph for a clinical case

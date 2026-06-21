@@ -1,19 +1,23 @@
 from __future__ import annotations
-import time
 import asyncio
-import csv
-import hashlib
-import io
-import json
-import httpx
+import logging
 from typing import Any, Dict, Optional
 
-from fastapi import APIRouter, File, UploadFile, HTTPException, Query
 import httpx
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
+
+log = logging.getLogger(__name__)
 
 protein_router = APIRouter(prefix="/proteins", tags=["proteins"])
 
 UNIPROT_API_URL = "https://rest.uniprot.org/uniprotkb"
+RCSB_SEARCH_URL = "https://search.rcsb.org/rcsbsearch/v2/query"
+RCSB_ENTRY_URL  = "https://data.rcsb.org/rest/v1/core/entry"
+PDBE_SIFTS_URL  = "https://www.ebi.ac.uk/pdbe/api/mappings/uniprot"
+
+# Simple in-process cache — domain annotations don't change between requests.
+_domains_cache: dict[str, Any] = {}
 
 async def fetch_uniprot_data(protein_id: str) -> Dict[str, Any]:
     """
@@ -70,6 +74,225 @@ def extract_comment_by_type(data: Dict[str, Any], comment_type: str) -> Optional
             if texts:
                 return texts[0].get("value")
     return None
+
+# ── domain models ────────────────────────────────────────────────────────────
+
+class DomainRange(BaseModel):
+    name: str
+    uniprot_start: int
+    uniprot_end: int
+    pdb_start: int | None = None
+    pdb_end: int | None = None
+
+class DomainsResponse(BaseModel):
+    uniprot_ac: str
+    pdb_id: str | None = None
+    chain: str | None = None
+    domains: list[DomainRange]
+    sifts_available: bool = False
+
+# ── domain helpers ────────────────────────────────────────────────────────────
+
+def _extract_domains(uniprot_json: dict) -> list[dict]:
+    """Pull Domain-type features from a UniProt entry JSON."""
+    domains = []
+    for feature in uniprot_json.get("features", []):
+        if feature.get("type") != "Domain":
+            continue
+        loc = feature.get("location", {})
+        start = loc.get("start", {}).get("value")
+        end   = loc.get("end", {}).get("value")
+        name  = feature.get("description", "Unknown domain")
+        if start is not None and end is not None:
+            domains.append({"name": name, "uniprot_start": int(start), "uniprot_end": int(end)})
+    return domains
+
+
+async def _best_pdb_for_uniprot(ac: str, client: httpx.AsyncClient) -> tuple[str, str] | tuple[None, None]:
+    """
+    Query RCSB to find the best PDB entry for a UniProt AC.
+    Returns (pdb_id, chain) or (None, None) when no structure exists.
+    Prefers human (taxonomy 9606) entries; falls back to any organism.
+    """
+    query = {
+        "query": {
+            "type": "terminal",
+            "service": "text",
+            "parameters": {
+                "attribute": "rcsb_polymer_entity_container_identifiers.uniprot_ids",
+                "operator": "in",
+                "value": [ac],
+            },
+        },
+        "return_type": "polymer_entity",
+        "request_options": {
+            "paginate": {"start": 0, "rows": 20},
+            "sort": [{"sort_by": "score", "direction": "desc"}],
+        },
+    }
+    try:
+        resp = await client.post(RCSB_SEARCH_URL, json=query, timeout=10)
+        resp.raise_for_status()
+        hits = resp.json().get("result_set", [])
+    except Exception as exc:
+        log.warning("RCSB search failed for %s: %s", ac, exc)
+        return None, None
+
+    if not hits:
+        return None, None
+
+    # hits are polymer entity IDs like "2ITX_1" — first part is PDB id
+    for hit in hits:
+        entity_id: str = hit.get("identifier", "")
+        if "_" in entity_id:
+            pdb_id = entity_id.split("_")[0].lower()
+            # Fetch chain info from RCSB entry
+            try:
+                r2 = await client.get(f"{RCSB_ENTRY_URL}/{pdb_id.upper()}", timeout=10)
+                r2.raise_for_status()
+                # Use the first polymer chain asym id
+                entry = r2.json()
+                chains = (
+                    entry.get("rcsb_entry_container_identifiers", {})
+                         .get("polymer_entity_ids", [])
+                )
+                # We just need a chain letter — fall through to SIFTS for real mapping
+                return pdb_id, "A"
+            except Exception:
+                return pdb_id, "A"
+
+    return None, None
+
+
+async def _sifts_offset(pdb_id: str, ac: str, client: httpx.AsyncClient) -> dict[int, int] | None:
+    """
+    Fetch PDBe SIFTS mapping for a PDB entry and return a dict mapping
+    UniProt residue number → PDB residue number for the given UniProt AC.
+    Returns None when the mapping is unavailable.
+    """
+    try:
+        resp = await client.get(f"{PDBE_SIFTS_URL}/{pdb_id}", timeout=10)
+        if resp.status_code == 404:
+            return None
+        resp.raise_for_status()
+        data = resp.json()
+    except Exception as exc:
+        log.warning("SIFTS fetch failed for %s / %s: %s", pdb_id, ac, exc)
+        return None
+
+    # PDBe nests results as data[pdb_id][ac][...]["mappings"]
+    entry = data.get(pdb_id.lower(), data.get(pdb_id.upper(), {}))
+    ac_data = entry.get(ac, {})
+    mappings: list[dict] = ac_data.get("mappings", [])
+
+    if not mappings:
+        return None
+
+    # Build a residue-level map from the first mapping segment (covers most cases)
+    # Each mapping has: unp_start, unp_end, pdb_start (struct_asym_id + residue_number)
+    offset_map: dict[int, int] = {}
+    for seg in mappings:
+        unp_start = seg.get("unp_start")
+        unp_end   = seg.get("unp_end")
+        pdb_start = seg.get("start", {}).get("residue_number")
+        if unp_start is None or pdb_start is None:
+            continue
+        shift = int(pdb_start) - int(unp_start)
+        for unp_res in range(int(unp_start), int(unp_end) + 1):
+            offset_map[unp_res] = unp_res + shift
+
+    return offset_map if offset_map else None
+
+
+def _apply_sifts(domains: list[dict], offset_map: dict[int, int]) -> list[DomainRange]:
+    result = []
+    for d in domains:
+        pdb_start = offset_map.get(d["uniprot_start"])
+        pdb_end   = offset_map.get(d["uniprot_end"])
+        result.append(DomainRange(
+            name=d["name"],
+            uniprot_start=d["uniprot_start"],
+            uniprot_end=d["uniprot_end"],
+            pdb_start=pdb_start,
+            pdb_end=pdb_end,
+        ))
+    return result
+
+
+# ── domain endpoint ───────────────────────────────────────────────────────────
+
+@protein_router.get("/{protein_id}/domains", response_model=DomainsResponse)
+async def get_protein_domains(protein_id: str):
+    """
+    Returns UniProt domain annotations for a protein, with PDB structure info
+    and SIFTS-mapped residue numbers for 3D viewer domain coloring.
+    """
+    ac = protein_id.upper()
+
+    if ac in _domains_cache:
+        return _domains_cache[ac]
+
+    async with httpx.AsyncClient(
+        headers={"Accept": "application/json"},
+        follow_redirects=True,
+    ) as client:
+        # 1. UniProt domains
+        try:
+            resp = await client.get(f"{UNIPROT_API_URL}/{ac}.json", timeout=15)
+            if resp.status_code == 404:
+                raise HTTPException(status_code=404, detail=f"UniProt AC {ac} not found.")
+            resp.raise_for_status()
+            uniprot_data = resp.json()
+        except HTTPException:
+            raise
+        except Exception as exc:
+            raise HTTPException(status_code=502, detail=f"UniProt fetch failed: {exc}")
+
+        raw_domains = _extract_domains(uniprot_data)
+
+        if not raw_domains:
+            result = DomainsResponse(uniprot_ac=ac, domains=[])
+            _domains_cache[ac] = result
+            return result
+
+        # 2. Best PDB structure
+        pdb_id, chain = await _best_pdb_for_uniprot(ac, client)
+
+        if pdb_id is None:
+            # No structure — return UniProt ranges without PDB coords
+            result = DomainsResponse(
+                uniprot_ac=ac,
+                domains=[DomainRange(**d) for d in raw_domains],
+            )
+            _domains_cache[ac] = result
+            return result
+
+        # 3. SIFTS residue mapping
+        offset_map = await _sifts_offset(pdb_id, ac, client)
+
+        if offset_map:
+            domains = _apply_sifts(raw_domains, offset_map)
+            sifts_available = True
+        else:
+            # Fall back: use UniProt numbers as PDB numbers (often close for kinases)
+            domains = [
+                DomainRange(**d, pdb_start=d["uniprot_start"], pdb_end=d["uniprot_end"])
+                for d in raw_domains
+            ]
+            sifts_available = False
+
+    result = DomainsResponse(
+        uniprot_ac=ac,
+        pdb_id=pdb_id,
+        chain=chain,
+        domains=domains,
+        sifts_available=sifts_available,
+    )
+    _domains_cache[ac] = result
+    return result
+
+
+# ── existing routes ───────────────────────────────────────────────────────────
 
 # --- Routes ---
 

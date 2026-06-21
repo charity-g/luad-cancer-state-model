@@ -22,8 +22,30 @@ _INTERVENTION = re.compile(
     r"reverse|activat|overexpress|effect|help|improve|resist|combination)\b", re.I
 )
 
+# Questions that are pure information retrieval — answer with graph + short summary,
+# no mechanistic reasoning needed.
+_LOOKUP = re.compile(
+    r"\b(show|list|what\s+is|what\s+are|which|find|get|display|give\s+me|"
+    r"how\s+many|where|fetch|return|pull|map|visuali[sz]e|graph\s+of|"
+    r"network\s+of|who|tell\s+me\s+about|describe|connections?\s+of|"
+    r"neighbors?\s+of|connected\s+to|related\s+to)\b",
+    re.I,
+)
+
+
+def classify(question: str) -> str:
+    """Return 'lookup' when the question is pure information retrieval, 'reason' otherwise.
+
+    Lookup: user wants to SEE a graph (nodes/edges pulled from DB).
+    Reason: user wants mechanistic analysis, intervention evaluation, or causal inference.
+    Intervention signals always win — 'show me what drugs inhibit EGFR' is 'reason'.
+    """
+    if _LOOKUP.search(question) and not _INTERVENTION.search(question):
+        return "lookup"
+    return "reason"
+
 _PLANNER_SYSTEM = (
-    "You translate questions about a LUAD (lung adenocarcinoma) causal biology "
+    "You translate questions about a cancer causal biology "
     "Neo4j graph into a SINGLE read-only Cypher query. Use ONLY the labels, "
     "properties, and relationship types defined in the schema below. The query "
     "must be read-only: no CREATE, MERGE, SET, DELETE, REMOVE. Return graph "

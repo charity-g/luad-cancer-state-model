@@ -2,8 +2,10 @@
 from __future__ import annotations
 import csv
 import io
+import json
 from typing import Any, List
 from backend.agents.create_graph.model import GuessMutation
+import hashlib
 
 
 def extract_mutations_from_profile(profile_bytes: bytes) -> List[GuessMutation]:
@@ -16,7 +18,9 @@ def extract_mutations_from_profile(profile_bytes: bytes) -> List[GuessMutation]:
     try:
         reader = csv.DictReader(io.StringIO(text))
         for index, row in enumerate(reader, start=1):
-            mutation_id = row.get("mutation_id") or row.get("id") or row.get("MutationID")
+            mutation_id = row.get("mutation_id") or hashlib.md5(
+                json.dumps(row, sort_keys=True, default=str).encode()
+            ).hexdigest()[:12]
             additional = {}
             if row.get('UniprotID'):
                 additional["uniprot_ac"] = row.get('UniprotID')
@@ -24,7 +28,7 @@ def extract_mutations_from_profile(profile_bytes: bytes) -> List[GuessMutation]:
                 additional["estimated_effect"] = row.get('effect')
             rows.append(
                 {
-                    "mutation_id": mutation_id or f"mutation_{index}",
+                    "mutation_id": mutation_id,
                     "protein": row.get("protein") or row.get("gene") or row.get("Gene"),
                     "raw": row,
                     **additional
@@ -36,7 +40,10 @@ def extract_mutations_from_profile(profile_bytes: bytes) -> List[GuessMutation]:
                 continue
             rows.append(
                 {
-                    "mutation_id": f"mutation_{index}",
+                    "mutation_id":  "mutation_"
+                    + hashlib.sha256(
+                        line.encode('utf-8')
+                    ).hexdigest()[:16],
                     "protein": "",
                     "estimated_effect": "no_effect",
                     "raw": {"line": line},
