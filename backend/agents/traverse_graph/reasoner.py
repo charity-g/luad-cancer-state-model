@@ -21,7 +21,7 @@ _INTERVENTION = re.compile(
 
 _SYSTEM = (
     "You are a cancer systems-biology reasoner for lung adenocarcinoma (LUAD). "
-    "You are given a subgraph from a causal knowledge graph: Pathway nodes "
+    "You are given mutation profile for a given patient"
     "(with LUAD status / inferred_state), Gene nodes (with CRISPR essentiality), "
     "and Mutation nodes, connected by typed causal relationships. Reason ONLY "
     "from the provided subgraph, cite nodes by name, and be mechanistic. Do not "

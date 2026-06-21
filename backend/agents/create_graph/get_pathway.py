@@ -27,10 +27,15 @@ def hydrate_mutation():
 
 def extract_proteins_for_mutation(mutation):
     # llm based, could be an agent on its own
-    # vector db
+    # vector db 
+    return {
+        # any information semantic information
+    }
 
 def extract_pathways_for_protein(protein):
     # api call based - will need browser info maybe
+    # https://www.kegg.jp/dbget-bin/www_bget?hsa:2065
+    
     returns list of kegg pathways 
 
 def run(profile):

@@ -1,3 +1,5 @@
+
+
 """Read-only Cypher execution layer over the LUAD Neo4j graph.
 
 The planner generates Cypher; this module executes it safely (read-only guard)
