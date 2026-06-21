@@ -65,6 +65,7 @@ async def process_profile(file: UploadFile = File(...)):
                 "message": "Profile received. Starting mutation analysis.",
             },
         )
+        print_debug("@stream started")
 
         mutations = extract_mutations_from_profile(profile_bytes)
 
@@ -77,13 +78,17 @@ async def process_profile(file: UploadFile = File(...)):
                 "message": f"Extracted {len(mutations)} mutation profiles.",
             },
         )
+        print_debug("@stream mutations_extracted")
 
         try:
             profile_pathway: list[dict[str, Any]] = await asyncio.to_thread(init_graph, profile_id)
         except Exception as exc:
             yield sse("graph_warning", {"profile_id": profile_id, "message": f"Graph init failed (Neo4j unreachable?): {exc}"})
             profile_pathway = []
+        
+        print_debug("@stream profile_pathway created")
 
+        pathway_ids_set = set()
         for mutation in mutations:
             await asyncio.sleep(1)
             hydrated_mutation = await hydrate_mutation(mutation)
@@ -134,7 +139,7 @@ async def process_profile(file: UploadFile = File(...)):
                 print_debug(f"Graph write failed for protein {protein_graph_id(protein)}: {exc}")
 
             pathway_ids = await extract_pathways_for_protein(protein)
-
+            
             yield sse(
                 "pathways_extracted",
                 {
@@ -146,25 +151,28 @@ async def process_profile(file: UploadFile = File(...)):
             )
 
             for pw_id in pathway_ids:
-                pathway_information = await fetch_pathway_information(pw_id)
-                print_debug(pathway_information)
-                try:
-                    await asyncio.to_thread(update_pathway, pathway_information, profile_id)
-                except Exception as exc:
-                    print_debug(f"Graph write failed for pathway {pw_id}: {exc}")
+                pathway_ids_set.add(pw_id)
+                
+        for pw_id in list(pathway_ids_set):
+            pathway_information = await fetch_pathway_information(pw_id)
+            print_debug(pathway_information)
+            try:
+                await asyncio.to_thread(update_pathway, pathway_information, profile_id)
+            except Exception as exc:
+                print_debug(f"Graph write failed for pathway {pw_id}: {exc}")
 
-                profile_pathway.append(pathway_information)
+            profile_pathway.append(pathway_information)
 
-                yield sse(
-                    "pathway_updated",
-                    {
-                        "profile_id": profile_id,
-                        "pathway": pathway_information,
-                        "message": f"Updated pathway {pathway_information.get('pathway_id', pw_id)}.",
-                    },
-                )
+            yield sse(
+                "pathway_updated",
+                {
+                    "profile_id": profile_id,
+                    "pathway": pathway_information,
+                    "message": f"Updated pathway {pathway_information.get('pathway_id', pw_id)}.",
+                },
+            )
 
-            await asyncio.sleep(0)
+        await asyncio.sleep(0)
 
         yield sse(
             "complete",
