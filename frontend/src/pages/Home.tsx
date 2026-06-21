@@ -4,7 +4,6 @@ import { useProfileHistory } from '../hooks/useProfileHistory'
 function formatDate(value: string | number | null) {
   if (value == null) return 'Unknown date'
   try {
-    // Neo4j timestamp() returns milliseconds as a number; ISO strings also accepted
     const d = typeof value === 'number' ? new Date(value) : new Date(value)
     if (isNaN(d.getTime())) return String(value)
     return d.toLocaleString(undefined, {
@@ -48,12 +47,12 @@ export default function Home() {
 
       {/* History */}
       <div>
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-700 mb-3">
+        <h2 className="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-3">
           Previous profiles
         </h2>
 
         {loading && (
-          <div className="flex items-center gap-2 text-sm text-slate-400">
+          <div className="flex items-center gap-2 text-sm text-slate-500">
             <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
@@ -63,13 +62,13 @@ export default function Home() {
         )}
 
         {error && (
-          <p className="text-sm text-red-500">
+          <p className="text-sm text-red-600">
             Could not load history: {error}
           </p>
         )}
 
         {!loading && !error && profiles.length === 0 && (
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-slate-500">
             No profiles yet. Upload a mutation CSV to get started.
           </p>
         )}
@@ -79,13 +78,13 @@ export default function Home() {
             {profiles.map((p) => (
               <li
                 key={p.profile_id}
-                className="flex items-center justify-between rounded-lg border border-slate-200 bg-white px-4 py-3 shadow-sm hover:border-slate-300 transition-colors"
+                className="flex items-center justify-between rounded-lg border border-slate-200 bg-white/80 backdrop-blur-sm px-4 py-3 shadow-sm hover:bg-white/90 transition-colors"
               >
                 <div className="min-w-0">
                   <p className="text-sm font-mono font-medium text-slate-800 truncate">
                     {p.profile_id}
                   </p>
-                  <p className="mt-0.5 text-xs text-slate-400">
+                  <p className="mt-0.5 text-xs text-slate-500">
                     {formatDate(p.created_at as string | number | null)}
                     {p.mutation_count > 0 && (
                       <span className="ml-2 inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">
@@ -96,7 +95,7 @@ export default function Home() {
                 </div>
                 <button
                   onClick={() => loadProfile(p.profile_id)}
-                  className="ml-4 flex-shrink-0 rounded-md border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:border-slate-400 hover:text-slate-900 transition-colors"
+                  className="ml-4 flex-shrink-0 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 hover:border-slate-400 hover:text-slate-900 transition-colors"
                 >
                   Load →
                 </button>
